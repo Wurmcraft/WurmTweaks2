@@ -1,2 +1,3 @@
 # Config
 config.debug.name=Enable / Disable Debug Mode
+config.removeAllCraftingRecipes.name=Removes All Crafting Recipes
