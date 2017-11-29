@@ -8,10 +8,11 @@ import org.apache.logging.log4j.Logger;
 
 public class LogHandler {
 
-	private static final Logger logger = LogManager.getLogger (Global.NAME);
+	private static final Logger LOGGER = LogManager.getLogger (Global.NAME);
+	private static final Logger SCRIPT_LOGGER = LogManager.getLogger ("WurmScript");
 
 	private static void log (Level level,String msg) {
-		logger.log (level,msg);
+		LOGGER.log (level,msg);
 	}
 
 	public static void info (String msg) {
@@ -25,5 +26,9 @@ public class LogHandler {
 	public static void debug (String msg) {
 		if (ConfigHandler.debug)
 			log (Level.DEBUG,msg);
+	}
+
+	public static void script (String file,int lineNo,String msg) {
+		SCRIPT_LOGGER.log (Level.INFO,file + " [" + lineNo + "]: " + msg);
 	}
 }

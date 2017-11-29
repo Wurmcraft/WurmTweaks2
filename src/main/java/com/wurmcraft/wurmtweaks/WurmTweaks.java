@@ -3,6 +3,10 @@ package com.wurmcraft.wurmtweaks;
 import com.wurmcraft.wurmtweaks.common.CommonProxy;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
+import com.wurmcraft.wurmtweaks.script.WurmScript;
+import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -34,5 +38,7 @@ public class WurmTweaks {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
 		MinecraftForge.EVENT_BUS.register (new WurmTweaks ());
+		new WurmScript ().init ();
+		WurmScript.process ("addShapeless('" + StackHelper.convert (new ItemStack (Items.DIAMOND,1,1)) + " " + StackHelper.convert (new ItemStack (Items.DIAMOND,1,0)) + " " + "<1xminecraft:dirt@0>" + "');");
 	}
 }
