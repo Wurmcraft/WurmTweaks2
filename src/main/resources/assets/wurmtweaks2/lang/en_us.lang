@@ -3,6 +3,8 @@ config.debug.name=Enable / Disable Debug Mode
 config.removeAllCraftingRecipes.name=Removes All Crafting Recipes
 config.removeAllFurnaceRecipes.name=Removes All Furnace Recipes
 config.copyItemName.name=Copy ItemName To Clipboard via /wt hand Command?
+config.masterScript.name=URL For Master.js (Master Script)
+config.recipeUpdates.name=Check For Script Updates
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!

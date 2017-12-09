@@ -22,16 +22,13 @@ public class WurmScript {
 	public static int lineNo = 0;
 	public static final String SPACER_CHAR = "_";
 
-	// Data
-	public static HashMap <ItemStack, Integer> burnTimes = new HashMap <> ();
-
 	public void init () {
 		scriptFunctions.put ("addShapeless",new AddShapeless ());
 		scriptFunctions.put ("addShaped",new AddShaped ());
 		scriptFunctions.put ("addFurnace",new AddFurnace ());
 	}
 
-	public static void process (String line) {
+	public void process (String line) {
 		try {
 			engine.eval (line,scriptFunctions);
 			lineNo++;
@@ -40,7 +37,7 @@ public class WurmScript {
 		}
 	}
 
-	public static void process (String[] lines) {
+	public void process (String[] lines) {
 		for (String line : lines)
 			process (line);
 	}
@@ -149,5 +146,21 @@ public class WurmScript {
 
 	public static String getScriptName () {
 		return currentScript != null ? currentScript.getName () : "Code.ws";
+	}
+
+	public static String[] removeComments (String[] withComments) {
+		List <String> without = new ArrayList <> ();
+		for (int x = 0; x < withComments.length; x++) {
+			if (withComments[x].startsWith ("//") || withComments[x].replaceAll (" ","").startsWith ("//"))
+				continue;
+			if (withComments[x].startsWith ("/*") || withComments[x].replaceAll (" ","").startsWith ("/*"))
+				for (int y = (x + 1); y < withComments.length; y++)
+					if (withComments[y].startsWith ("*/") || withComments[y].replaceAll (" ","").startsWith ("*/")) {
+						x = y + 1;
+						break;
+					}
+			without.add (withComments[x]);
+		}
+		return without.toArray (new String[0]);
 	}
 }

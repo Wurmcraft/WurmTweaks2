@@ -4,6 +4,7 @@ import com.wurmcraft.wurmtweaks.common.CommonProxy;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.command.WTCommand;
 import com.wurmcraft.wurmtweaks.reference.Global;
+import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.init.Items;
@@ -15,6 +16,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Mod (modid = Global.MODID, name = Global.NAME, version = Global.VERSION, dependencies = Global.DEPEND, acceptedMinecraftVersions = Global.MC_VERSIONS)
 public class WurmTweaks {
@@ -40,10 +44,7 @@ public class WurmTweaks {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
 		MinecraftForge.EVENT_BUS.register (new WurmTweaks ());
-		new WurmScript ().init ();
-		WurmScript.process ("addShapeless('" + StackHelper.convert (new ItemStack (Items.DIAMOND,1,1)) + " " + StackHelper.convert (new ItemStack (Items.DIAMOND,1,0)) + " " + "<1xminecraft:dirt@0>" + "');");
-		WurmScript.process ("addShaped('<1xminecraft:wool@3> XAX XXX XAX X " + StackHelper.convert (new ItemStack (Items.ARROW)) + " A <1xminecraft:apple@0>');");
-		WurmScript.process ("addFurnace('<1xminecraft:diamond@1> <1xminecraft:apple@0> 10');");
+		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,ConfigHandler.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 
 	@Mod.EventHandler
