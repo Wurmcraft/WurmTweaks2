@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.script.*;
 import java.io.File;
@@ -31,6 +32,7 @@ public class WurmScript {
 		scriptFunctions.put ("addShaped",new AddShaped ());
 		scriptFunctions.put ("addFurnace",new AddFurnace ());
 		scriptFunctions.put ("addBrewing",new AddBrewing ());
+		scriptFunctions.put ("addOreEntry",new AddOreEntry ());
 	}
 
 	public void process (String line) {
@@ -189,6 +191,24 @@ public class WurmScript {
 					LogHandler.script (getScriptName (),lineNo,"Invalid Input Item '" + itemStrings[1] + "'");
 			} else
 				LogHandler.script (getScriptName (),lineNo,"Invalid Item '" + itemStrings[0] + "' For Shapeless Recipe Input");
+			return null;
+		}
+	}
+
+	public class AddOreEntry implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] itemStrings = s.split (" ");
+			ItemStack item = StackHelper.convert (itemStrings[0],null);
+			if (item != ItemStack.EMPTY) {
+				if (itemStrings.length > 1) {
+					for (int index = 1; index < itemStrings.length; index++)
+						if (itemStrings[index] != null && itemStrings[index].length () > 0)
+							OreDictionary.registerOre (itemStrings[index],item);
+				} else
+					LogHandler.script (getScriptName (),lineNo,"Missing Ore Dict Entry [addOreEntry(<stack> <entry1>...)]");
+			}
 			return null;
 		}
 	}
