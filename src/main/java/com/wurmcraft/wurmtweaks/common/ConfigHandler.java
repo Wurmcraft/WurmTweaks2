@@ -6,6 +6,7 @@ import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.ReflectionHelper;
 import net.minecraft.advancements.AdvancementList;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.config.Config;
@@ -28,6 +29,14 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_CRAFTING_RECIPES)
 	public static boolean removeAllCraftingRecipes = false;
 
+	@Config.Comment ("Removes All Furnace Recipes")
+	@Config.LangKey (Local.CONFIG_REMOVE_ALL_FURNACE_RECIPES)
+	public static boolean removeAllFurnaceRecipes = false;
+
+	@Config.Comment ("Copy ItemName To Clipboard via /wt hand Command?")
+	@Config.LangKey (Local.CONFIG_COPYITEMNAME)
+	public static boolean copyItemName = true;
+
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID ().equals (Global.MODID)) {
@@ -40,6 +49,8 @@ public class ConfigHandler {
 		if (removeAllCraftingRecipes)
 			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ())
 				ForgeRegistries.RECIPES.register (new InvalidRecipe (recipe));
+		if (removeAllFurnaceRecipes)
+			FurnaceRecipes.instance ().getSmeltingList ().clear ();
 	}
 
 	@SubscribeEvent

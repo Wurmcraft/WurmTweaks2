@@ -1,3 +1,10 @@
 # Config
 config.debug.name=Enable / Disable Debug Mode
 config.removeAllCraftingRecipes.name=Removes All Crafting Recipes
+config.removeAllFurnaceRecipes.name=Removes All Furnace Recipes
+config.copyItemName.name=Copy ItemName To Clipboard via /wt hand Command?
+
+# Command
+info.requiresPlayer.name=Command Must Be Run From Someone With Hands!
+info.emptyHand.name=You Must Be Holding Something For It To Work!
+info.heldItem.name=Item Name: '%ITEM%'

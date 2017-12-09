@@ -22,9 +22,13 @@ public class WurmScript {
 	public static int lineNo = 0;
 	public static final String SPACER_CHAR = "_";
 
+	// Data
+	public static HashMap <ItemStack, Integer> burnTimes = new HashMap <> ();
+
 	public void init () {
 		scriptFunctions.put ("addShapeless",new AddShapeless ());
 		scriptFunctions.put ("addShaped",new AddShaped ());
+		scriptFunctions.put ("addFurnace",new AddFurnace ());
 	}
 
 	public static void process (String line) {
@@ -113,6 +117,31 @@ public class WurmScript {
 				finalRecipe.addAll (recipeStyle);
 				finalRecipe.addAll (temp);
 				RecipeUtils.addShaped (output,finalRecipe.toArray (new Object[0]));
+			}
+			return null;
+		}
+	}
+
+	public class AddFurnace implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] recipeStrings = s.split (" ");
+			ItemStack output = StackHelper.convert (recipeStrings[0],null);
+			if (output != ItemStack.EMPTY && recipeStrings.length > 1) {
+				ItemStack input = StackHelper.convert (recipeStrings[1],null);
+				if (input != ItemStack.EMPTY) {
+					try {
+						float exp = Float.parseFloat (recipeStrings[2]);
+						if (exp > 0)
+							RecipeUtils.addFurnace (output,input,exp);
+						else
+							LogHandler.script (getScriptName (),lineNo,"Furnace Experience Must Be Greater Than 0 (>0)");
+					} catch (NumberFormatException e) {
+						LogHandler.script (getScriptName (),lineNo,recipeStrings[2] + " is not a valid number!");
+					}
+				} else
+					LogHandler.script (getScriptName (),lineNo,"Invalid Input Stack '" + recipeStrings[1] + "'!");
 			}
 			return null;
 		}
