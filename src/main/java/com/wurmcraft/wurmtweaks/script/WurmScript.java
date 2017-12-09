@@ -1,11 +1,13 @@
 package com.wurmcraft.wurmtweaks.script;
 
+import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import joptsimple.internal.Strings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.Loader;
 
 import javax.script.*;
 import java.io.File;
@@ -17,6 +19,8 @@ import java.util.function.Function;
 public class WurmScript {
 
 	private static final ScriptEngine engine = new ScriptEngineManager ().getEngineByName ("nashorn");
+	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
+
 	public static Bindings scriptFunctions = new SimpleBindings ();
 	public static File currentScript = null;
 	public static int lineNo = 0;
@@ -26,6 +30,7 @@ public class WurmScript {
 		scriptFunctions.put ("addShapeless",new AddShapeless ());
 		scriptFunctions.put ("addShaped",new AddShaped ());
 		scriptFunctions.put ("addFurnace",new AddFurnace ());
+		scriptFunctions.put ("addBrewing",new AddBrewing ());
 	}
 
 	public void process (String line) {
@@ -162,5 +167,29 @@ public class WurmScript {
 			without.add (withComments[x]);
 		}
 		return without.toArray (new String[0]);
+	}
+
+	public class AddBrewing implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] itemStrings = s.split (" ");
+			ItemStack output = StackHelper.convert (itemStrings[0],null);
+			if (output != ItemStack.EMPTY) {
+				ItemStack input = StackHelper.convert (itemStrings[1],null);
+				if (input != null) {
+					List <ItemStack> recipeInput = new ArrayList <> ();
+					for (int index = 2; index < itemStrings.length; index++)
+						if (StackHelper.convert (itemStrings[index],null) != ItemStack.EMPTY)
+							recipeInput.add (StackHelper.convert (itemStrings[index],null));
+						else
+							return null;
+					RecipeUtils.addBrewing (output,input,recipeInput);
+				} else
+					LogHandler.script (getScriptName (),lineNo,"Invalid Input Item '" + itemStrings[1] + "'");
+			} else
+				LogHandler.script (getScriptName (),lineNo,"Invalid Item '" + itemStrings[0] + "' For Shapeless Recipe Input");
+			return null;
+		}
 	}
 }

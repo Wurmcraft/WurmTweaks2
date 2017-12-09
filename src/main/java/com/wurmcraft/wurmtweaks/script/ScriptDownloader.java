@@ -2,7 +2,6 @@ package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
-import joptsimple.internal.Strings;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -12,7 +11,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class ScriptDownloader {

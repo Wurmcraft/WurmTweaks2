@@ -13,18 +13,13 @@ import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.io.File;
-
 @Mod.EventBusSubscriber (modid = Global.MODID)
 @Config (modid = Global.MODID)
 public class ConfigHandler {
-
-	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 
 	@Config.Comment ("Enable / Disable Debug Mode")
 	@Config.LangKey (Local.CONFIG_DEBUG)
