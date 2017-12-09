@@ -21,7 +21,6 @@ public class StackHelper {
 		else if (item != null && item.length () > 0 && item.contains (":") && item.startsWith ("<") && item.endsWith (">")) {
 			ResourceLocation itemLookup = new ResourceLocation (item.substring (item.indexOf ("x") + 1,item.indexOf (":")),item.substring (item.indexOf (":") + 1,item.indexOf ("@")));
 			Item validItem = ForgeRegistries.ITEMS.getValue (itemLookup);
-			LogHandler.info ("LUP: " + itemLookup);
 			if (validItem != null) {
 				int stackSize = Integer.valueOf (item.substring (1,item.indexOf ("x")));
 				int meta = Integer.valueOf (item.substring (item.indexOf ("@") + 1,item.contains ("^") ? item.indexOf ("^") : item.indexOf (">")));

@@ -2,12 +2,16 @@ package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import joptsimple.internal.Strings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 
 import javax.script.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 
 public class WurmScript {
@@ -16,9 +20,11 @@ public class WurmScript {
 	public static Bindings scriptFunctions = new SimpleBindings ();
 	public static File currentScript = null;
 	public static int lineNo = 0;
+	public static final String SPACER_CHAR = "_";
 
 	public void init () {
 		scriptFunctions.put ("addShapeless",new AddShapeless ());
+		scriptFunctions.put ("addShaped",new AddShaped ());
 	}
 
 	public static void process (String line) {
@@ -42,18 +48,77 @@ public class WurmScript {
 			String[] itemStrings = s.split (" ");
 			ItemStack output = StackHelper.convert (itemStrings[0],null);
 			if (output != ItemStack.EMPTY) {
-				NonNullList <ItemStack> recipeInput = NonNullList.create ();
+				NonNullList <Ingredient> recipeInput = NonNullList.create ();
 				for (int index = 1; index < itemStrings.length; index++)
 					if (StackHelper.convert (itemStrings[index]) != Ingredient.EMPTY)
-						recipeInput.add (StackHelper.convert (itemStrings[index],null));
+						recipeInput.add (StackHelper.convert (itemStrings[index]));
 					else
 						return null;
-				//				RecipeUtils.addShapeless (output,(Object[]) recipeInput.toArray (new ItemStack[0]));
+				RecipeUtils.addShapeless (output,recipeInput.toArray (new Ingredient[0]));
 			} else if (!StackHelper.convert (itemStrings[0]).isSimple ()) {
 
 			} else
 				LogHandler.script (currentScript.getName (),lineNo,"Invalid Item '" + itemStrings[0] + "' For Shapeless Recipe Input");
 			return null;
 		}
+	}
+
+	public class AddShaped implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] recipeStrings = s.split (" ");
+			ItemStack output = StackHelper.convert (recipeStrings[0],null);
+			if (output != ItemStack.EMPTY) {
+				if (recipeStrings.length % 2 != 0) {
+					LogHandler.script (currentScript.getName (),lineNo,"Invalid Format '" + Strings.join (recipeStrings," ") + "' try <output> <recipe style> <varA>... <ItemA>...");
+					return null;
+				}
+				List <String> recipeStyle = new ArrayList <> ();
+				int recipeFormatStart = 4;
+				for (int index = 1; index < 4; index++)
+					if (recipeStrings[index].length () <= 3 && recipeStrings[index].length () != 1)
+						recipeStyle.add (recipeStrings[index].replaceAll (SPACER_CHAR," "));
+					else if (recipeStrings[index].length () != 1) {
+						recipeFormatStart = index + 1;
+						break;
+					}
+				HashMap <Character, Ingredient> recipeFormat = new HashMap <> ();
+				for (int index = recipeFormatStart; index < recipeStrings.length; index++) {
+					if (recipeStrings[index].length () == 1) {
+						Character formatChar = recipeStrings[index].charAt (0);
+						index++;
+						Ingredient formatIngredient = StackHelper.convert (recipeStrings[index]);
+						if (!formatIngredient.equals (Ingredient.EMPTY))
+							recipeFormat.put (formatChar,formatIngredient);
+						else {
+							LogHandler.script (getScriptName (),lineNo,recipeStrings[index] + " is not a valid Ingredient, try using /wt hand");
+							return null;
+						}
+					} else {
+						LogHandler.script (getScriptName (),lineNo,"Invalid Varable Format '" + recipeStrings[index] + "', try using 'Var'");
+						return null;
+					}
+				}
+				if (RecipeUtils.countRecipeStyle (Strings.join (recipeStyle.toArray (new String[0]),"")) != recipeFormat.keySet ().size ()) {
+					LogHandler.script (getScriptName (),lineNo,"Inpossible Varable Style to Format, check to make sure you have used all the varables in the recipe style!");
+					return null;
+				}
+				List <Object> temp = new ArrayList <> ();
+				for (Character ch : recipeFormat.keySet ()) {
+					temp.add (ch);
+					temp.add (recipeFormat.get (ch));
+				}
+				List <Object> finalRecipe = new ArrayList <> ();
+				finalRecipe.addAll (recipeStyle);
+				finalRecipe.addAll (temp);
+				RecipeUtils.addShaped (output,finalRecipe.toArray (new Object[0]));
+			}
+			return null;
+		}
+	}
+
+	public static String getScriptName () {
+		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 }

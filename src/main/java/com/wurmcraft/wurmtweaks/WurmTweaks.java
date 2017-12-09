@@ -40,5 +40,6 @@ public class WurmTweaks {
 		MinecraftForge.EVENT_BUS.register (new WurmTweaks ());
 		new WurmScript ().init ();
 		WurmScript.process ("addShapeless('" + StackHelper.convert (new ItemStack (Items.DIAMOND,1,1)) + " " + StackHelper.convert (new ItemStack (Items.DIAMOND,1,0)) + " " + "<1xminecraft:dirt@0>" + "');");
+		WurmScript.process ("addShaped('<1xminecraft:diamond@1> XAX XXX XAX X " + StackHelper.convert (new ItemStack (Items.ARROW)) + " A <1xminecraft:apple@0>');");
 	}
 }
