@@ -16,6 +16,8 @@ import net.minecraft.util.text.translation.I18n;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WTCommand extends CommandBase {
 
@@ -30,8 +32,24 @@ public class WTCommand extends CommandBase {
 	}
 
 	@Override
+	public List <String> getAliases () {
+		List <String> aliases = new ArrayList <> ();
+		aliases.add ("wurmtweaks");
+		aliases.add ("WurmTweaks");
+		aliases.add ("wurmtweaks2");
+		aliases.add ("WurmTweaks2");
+		aliases.add ("WT2");
+		return aliases;
+	}
+
+	@Override
+	public boolean checkPermission (MinecraftServer server,ICommandSender sender) {
+		return true;
+	}
+
+	@Override
 	public void execute (MinecraftServer server,ICommandSender sender,String[] args) throws CommandException {
-		if (args.length > 0 && sender.getEntityWorld ().isRemote) {
+		if (args.length > 0 && !sender.getEntityWorld ().isRemote) {
 			if (args[0].equalsIgnoreCase ("hand"))
 				hand (sender);
 		} else
@@ -43,7 +61,7 @@ public class WTCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 			if (player.getHeldItemMainhand () != ItemStack.EMPTY) {
 				String item = StackHelper.convert (player.getHeldItemMainhand ());
-				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item)));
+				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item).replaceAll ("'",TextFormatting.RED + "'")));
 				if (ConfigHandler.copyItemName)
 					addToClipboard (item);
 			} else

@@ -40,7 +40,7 @@ public class StackHelper {
 
 	public static ItemStack convert (String item,Void empty) {
 		Ingredient ingredient = convert (item);
-		if (ingredient.isSimple ())
+		if (ingredient.getMatchingStacks ().length > 0)
 			return ingredient.getMatchingStacks ()[0];
 		return ItemStack.EMPTY;
 	}
@@ -60,7 +60,6 @@ public class StackHelper {
 						tempData.add (OreDictionary.getOreName (id));
 					} else
 						return "Ingredient '" + ingredient.getValidItemStacksPacked ().toArray (new int[0]) + "' is complex and it's items have no known OreDictionary Entry!";
-
 		} else
 			return "WurmScript does not support WildCards for ItemStacks (Use the OreDictionary Instead)";
 		return "A Unknown Error Has Occured With Ingredient Translation!";
@@ -78,7 +77,7 @@ public class StackHelper {
 				return "Ore Name '" + stack + "' does not exist!";
 		else if (!ore && stack instanceof ItemStack && !((ItemStack) stack).isEmpty ()) {
 			ItemStack item = (ItemStack) stack;
-			String temp = "<" + item.getCount () + "x" + item.getItem ().getRegistryName ().getResourceDomain () + ":" + item.getUnlocalizedName ().substring (5) + "@" + ((ItemStack) stack).getItemDamage ();
+			String temp = "<" + item.getCount () + "x" + item.getItem ().getRegistryName ().getResourceDomain () + ":" + item.getItem ().getRegistryName ().getResourcePath () + "@" + ((ItemStack) stack).getItemDamage ();
 			if (item.hasTagCompound ())
 				return temp + "^" + item.getTagCompound () + ">";
 			return temp + ">";
