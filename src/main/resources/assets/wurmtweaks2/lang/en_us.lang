@@ -10,3 +10,6 @@ config.recipeUpdates.name=Check For Script Updates
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!
 info.emptyHand.name=You Must Be Holding Something For It To Work!
 info.heldItem.name=Item Name: '%ITEM%'
+
+# Chat
+chat.denyToss.name=§cYou Cannot Toss This Item!

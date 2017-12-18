@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.asm.transformers.ItemStackTransformer;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -87,5 +88,9 @@ public class StackHelper {
 
 	private static boolean isOreDictionaryEntry (String stack) {
 		return stack != null && stack.length () > 2 && stack.startsWith ("<") && stack.endsWith (">") && stack.substring (1,stack.length () - 1).length () > 0 && OreDictionary.doesOreNameExist (stack.substring (1,stack.length () - 1));
+	}
+
+	public static boolean isSameIgnoreSize (ItemStack a,ItemStack b) {
+		return a.getItem ().equals (b.getItem ()) && a.getTagCompound () == b.getTagCompound () && a.getItemDamage () == b.getItemDamage ();
 	}
 }

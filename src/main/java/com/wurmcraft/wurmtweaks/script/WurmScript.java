@@ -1,5 +1,6 @@
 package com.wurmcraft.wurmtweaks.script;
 
+import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
@@ -33,6 +34,9 @@ public class WurmScript {
 		scriptFunctions.put ("addFurnace",new AddFurnace ());
 		scriptFunctions.put ("addBrewing",new AddBrewing ());
 		scriptFunctions.put ("addOreEntry",new AddOreEntry ());
+		scriptFunctions.put ("disablePickup",new DisablePickup ());
+		scriptFunctions.put ("convertPickup",new ConvertPickup ());
+		scriptFunctions.put ("addTooltip",new AddToolTip ());
 	}
 
 	public void process (String line) {
@@ -209,6 +213,55 @@ public class WurmScript {
 				} else
 					LogHandler.script (getScriptName (),lineNo,"Missing Ore Dict Entry [addOreEntry(<stack> <entry1>...)]");
 			}
+			return null;
+		}
+	}
+
+	public class DisablePickup implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] stack = s.split (" ");
+			ItemStack item = StackHelper.convert (stack[0],null);
+			if (item != ItemStack.EMPTY) {
+				ScriptEvents.addThrowCancelEvent (item);
+			} else
+				LogHandler.script (getScriptName (),lineNo,stack[0] + " is not a valid item");
+			return null;
+		}
+	}
+
+	public class ConvertPickup implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] itemString = s.split (" ");
+			if (itemString.length == 2) {
+				ItemStack pickupItem = StackHelper.convert (itemString[0],null);
+				ItemStack convert = StackHelper.convert (itemString[1],null);
+				if (pickupItem != ItemStack.EMPTY && convert != ItemStack.EMPTY) {
+					ScriptEvents.addPickupConversion (pickupItem,convert);
+				} else
+					LogHandler.script (getScriptName (),lineNo,s + " does not a have a valid item");
+			} else
+				LogHandler.script (getScriptName (),lineNo,"convertPickup('<itemA> <itemB>')");
+			return null;
+		}
+	}
+
+	public class AddToolTip implements Function <String, Void> {
+
+		@Override
+		public Void apply (String s) {
+			String[] itemStrings = s.split (" ");
+			if (itemStrings.length >= 2) {
+				ItemStack item = StackHelper.convert (itemStrings[0],null);
+				List <String> tooltip = new ArrayList <> ();
+				for (int index = 1; index < itemStrings.length; index++)
+					tooltip.add (itemStrings[index].replaceAll ("&","§").replaceAll ("_", " "));
+				ScriptEvents.addToolTipEntry (item,tooltip.toArray (new String[0]));
+			} else
+				LogHandler.script (getScriptName (),lineNo,"addTooltip('<item> <tipA> <tipB>...");
 			return null;
 		}
 	}

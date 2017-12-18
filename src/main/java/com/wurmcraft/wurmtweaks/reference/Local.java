@@ -14,4 +14,7 @@ public class Local {
 	public static final String REQUIRES_PLAYER = "info.requiresPlayer.name";
 	public static final String EMPTY_HAND = "info.emptyHand.name";
 	public static final String HELD_ITEM = "info.heldItem.name";
+
+	// Chat
+	public static final String CHAT_ITEMTOSS_DENY = "chat.denyToss.name";
 }

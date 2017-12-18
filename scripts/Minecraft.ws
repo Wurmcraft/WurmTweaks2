@@ -6,3 +6,6 @@ addBrewing('<1xminecraft:potion@0^{Potion:"minecraft:water"}> <1xminecraft:ender
 
 // Utils
 addOreEntry('<1xminecraft:apple@0> packFood packFruit');
+disablePickup('<1xminecraft:apple@0>');
+convertPickup('<1xminecraft:stone@0> <1xminecraft:stone@2>');
+addTooltip('<1xminecraft:stone@0> Converts_to_Andesite_Upon_Droped');
