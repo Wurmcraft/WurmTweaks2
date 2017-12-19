@@ -21,27 +21,21 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 @Config (modid = Global.MODID)
 public class ConfigHandler {
 
-	@Config.Comment ("Enable / Disable Debug Mode")
 	@Config.LangKey (Local.CONFIG_DEBUG)
 	public static boolean debug = false;
 
-	@Config.Comment ("Removes All Crafting Recipes")
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_CRAFTING_RECIPES)
 	public static boolean removeAllCraftingRecipes = false;
 
-	@Config.Comment ("Removes All Furnace Recipes")
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_FURNACE_RECIPES)
 	public static boolean removeAllFurnaceRecipes = false;
 
-	@Config.Comment ("Copy ItemName To Clipboard via /wt hand Command?")
 	@Config.LangKey (Local.CONFIG_COPYITEMNAME)
 	public static boolean copyItemName = true;
 
-	@Config.Comment ("URL For Master.js (Master Script)")
 	@Config.LangKey (Local.CONFIG_MASTER_SCRIPT)
 	public static String masterScript = "https://raw.githubusercontent.com/Wurmcraft/WurmTweaks2/master/scripts/master.ws";
 
-	@Config.Comment ("Check For Script Updates")
 	@Config.LangKey (Local.CONFIG_RECIPE_UPDATES)
 	public static boolean checkForRecipeUpdates = true;
 

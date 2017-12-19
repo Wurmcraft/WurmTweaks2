@@ -13,4 +13,15 @@ public class ReflectionHelper {
 		field.set (null,newValue);
 	}
 
+	public static void setStatic (Field field,Object newValue) {
+		try {
+			field.setAccessible (true);
+			Field modifiersField = null;
+			modifiersField = Field.class.getDeclaredField ("modifiers");
+			modifiersField.setAccessible (true);
+			field.set (null,newValue);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			e.printStackTrace ();
+		}
+	}
 }

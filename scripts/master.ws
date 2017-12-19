@@ -4,3 +4,4 @@
   Note: The Recipes in the Test Script are Meant for Testing Only and Most of them will be complete non-sense
 */
 Minecraft.ws
+TConstruct.ws

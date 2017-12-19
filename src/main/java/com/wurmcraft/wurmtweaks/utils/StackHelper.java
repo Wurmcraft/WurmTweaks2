@@ -1,11 +1,17 @@
 package com.wurmcraft.wurmtweaks.utils;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.fml.common.asm.transformers.ItemStackTransformer;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
@@ -67,7 +73,28 @@ public class StackHelper {
 	}
 
 	public static String convert (ItemStack stack) {
+		if (stack.getItem () instanceof ItemBucket || stack.getItem () == ForgeModContainer.getInstance().universalBucket) {
+			FluidStack fluid = new FluidBucketWrapper (stack).getFluid ();
+			return convert (fluid);
+		}
 		return convert (stack,false);
+	}
+
+	public static String convert (FluidStack stack) {
+		if (stack != null && stack.getUnlocalizedName () != null && stack.getUnlocalizedName ().length () > 0)
+			return "<*" + stack.amount + "x" + stack.getFluid ().getName () + ">";
+		else
+			return "Invalid FluidStack " + stack.getUnlocalizedName ();
+	}
+
+	public static FluidStack convertToFluid (String fluidStack) {
+		if (fluidStack.startsWith ("<*")) {
+			int amount = Integer.parseInt (fluidStack.substring (fluidStack.indexOf ("<*")+2,fluidStack.indexOf ("x")));
+			Fluid fluid = FluidRegistry.getFluid (fluidStack.substring (fluidStack.indexOf ("x") + 1,fluidStack.indexOf (">")));
+			if (fluid != null)
+				return new FluidStack (fluid,amount);
+		}
+		return null;
 	}
 
 	public static String convert (Object stack,boolean ore) {

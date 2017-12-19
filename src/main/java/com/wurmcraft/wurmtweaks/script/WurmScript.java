@@ -1,5 +1,7 @@
 package com.wurmcraft.wurmtweaks.script;
 
+import com.wurmcraft.wurmtweaks.api.IModSupport;
+import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
@@ -13,6 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.script.*;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +30,7 @@ public class WurmScript {
 	public static File currentScript = null;
 	public static int lineNo = 0;
 	public static final String SPACER_CHAR = "_";
+	public static final List <IModSupport> activeControllers = new ArrayList <> ();
 
 	public void init () {
 		scriptFunctions.put ("addShapeless",new AddShapeless ());
@@ -37,6 +41,27 @@ public class WurmScript {
 		scriptFunctions.put ("disablePickup",new DisablePickup ());
 		scriptFunctions.put ("convertPickup",new ConvertPickup ());
 		scriptFunctions.put ("addTooltip",new AddToolTip ());
+		for (IModSupport controller : activeControllers)
+			if (Loader.isModLoaded (controller.getModID ())) {
+				LogHandler.info ("Loaded " + controller.getModID () + " Support");
+				controller.init ();
+				Method[] methods = controller.getClass ().getDeclaredMethods ();
+				for (Method method : methods)
+					if (method.getAnnotation (ScriptFunction.class) != null)
+						scriptFunctions.put (method.getName (),new ScriptFunctionWrapper (controller,method));
+			}
+	}
+
+	public static void setCurrentScript (File currentScript) {
+		WurmScript.currentScript = currentScript;
+		lineNo = 0;
+	}
+
+	public static void register (IModSupport controller) {
+		if (!activeControllers.contains (controller))
+			activeControllers.add (controller);
+		else
+			LogHandler.info (controller.getModID () + " has already been rregistered");
 	}
 
 	public void process (String line) {
@@ -51,6 +76,10 @@ public class WurmScript {
 	public void process (String[] lines) {
 		for (String line : lines)
 			process (line);
+	}
+
+	public static void info (String msg) {
+		LogHandler.script (getScriptName (),lineNo,msg);
 	}
 
 	public class AddShapeless implements Function <String, Void> {
@@ -258,7 +287,7 @@ public class WurmScript {
 				ItemStack item = StackHelper.convert (itemStrings[0],null);
 				List <String> tooltip = new ArrayList <> ();
 				for (int index = 1; index < itemStrings.length; index++)
-					tooltip.add (itemStrings[index].replaceAll ("&","§").replaceAll ("_", " "));
+					tooltip.add (itemStrings[index].replaceAll ("&","§").replaceAll ("_"," "));
 				ScriptEvents.addToolTipEntry (item,tooltip.toArray (new String[0]));
 			} else
 				LogHandler.script (getScriptName (),lineNo,"addTooltip('<item> <tipA> <tipB>...");
