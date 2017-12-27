@@ -65,12 +65,13 @@ public class WurmScript {
 	}
 
 	public void process (String line) {
-		try {
-			engine.eval (line,scriptFunctions);
-			lineNo++;
-		} catch (ScriptException e) {
-			LogHandler.script (currentScript != null ? currentScript.getName () : "Code.ws",lineNo,e.getMessage ());
-		}
+		if (!line.startsWith ("//") && line.length () > 0)
+			try {
+				engine.eval (line,scriptFunctions);
+				lineNo++;
+			} catch (Exception e) {
+				LogHandler.script (getScriptName (),lineNo,e.getLocalizedMessage ());
+			}
 	}
 
 	public void process (String[] lines) {

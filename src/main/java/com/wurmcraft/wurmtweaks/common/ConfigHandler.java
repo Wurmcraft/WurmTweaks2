@@ -25,10 +25,10 @@ public class ConfigHandler {
 	public static boolean debug = false;
 
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_CRAFTING_RECIPES)
-	public static boolean removeAllCraftingRecipes = false;
+	public static boolean removeAllCraftingRecipes = true;
 
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_FURNACE_RECIPES)
-	public static boolean removeAllFurnaceRecipes = false;
+	public static boolean removeAllFurnaceRecipes = true;
 
 	@Config.LangKey (Local.CONFIG_COPYITEMNAME)
 	public static boolean copyItemName = true;

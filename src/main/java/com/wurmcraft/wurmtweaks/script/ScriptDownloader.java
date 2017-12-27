@@ -67,15 +67,18 @@ public class ScriptDownloader {
 	}
 
 	private void processSlaveScripts () {
-		for (String script : slaveScripts) {
-			try {
-				List <String> slaveScriptLines = Files.readAllLines (new File (saveLocation + File.separator + script).toPath ());
-				String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
-				WurmScript.setCurrentScript (new File (saveLocation + File.separator + script));
-				wurmScript.process (withCommentsRemoved);
-			} catch (IOException e) {
-				LogHandler.info ("Unable to read " + script + " I/O Exception");
+		if (slaveScript.length () > 0)
+			for (String script : slaveScripts) {
+				try {
+					List <String> slaveScriptLines = Files.readAllLines (new File (saveLocation + File.separator + script).toPath ());
+					if (slaveScriptLines.size () > 0) {
+						String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
+						WurmScript.setCurrentScript (new File (saveLocation + File.separator + script));
+						wurmScript.process (withCommentsRemoved);
+					}
+				} catch (IOException e) {
+					LogHandler.info ("Unable to read " + script + " I/O Exception");
+				}
 			}
-		}
 	}
 }

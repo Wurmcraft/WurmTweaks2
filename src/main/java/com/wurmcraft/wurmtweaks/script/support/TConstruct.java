@@ -22,7 +22,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-@Config (modid = Global.MODID)
+// TODO Add Material Support
 public class TConstruct implements IModSupport {
 
 	@Override

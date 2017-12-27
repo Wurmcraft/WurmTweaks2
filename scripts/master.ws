@@ -5,3 +5,4 @@
 */
 Minecraft.ws
 TConstruct.ws
+ImmersiveEngineering.ws
