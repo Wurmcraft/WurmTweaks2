@@ -7,3 +7,4 @@ Minecraft.ws
 TConstruct.ws
 ImmersiveEngineering.ws
 ExtraUtils2.ws
+DraconicEvolution.ws

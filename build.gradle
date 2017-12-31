@@ -30,7 +30,11 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2510/691/[module]-1.12-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2474/52/[module]-1.12-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2501/821/[module]-[revision].[ext]"}
-	ivy{ artifactPattern "https://addons-origin.cursecdn.com/files/2512/406/[module]-1.12-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/406/[module]-1.12-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2514/754/[module]-1.12-[revision]-universal.[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2514/752/[module]-1.12-[revision]-universal.[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/819/[module]-${mc_version}-[revision]-universal.[ext]"}
+	maven { url = "http://maven.covers1624.net" }
 }
 
 dependencies {
@@ -38,6 +42,10 @@ dependencies {
 	compile name: 'Mantle', version: "${mantle_version}", ext: 'jar'
     compile name: 'ImmersiveEngineering', version: "${immersiveengineering_version}", ext: 'jar'
 	compile name: 'extrautils2', version: "${extrautils2_version}", ext: 'jar'
+	compile name: 'Draconic-Evolution', version: "${draconicvolution_version}", ext: 'jar'
+	compile name: 'BrandonsCore', version: "${brandonscore_version}", ext: 'jar'
+	compile name: 'CodeChickenLib', version: "${codechickenlib_version}", ext: 'jar'
+	deobfCompile "cofh:RedstoneFlux:1.12-${rf_version}:universal"
 }
 
 processResources {

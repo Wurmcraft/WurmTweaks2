@@ -7,6 +7,7 @@ import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
+import com.wurmcraft.wurmtweaks.script.support.DraconicEvolution;
 import com.wurmcraft.wurmtweaks.script.support.ExtraUtils2;
 import com.wurmcraft.wurmtweaks.script.support.ImmersiveEngineering;
 import com.wurmcraft.wurmtweaks.script.support.TConstruct;
@@ -46,6 +47,7 @@ public class WurmTweaks {
 		WurmScript.register (new TConstruct ());
 		WurmScript.register (new ImmersiveEngineering ());
 		WurmScript.register (new ExtraUtils2 ());
+		WurmScript.register (new DraconicEvolution ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 
