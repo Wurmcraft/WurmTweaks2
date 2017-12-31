@@ -7,6 +7,7 @@ import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
+import com.wurmcraft.wurmtweaks.script.support.ExtraUtils2;
 import com.wurmcraft.wurmtweaks.script.support.ImmersiveEngineering;
 import com.wurmcraft.wurmtweaks.script.support.TConstruct;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,6 +45,7 @@ public class WurmTweaks {
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
 		WurmScript.register (new TConstruct ());
 		WurmScript.register (new ImmersiveEngineering ());
+		WurmScript.register (new ExtraUtils2 ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 

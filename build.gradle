@@ -30,12 +30,14 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2510/691/[module]-1.12-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2474/52/[module]-1.12-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2501/821/[module]-[revision].[ext]"}
+	ivy{ artifactPattern "https://addons-origin.cursecdn.com/files/2512/406/[module]-1.12-[revision].[ext]"}
 }
 
 dependencies {
 	compile name: 'TConstruct', version: "${tconstruct_version}", ext: 'jar'
 	compile name: 'Mantle', version: "${mantle_version}", ext: 'jar'
     compile name: 'ImmersiveEngineering', version: "${immersiveengineering_version}", ext: 'jar'
+	compile name: 'extrautils2', version: "${extrautils2_version}", ext: 'jar'
 }
 
 processResources {
