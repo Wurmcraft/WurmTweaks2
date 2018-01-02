@@ -38,6 +38,8 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/886/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/885/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2510/812/[module]-${mc_version}-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2515/447/[module]-${mc_version}-[revision]-universal.[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2515/436/[module]-${mc_version}-[revision]-universal.[ext]"}
 	
 }
 
@@ -53,6 +55,8 @@ dependencies {
 	compile name: 'environmentaltech', version: "${environmentaltech_version}", ext: 'jar'
 	compile name: 'valkyrielib', version: "${valkyrielib_version}", ext: 'jar'
 	compile name: 'Mekanism', version: "${mekanism_version}", ext: 'jar'
+	compile name: 'TechReborn', version: "${techreborn_version}", ext: 'jar'
+	compile name: 'RebornCore', version: "${reborncore_version}", ext: 'jar'
 }
 
 processResources {
