@@ -37,6 +37,7 @@ repositories {
 	maven { url = "http://maven.covers1624.net" }
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/886/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/885/[module]-${mc_version}-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2510/812/[module]-${mc_version}-[revision].[ext]"}
 	
 }
 
@@ -51,6 +52,7 @@ dependencies {
 	deobfCompile "cofh:RedstoneFlux:1.12-${rf_version}:universal"
 	compile name: 'environmentaltech', version: "${environmentaltech_version}", ext: 'jar'
 	compile name: 'valkyrielib', version: "${valkyrielib_version}", ext: 'jar'
+	compile name: 'Mekanism', version: "${mekanism_version}", ext: 'jar'
 }
 
 processResources {

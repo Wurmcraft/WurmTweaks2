@@ -46,6 +46,7 @@ public class WurmTweaks {
 		WurmScript.register (new ExtraUtils2 ());
 		WurmScript.register (new DraconicEvolution ());
 		WurmScript.register (new EnvironmentalTech ());
+		WurmScript.register (new Mekanism ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 
