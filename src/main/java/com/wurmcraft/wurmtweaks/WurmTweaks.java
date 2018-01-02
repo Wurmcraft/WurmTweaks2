@@ -7,10 +7,7 @@ import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.script.support.DraconicEvolution;
-import com.wurmcraft.wurmtweaks.script.support.ExtraUtils2;
-import com.wurmcraft.wurmtweaks.script.support.ImmersiveEngineering;
-import com.wurmcraft.wurmtweaks.script.support.TConstruct;
+import com.wurmcraft.wurmtweaks.script.support.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -48,6 +45,7 @@ public class WurmTweaks {
 		WurmScript.register (new ImmersiveEngineering ());
 		WurmScript.register (new ExtraUtils2 ());
 		WurmScript.register (new DraconicEvolution ());
+		WurmScript.register (new EnvironmentalTech ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 

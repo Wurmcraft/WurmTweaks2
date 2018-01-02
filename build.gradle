@@ -35,6 +35,9 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2514/752/[module]-1.12-[revision]-universal.[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/819/[module]-${mc_version}-[revision]-universal.[ext]"}
 	maven { url = "http://maven.covers1624.net" }
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/886/[module]-${mc_version}-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/885/[module]-${mc_version}-[revision].[ext]"}
+	
 }
 
 dependencies {
@@ -46,6 +49,8 @@ dependencies {
 	compile name: 'BrandonsCore', version: "${brandonscore_version}", ext: 'jar'
 	compile name: 'CodeChickenLib', version: "${codechickenlib_version}", ext: 'jar'
 	deobfCompile "cofh:RedstoneFlux:1.12-${rf_version}:universal"
+	compile name: 'environmentaltech', version: "${environmentaltech_version}", ext: 'jar'
+	compile name: 'valkyrielib', version: "${valkyrielib_version}", ext: 'jar'
 }
 
 processResources {
