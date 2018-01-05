@@ -42,6 +42,7 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2515/436/[module]-${mc_version}-[revision]-universal.[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/148/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/472/[module]-${mc_version}-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2511/216/[module]-${mc_version}-[revision].[ext]"}
 	
 }
 
@@ -61,6 +62,7 @@ dependencies {
 	compile name: 'RebornCore', version: "${reborncore_version}", ext: 'jar'
 	compile name: 'calculator', version: "${calculator_version}", ext: 'jar'
 	compile name: 'sonarcore', version: "${sonarcore_version}", ext: 'jar'
+	compile name: 'ActuallyAdditions', version: "${actuallyadditions_version}", ext: 'jar'
 }
 
 processResources {

@@ -18,7 +18,7 @@ addIndustrialSawmill('<4xminecraft:beetroot@0> <4xminecraft:melon_block@0> <1xmi
 addVacuumFreezer('<4xminecraft:beetroot@0> <1xtechreborn:rubysword@0> 100 128');
 
 // Utils
-addScrapbox(<1xtechreborn:fusion_control_computer@0>);
+addScrapbox('<1xtechreborn:fusion_control_computer@0>');
 addThermalGeneratorFluid('<*1000xfluidelectrolyzedwater> 20000');
 addDieselGeneratorFluid('<*1000xfluidelectrolyzedwater> 20000');
 addGasGeneratorFluid('<*1000xfluidelectrolyzedwater> 20000');
