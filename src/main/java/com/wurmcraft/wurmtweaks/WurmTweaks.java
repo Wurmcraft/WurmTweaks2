@@ -48,6 +48,8 @@ public class WurmTweaks {
 		WurmScript.register (new EnvironmentalTech ());
 		WurmScript.register (new Mekanism ());
 		WurmScript.register (new TechReborn ());
+		WurmScript.register (new SonarCore ());
+		WurmScript.register (new Calculator ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 

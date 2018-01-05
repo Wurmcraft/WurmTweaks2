@@ -11,3 +11,5 @@ DraconicEvolution.ws
 EnvironmentalTech.ws
 Mekanism.ws
 TechReborn.ws
+SonarCore.ws
+Calculator.ws

@@ -13,7 +13,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
-import javax.script.*;
+import javax.script.Bindings;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.SimpleBindings;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -41,6 +44,7 @@ public class WurmScript {
 		scriptFunctions.put ("disablePickup",new DisablePickup ());
 		scriptFunctions.put ("convertPickup",new ConvertPickup ());
 		scriptFunctions.put ("addTooltip",new AddToolTip ());
+		scriptFunctions.put ("isModLoaded",new IsModLoaded ());
 		for (IModSupport controller : activeControllers)
 			if (Loader.isModLoaded (controller.getModID ())) {
 				LogHandler.info ("Loaded " + controller.getModID () + " Support");
@@ -293,6 +297,19 @@ public class WurmScript {
 			} else
 				LogHandler.script (getScriptName (),lineNo,"addTooltip('<item> <tipA> <tipB>...");
 			return null;
+		}
+	}
+
+	public class IsModLoaded implements Function <String, Boolean> {
+
+		@Override
+		public Boolean apply (String s) {
+			String[] mod = s.split (" ");
+			if (mod.length == 1) {
+				return Loader.isModLoaded (mod[0]);
+			} else
+				WurmScript.info ("isModLoaded('<ModName>')");
+			return false;
 		}
 	}
 }
