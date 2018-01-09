@@ -52,6 +52,7 @@ public class WurmTweaks {
 		WurmScript.register (new Calculator ());
 		WurmScript.register (new ActuallyAdditions ());
 		WurmScript.register (new IndustrialForegoing ());
+		WurmScript.register (new NuclearCraft ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 

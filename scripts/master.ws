@@ -15,3 +15,4 @@ SonarCore.ws
 Calculator.ws
 ActuallyAdditions.ws
 IndustrialForegoing.ws
+NuclearCraft.ws

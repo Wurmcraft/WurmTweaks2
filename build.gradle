@@ -46,6 +46,7 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2516/439/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/629/[module]-1.12-[revision].[ext]"}
 	maven {url "http://maven.shadowfacts.net/"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2517/776/[module]-[revision]--${mc_version}.[ext]"}
 }
 
 dependencies {
@@ -68,6 +69,7 @@ dependencies {
 	compile name: 'industrialforegoing', version: "${industrialforegoing_version}", ext: 'jar'
 	compile name: 'tesla-core-lib', version: "${teslacorelib_version}", ext: 'jar'
 	compile group: "net.shadowfacts", name: "Forgelin", version: "1.6.0"
+	compile name: 'NuclearCraft', version: "${nuclearcraft_version}", ext: 'jar'
 }
 
 processResources {
