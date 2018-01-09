@@ -43,7 +43,9 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/148/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2512/472/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2511/216/[module]-${mc_version}-[revision].[ext]"}
-	
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2516/439/[module]-${mc_version}-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/629/[module]-1.12-[revision].[ext]"}
+	maven {url "http://maven.shadowfacts.net/"}
 }
 
 dependencies {
@@ -63,6 +65,9 @@ dependencies {
 	compile name: 'calculator', version: "${calculator_version}", ext: 'jar'
 	compile name: 'sonarcore', version: "${sonarcore_version}", ext: 'jar'
 	compile name: 'ActuallyAdditions', version: "${actuallyadditions_version}", ext: 'jar'
+	compile name: 'industrialforegoing', version: "${industrialforegoing_version}", ext: 'jar'
+	compile name: 'tesla-core-lib', version: "${teslacorelib_version}", ext: 'jar'
+	compile group: "net.shadowfacts", name: "Forgelin", version: "1.6.0"
 }
 
 processResources {

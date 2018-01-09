@@ -51,6 +51,7 @@ public class WurmTweaks {
 		WurmScript.register (new SonarCore ());
 		WurmScript.register (new Calculator ());
 		WurmScript.register (new ActuallyAdditions ());
+		WurmScript.register (new IndustrialForegoing ());
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 
