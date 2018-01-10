@@ -5,9 +5,9 @@ import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.command.WTCommand;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.script.support.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -41,18 +41,7 @@ public class WurmTweaks {
 		ConfigHandler.handleLateConfigSettings ();
 		MinecraftForge.EVENT_BUS.register (new WurmTweaks ());
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
-		WurmScript.register (new TConstruct ());
-		WurmScript.register (new ImmersiveEngineering ());
-		WurmScript.register (new ExtraUtils2 ());
-		WurmScript.register (new DraconicEvolution ());
-		WurmScript.register (new EnvironmentalTech ());
-		WurmScript.register (new Mekanism ());
-		WurmScript.register (new TechReborn ());
-		WurmScript.register (new SonarCore ());
-		WurmScript.register (new Calculator ());
-		WurmScript.register (new ActuallyAdditions ());
-		WurmScript.register (new IndustrialForegoing ());
-		WurmScript.register (new NuclearCraft ());
+		ModSupport.init ();
 		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 

@@ -9,7 +9,7 @@ public class Local {
 	public static final String CONFIG_COPYITEMNAME = "config.copyItemName.name";
 	public static final String CONFIG_MASTER_SCRIPT = "config.masterScript.name";
 	public static final String CONFIG_RECIPE_UPDATES = "config.recipeUpdates.name";
-	// Config  | Support
+	// Config  | ModSupport
 	public static final String CONFIG_REMOVE_ALL_DRYING_RECIPES = "config.removeAllDryingRecipes.name";
 	public static final String CONFIG_REMOVE_ALL_MELTING_RECIPES = "config.removeAllMeltingRecipes.name";
 	public static final String CONFIG_REMOVE_ALL_ENTITY_MELTING_RECIPES = "config.removeAllEntityMeltingRecipes.name";

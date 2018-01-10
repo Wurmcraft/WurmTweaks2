@@ -47,7 +47,7 @@ public class WurmScript {
 		scriptFunctions.put ("isModLoaded",new IsModLoaded ());
 		for (IModSupport controller : activeControllers)
 			if (Loader.isModLoaded (controller.getModID ())) {
-				LogHandler.info ("Loaded " + controller.getModID () + " Support");
+				LogHandler.info ("Loaded " + controller.getModID () + " ModSupport");
 				controller.init ();
 				Method[] methods = controller.getClass ().getDeclaredMethods ();
 				for (Method method : methods)
