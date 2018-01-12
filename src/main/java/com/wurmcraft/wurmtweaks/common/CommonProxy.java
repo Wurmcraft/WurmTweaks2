@@ -2,11 +2,13 @@ package com.wurmcraft.wurmtweaks.common;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
 
 	public void preInit () {
+		MinecraftForge.EVENT_BUS.register (new Registry ());
 	}
 
 	public void init () {

@@ -19,3 +19,17 @@ info.heldItem.name=Item Name: '%ITEM%'
 
 # Chat
 chat.denyToss.name=§cYou Cannot Toss This Item!
+
+# Item
+item.battery.name=Battery
+item.cardboard.name=Cardboard
+item.flippers.name=Flippers
+item.goggles.name=Goggles
+item.jetpackParts.name=Jetpack Parts
+item.largeReactor.name=Large Reactor
+item.reactor.name=Reactor
+item.mindControl.name=Mind Control
+item.mechanicalComponent.name=Mechanical Component
+item.nanoTech.name=Nano Tech
+item.solarPanel.name=Solar Panel
+item.thruster.name=Thruster
