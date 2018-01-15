@@ -25,6 +25,7 @@ public class WurmTweaks {
 
 	@SidedProxy (serverSide = Global.PROXY_SERVER, clientSide = Global.PROXY_CLIENT)
 	public static CommonProxy proxy;
+	public static ScriptDownloader dl;
 
 	@Mod.EventHandler
 	public void preInit (FMLPreInitializationEvent e) {
@@ -41,10 +42,9 @@ public class WurmTweaks {
 	public void postInit (FMLPostInitializationEvent e) {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
-		MinecraftForge.EVENT_BUS.register (new WurmTweaks ());
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
 		ModSupport.init ();
-		ScriptDownloader dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
+		dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 
 	@Mod.EventHandler

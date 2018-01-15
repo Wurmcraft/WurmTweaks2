@@ -1,10 +1,10 @@
 package com.wurmcraft.wurmtweaks.common.command;
 
+import com.wurmcraft.wurmtweaks.WurmTweaks;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Local;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -48,10 +48,14 @@ public class WTCommand extends CommandBase {
 	}
 
 	@Override
-	public void execute (MinecraftServer server,ICommandSender sender,String[] args) throws CommandException {
+	public void execute (MinecraftServer server,ICommandSender sender,String[] args) {
 		if (args.length > 0 && !sender.getEntityWorld ().isRemote) {
 			if (args[0].equalsIgnoreCase ("hand"))
 				hand (sender);
+			else if (args[0].equalsIgnoreCase ("reload")) {
+				WurmTweaks.dl.init ();
+				sender.sendMessage (new TextComponentString (TextFormatting.RED + "Reloaded! (Old Recipes Are Not Removed)"));
+			}
 		} else
 			sender.sendMessage (new TextComponentString (TextFormatting.GOLD + getUsage (sender)));
 	}

@@ -1,17 +1,17 @@
 package com.wurmcraft.wurmtweaks.common.event;
 
 import com.wurmcraft.wurmtweaks.reference.Local;
-import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,6 +89,7 @@ public class ScriptEvents {
 	}
 
 	@SubscribeEvent
+	@SideOnly (value = Side.CLIENT)
 	public void onRenderTooltip (ItemTooltipEvent e) {
 		if (tooltipQuick.size () > 0 && tooltipEvent.size () > 0 && tooltipQuick.contains (e.getItemStack ().getItem ()))
 			for (ItemStack item : tooltipEvent.keySet ())
