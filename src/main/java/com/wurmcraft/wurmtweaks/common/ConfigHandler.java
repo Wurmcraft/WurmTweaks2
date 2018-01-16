@@ -40,7 +40,7 @@ public class ConfigHandler {
 	public static boolean checkForRecipeUpdates = true;
 
 	@Config.LangKey (Local.CONFIG_META_ITEM)
-	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster";
+	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux";
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {

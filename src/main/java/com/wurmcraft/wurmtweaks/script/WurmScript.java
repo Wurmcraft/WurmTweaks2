@@ -26,7 +26,7 @@ import java.util.function.Function;
 
 public class WurmScript {
 
-	private static final ScriptEngine engine = new ScriptEngineManager ().getEngineByName ("nashorn");
+	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
 	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 
 	public static Bindings scriptFunctions = new SimpleBindings ();

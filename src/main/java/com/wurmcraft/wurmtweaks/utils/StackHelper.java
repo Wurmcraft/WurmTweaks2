@@ -46,6 +46,8 @@ public class StackHelper {
 	}
 
 	public static ItemStack convert (String item,Void empty) {
+		if(item.equalsIgnoreCase ("empty"))
+			return ItemStack.EMPTY;
 		Ingredient ingredient = convert (item);
 		if (ingredient.getMatchingStacks ().length > 0)
 			return ingredient.getMatchingStacks ()[0];
