@@ -32,13 +32,15 @@ public class ScriptDownloader {
 	}
 
 	public void init () {
-		downloadFile (masterScript,"master.ws");
+		if (ConfigHandler.checkForRecipeUpdates)
+			downloadFile (masterScript,"master.ws");
 		if (new File (saveLocation + File.separator + "master.ws").exists ()) {
 			try {
 				List <String> masterScriptLines = Files.readAllLines (new File (saveLocation + File.separator + "master.ws").toPath ());
 				String[] withCommentsRemoved = WurmScript.removeComments (masterScriptLines.toArray (new String[0]));
 				Collections.addAll (slaveScripts,withCommentsRemoved);
-				wurmScript = new WurmScript ();
+				if (wurmScript == null)
+					wurmScript = new WurmScript ();
 				wurmScript.init ();
 				downloadSlaveScripts ();
 				processSlaveScripts ();

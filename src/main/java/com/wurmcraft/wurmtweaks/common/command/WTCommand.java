@@ -4,6 +4,7 @@ import com.wurmcraft.wurmtweaks.WurmTweaks;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Local;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import joptsimple.internal.Strings;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -54,7 +56,7 @@ public class WTCommand extends CommandBase {
 				hand (sender);
 			else if (args[0].equalsIgnoreCase ("reload")) {
 				WurmTweaks.dl.reload ();
-				sender.sendMessage (new TextComponentString (TextFormatting.RED + "Reloaded! (Old Recipes Are Not Removed)"));
+				sender.sendMessage (new TextComponentString (TextFormatting.RED + "Reloaded! (Old Machine Recipes Are Not Removed!)"));
 			} else if (args[0].equalsIgnoreCase ("load") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 				if (args.length == 2) {
@@ -75,7 +77,11 @@ public class WTCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 			if (player.getHeldItemMainhand () != ItemStack.EMPTY) {
 				String item = StackHelper.convert (player.getHeldItemMainhand ());
+				List <String> oreEntrys = new ArrayList <> ();
+				for (int id : OreDictionary.getOreIDs (player.getHeldItemMainhand ()))
+					oreEntrys.add (OreDictionary.getOreName (id));
 				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item).replaceAll ("'",TextFormatting.RED + "'")));
+				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + Strings.join (oreEntrys,",")).replaceAll ("'",TextFormatting.RED + "'")));
 				if (ConfigHandler.copyItemName && player.world.isRemote)
 					addToClipboard (item);
 			} else

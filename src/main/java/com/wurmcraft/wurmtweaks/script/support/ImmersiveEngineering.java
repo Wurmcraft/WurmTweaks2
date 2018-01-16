@@ -211,13 +211,13 @@ public class ImmersiveEngineering implements IModSupport {
 					ItemStack inputStack = StackHelper.convert (input[2],null);
 					if (inputStack != ItemStack.EMPTY) {
 						try {
-							int energy = Integer.parseInt (input[2]);
+							int energy = Integer.parseInt (input[3]);
 							if (energy > 0)
 								FermenterRecipe.addRecipe (outputFluid,output,inputStack,energy);
 							else
 								WurmScript.info ("Number Must Be Greater Than 0!");
 						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[2] + "'");
+							WurmScript.info ("Invalid Number '" + input[3] + "'");
 						}
 					} else
 						WurmScript.info ("Invalid Stack '" + input[2] + "'");

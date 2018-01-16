@@ -32,7 +32,7 @@ public class RecipeUtils {
 
 	public static void addShaped (ItemStack output,Object... recipe) {
 		ShapedOreRecipe shapedRecipe = new ShapedOreRecipe (RECIPE_GROUP,output,recipe);
-		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName ()));
+		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5)));
 		ForgeRegistries.RECIPES.register (shapedRecipe);
 		activeRecipes.add (shapedRecipe);
 	}

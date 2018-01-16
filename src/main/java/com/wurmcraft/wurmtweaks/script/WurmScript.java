@@ -76,9 +76,10 @@ public class WurmScript {
 			recipeRegistry.remove (recipe.getRegistryName ());
 			recipeRegistry.register (new InvalidRecipe (recipe));
 		}
+		RecipeUtils.activeRecipes.clear ();
 		for (ItemStack input : RecipeUtils.activeFurnace.keySet ())
 			FurnaceRecipes.instance ().getSmeltingList ().remove (input,RecipeUtils.activeFurnace.get (input));
-		init ();
+		RecipeUtils.activeFurnace.clear ();
 	}
 
 	public static void setCurrentScript (File currentScript) {
@@ -100,12 +101,13 @@ public class WurmScript {
 			} catch (Exception e) {
 				info (e.getLocalizedMessage ());
 			}
-		lineNo++;
 	}
 
 	public void process (String[] lines) {
-		for (String line : lines)
+		for (String line : lines) {
 			process (line);
+			lineNo++;
+		}
 	}
 
 	public static void info (String msg) {
