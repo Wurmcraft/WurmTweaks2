@@ -47,7 +47,7 @@ public class Minecraft implements IModSupport {
 			} else
 				WurmScript.info ("Invalid Output '" + input[0] + "'");
 		} else
-			WurmScript.info ("addShapeless('<outut> <input(s)>...')");
+			WurmScript.info ("addShapeless('<output> <input(s)>...')");
 	}
 
 	@ScriptFunction
