@@ -53,10 +53,17 @@ public class Minecraft implements IModSupport {
 	@ScriptFunction
 	public void addShaped (String line) {
 		String[] input = line.split (" ");
+		int indexFirstVar = 1;
+		for (; indexFirstVar < input.length; indexFirstVar++) {
+			if (input[indexFirstVar-1].length() == 1 && input[indexFirstVar].contains("<")) {
+				indexFirstVar-=1;
+				break;
+			}
+		}
 		if (input.length > 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
+			ItemStack output = StackHelper.convert(input[0],null);
 			if (output != ItemStack.EMPTY) {
-				int[] recipeSize = getRecipeSize (Arrays.copyOfRange (input,1,4));
+				int[] recipeSize = getRecipeSize(Arrays.copyOfRange(input, 1, indexFirstVar));
 				String[] recipeStyle = new String[recipeSize[1]];
 				for (int index = 1; index < (recipeSize[1] + 1); index++) {
 					StringBuilder temp = new StringBuilder (replaceLastTillDiff (input[index],WurmScript.SPACER));
