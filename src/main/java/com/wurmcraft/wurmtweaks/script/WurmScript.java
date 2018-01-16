@@ -4,14 +4,22 @@ import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
+import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import joptsimple.internal.Strings;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
@@ -29,16 +37,17 @@ public class WurmScript {
 	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
 	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 
-	public static Bindings scriptFunctions = new SimpleBindings ();
+	public static Bindings scriptFunctions = null;
 	public static File currentScript = null;
 	public static int lineNo = 0;
+	public static final char SPACER = '_';
 	public static final String SPACER_CHAR = "_";
 	public static final List <IModSupport> activeControllers = new ArrayList <> ();
+	public static boolean reload = false;
 
 	public void init () {
-		scriptFunctions.put ("addShapeless",new AddShapeless ());
-		scriptFunctions.put ("addShaped",new AddShaped ());
-		scriptFunctions.put ("addFurnace",new AddFurnace ());
+		if (scriptFunctions == null)
+			scriptFunctions = new SimpleBindings ();
 		scriptFunctions.put ("addBrewing",new AddBrewing ());
 		scriptFunctions.put ("addOreEntry",new AddOreEntry ());
 		scriptFunctions.put ("disablePickup",new DisablePickup ());
@@ -46,36 +55,52 @@ public class WurmScript {
 		scriptFunctions.put ("addTooltip",new AddToolTip ());
 		scriptFunctions.put ("isModLoaded",new IsModLoaded ());
 		for (IModSupport controller : activeControllers)
-			if (Loader.isModLoaded (controller.getModID ())) {
+			if (Loader.isModLoaded (controller.getModID ()) || controller.getModID ().equals ("minecraft")) {
 				LogHandler.info ("Loaded " + controller.getModID () + " ModSupport");
 				controller.init ();
 				Method[] methods = controller.getClass ().getDeclaredMethods ();
 				for (Method method : methods)
-					if (method.getAnnotation (ScriptFunction.class) != null)
+					if (method.getAnnotation (ScriptFunction.class) != null) {
+						scriptFunctions.put (method.getName ().toLowerCase (),new ScriptFunctionWrapper (controller,method));
 						scriptFunctions.put (method.getName (),new ScriptFunctionWrapper (controller,method));
+					}
 			}
+	}
+
+	public void reload () {
+		reload = true;
+		scriptFunctions = null;
+		ForgeRegistry <IRecipe> recipeRegistry = (ForgeRegistry <IRecipe>) ForgeRegistries.RECIPES;
+		recipeRegistry.unfreeze ();
+		for (IRecipe recipe : RecipeUtils.activeRecipes) {
+			recipeRegistry.remove (recipe.getRegistryName ());
+			recipeRegistry.register (new InvalidRecipe (recipe));
+		}
+		for (ItemStack input : RecipeUtils.activeFurnace.keySet ())
+			FurnaceRecipes.instance ().getSmeltingList ().remove (input,RecipeUtils.activeFurnace.get (input));
+		init ();
 	}
 
 	public static void setCurrentScript (File currentScript) {
 		WurmScript.currentScript = currentScript;
-		lineNo = 0;
+		lineNo = 1;
 	}
 
 	public static void register (IModSupport controller) {
 		if (!activeControllers.contains (controller))
 			activeControllers.add (controller);
 		else
-			LogHandler.info (controller.getModID () + " has already been rregistered");
+			LogHandler.info (controller.getModID () + " has already been registered!");
 	}
 
 	public void process (String line) {
 		if (!line.startsWith ("//") && line.length () > 0)
 			try {
 				engine.eval (line,scriptFunctions);
-				lineNo++;
 			} catch (Exception e) {
-				LogHandler.script (getScriptName (),lineNo,e.getLocalizedMessage ());
+				info (e.getLocalizedMessage ());
 			}
+		lineNo++;
 	}
 
 	public void process (String[] lines) {
@@ -85,108 +110,6 @@ public class WurmScript {
 
 	public static void info (String msg) {
 		LogHandler.script (getScriptName (),lineNo,msg);
-	}
-
-	public class AddShapeless implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] itemStrings = s.split (" ");
-			ItemStack output = StackHelper.convert (itemStrings[0],null);
-			if (output != ItemStack.EMPTY) {
-				NonNullList <Ingredient> recipeInput = NonNullList.create ();
-				for (int index = 1; index < itemStrings.length; index++)
-					if (StackHelper.convert (itemStrings[index]) != Ingredient.EMPTY)
-						recipeInput.add (StackHelper.convert (itemStrings[index]));
-					else
-						return null;
-				RecipeUtils.addShapeless (output,recipeInput.toArray (new Ingredient[0]));
-			} else if (!StackHelper.convert (itemStrings[0]).isSimple ()) {
-
-			} else
-				LogHandler.script (currentScript.getName (),lineNo,"Invalid Item '" + itemStrings[0] + "' For Shapeless Recipe Input");
-			return null;
-		}
-	}
-
-	public class AddShaped implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] recipeStrings = s.split (" ");
-			ItemStack output = StackHelper.convert (recipeStrings[0],null);
-			if (output != ItemStack.EMPTY) {
-				if (recipeStrings.length % 2 != 0) {
-					LogHandler.script (currentScript.getName (),lineNo,"Invalid Format '" + Strings.join (recipeStrings," ") + "' try <output> <recipe style> <varA>... <ItemA>...");
-					return null;
-				}
-				List <String> recipeStyle = new ArrayList <> ();
-				int recipeFormatStart = 4;
-				for (int index = 1; index < 4; index++)
-					if (recipeStrings[index].length () <= 3 && recipeStrings[index].length () != 1)
-						recipeStyle.add (recipeStrings[index].replaceAll (SPACER_CHAR," "));
-					else if (recipeStrings[index].length () != 1) {
-						recipeFormatStart = index + 1;
-						break;
-					}
-				HashMap <Character, Ingredient> recipeFormat = new HashMap <> ();
-				for (int index = recipeFormatStart; index < recipeStrings.length; index++) {
-					if (recipeStrings[index].length () == 1) {
-						Character formatChar = recipeStrings[index].charAt (0);
-						index++;
-						Ingredient formatIngredient = StackHelper.convert (recipeStrings[index]);
-						if (!formatIngredient.equals (Ingredient.EMPTY))
-							recipeFormat.put (formatChar,formatIngredient);
-						else {
-							LogHandler.script (getScriptName (),lineNo,recipeStrings[index] + " is not a valid Ingredient, try using /wt hand");
-							return null;
-						}
-					} else {
-						LogHandler.script (getScriptName (),lineNo,"Invalid Varable Format '" + recipeStrings[index] + "', try using 'Var'");
-						return null;
-					}
-				}
-				if (RecipeUtils.countRecipeStyle (Strings.join (recipeStyle.toArray (new String[0]),"")) != recipeFormat.keySet ().size ()) {
-					LogHandler.script (getScriptName (),lineNo,"Inpossible Varable Style to Format, check to make sure you have used all the varables in the recipe style!");
-					return null;
-				}
-				List <Object> temp = new ArrayList <> ();
-				for (Character ch : recipeFormat.keySet ()) {
-					temp.add (ch);
-					temp.add (recipeFormat.get (ch));
-				}
-				List <Object> finalRecipe = new ArrayList <> ();
-				finalRecipe.addAll (recipeStyle);
-				finalRecipe.addAll (temp);
-				RecipeUtils.addShaped (output,finalRecipe.toArray (new Object[0]));
-			}
-			return null;
-		}
-	}
-
-	public class AddFurnace implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] recipeStrings = s.split (" ");
-			ItemStack output = StackHelper.convert (recipeStrings[0],null);
-			if (output != ItemStack.EMPTY && recipeStrings.length > 1) {
-				ItemStack input = StackHelper.convert (recipeStrings[1],null);
-				if (input != ItemStack.EMPTY) {
-					try {
-						float exp = Float.parseFloat (recipeStrings[2]);
-						if (exp > 0)
-							RecipeUtils.addFurnace (output,input,exp);
-						else
-							LogHandler.script (getScriptName (),lineNo,"Furnace Experience Must Be Greater Than 0 (>0)");
-					} catch (NumberFormatException e) {
-						LogHandler.script (getScriptName (),lineNo,recipeStrings[2] + " is not a valid number!");
-					}
-				} else
-					LogHandler.script (getScriptName (),lineNo,"Invalid Input Stack '" + recipeStrings[1] + "'!");
-			}
-			return null;
-		}
 	}
 
 	public static String getScriptName () {

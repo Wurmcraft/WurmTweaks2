@@ -28,7 +28,7 @@ public class WTCommand extends CommandBase {
 
 	@Override
 	public String getUsage (ICommandSender sender) {
-		return "/wt hand";
+		return "/wt <hand | reload | load> <data>";
 	}
 
 	@Override
@@ -53,8 +53,18 @@ public class WTCommand extends CommandBase {
 			if (args[0].equalsIgnoreCase ("hand"))
 				hand (sender);
 			else if (args[0].equalsIgnoreCase ("reload")) {
-				WurmTweaks.dl.init ();
+				WurmTweaks.dl.reload ();
 				sender.sendMessage (new TextComponentString (TextFormatting.RED + "Reloaded! (Old Recipes Are Not Removed)"));
+			} else if (args[0].equalsIgnoreCase ("load") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
+				if (args.length == 2) {
+					ItemStack stack = StackHelper.convert (args[1],null);
+					if (stack != ItemStack.EMPTY) {
+						player.addItemStackToInventory (stack);
+					} else
+						sender.sendMessage (new TextComponentString ("Invalid Stack '" + args[1] + "'"));
+				} else
+					sender.sendMessage (new TextComponentString ("/wt load <item>"));
 			}
 		} else
 			sender.sendMessage (new TextComponentString (TextFormatting.GOLD + getUsage (sender)));
@@ -66,7 +76,7 @@ public class WTCommand extends CommandBase {
 			if (player.getHeldItemMainhand () != ItemStack.EMPTY) {
 				String item = StackHelper.convert (player.getHeldItemMainhand ());
 				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item).replaceAll ("'",TextFormatting.RED + "'")));
-				if (ConfigHandler.copyItemName)
+				if (ConfigHandler.copyItemName && player.world.isRemote)
 					addToClipboard (item);
 			} else
 				sender.sendMessage (new TextComponentString (TextFormatting.RED + I18n.translateToLocal (Local.EMPTY_HAND)));

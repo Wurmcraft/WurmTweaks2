@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Loader;
 public class ModSupport {
 
 	public static void init () {
+		WurmScript.register (new Minecraft ());
 		if (Loader.isModLoaded ("tconstruct"))
 			WurmScript.register (new TConstruct ());
 		if (Loader.isModLoaded ("immersiveengineering"))

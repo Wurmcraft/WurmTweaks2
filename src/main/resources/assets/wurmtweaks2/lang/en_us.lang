@@ -33,3 +33,5 @@ item.mechanicalComponent.name=Mechanical Component
 item.nanoTech.name=Nano Tech
 item.solarPanel.name=Solar Panel
 item.thruster.name=Thruster
+item.flintChunk.name=Flint Chunk
+item.flux.name=Flux

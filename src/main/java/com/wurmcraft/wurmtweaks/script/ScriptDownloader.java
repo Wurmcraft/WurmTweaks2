@@ -2,6 +2,9 @@ package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -39,11 +42,21 @@ public class ScriptDownloader {
 				wurmScript.init ();
 				downloadSlaveScripts ();
 				processSlaveScripts ();
+				if (WurmScript.reload) {
+					ForgeRegistry <IRecipe> recipeRegistry = (ForgeRegistry <IRecipe>) ForgeRegistries.RECIPES;
+					recipeRegistry.freeze ();
+					WurmScript.reload = false;
+				}
 			} catch (IOException e) {
 				LogHandler.info ("Unable To Load 'master.ws' from disk");
 			}
 		} else
 			LogHandler.info ("Failed to find master.ws");
+	}
+
+	public void reload () {
+		wurmScript.reload ();
+		init ();
 	}
 
 	private void downloadFile (String loc,String fileName) {
