@@ -31,5 +31,7 @@ public class ModSupport {
 			WurmScript.register (new IndustrialForegoing ());
 		if (Loader.isModLoaded ("nuclearcraft"))
 			WurmScript.register (new NuclearCraft ());
+		if (Loader.isModLoaded ("betterwithmods"))
+			WurmScript.register (new BetterWithMods ());
 	}
 }

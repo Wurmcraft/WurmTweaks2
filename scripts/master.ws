@@ -16,3 +16,4 @@ Calculator.ws
 ActuallyAdditions.ws
 IndustrialForegoing.ws
 NuclearCraft.ws
+BetterWithMods.ws

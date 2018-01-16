@@ -1,0 +1,5 @@
+addCauldron('<1xminecraft:apple@0> <1xminecraft:golden_apple@0> <1xminecraft:arrow@0>')
+addStokedCauldron('<1xminecraft:apple@0> <1xminecraft:golden_apple@0> <1xminecraft:arrow@0> <1xminecraft:arrow@0>')
+addCrucible('<1xminecraft:apple@0> <1xminecraft:golden_apple@0> <1xminecraft:arrow@0>')
+addStokedCrucible('<1xminecraft:apple@0> <1xminecraft:golden_apple@0> <1xminecraft:arrow@0> <1xminecraft:arrow@0>')
+addMill('<1xminecraft:iron_ingot@0> <1xminecraft:iron_ore@0> <1xwurmtweaks2:itemmeta@13>')
