@@ -42,6 +42,9 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_META_ITEM)
 	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux";
 
+	@Config.LangKey(Local.CONFIG_FILE_LOGGER)
+	public static boolean logToFile = true;
+
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID ().equals (Global.MODID)) {

@@ -4,6 +4,7 @@ public class Local {
 
 	// Config
 	public static final String CONFIG_DEBUG = "config.debug.name";
+	public static final String CONFIG_FILE_LOGGER = "config.debug.fileLogger";
 	public static final String CONFIG_REMOVE_ALL_CRAFTING_RECIPES = "config.removeAllCraftingRecipes.name";
 	public static final String CONFIG_REMOVE_ALL_FURNACE_RECIPES = "config.removeAllFurnaceRecipes.name";
 	public static final String CONFIG_COPYITEMNAME = "config.copyItemName.name";

@@ -1,5 +1,6 @@
 # Config
 config.debug.name=Enable / Disable Debug Mode
+config.debug.fileLogger=Enable / Disable logging WurmTweaks output to disk
 config.removeAllCraftingRecipes.name=Removes All Crafting Recipes
 config.removeAllFurnaceRecipes.name=Removes All Furnace Recipes
 config.copyItemName.name=Copy ItemName To Clipboard via /wt hand Command?
