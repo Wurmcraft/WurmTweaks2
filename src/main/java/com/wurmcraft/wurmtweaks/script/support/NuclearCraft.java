@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import nc.recipe.NCRecipes;
@@ -17,7 +18,17 @@ public class NuclearCraft implements IModSupport {
 
 	@Override
 	public void init () {
-		//				NCRecipes
+		if (ConfigHandler.removeAllRecipes) {
+			NCRecipes.PRESSURIZER_RECIPES.recipes.clear ();
+			NCRecipes.ISOTOPE_SEPARATOR_RECIPES.recipes.clear ();
+			NCRecipes.MANUFACTORY_RECIPES.recipes.clear ();
+			NCRecipes.ALLOY_FURNACE_RECIPES.recipes.clear ();
+			NCRecipes.CHEMICAL_REACTOR_RECIPES.recipes.clear ();
+			NCRecipes.SUPERCOOLER_RECIPES.recipes.clear ();
+			NCRecipes.INFUSER_RECIPES.recipes.clear ();
+			NCRecipes.INGOT_FORMER_RECIPES.recipes.clear ();
+			NCRecipes.MELTER_RECIPES.recipes.clear ();
+		}
 	}
 
 	@ScriptFunction

@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.block.IGrowable;
@@ -22,6 +23,8 @@ public class SonarCore implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes)
+			sonar.core.SonarCore.fertilisers.getObjects ().clear ();
 	}
 
 	@ScriptFunction

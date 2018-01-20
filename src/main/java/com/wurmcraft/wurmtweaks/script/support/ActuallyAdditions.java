@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
@@ -19,6 +20,15 @@ public class ActuallyAdditions implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			ActuallyAdditionsAPI.CRUSHER_RECIPES.clear ();
+			ActuallyAdditionsAPI.TREASURE_CHEST_LOOT.clear ();
+			ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES.clear ();
+			ActuallyAdditionsAPI.EMPOWERER_RECIPES.clear ();
+			ActuallyAdditionsAPI.COMPOST_RECIPES.clear ();
+			ActuallyAdditionsAPI.STONE_ORES.clear ();
+			ActuallyAdditionsAPI.NETHERRACK_ORES.clear ();
+		}
 	}
 
 	@ScriptFunction

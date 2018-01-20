@@ -3,8 +3,8 @@ package com.wurmcraft.wurmtweaks.script.support;
 import blusunrize.immersiveengineering.api.crafting.*;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -21,6 +21,17 @@ public class ImmersiveEngineering implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			AlloyRecipe.recipeList.clear ();
+			ArcFurnaceRecipe.recipeList.clear ();
+			BlastFurnaceRecipe.recipeList.clear ();
+			CokeOvenRecipe.recipeList.clear ();
+			CrusherRecipe.recipeList.clear ();
+			FermenterRecipe.recipeList.clear ();
+			MetalPressRecipe.recipeList.clear ();
+			RefineryRecipe.recipeList.clear ();
+			SqueezerRecipe.recipeList.clear ();
+		}
 	}
 
 	@ScriptFunction

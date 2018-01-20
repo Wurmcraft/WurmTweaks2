@@ -4,6 +4,7 @@ import com.rwtema.extrautils2.api.machine.XUMachineCrusher;
 import com.rwtema.extrautils2.tile.TileResonator;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,11 @@ public class ExtraUtils2 implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			TileResonator.resonatorRecipes.clear ();
+			while (XUMachineCrusher.INSTANCE.recipes_registry.iterator ().hasNext ())
+				XUMachineCrusher.INSTANCE.recipes_registry.removeRecipe (XUMachineCrusher.INSTANCE.recipes_registry.iterator ().next ());
+		}
 	}
 
 	@ScriptFunction

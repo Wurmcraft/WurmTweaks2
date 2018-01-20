@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
@@ -12,6 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import reborncore.api.recipe.RecipeHandler;
+import techreborn.api.RollingMachineRecipe;
 import techreborn.api.ScrapboxList;
 import techreborn.api.TechRebornAPI;
 import techreborn.api.generator.EFluidGenerator;
@@ -33,6 +35,12 @@ public class TechReborn implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			RollingMachineRecipe.instance.getRecipeList ().clear ();
+			ScrapboxList.stacks.clear ();
+			FusionReactorRecipeHelper.reactorRecipes.clear ();
+			RecipeHandler.recipeList.clear ();
+		}
 	}
 
 

@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import mekanism.api.MekanismAPI;
@@ -9,6 +10,7 @@ import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
 import mekanism.api.infuse.InfuseRegistry;
 import mekanism.api.infuse.InfuseType;
+import mekanism.common.recipe.RecipeHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -23,7 +25,26 @@ public class Mekanism implements IModSupport {
 
 	@Override
 	public void init () {
-
+		if (ConfigHandler.removeAllRecipes) {
+			RecipeHandler.Recipe.CHEMICAL_CRYSTALLIZER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_DISSOLUTION_CHAMBER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_INFUSER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_INJECTION_CHAMBER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_OXIDIZER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_WASHER.get ().clear ();
+			RecipeHandler.Recipe.COMBINER.get ().clear ();
+			RecipeHandler.Recipe.CRUSHER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_WASHER.get ().clear ();
+			RecipeHandler.Recipe.CHEMICAL_OXIDIZER.get ().clear ();
+			RecipeHandler.Recipe.ENERGIZED_SMELTER.get ().clear ();
+			RecipeHandler.Recipe.ENRICHMENT_CHAMBER.get ().clear ();
+			RecipeHandler.Recipe.PURIFICATION_CHAMBER.get ().clear ();
+			RecipeHandler.Recipe.PRECISION_SAWMILL.get ().clear ();
+			RecipeHandler.Recipe.METALLURGIC_INFUSER.get ().clear ();
+			RecipeHandler.Recipe.THERMAL_EVAPORATION_PLANT.get ().clear ();
+			RecipeHandler.Recipe.SOLAR_NEUTRON_ACTIVATOR.get ().clear ();
+			RecipeHandler.Recipe.OSMIUM_COMPRESSOR.get ().clear ();
+		}
 	}
 
 	@ScriptFunction

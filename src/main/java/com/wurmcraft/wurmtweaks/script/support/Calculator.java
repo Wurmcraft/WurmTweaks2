@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,22 @@ public class Calculator implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			AlgorithmSeparatorRecipes.instance ().getRecipes ().clear ();
+			AtomicCalculatorRecipes.instance ().getRecipes ().clear ();
+			CalculatorRecipes.instance ().getRecipes ().clear ();
+			ConductorMastRecipes.instance ().getRecipes ().clear ();
+			ExtractionChamberRecipes.instance ().getRecipes ().clear ();
+			FabricationChamberRecipes.instance ().getRecipes ().clear ();
+			FlawlessCalculatorRecipes.instance ().getRecipes ().clear ();
+			HealthProcessorRecipes.instance ().getRecipes ().clear ();
+			PrecisionChamberRecipes.instance ().getRecipes ().clear ();
+			ScientificRecipes.instance ().getRecipes ().clear ();
+			StoneSeparatorRecipes.instance ().getRecipes ().clear ();
+			ProcessingChamberRecipes.instance ().getRecipes ().clear ();
+			RestorationChamberRecipes.instance ().getRecipes ().clear ();
+			ReassemblyChamberRecipes.instance ().getRecipes ().clear ();
+		}
 	}
 
 	@ScriptFunction
@@ -260,5 +277,56 @@ public class Calculator implements IModSupport {
 				WurmScript.info ("Invalid Stack '" + input[0] + "'");
 		} else
 			WurmScript.info ("addStoneSeperator('<output> <input> <input2>')");
+	}
+
+	@ScriptFunction
+	public void addProcessingChamber (String line) {
+		String[] input = line.split (" ");
+		if (input.length == 2) {
+			ItemStack output = StackHelper.convert (input[0],null);
+			if (output != ItemStack.EMPTY) {
+				ItemStack inputStack = StackHelper.convert (input[1],null);
+				if (inputStack != ItemStack.EMPTY) {
+					ProcessingChamberRecipes.instance ().addRecipe (output,input);
+				} else
+					WurmScript.info ("Invalid Input '" + input[1] + "'");
+			} else
+				WurmScript.info ("Invalid Output '" + input[0] + "'");
+		} else
+			WurmScript.info ("addProcessingChamber('<output> <input')");
+	}
+
+	@ScriptFunction
+	public void addRestorationChamber (String line) {
+		String[] input = line.split (" ");
+		if (input.length == 2) {
+			ItemStack output = StackHelper.convert (input[0],null);
+			if (output != ItemStack.EMPTY) {
+				ItemStack inputStack = StackHelper.convert (input[1],null);
+				if (inputStack != ItemStack.EMPTY) {
+					RestorationChamberRecipes.instance ().addRecipe (output,input);
+				} else
+					WurmScript.info ("Invalid Input '" + input[1] + "'");
+			} else
+				WurmScript.info ("Invalid Output '" + input[0] + "'");
+		} else
+			WurmScript.info ("addRestorationChamber('<output> <input')");
+	}
+
+	@ScriptFunction
+	public void addReassemblyChamber (String line) {
+		String[] input = line.split (" ");
+		if (input.length == 2) {
+			ItemStack output = StackHelper.convert (input[0],null);
+			if (output != ItemStack.EMPTY) {
+				ItemStack inputStack = StackHelper.convert (input[1],null);
+				if (inputStack != ItemStack.EMPTY) {
+					ReassemblyChamberRecipes.instance ().addRecipe (output,input);
+				} else
+					WurmScript.info ("Invalid Input '" + input[1] + "'");
+			} else
+				WurmScript.info ("Invalid Output '" + input[0] + "'");
+		} else
+			WurmScript.info ("addReassemblyChamber('<output> <input')");
 	}
 }

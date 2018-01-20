@@ -25,10 +25,10 @@ public class ConfigHandler {
 	public static boolean debug = false;
 
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_CRAFTING_RECIPES)
-	public static boolean removeAllCraftingRecipes = true;
+	public static boolean removeAllCraftingRecipes = false;
 
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_FURNACE_RECIPES)
-	public static boolean removeAllFurnaceRecipes = true;
+	public static boolean removeAllFurnaceRecipes = false;
 
 	@Config.LangKey (Local.CONFIG_COPYITEMNAME)
 	public static boolean copyItemName = true;
@@ -40,10 +40,13 @@ public class ConfigHandler {
 	public static boolean checkForRecipeUpdates = true;
 
 	@Config.LangKey (Local.CONFIG_META_ITEM)
-	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux";
+	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux, rawSteelIngot, machineFramework, quarryCore, mortar";
 
-	@Config.LangKey(Local.CONFIG_FILE_LOGGER)
+	@Config.LangKey (Local.CONFIG_FILE_LOGGER)
 	public static boolean logToFile = true;
+
+	@Config.LangKey (Local.CONFIG_REMOVE_ALL)
+	public static boolean removeAllRecipes = false;
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -55,8 +58,9 @@ public class ConfigHandler {
 
 	public static void handleLateConfigSettings () {
 		if (removeAllCraftingRecipes)
-			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ())
+			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ()) {
 				ForgeRegistries.RECIPES.register (new InvalidRecipe (recipe));
+			}
 		if (removeAllFurnaceRecipes)
 			FurnaceRecipes.instance ().getSmeltingList ().clear ();
 	}

@@ -7,6 +7,7 @@ import com.buuz135.industrial.api.recipe.ProteinReactorEntry;
 import com.buuz135.industrial.api.recipe.SludgeEntry;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,12 @@ public class IndustrialForegoing implements IModSupport {
 
 	@Override
 	public void init () {
-
+		if (ConfigHandler.removeAllRecipes) {
+			BioReactorEntry.BIO_REACTOR_ENTRIES.clear ();
+			SludgeEntry.SLUDGE_RECIPES.clear ();
+			ProteinReactorEntry.PROTEIN_REACTOR_ENTRIES.clear ();
+			LaserDrillEntry.LASER_DRILL_ENTRIES.clear ();
+		}
 	}
 
 	@ScriptFunction

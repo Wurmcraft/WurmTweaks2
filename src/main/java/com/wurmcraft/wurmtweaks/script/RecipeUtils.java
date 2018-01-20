@@ -9,11 +9,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,14 +25,14 @@ public class RecipeUtils {
 
 	public static void addShapeless (ItemStack output,Ingredient... inputItems) {
 		ShapelessOreRecipe recipe = new ShapelessOreRecipe (RECIPE_GROUP,output,inputItems);
-		recipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName ()));
+		recipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (inputItems)));
 		ForgeRegistries.RECIPES.register (recipe);
 		activeRecipes.add (recipe);
 	}
 
 	public static void addShaped (ItemStack output,Object... recipe) {
 		ShapedOreRecipe shapedRecipe = new ShapedOreRecipe (RECIPE_GROUP,output,recipe);
-		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5)));
+		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (recipe)));
 		ForgeRegistries.RECIPES.register (shapedRecipe);
 		activeRecipes.add (shapedRecipe);
 	}

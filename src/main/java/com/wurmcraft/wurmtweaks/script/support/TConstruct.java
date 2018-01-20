@@ -2,20 +2,18 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
-import com.wurmcraft.wurmtweaks.reference.Global;
-import com.wurmcraft.wurmtweaks.reference.Local;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.LogHandler;
-import com.wurmcraft.wurmtweaks.utils.ReflectionHelper;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.DryingRecipe;
 import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
+import slimeknights.tconstruct.library.smeltery.ICastingRecipe;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
 import java.lang.reflect.Field;
@@ -31,7 +29,29 @@ public class TConstruct implements IModSupport {
 	}
 
 	@Override
-	public void init () { }
+	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			try {
+				Field tableCasting = TinkerRegistry.class.getDeclaredField ("tableCastRegistry");
+				tableCasting.setAccessible (true);
+				((List <ICastingRecipe>) tableCasting.get (TinkerRegistry.getAllTableCastingRecipes ())).clear ();
+				Field melting = TinkerRegistry.class.getDeclaredField ("meltingRegistry");
+				melting.setAccessible (true);
+				((List <MeltingRecipe>) melting.get (TinkerRegistry.getAllMeltingRecipies ())).clear ();
+				Field basinCast = TinkerRegistry.class.getDeclaredField ("basinCastRegistry");
+				basinCast.setAccessible (true);
+				((List <ICastingRecipe>) basinCast.get (TinkerRegistry.getAllBasinCastingRecipes ())).clear ();
+				Field alloy = TinkerRegistry.class.getDeclaredField ("alloyRegistry");
+				alloy.setAccessible (true);
+				((List <AlloyRecipe>) alloy.get (TinkerRegistry.getAlloys ())).clear ();
+				Field drying = TinkerRegistry.class.getDeclaredField ("dryingRegistry");
+				drying.setAccessible (true);
+				((List <DryingRecipe>) drying.get (TinkerRegistry.getAllDryingRecipes ())).clear ();
+			} catch (IllegalAccessException | NoSuchFieldException e) {
+				e.printStackTrace ();
+			}
+		}
+	}
 
 	@ScriptFunction
 	public void addCasting (String line) {

@@ -2,8 +2,10 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.brandon3055.draconicevolution.api.fusioncrafting.FusionRecipeAPI;
 import com.brandon3055.draconicevolution.api.fusioncrafting.SimpleFusionRecipe;
+import com.brandon3055.draconicevolution.lib.RecipeManager;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,8 @@ public class DraconicEvolution implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes)
+			RecipeManager.FUSION_REGISTRY.getRecipes ().clear ();
 	}
 
 	@ScriptFunction

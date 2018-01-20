@@ -12,7 +12,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
-import net.minecraftforge.fml.common.asm.transformers.ItemStackTransformer;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -39,8 +38,7 @@ public class StackHelper {
 						LogHandler.info ("Invalid NBT '" + item.substring (item.indexOf ("^") + 1,item.length () - 1) + "'" + " for the item '" + item + "'");
 					}
 				return new IngredientHelper (stack);
-			} else
-				LogHandler.info ("Invalid Item '" + validItem + "'");
+			}
 		}
 		return Ingredient.EMPTY;
 	}

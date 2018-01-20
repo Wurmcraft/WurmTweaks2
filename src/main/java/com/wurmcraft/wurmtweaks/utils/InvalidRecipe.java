@@ -57,4 +57,10 @@ public class InvalidRecipe implements IRecipe {
 	public Class <IRecipe> getRegistryType () {
 		return oldRecipe.getRegistryType ();
 	}
+
+	// TODO Add this to every recipe to avoid having to override RecipeBook
+	@Override
+	public boolean isDynamic () {
+		return true;
+	}
 }

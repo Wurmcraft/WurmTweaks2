@@ -6,6 +6,7 @@ import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_res.VMRes;
 import com.valkyrieofnight.valkyrielib.lib.stack.WeightedItemStack;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,44 @@ public class EnvironmentalTech implements IModSupport {
 
 	@Override
 	public void init () {
+		if (ConfigHandler.removeAllRecipes) {
+			VMBotanic.getInstance ().T1.getList ().clear ();
+			VMBotanic.getInstance ().T1.getTargeters ().clear ();
+			VMBotanic.getInstance ().T2.getList ().clear ();
+			VMBotanic.getInstance ().T2.getTargeters ().clear ();
+			VMBotanic.getInstance ().T3.getList ().clear ();
+			VMBotanic.getInstance ().T3.getTargeters ().clear ();
+			VMBotanic.getInstance ().T4.getList ().clear ();
+			VMBotanic.getInstance ().T4.getTargeters ().clear ();
+			VMBotanic.getInstance ().T5.getList ().clear ();
+			VMBotanic.getInstance ().T5.getTargeters ().clear ();
+			VMBotanic.getInstance ().T6.getList ().clear ();
+			VMBotanic.getInstance ().T6.getTargeters ().clear ();
+			VMRes.getInstance ().T1.getList ().clear ();
+			VMRes.getInstance ().T1.getTargeters ().clear ();
+			VMRes.getInstance ().T2.getList ().clear ();
+			VMRes.getInstance ().T2.getTargeters ().clear ();
+			VMRes.getInstance ().T3.getList ().clear ();
+			VMRes.getInstance ().T3.getTargeters ().clear ();
+			VMRes.getInstance ().T4.getList ().clear ();
+			VMRes.getInstance ().T4.getTargeters ().clear ();
+			VMRes.getInstance ().T5.getList ().clear ();
+			VMRes.getInstance ().T5.getTargeters ().clear ();
+			VMRes.getInstance ().T6.getList ().clear ();
+			VMRes.getInstance ().T6.getTargeters ().clear ();
+			VMOre.getInstance ().VOM_T1.getList ().clear ();
+			VMOre.getInstance ().VOM_T1.getTargeters ().clear ();
+			VMOre.getInstance ().VOM_T2.getList ().clear ();
+			VMOre.getInstance ().VOM_T2.getTargeters ().clear ();
+			VMOre.getInstance ().VOM_T3.getList ().clear ();
+			VMOre.getInstance ().VOM_T3.getTargeters ().clear ();
+			VMOre.getInstance ().VOM_T4.getList ().clear ();
+			VMOre.getInstance ().VOM_T4.getTargeters ().clear ();
+			VMOre.getInstance ().VOM_T5.getList ().clear ();
+			VMOre.getInstance ().VOM_T5.getTargeters ().clear ();
+			VMOre.getInstance ().VOM_T6.getList ().clear ();
+			VMOre.getInstance ().VOM_T6.getTargeters ().clear ();
+		}
 	}
 
 	// TODO Possible Cross- Mod Support
