@@ -20,7 +20,7 @@ public class Calculator implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			AlgorithmSeparatorRecipes.instance ().getRecipes ().clear ();
 			AtomicCalculatorRecipes.instance ().getRecipes ().clear ();
 			CalculatorRecipes.instance ().getRecipes ().clear ();

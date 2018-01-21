@@ -4,14 +4,10 @@ import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.reference.Local;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
-import com.wurmcraft.wurmtweaks.utils.ReflectionHelper;
-import net.minecraft.advancements.AdvancementList;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -45,8 +41,8 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_FILE_LOGGER)
 	public static boolean logToFile = true;
 
-	@Config.LangKey (Local.CONFIG_REMOVE_ALL)
-	public static boolean removeAllRecipes = false;
+	@Config.LangKey (Local.CONFIG_REMOVE_ALL_MACHINE_RECIPES)
+	public static boolean removeAllMachineRecipes = false;
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -63,20 +59,5 @@ public class ConfigHandler {
 			}
 		if (removeAllFurnaceRecipes)
 			FurnaceRecipes.instance ().getSmeltingList ().clear ();
-	}
-
-	@SubscribeEvent
-	public void onWorldLoad (WorldEvent.Load e) {
-		if (removeAllCraftingRecipes)
-			if (!e.getWorld ().isRemote)
-				emptyRecipeBook ((WorldServer) e.getWorld ());
-	}
-
-	public static void emptyRecipeBook (WorldServer world) {
-		try {
-			ReflectionHelper.setFinalStatic (world.getAdvancementManager ().getClass ().getDeclaredField ("ADVANCEMENT_LIST"),new AdvancementList ());
-		} catch (Exception f) {
-			f.printStackTrace ();
-		}
 	}
 }

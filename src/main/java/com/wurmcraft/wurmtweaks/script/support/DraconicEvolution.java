@@ -22,7 +22,7 @@ public class DraconicEvolution implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes)
+		if (ConfigHandler.removeAllMachineRecipes)
 			RecipeManager.FUSION_REGISTRY.getRecipes ().clear ();
 	}
 

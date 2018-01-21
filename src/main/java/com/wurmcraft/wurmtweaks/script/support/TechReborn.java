@@ -35,7 +35,7 @@ public class TechReborn implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			RollingMachineRecipe.instance.getRecipeList ().clear ();
 			ScrapboxList.stacks.clear ();
 			FusionReactorRecipeHelper.reactorRecipes.clear ();

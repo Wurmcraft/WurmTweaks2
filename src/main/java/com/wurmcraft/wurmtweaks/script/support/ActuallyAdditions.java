@@ -20,7 +20,7 @@ public class ActuallyAdditions implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			ActuallyAdditionsAPI.CRUSHER_RECIPES.clear ();
 			ActuallyAdditionsAPI.TREASURE_CHEST_LOOT.clear ();
 			ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES.clear ();

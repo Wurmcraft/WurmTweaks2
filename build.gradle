@@ -48,6 +48,7 @@ repositories {
 	maven {url "http://maven.shadowfacts.net/"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2517/776/[module]-[revision]--${mc_version}.[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2516/240/[module]-1.12-[revision].[ext]"}
+	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2508/832/[module]-${mc_version}-[revision].[ext]"}
 }
 
 dependencies {
@@ -72,6 +73,7 @@ dependencies {
 	compile group: "net.shadowfacts", name: "Forgelin", version: "1.6.0"
 	compile name: 'NuclearCraft', version: "${nuclearcraft_version}", ext: 'jar'
 	compile name: 'BetterWithMods', version: "${betterwithmods_version}", ext: 'jar'
+	compile name: 'AbyssalCraft', version: "${abyssalcraft_version}", ext: 'jar'
 }
 
 processResources {

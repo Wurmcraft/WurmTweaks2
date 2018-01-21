@@ -21,7 +21,7 @@ public class ImmersiveEngineering implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			AlloyRecipe.recipeList.clear ();
 			ArcFurnaceRecipe.recipeList.clear ();
 			BlastFurnaceRecipe.recipeList.clear ();

@@ -1,6 +1,8 @@
 package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.reference.Global;
+import com.wurmcraft.wurmtweaks.utils.DynamicShapedOreRecipe;
+import com.wurmcraft.wurmtweaks.utils.DynamicShapelessOreRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -9,8 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,14 +24,14 @@ public class RecipeUtils {
 	public static HashMap <ItemStack, ItemStack> activeFurnace = new HashMap <> ();
 
 	public static void addShapeless (ItemStack output,Ingredient... inputItems) {
-		ShapelessOreRecipe recipe = new ShapelessOreRecipe (RECIPE_GROUP,output,inputItems);
+		DynamicShapelessOreRecipe recipe = new DynamicShapelessOreRecipe (RECIPE_GROUP,output,inputItems);
 		recipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (inputItems)));
 		ForgeRegistries.RECIPES.register (recipe);
 		activeRecipes.add (recipe);
 	}
 
 	public static void addShaped (ItemStack output,Object... recipe) {
-		ShapedOreRecipe shapedRecipe = new ShapedOreRecipe (RECIPE_GROUP,output,recipe);
+		DynamicShapedOreRecipe shapedRecipe = new DynamicShapedOreRecipe (RECIPE_GROUP,output,recipe);
 		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (recipe)));
 		ForgeRegistries.RECIPES.register (shapedRecipe);
 		activeRecipes.add (shapedRecipe);

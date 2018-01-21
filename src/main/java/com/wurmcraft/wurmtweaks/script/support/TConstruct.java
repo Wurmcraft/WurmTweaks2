@@ -30,7 +30,7 @@ public class TConstruct implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			try {
 				Field tableCasting = TinkerRegistry.class.getDeclaredField ("tableCastRegistry");
 				tableCasting.setAccessible (true);

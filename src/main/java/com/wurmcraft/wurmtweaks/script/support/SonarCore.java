@@ -23,7 +23,7 @@ public class SonarCore implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes)
+		if (ConfigHandler.removeAllMachineRecipes)
 			sonar.core.SonarCore.fertilisers.getObjects ().clear ();
 	}
 

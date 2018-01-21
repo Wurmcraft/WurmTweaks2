@@ -37,7 +37,7 @@ public class BetterWithMods implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			SawManager.WOOD_SAW.getRecipes ().clear ();
 			SawManager.STEEL_SAW.getRecipes ().clear ();
 			CauldronManager.getInstance ().getRecipes ().clear ();

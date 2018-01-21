@@ -6,7 +6,7 @@ config.removeAllFurnaceRecipes.name=Removes All Furnace Recipes
 config.copyItemName.name=Copy ItemName To Clipboard via /wt hand Command?
 config.masterScript.name=URL For Master.js (Master Script)
 config.recipeUpdates.name=Check For Script Updates
-config.removeAll.name=Remove All Recipes
+config.removeAllMachineRecipes.name=Remove All Machine Recipes
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!

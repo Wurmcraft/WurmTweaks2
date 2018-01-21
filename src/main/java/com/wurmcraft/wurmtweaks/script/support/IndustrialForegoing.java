@@ -21,7 +21,7 @@ public class IndustrialForegoing implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			BioReactorEntry.BIO_REACTOR_ENTRIES.clear ();
 			SludgeEntry.SLUDGE_RECIPES.clear ();
 			ProteinReactorEntry.PROTEIN_REACTOR_ENTRIES.clear ();

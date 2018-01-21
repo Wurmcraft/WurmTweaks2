@@ -18,7 +18,7 @@ public class ExtraUtils2 implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			TileResonator.resonatorRecipes.clear ();
 			while (XUMachineCrusher.INSTANCE.recipes_registry.iterator ().hasNext ())
 				XUMachineCrusher.INSTANCE.recipes_registry.removeRecipe (XUMachineCrusher.INSTANCE.recipes_registry.iterator ().next ());

@@ -18,7 +18,7 @@ public class NuclearCraft implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			NCRecipes.PRESSURIZER_RECIPES.recipes.clear ();
 			NCRecipes.ISOTOPE_SEPARATOR_RECIPES.recipes.clear ();
 			NCRecipes.MANUFACTORY_RECIPES.recipes.clear ();

@@ -33,5 +33,7 @@ public class ModSupport {
 			WurmScript.register (new NuclearCraft ());
 		if (Loader.isModLoaded ("betterwithmods"))
 			WurmScript.register (new BetterWithMods ());
+		if (Loader.isModLoaded ("abyssalcraft"))
+			WurmScript.register (new AbyssalCraft ());
 	}
 }

@@ -17,3 +17,4 @@ ActuallyAdditions.ws
 IndustrialForegoing.ws
 NuclearCraft.ws
 BetterWithMods.ws
+AbyssalCraft.ws

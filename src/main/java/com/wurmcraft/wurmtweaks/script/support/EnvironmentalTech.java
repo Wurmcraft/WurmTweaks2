@@ -21,7 +21,7 @@ public class EnvironmentalTech implements IModSupport {
 
 	@Override
 	public void init () {
-		if (ConfigHandler.removeAllRecipes) {
+		if (ConfigHandler.removeAllMachineRecipes) {
 			VMBotanic.getInstance ().T1.getList ().clear ();
 			VMBotanic.getInstance ().T1.getTargeters ().clear ();
 			VMBotanic.getInstance ().T2.getList ().clear ();

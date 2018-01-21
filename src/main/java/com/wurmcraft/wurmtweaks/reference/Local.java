@@ -11,7 +11,7 @@ public class Local {
 	public static final String CONFIG_MASTER_SCRIPT = "config.masterScript.name";
 	public static final String CONFIG_RECIPE_UPDATES = "config.recipeUpdates.name";
 	public static final String CONFIG_META_ITEM = "config.metaItem.name";
-	public static final String CONFIG_REMOVE_ALL = "config.removeAll.name";
+	public static final String CONFIG_REMOVE_ALL_MACHINE_RECIPES = "config.removeAllMachineRecipes.name";
 
 	// Command
 	public static final String REQUIRES_PLAYER = "info.requiresPlayer.name";
