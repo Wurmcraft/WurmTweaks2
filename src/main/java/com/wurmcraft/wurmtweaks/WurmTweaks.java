@@ -5,6 +5,7 @@ import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.command.WTCommand;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.common.items.WTItems;
+import com.wurmcraft.wurmtweaks.common.network.NetworkHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
@@ -36,6 +37,7 @@ public class WurmTweaks {
 	@Mod.EventHandler
 	public void init (FMLInitializationEvent e) {
 		proxy.init ();
+		NetworkHandler.registerPackets ();
 	}
 
 	@Mod.EventHandler

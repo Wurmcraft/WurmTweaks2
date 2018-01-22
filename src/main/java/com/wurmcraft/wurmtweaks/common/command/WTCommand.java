@@ -2,12 +2,15 @@ package com.wurmcraft.wurmtweaks.common.command;
 
 import com.wurmcraft.wurmtweaks.WurmTweaks;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
+import com.wurmcraft.wurmtweaks.common.network.NetworkHandler;
+import com.wurmcraft.wurmtweaks.common.network.msg.CopyMessage;
 import com.wurmcraft.wurmtweaks.reference.Local;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import joptsimple.internal.Strings;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
@@ -15,9 +18,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,21 +78,17 @@ public class WTCommand extends CommandBase {
 			if (player.getHeldItemMainhand () != ItemStack.EMPTY) {
 				String item = StackHelper.convert (player.getHeldItemMainhand ());
 				List <String> oreEntrys = new ArrayList <> ();
-				for (int id : OreDictionary.getOreIDs (player.getHeldItemMainhand ()))
-					oreEntrys.add (OreDictionary.getOreName (id));
+				if (!player.getHeldItemMainhand ().isEmpty ())
+					for (int id : OreDictionary.getOreIDs (player.getHeldItemMainhand ()))
+						oreEntrys.add (OreDictionary.getOreName (id));
 				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item).replaceAll ("'",TextFormatting.RED + "'")));
-				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + Strings.join (oreEntrys,",")).replaceAll ("'",TextFormatting.RED + "'")));
-				if (ConfigHandler.copyItemName && player.world.isRemote)
-					addToClipboard (item);
+				if (!player.getHeldItemMainhand ().isEmpty ())
+					player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + Strings.join (oreEntrys,",")).replaceAll ("'",TextFormatting.RED + "'")));
+				if (ConfigHandler.copyItemName)
+					NetworkHandler.sendTo (new CopyMessage (item),(EntityPlayerMP) player);
 			} else
 				sender.sendMessage (new TextComponentString (TextFormatting.RED + I18n.translateToLocal (Local.EMPTY_HAND)));
 		} else
 			sender.sendMessage (new TextComponentString (TextFormatting.RED + I18n.translateToLocal (Local.REQUIRES_PLAYER)));
-	}
-
-	private void addToClipboard (String text) {
-		StringSelection sel = new StringSelection (text);
-		Clipboard board = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-		board.setContents (sel,sel);
 	}
 }
