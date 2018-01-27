@@ -20,7 +20,8 @@ import java.util.List;
 
 public class StackHelper {
 
-	public static Ingredient convert (String item) {
+	public static Ingredient convert (String input) {
+		String item = input.replaceAll ("_"," ");
 		boolean isOreEntry = isOreDictionaryEntry (item);
 		if (isOreEntry)
 			return new IngredientHelper (OreDictionary.getOres (item.substring (1,item.length () - 1)).toArray (new ItemStack[0]));
@@ -44,7 +45,7 @@ public class StackHelper {
 	}
 
 	public static ItemStack convert (String item,Void empty) {
-		if(item.equalsIgnoreCase ("empty"))
+		if (item.equalsIgnoreCase ("empty"))
 			return ItemStack.EMPTY;
 		Ingredient ingredient = convert (item);
 		if (ingredient.getMatchingStacks ().length > 0)
@@ -73,7 +74,7 @@ public class StackHelper {
 	}
 
 	public static String convert (ItemStack stack) {
-		if (stack.getItem () instanceof ItemBucket || stack.getItem () == ForgeModContainer.getInstance().universalBucket) {
+		if (stack.getItem () instanceof ItemBucket || stack.getItem () == ForgeModContainer.getInstance ().universalBucket) {
 			FluidStack fluid = new FluidBucketWrapper (stack).getFluid ();
 			return convert (fluid);
 		}
@@ -89,7 +90,7 @@ public class StackHelper {
 
 	public static FluidStack convertToFluid (String fluidStack) {
 		if (fluidStack.startsWith ("<*")) {
-			int amount = Integer.parseInt (fluidStack.substring (fluidStack.indexOf ("<*")+2,fluidStack.indexOf ("x")));
+			int amount = Integer.parseInt (fluidStack.substring (fluidStack.indexOf ("<*") + 2,fluidStack.indexOf ("x")));
 			Fluid fluid = FluidRegistry.getFluid (fluidStack.substring (fluidStack.indexOf ("x") + 1,fluidStack.indexOf (">")));
 			if (fluid != null)
 				return new FluidStack (fluid,amount);
@@ -107,8 +108,8 @@ public class StackHelper {
 			ItemStack item = (ItemStack) stack;
 			String temp = "<" + item.getCount () + "x" + item.getItem ().getRegistryName ().getResourceDomain () + ":" + item.getItem ().getRegistryName ().getResourcePath () + "@" + ((ItemStack) stack).getItemDamage ();
 			if (item.hasTagCompound ())
-				return temp + "^" + item.getTagCompound () + ">";
-			return temp + ">";
+				return temp + "^" + item.getTagCompound () + ">".replaceAll (" ","_");
+			return temp + ">".replaceAll (" ","_");
 		}
 		return "'" + stack + "' is a Invalid / Empty Item!";
 	}
