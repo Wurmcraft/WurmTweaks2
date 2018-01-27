@@ -21,7 +21,7 @@ import java.util.List;
 public class StackHelper {
 
 	public static Ingredient convert (String input) {
-		String item = input.replaceAll ("_"," ");
+		String item = input.replaceAll ("%"," ");
 		boolean isOreEntry = isOreDictionaryEntry (item);
 		if (isOreEntry)
 			return new IngredientHelper (OreDictionary.getOres (item.substring (1,item.length () - 1)).toArray (new ItemStack[0]));
@@ -108,8 +108,8 @@ public class StackHelper {
 			ItemStack item = (ItemStack) stack;
 			String temp = "<" + item.getCount () + "x" + item.getItem ().getRegistryName ().getResourceDomain () + ":" + item.getItem ().getRegistryName ().getResourcePath () + "@" + ((ItemStack) stack).getItemDamage ();
 			if (item.hasTagCompound ())
-				return temp + "^" + item.getTagCompound () + ">".replaceAll (" ","_");
-			return temp + ">".replaceAll (" ","_");
+				return temp + "^" + item.getTagCompound () + ">".replaceAll (" ","%");
+			return temp + ">".replaceAll (" ","%");
 		}
 		return "'" + stack + "' is a Invalid / Empty Item!";
 	}
