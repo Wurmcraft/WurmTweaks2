@@ -76,7 +76,7 @@ public class WTCommand extends CommandBase {
 		if (sender.getCommandSenderEntity () instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 			if (player.getHeldItemMainhand () != ItemStack.EMPTY) {
-				String item = StackHelper.convert (player.getHeldItemMainhand ());
+				String item = StackHelper.convert (player.getHeldItemMainhand ()).replaceAll (" ","%");
 				List <String> oreEntrys = new ArrayList <> ();
 				if (!player.getHeldItemMainhand ().isEmpty ())
 					for (int id : OreDictionary.getOreIDs (player.getHeldItemMainhand ()))
