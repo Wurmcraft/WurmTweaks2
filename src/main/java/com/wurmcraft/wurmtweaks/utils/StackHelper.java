@@ -73,8 +73,8 @@ public class StackHelper {
 		return "A Unknown Error Has Occured With Ingredient Translation!";
 	}
 
-	public static String convert (ItemStack stack) {
-		if (stack.getItem () instanceof ItemBucket || stack.getItem () == ForgeModContainer.getInstance ().universalBucket) {
+	public static String convert (ItemStack stack,int bucketCheck) {
+		if (bucketCheck == 1 && stack.getItem () instanceof ItemBucket || bucketCheck == 1 && stack.getItem () == ForgeModContainer.getInstance ().universalBucket) {
 			FluidStack fluid = new FluidBucketWrapper (stack).getFluid ();
 			return convert (fluid);
 		}

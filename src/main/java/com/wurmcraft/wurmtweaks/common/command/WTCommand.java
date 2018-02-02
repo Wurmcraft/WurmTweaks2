@@ -11,11 +11,13 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -76,12 +78,14 @@ public class WTCommand extends CommandBase {
 		if (sender.getCommandSenderEntity () instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 			if (player.getHeldItemMainhand () != ItemStack.EMPTY) {
-				String item = StackHelper.convert (player.getHeldItemMainhand ()).replaceAll (" ","%");
+				String item = StackHelper.convert (player.getHeldItemMainhand (),0).replaceAll (" ","%");
 				List <String> oreEntrys = new ArrayList <> ();
 				if (!player.getHeldItemMainhand ().isEmpty ())
 					for (int id : OreDictionary.getOreIDs (player.getHeldItemMainhand ()))
 						oreEntrys.add (OreDictionary.getOreName (id));
 				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item).replaceAll ("'",TextFormatting.RED + "'")));
+				if (player.getHeldItemMainhand ().getItem () instanceof ItemBucket || player.getHeldItemMainhand ().getItem () == ForgeModContainer.getInstance ().universalBucket)
+					oreEntrys.add (StackHelper.convert (player.getHeldItemMainhand (),1));
 				if (!player.getHeldItemMainhand ().isEmpty ())
 					player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + Strings.join (oreEntrys,",")).replaceAll ("'",TextFormatting.RED + "'")));
 				if (ConfigHandler.copyItemName)
