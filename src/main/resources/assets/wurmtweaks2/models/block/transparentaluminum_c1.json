@@ -1,0 +1,13 @@
+{
+  "__comment": "Model for when only one side is connected.",
+  "parent": "block/cube",
+  "textures": {
+    "particle": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum0C",
+    "down": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum0C",
+    "up": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C",
+    "north": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum1C_u",
+    "south": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum1C_u",
+    "west": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum1C_u",
+    "east": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum1C_u"
+  }
+}

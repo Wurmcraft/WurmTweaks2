@@ -36,7 +36,7 @@ public class ConfigHandler {
 	public static boolean checkForRecipeUpdates = true;
 
 	@Config.LangKey (Local.CONFIG_META_ITEM)
-	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux, rawSteelIngot, machineFramework, quarryCore, mortar";
+	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux, rawSteelIngot, machineFramework, quarryCore, mortar, magicChunk, aerogel, hyperDiamond, metallicHydrogen, quantumFoam, quantumSingularity, mixedSheet, boneChunk, creativeParts, creativePartsEnergy, creativePartsMagic, advMachineFramework, computationalCore, engineCoil, natureCore, token, advCraftingParts, gearMixedSheet, darkMatter, redMatter, unstableMatter";
 
 	@Config.LangKey (Local.CONFIG_FILE_LOGGER)
 	public static boolean logToFile = true;

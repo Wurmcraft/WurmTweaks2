@@ -1,0 +1,13 @@
+{
+  "__comment": "Model for when three adjacent connected sides are a T shape.",
+  "parent": "block/cube",
+  "textures": {
+    "particle": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum0C",
+    "down": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C",
+    "up": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C",
+    "north": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum3C_ued",
+    "south": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum3C_uwd",
+    "west": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C",
+    "east": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum2C_ud"
+  }
+}

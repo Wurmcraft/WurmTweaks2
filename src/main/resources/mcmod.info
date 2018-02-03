@@ -2,7 +2,7 @@
 {
   "modid": "wurmtweaks2",
   "name": "WurmTweaks2",
-  "description": "A Mod Used to help modpack creators create recipes along with some unique features like Web Based Recipes",
+  "description": "A Mod Used to help modpack creators create recipes along with some unique features like Web Based Recipes and Custom Crafting Items",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/Wurmcraft/WurmTweaks2",

@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.client;
 
 import com.wurmcraft.wurmtweaks.common.CommonProxy;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
+import com.wurmcraft.wurmtweaks.common.block.WTBlocks;
 import com.wurmcraft.wurmtweaks.common.items.WTItems;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import net.minecraft.client.Minecraft;
@@ -57,5 +58,6 @@ public class ClientProxy extends CommonProxy {
 		String[] metaItems = ConfigHandler.metaItems.replaceAll (" ","").split (",");
 		for (int index = 0; index < metaItems.length; index++)
 			createModel (WTItems.itemMeta,index,metaItems[index]);
+		createModel (Item.getItemFromBlock (WTBlocks.transparentAluminum),0,"transparentAluminum");
 	}
 }

@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks;
 
 import com.wurmcraft.wurmtweaks.common.CommonProxy;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
+import com.wurmcraft.wurmtweaks.common.block.WTBlocks;
 import com.wurmcraft.wurmtweaks.common.command.WTCommand;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.common.items.WTItems;
@@ -31,6 +32,7 @@ public class WurmTweaks {
 	@Mod.EventHandler
 	public void preInit (FMLPreInitializationEvent e) {
 		WTItems.register ();
+		WTBlocks.register ();
 		proxy.preInit ();
 	}
 

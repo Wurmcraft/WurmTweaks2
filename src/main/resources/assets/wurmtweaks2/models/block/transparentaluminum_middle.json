@@ -1,0 +1,7 @@
+{
+  "__comment": "Model for when all sides are connected.",
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C"
+  }
+}

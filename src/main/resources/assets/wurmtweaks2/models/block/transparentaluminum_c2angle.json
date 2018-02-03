@@ -1,0 +1,13 @@
+{
+  "__comment": "Model for when two adgacent sides are connected.",
+  "parent": "block/cube",
+  "textures": {
+    "particle": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum0C",
+    "down": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum1C_e",
+    "up": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C",
+    "north": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum2C_uw",
+    "south": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum2C_ue",
+    "west": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum1C_u",
+    "east": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum4C"
+  }
+}
