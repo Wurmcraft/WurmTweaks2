@@ -91,7 +91,8 @@ public class WurmScript extends WurmTweaks2API {
 						scriptFunctions.put (method.getName (),new ScriptFunctionWrapper (controller,method));
 						if (method.getAnnotation (ScriptFunction.class).aliases ().length > 0)
 							for (String alt : method.getAnnotation (ScriptFunction.class).aliases ())
-								scriptFunctions.put (alt,new ScriptFunctionWrapper (controller,method));
+								if (alt.length () > 0)
+									scriptFunctions.put (alt,new ScriptFunctionWrapper (controller,method));
 					}
 			}
 	}
@@ -118,7 +119,7 @@ public class WurmScript extends WurmTweaks2API {
 					String linkedMachine = line.substring (0,line.indexOf ("('")).replaceAll ("add","").toLowerCase ();
 					Method[] methods = linkRegistry.getLinkedMachines (linkedMachine);
 					String[] recipes = linkRegistry.getLinkedMachinesRecipes (linkedMachine,line);
-					if (methods.length > 0 || recipes.length > 0)
+					if (methods.length > 0 && recipes.length > 0)
 						for (String ln : linkRegistry.getLinkedMachinesRecipes (linkedMachine,line))
 							engine.eval (ln,scriptFunctions);
 					else
