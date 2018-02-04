@@ -2,24 +2,19 @@ package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
-import joptsimple.internal.Strings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.GameData;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
@@ -28,22 +23,48 @@ import javax.script.SimpleBindings;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
-public class WurmScript {
+public class WurmScript extends WurmTweaks2API {
 
+	public static final char SPACER = '_';
+	public static final String SPACER_CHAR = "_";
 	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
 	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
-
 	public static Bindings scriptFunctions = null;
 	public static File currentScript = null;
 	public static int lineNo = 0;
-	public static final char SPACER = '_';
-	public static final String SPACER_CHAR = "_";
-	public static final List <IModSupport> activeControllers = new ArrayList <> ();
 	public static boolean reload = false;
+
+	public static void setCurrentScript (File currentScript) {
+		WurmScript.currentScript = currentScript;
+		lineNo = 1;
+	}
+
+	public static void info (String msg) {
+		LogHandler.script (getScriptName (),lineNo,msg);
+	}
+
+	public static String getScriptName () {
+		return currentScript != null ? currentScript.getName () : "Code.ws";
+	}
+
+	public static String[] removeComments (String[] withComments) {
+		List <String> without = new ArrayList <> ();
+		for (int x = 0; x < withComments.length; x++) {
+			if (withComments[x].startsWith ("//") || withComments[x].replaceAll (" ","").startsWith ("//"))
+				continue;
+			if (withComments[x].startsWith ("/*") || withComments[x].replaceAll (" ","").startsWith ("/*"))
+				for (int y = (x + 1); y < withComments.length; y++)
+					if (withComments[y].startsWith ("*/") || withComments[y].replaceAll (" ","").startsWith ("*/")) {
+						x = y + 1;
+						break;
+					}
+			without.add (withComments[x]);
+		}
+		return without.toArray (new String[0]);
+	}
 
 	public void init () {
 		if (scriptFunctions == null)
@@ -82,18 +103,6 @@ public class WurmScript {
 		RecipeUtils.activeFurnace.clear ();
 	}
 
-	public static void setCurrentScript (File currentScript) {
-		WurmScript.currentScript = currentScript;
-		lineNo = 1;
-	}
-
-	public static void register (IModSupport controller) {
-		if (!activeControllers.contains (controller))
-			activeControllers.add (controller);
-		else
-			LogHandler.info (controller.getModID () + " has already been registered!");
-	}
-
 	public void process (String line) {
 		if (!line.startsWith ("//") && line.length () > 0)
 			try {
@@ -108,30 +117,6 @@ public class WurmScript {
 			process (line);
 			lineNo++;
 		}
-	}
-
-	public static void info (String msg) {
-		LogHandler.script (getScriptName (),lineNo,msg);
-	}
-
-	public static String getScriptName () {
-		return currentScript != null ? currentScript.getName () : "Code.ws";
-	}
-
-	public static String[] removeComments (String[] withComments) {
-		List <String> without = new ArrayList <> ();
-		for (int x = 0; x < withComments.length; x++) {
-			if (withComments[x].startsWith ("//") || withComments[x].replaceAll (" ","").startsWith ("//"))
-				continue;
-			if (withComments[x].startsWith ("/*") || withComments[x].replaceAll (" ","").startsWith ("/*"))
-				for (int y = (x + 1); y < withComments.length; y++)
-					if (withComments[y].startsWith ("*/") || withComments[y].replaceAll (" ","").startsWith ("*/")) {
-						x = y + 1;
-						break;
-					}
-			without.add (withComments[x]);
-		}
-		return without.toArray (new String[0]);
 	}
 
 	public class AddBrewing implements Function <String, Void> {
