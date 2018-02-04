@@ -73,18 +73,16 @@ public class IndustrialForegoing implements IModSupport {
 			WurmScript.info ("addProteinReactor('<stack>')");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Ore-Gen Registry'?
-	@ScriptFunction
+	@ScriptFunction (link = "laser", linkSize = {3})
 	public void addLaser (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 3) {
 			try {
-				int colorMeta = Integer.parseInt (input[0]);
+				int weight = Integer.parseInt (input[0]);
 				ItemStack stack = StackHelper.convert (input[1],null);
 				if (stack != ItemStack.EMPTY) {
 					try {
-						int weight = Integer.parseInt (input[2]);
+						int colorMeta = Integer.parseInt (input[2]);
 						IndustrialForegoingHelper.addLaserDrillEntry (new LaserDrillEntry (colorMeta,stack,weight));
 					} catch (NumberFormatException f) {
 						WurmScript.info ("Invalid Number '" + input[2]);
@@ -95,6 +93,6 @@ public class IndustrialForegoing implements IModSupport {
 				WurmScript.info ("Invalid Number '" + input[0] + "'");
 			}
 		} else
-			WurmScript.info ("addLaser('<color> <stack> <weight>')");
+			WurmScript.info ("addLaser('<stack> <weight> <color>')");
 	}
 }

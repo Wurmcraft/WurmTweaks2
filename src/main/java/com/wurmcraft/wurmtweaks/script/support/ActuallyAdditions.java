@@ -96,9 +96,7 @@ public class ActuallyAdditions implements IModSupport {
 			WurmScript.info ("addReconstructor('<output> <input> <energy>')");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Macerator Registry'?
-	@ScriptFunction
+	@ScriptFunction (link = "crushing", linkSize = {4})
 	public void addAACrusher (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 4) {
@@ -125,9 +123,7 @@ public class ActuallyAdditions implements IModSupport {
 	}
 
 
-	// TODO Possible Cross- Mod Support
-	// 'Ore-Gen Registry'?
-	@ScriptFunction
+	@ScriptFunction (link = "laser", linkSize = {2})
 	public void addMiningLensStone (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 2) {
@@ -145,8 +141,6 @@ public class ActuallyAdditions implements IModSupport {
 			WurmScript.info ("addMiningLensStone('<oreDict> <weight>'))");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Ore-Gen Registry'?
 	@ScriptFunction
 	public void addMiningLensNether (String line) {
 		String[] input = line.split (" ");

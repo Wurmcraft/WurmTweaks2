@@ -540,9 +540,7 @@ public class TechReborn implements IModSupport {
 		}
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Macerator Registry'?
-	@ScriptFunction
+	@ScriptFunction (link = "crushing", linkSize = {4})
 	public void addGrinder (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 4) {
@@ -649,8 +647,6 @@ public class TechReborn implements IModSupport {
 			WurmScript.info ("addIndustrialElectrolyzer('<output> <output2> <output3> <output4> <input> <input2> <time> <euTick>')");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Macerator Registry'?
 	@ScriptFunction
 	public void addIndustrialGrinder (String line) {
 		String[] input = line.split (" ");

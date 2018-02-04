@@ -36,13 +36,16 @@ public class ConfigHandler {
 	public static boolean checkForRecipeUpdates = true;
 
 	@Config.LangKey (Local.CONFIG_META_ITEM)
-	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux, rawSteelIngot, machineFramework, quarryCore, mortar, magicChunk, aerogel, hyperDiamond, metallicHydrogen, quantumFoam, quantumSingularity, mixedSheet, boneChunk, creativeParts, creativePartsEnergy, creativePartsMagic, advMachineFramework, computationalCore, engineCoil, natureCore, token, advCraftingParts, gearMixedSheet, darkMatter, redMatter, unstableMatter";
+	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux, rawSteelIngot, machineFramework, quarryCore, mortar, magicChunk, aerogel, hyperDiamond, metallicHydrogen, quantumFoam, quantumSingularity, mixedSheet, boneChunk, creativeParts, creativePartsEnergy, creativePartsMagic, advMachineFramework, computationalCore, engineCoil, natureCore, token, advCraftingParts, gearMixedSheet, darkMatter, redMatter, unstableMatter, shielding";
 
 	@Config.LangKey (Local.CONFIG_FILE_LOGGER)
 	public static boolean logToFile = true;
 
 	@Config.LangKey (Local.CONFIG_REMOVE_ALL_MACHINE_RECIPES)
 	public static boolean removeAllMachineRecipes = false;
+
+	@Config.LangKey (Local.CONFIG_LINKED_MACHINES)
+	public static boolean linkedMachines = true;
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {

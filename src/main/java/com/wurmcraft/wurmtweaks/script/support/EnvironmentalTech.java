@@ -61,8 +61,6 @@ public class EnvironmentalTech implements IModSupport {
 		}
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Ore-Gen Registry'?
 	@ScriptFunction
 	public void addBotanicMiner (String line) {
 		String[] input = line.split (" ");
@@ -112,8 +110,6 @@ public class EnvironmentalTech implements IModSupport {
 			WurmScript.info ("addBotanicMiner('<stack> <weight> <tier> <color>)");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Ore-Gen' Registry
 	@ScriptFunction
 	public void addResourceMiner (String line) {
 		String[] input = line.split (" ");
@@ -163,19 +159,17 @@ public class EnvironmentalTech implements IModSupport {
 			WurmScript.info ("addResourceMiner('<stack> <weight> <tier> <color>)");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Ore-Gen' Registry
-	@ScriptFunction
+	@ScriptFunction (link = "laser", linkSize = {4})
 	public void addOreMiner (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 4) {
 			ItemStack stack = StackHelper.convert (input[0],null);
 			if (stack != ItemStack.EMPTY) {
 				try {
-					int weight = Integer.parseInt (input[1]);
+					int weight = Integer.parseInt (input[2]);
 					if (weight > 0) {
 						try {
-							int tier = Integer.parseInt (input[2]);
+							int tier = Integer.parseInt (input[1]);
 							if (tier > 0 && tier < 7) {
 								String color = input[3];
 								switch (tier) {
@@ -201,16 +195,16 @@ public class EnvironmentalTech implements IModSupport {
 							} else
 								WurmScript.info ("Number Must Be At Least 0 And A Maximum Of 7!");
 						} catch (NumberFormatException f) {
-							WurmScript.info ("Invalid Stack '" + input[2] + "'");
+							WurmScript.info ("Invalid Number '" + input[1] + "'");
 						}
 					} else
 						WurmScript.info ("Number Must Be Greater Than 0!");
 				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[0] + "'");
+					WurmScript.info ("Invalid Number '" + input[2] + "'");
 				}
 			} else
 				WurmScript.info ("Invalid Stack '" + input[0] + "'");
 		} else
-			WurmScript.info ("addOreMiner('<stack> <weight> <tier> <color>)");
+			WurmScript.info ("addOreMiner('<stack> <weight> <color> tier>)");
 	}
 }

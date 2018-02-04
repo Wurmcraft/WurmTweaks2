@@ -98,9 +98,7 @@ public class Mekanism implements IModSupport {
 			WurmScript.info ("addCombiner('<output> <input')");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Macerator Registry'?
-	@ScriptFunction
+	@ScriptFunction (link = "crushing", linkSize = {2})
 	public void addMCruser (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 2) {

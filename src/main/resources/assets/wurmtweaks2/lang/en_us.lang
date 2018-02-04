@@ -7,6 +7,7 @@ config.copyItemName.name=Copy ItemName To Clipboard via /wt hand Command?
 config.masterScript.name=URL For Master.js (Master Script)
 config.recipeUpdates.name=Check For Script Updates
 config.removeAllMachineRecipes.name=Remove All Machine Recipes
+config.linkedMachines.name=Linked Machines
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!
@@ -56,6 +57,7 @@ item.gearMixedSheet.name=Mixed Sheet Gear
 item.darkMatter.name=Dark Matter
 item.redMatter.name=Red Matter
 item.unstableMatter.name=Unstable Matter
+item.shielding.name=Shielding
 
 # Block
 tile.transparentAluminum.name=Transparent Aluminum

@@ -15,6 +15,17 @@ import java.lang.annotation.Target;
 public @interface ScriptFunction {
 
 	/**
+	 Allows for Machine Recipes to be grouped based on there function
+	 */
+	String link () default "";
+
+	/**
+	 Used by link to determine the recipe length
+	 1 for each set of possible input lengths
+	 */
+	int[] linkSize () default 0;
+
+	/**
 	 Only use to override IModSupport
 
 	 @see IModSupport

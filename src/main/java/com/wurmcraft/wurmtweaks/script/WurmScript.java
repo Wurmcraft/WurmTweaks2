@@ -3,6 +3,7 @@ package com.wurmcraft.wurmtweaks.script;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
@@ -36,6 +37,7 @@ public class WurmScript extends WurmTweaks2API {
 	public static File currentScript = null;
 	public static int lineNo = 0;
 	public static boolean reload = false;
+	protected LinkedRegistry linkRegistry = new LinkedRegistry ();
 
 	public static void setCurrentScript (File currentScript) {
 		WurmScript.currentScript = currentScript;
@@ -66,6 +68,10 @@ public class WurmScript extends WurmTweaks2API {
 		return without.toArray (new String[0]);
 	}
 
+	public static List <IModSupport> getActiveControllers () {
+		return activeControllers;
+	}
+
 	public void init () {
 		if (scriptFunctions == null)
 			scriptFunctions = new SimpleBindings ();
@@ -82,8 +88,10 @@ public class WurmScript extends WurmTweaks2API {
 				Method[] methods = controller.getClass ().getDeclaredMethods ();
 				for (Method method : methods)
 					if (method.getAnnotation (ScriptFunction.class) != null) {
-						scriptFunctions.put (method.getName ().toLowerCase (),new ScriptFunctionWrapper (controller,method));
 						scriptFunctions.put (method.getName (),new ScriptFunctionWrapper (controller,method));
+						if (method.getAnnotation (ScriptFunction.class).aliases ().length > 0)
+							for (String alt : method.getAnnotation (ScriptFunction.class).aliases ())
+								scriptFunctions.put (alt,new ScriptFunctionWrapper (controller,method));
 					}
 			}
 	}
@@ -106,7 +114,17 @@ public class WurmScript extends WurmTweaks2API {
 	public void process (String line) {
 		if (!line.startsWith ("//") && line.length () > 0)
 			try {
-				engine.eval (line,scriptFunctions);
+				if (ConfigHandler.linkedMachines) {
+					String linkedMachine = line.substring (0,line.indexOf ("('")).replaceAll ("add","").toLowerCase ();
+					Method[] methods = linkRegistry.getLinkedMachines (linkedMachine);
+					String[] recipes = linkRegistry.getLinkedMachinesRecipes (linkedMachine,line);
+					if (methods.length > 0 || recipes.length > 0)
+						for (String ln : linkRegistry.getLinkedMachinesRecipes (linkedMachine,line))
+							engine.eval (ln,scriptFunctions);
+					else
+						engine.eval (line,scriptFunctions);
+				} else
+					engine.eval (line,scriptFunctions);
 			} catch (Exception e) {
 				info (e.getLocalizedMessage ());
 			}

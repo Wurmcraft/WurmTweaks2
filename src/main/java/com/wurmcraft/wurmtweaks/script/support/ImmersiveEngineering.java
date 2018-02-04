@@ -170,9 +170,7 @@ public class ImmersiveEngineering implements IModSupport {
 			WurmScript.info ("addCokeOven('<output> <input> <time> <creosote>");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Macerator Registry'?
-	@ScriptFunction
+	@ScriptFunction (link = "crushing", linkSize = {3,5})
 	public void addCrusher (String line) {
 		String[] input = line.split (" ");
 		if (input.length >= 3) {

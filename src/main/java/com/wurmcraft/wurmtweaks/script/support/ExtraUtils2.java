@@ -50,10 +50,8 @@ public class ExtraUtils2 implements IModSupport {
 			WurmScript.info ("addResonator('<output> <input> <energy>')");
 	}
 
-	// TODO Possible Cross- Mod Support
-	// 'Macerator Registry'?
-	@ScriptFunction
-	public void addCrusher (String line) {
+	@ScriptFunction (link = "crushing", linkSize = {2,4})
+	public void addXUCrusher (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 2 || input.length == 4) {
 			ItemStack output = StackHelper.convert (input[0],null);

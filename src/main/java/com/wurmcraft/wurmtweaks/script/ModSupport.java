@@ -1,5 +1,6 @@
 package com.wurmcraft.wurmtweaks.script;
 
+import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
 import com.wurmcraft.wurmtweaks.script.support.*;
 import net.minecraftforge.fml.common.Loader;
 
@@ -8,32 +9,32 @@ public class ModSupport {
 	public static void init () {
 		WurmScript.register (new Minecraft ());
 		if (Loader.isModLoaded ("tconstruct"))
-			WurmScript.register (new TConstruct ());
+			WurmTweaks2API.register (new TConstruct ());
 		if (Loader.isModLoaded ("immersiveengineering"))
-			WurmScript.register (new ImmersiveEngineering ());
+			WurmTweaks2API.register (new ImmersiveEngineering ());
 		if (Loader.isModLoaded ("extrautils2"))
-			WurmScript.register (new ExtraUtils2 ());
+			WurmTweaks2API.register (new ExtraUtils2 ());
 		if (Loader.isModLoaded ("draconicevolution"))
-			WurmScript.register (new DraconicEvolution ());
+			WurmTweaks2API.register (new DraconicEvolution ());
 		if (Loader.isModLoaded ("environmentaltech"))
-			WurmScript.register (new EnvironmentalTech ());
+			WurmTweaks2API.register (new EnvironmentalTech ());
 		if (Loader.isModLoaded ("mekanism"))
-			WurmScript.register (new Mekanism ());
+			WurmTweaks2API.register (new Mekanism ());
 		if (Loader.isModLoaded ("techreborn"))
-			WurmScript.register (new TechReborn ());
+			WurmTweaks2API.register (new TechReborn ());
 		if (Loader.isModLoaded ("sonarcore"))
-			WurmScript.register (new SonarCore ());
+			WurmTweaks2API.register (new SonarCore ());
 		if (Loader.isModLoaded ("calculator"))
-			WurmScript.register (new Calculator ());
+			WurmTweaks2API.register (new Calculator ());
 		if (Loader.isModLoaded ("actuallyadditions"))
-			WurmScript.register (new ActuallyAdditions ());
+			WurmTweaks2API.register (new ActuallyAdditions ());
 		if (Loader.isModLoaded ("industrialforegoing"))
-			WurmScript.register (new IndustrialForegoing ());
+			WurmTweaks2API.register (new IndustrialForegoing ());
 		if (Loader.isModLoaded ("nuclearcraft"))
-			WurmScript.register (new NuclearCraft ());
+			WurmTweaks2API.register (new NuclearCraft ());
 		if (Loader.isModLoaded ("betterwithmods"))
-			WurmScript.register (new BetterWithMods ());
+			WurmTweaks2API.register (new BetterWithMods ());
 		if (Loader.isModLoaded ("abyssalcraft"))
-			WurmScript.register (new AbyssalCraft ());
+			WurmTweaks2API.register (new AbyssalCraft ());
 	}
 }
