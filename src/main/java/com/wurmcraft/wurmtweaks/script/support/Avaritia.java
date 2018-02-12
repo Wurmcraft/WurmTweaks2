@@ -2,55 +2,40 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
-import com.wurmcraft.wurmtweaks.script.RecipeUtils;
+import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
+import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import morph.avaritia.recipe.AvaritiaRecipeManager;
+import morph.avaritia.recipe.compressor.CompressorRecipe;
+import morph.avaritia.recipe.extreme.ExtremeShapedRecipe;
+import morph.avaritia.recipe.extreme.ExtremeShapelessRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Minecraft implements IModSupport {
+public class Avaritia implements IModSupport {
 
 	@Override
 	public String getModID () {
-		return "minecraft";
+		return "avaritia";
 	}
 
 	@Override
 	public void init () {
-
+		AvaritiaRecipeManager.EXTREME_RECIPES.clear ();
+		AvaritiaRecipeManager.COMPRESSOR_RECIPES.clear ();
 	}
 
 	@ScriptFunction
-	public void addShapeless (String line) {
-		String[] input = line.split (" ");
-		if (input.length > 1) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				List <Ingredient> inputStacks = new ArrayList <> ();
-				for (int index = 1; index < input.length; index++) {
-					Ingredient tempInput = StackHelper.convert (input[index]);
-					if (tempInput != Ingredient.EMPTY)
-						inputStacks.add (tempInput);
-					else
-						WurmScript.info ("Invalid Input '" + input[index] + "'");
-				}
-				if (inputStacks.size () > 0)
-					RecipeUtils.addShapeless (output,inputStacks.toArray (new Ingredient[0]));
-				else
-					WurmScript.info ("Invalid Recipe, No Items Found!");
-			} else
-				WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addShapeless('<output> <input(s)>...')");
-	}
-
-	@ScriptFunction
-	public void addShaped (String line) {
+	public void addShapedExtreme (String line) {
 		String[] input = line.split (" ");
 		int indexFirstVar = 1;
 		for (; indexFirstVar < input.length; indexFirstVar++) {
@@ -102,34 +87,57 @@ public class Minecraft implements IModSupport {
 					List <Object> finalRecipe = new ArrayList <> ();
 					finalRecipe.addAll (Arrays.asList (recipeStyle));
 					finalRecipe.addAll (temp);
-					RecipeUtils.addShaped (output,finalRecipe.toArray (new Object[0]));
+					ExtremeShapedRecipe recipe = new ExtremeShapedRecipe (output,CraftingHelper.parseShaped (finalRecipe.toArray (new Object[0])));
+					AvaritiaRecipeManager.EXTREME_RECIPES.put (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + recipe.hashCode ()),recipe);
 				}
 			} else
 				WurmScript.info ("Invalid Output '" + input[0] + "'");
 		} else
-			WurmScript.info ("addShaped(<output> <style> <format>");
+			WurmScript.info ("addShapedExtreme(<output> <style> <format>')");
 	}
 
 	@ScriptFunction
-	public void addFurnace (String line) {
+	public void addShapelessExtreme (String line) {
 		String[] input = line.split (" ");
-		if (input.length == 3) {
+		if (input.length > 1) {
 			ItemStack output = StackHelper.convert (input[0],null);
 			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						float exp = Float.parseFloat (input[2]);
-						RecipeUtils.addFurnace (output,inputStack,exp);
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
+				NonNullList <Ingredient> inputStacks = NonNullList.create ();
+				for (int index = 1; index < input.length; index++) {
+					Ingredient tempInput = StackHelper.convert (input[index]);
+					if (tempInput != Ingredient.EMPTY)
+						inputStacks.add (tempInput);
+					else
+						WurmScript.info ("Invalid Input '" + input[index] + "'");
+				}
+				if (inputStacks.size () > 0)
+					AvaritiaRecipeManager.EXTREME_RECIPES.put (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + inputStacks.hashCode ()),new ExtremeShapelessRecipe (inputStacks,output));
+				else
+					WurmScript.info ("Invalid Recipe, No Items Found!");
+			} else
+				WurmScript.info ("Invalid Output '" + input[0] + "'");
+		} else
+			WurmScript.info ("addExtremeShapeless('<output> <input(s)>...')");
+	}
+
+	@ScriptFunction
+	public void addCompression (String line) {
+		String[] input = line.split (" ");
+		if (input.length == 2) {
+			ItemStack output = StackHelper.convert (input[0],null);
+			if (output != ItemStack.EMPTY) {
+				Ingredient inputStack = StackHelper.convert (input[1]);
+				if (inputStack != Ingredient.EMPTY) {
+					List <Ingredient> inputFormatted = new ArrayList <> ();
+					inputFormatted.add (inputStack);
+					CompressorRecipe recipe = new CompressorRecipe (output,StackHelper.convert (input[1],null).getCount (),false,inputFormatted);
+					AvaritiaRecipeManager.COMPRESSOR_RECIPES.put (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + inputStack.hashCode ()),recipe);
 				} else
 					WurmScript.info ("Invalid Input '" + input[1] + "'");
 			} else
 				WurmScript.info ("Invalid Output '" + input[0] + "'");
 		} else
-			WurmScript.info ("addFurnace('<output> <input> <exp>')");
+			WurmScript.info ("addCompression('<output> <input>')");
 	}
 
 	public int[] getRecipeSize (String[] possibleStyle) {
@@ -144,6 +152,7 @@ public class Minecraft implements IModSupport {
 			if (t > 0)
 				height++;
 		size[1] = height;
+		LogHandler.info ("Size: " + size[0] + " " + size[1]);
 		return size;
 	}
 

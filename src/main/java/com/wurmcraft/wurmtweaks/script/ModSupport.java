@@ -36,5 +36,7 @@ public class ModSupport {
 			WurmTweaks2API.register (new BetterWithMods ());
 		if (Loader.isModLoaded ("abyssalcraft"))
 			WurmTweaks2API.register (new AbyssalCraft ());
+		if (Loader.isModLoaded ("avaritia"))
+			WurmTweaks2API.register (new Avaritia ());
 	}
 }
