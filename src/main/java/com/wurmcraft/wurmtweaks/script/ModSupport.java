@@ -40,5 +40,7 @@ public class ModSupport {
 			WurmTweaks2API.register (new Avaritia ());
 		if (Loader.isModLoaded ("botania"))
 			WurmTweaks2API.register (new Botania ());
+		if (Loader.isModLoaded ("bloodmagic"))
+			WurmTweaks2API.register (new BloodMagic ());
 	}
 }
