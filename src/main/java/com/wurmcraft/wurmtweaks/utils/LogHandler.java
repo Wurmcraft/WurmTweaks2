@@ -21,12 +21,11 @@ public class LogHandler {
 		FileOutputStream fos = null;
 		try {
 			String file = Loader.instance().getConfigDir().getParent() + "/" + Global.MODID + ".log";
-			System.out.println("WURMLOG: " + file);
 			File logFile = new File(file);
 			if (!logFile.exists()) logFile.createNewFile();
 			fos = new FileOutputStream(logFile);
 		} catch (IOException e) {
-			System.err.println("Error opening " + Global.MODID + " log!");
+			LOGGER.log (Level.ERROR,"Error opening " + Global.MODID + " log!");
 		} finally {
 			FILE_LOG = fos;
 		}

@@ -107,7 +107,7 @@ public class Minecraft implements IModSupport {
 			} else
 				WurmScript.info ("Invalid Output '" + input[0] + "'");
 		} else
-			WurmScript.info ("addShaped(<output> <style> <format>");
+			WurmScript.info ("addShaped(<output> <style> <format>')");
 	}
 
 	@ScriptFunction

@@ -38,5 +38,7 @@ public class ModSupport {
 			WurmTweaks2API.register (new AbyssalCraft ());
 		if (Loader.isModLoaded ("avaritia"))
 			WurmTweaks2API.register (new Avaritia ());
+		if (Loader.isModLoaded ("botania"))
+			WurmTweaks2API.register (new Botania ());
 	}
 }
