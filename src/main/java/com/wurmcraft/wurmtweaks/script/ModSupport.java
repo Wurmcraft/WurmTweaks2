@@ -42,5 +42,7 @@ public class ModSupport {
 			WurmTweaks2API.register (new Botania ());
 		if (Loader.isModLoaded ("bloodmagic"))
 			WurmTweaks2API.register (new BloodMagic ());
+		if (Loader.isModLoaded ("thermalexpansion"))
+			WurmTweaks2API.register (new ThermalExpansion ());
 	}
 }
