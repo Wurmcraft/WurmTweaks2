@@ -4,17 +4,14 @@ import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.script.Bindings;
@@ -25,7 +22,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class WurmScript extends WurmTweaks2API {
 
@@ -75,14 +71,8 @@ public class WurmScript extends WurmTweaks2API {
 	public void init () {
 		if (scriptFunctions == null)
 			scriptFunctions = new SimpleBindings ();
-		scriptFunctions.put ("addBrewing",new AddBrewing ());
-		scriptFunctions.put ("addOreEntry",new AddOreEntry ());
-		scriptFunctions.put ("disablePickup",new DisablePickup ());
-		scriptFunctions.put ("convertPickup",new ConvertPickup ());
-		scriptFunctions.put ("addTooltip",new AddToolTip ());
-		scriptFunctions.put ("isModLoaded",new IsModLoaded ());
 		for (IModSupport controller : activeControllers)
-			if (Loader.isModLoaded (controller.getModID ()) || controller.getModID ().equals ("minecraft")) {
+			if (Loader.isModLoaded (controller.getModID ()) || controller.getModID ().equals ("minecraft") || controller.getModID ().equals ("events")) {
 				LogHandler.info ("Loaded " + controller.getModID () + " ModSupport");
 				controller.init ();
 				Method[] methods = controller.getClass ().getDeclaredMethods ();
@@ -135,110 +125,6 @@ public class WurmScript extends WurmTweaks2API {
 		for (String line : lines) {
 			process (line);
 			lineNo++;
-		}
-	}
-
-	public class AddBrewing implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] itemStrings = s.split (" ");
-			ItemStack output = StackHelper.convert (itemStrings[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack input = StackHelper.convert (itemStrings[1],null);
-				if (input != null) {
-					List <ItemStack> recipeInput = new ArrayList <> ();
-					for (int index = 2; index < itemStrings.length; index++)
-						if (StackHelper.convert (itemStrings[index],null) != ItemStack.EMPTY)
-							recipeInput.add (StackHelper.convert (itemStrings[index],null));
-						else
-							return null;
-					RecipeUtils.addBrewing (output,input,recipeInput);
-				} else
-					LogHandler.script (getScriptName (),lineNo,"Invalid Input Item '" + itemStrings[1] + "'");
-			} else
-				LogHandler.script (getScriptName (),lineNo,"Invalid Item '" + itemStrings[0] + "' For Shapeless Recipe Input");
-			return null;
-		}
-	}
-
-	public class AddOreEntry implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] itemStrings = s.split (" ");
-			ItemStack item = StackHelper.convert (itemStrings[0],null);
-			if (item != ItemStack.EMPTY) {
-				if (itemStrings.length > 1) {
-					for (int index = 1; index < itemStrings.length; index++)
-						if (itemStrings[index] != null && itemStrings[index].length () > 0)
-							OreDictionary.registerOre (itemStrings[index],item);
-				} else
-					LogHandler.script (getScriptName (),lineNo,"Missing Ore Dict Entry [addOreEntry(<stack> <entry1>...)]");
-			}
-			return null;
-		}
-	}
-
-	public class DisablePickup implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] stack = s.split (" ");
-			ItemStack item = StackHelper.convert (stack[0],null);
-			if (item != ItemStack.EMPTY) {
-				ScriptEvents.addThrowCancelEvent (item);
-			} else
-				LogHandler.script (getScriptName (),lineNo,stack[0] + " is not a valid item");
-			return null;
-		}
-	}
-
-	public class ConvertPickup implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] itemString = s.split (" ");
-			if (itemString.length == 2) {
-				ItemStack pickupItem = StackHelper.convert (itemString[0],null);
-				ItemStack convert = StackHelper.convert (itemString[1],null);
-				if (pickupItem != ItemStack.EMPTY && convert != ItemStack.EMPTY) {
-					ScriptEvents.addPickupConversion (pickupItem,convert);
-				} else
-					LogHandler.script (getScriptName (),lineNo,s + " does not a have a valid item");
-			} else
-				LogHandler.script (getScriptName (),lineNo,"convertPickup('<itemA> <itemB>')");
-			return null;
-		}
-	}
-
-	public class AddToolTip implements Function <String, Void> {
-
-		@Override
-		public Void apply (String s) {
-			String[] itemStrings = s.split (" ");
-			if (itemStrings.length >= 2) {
-				ItemStack item = StackHelper.convert (itemStrings[0],null);
-				List <String> tooltip = new ArrayList <> ();
-				for (int index = 1; index < itemStrings.length; index++)
-					tooltip.add (itemStrings[index].replaceAll ("&","§").replaceAll ("_"," "));
-				ScriptEvents.addToolTipEntry (item,tooltip.toArray (new String[0]));
-			} else
-				LogHandler.script (getScriptName (),lineNo,"addTooltip('<item> <tipA> <tipB>...");
-			return null;
-		}
-	}
-
-	public class IsModLoaded implements Function <String, Boolean> {
-
-		@Override
-		public Boolean apply (String s) {
-			String[] mod = s.split (" ");
-			if (mod.length == 1) {
-				return Loader.isModLoaded (mod[0]);
-			} else
-				WurmScript.info ("isModLoaded('<ModName>')");
-			return false;
 		}
 	}
 }

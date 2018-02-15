@@ -8,6 +8,7 @@ public class ModSupport {
 
 	public static void init () {
 		WurmScript.register (new Minecraft ());
+		WurmScript.register (new Events ());
 		if (Loader.isModLoaded ("tconstruct"))
 			WurmTweaks2API.register (new TConstruct ());
 		if (Loader.isModLoaded ("immersiveengineering"))

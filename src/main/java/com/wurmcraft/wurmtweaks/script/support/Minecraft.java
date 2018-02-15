@@ -7,6 +7,7 @@ import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,7 +111,7 @@ public class Minecraft implements IModSupport {
 			WurmScript.info ("addShaped(<output> <style> <format>')");
 	}
 
-	@ScriptFunction
+	@ScriptFunction (linkSize = 3, link = "furnace")
 	public void addFurnace (String line) {
 		String[] input = line.split (" ");
 		if (input.length == 3) {
@@ -130,6 +131,41 @@ public class Minecraft implements IModSupport {
 				WurmScript.info ("Invalid Output '" + input[0] + "'");
 		} else
 			WurmScript.info ("addFurnace('<output> <input> <exp>')");
+	}
+
+	@ScriptFunction
+	public void addOreEntry (String line) {
+		String[] input = line.split (" ");
+		if (input.length == 2) {
+			ItemStack stack = StackHelper.convert (input[0],null);
+			if (stack != ItemStack.EMPTY) {
+				String entry = input[1].replaceAll ("<","").replaceAll (">","");
+				OreDictionary.registerOre (entry,stack);
+			} else
+				WurmScript.info ("Invalid Output '" + input[0] + "'");
+		} else
+			WurmScript.info ("addOreEntry('<output> entry')");
+	}
+
+	@ScriptFunction
+	public void addBrewing (String line) {
+		String[] input = line.split (" ");
+		if (input.length == 3) {
+			ItemStack output = StackHelper.convert (input[0],null);
+			if (output != ItemStack.EMPTY) {
+				ItemStack inputStack = StackHelper.convert (input[1],null);
+				if (inputStack != ItemStack.EMPTY) {
+					ItemStack bottomStack = StackHelper.convert (input[2],null);
+					if (bottomStack != ItemStack.EMPTY) {
+						RecipeUtils.addBrewing (output,inputStack,bottomStack);
+					} else
+						WurmScript.info ("Invalid Stack '" + input[2] + "'");
+				} else
+					WurmScript.info ("Invalid Input '" + input[1] + "'");
+			} else
+				WurmScript.info ("Invalid Output '" + input[0] + "'");
+		} else
+			WurmScript.info ("addBrewing('<output> <input> <bottom>')");
 	}
 
 	public int[] getRecipeSize (String[] possibleStyle) {

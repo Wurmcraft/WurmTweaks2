@@ -46,7 +46,7 @@ public class RecipeUtils {
 		activeFurnace.put (input,output);
 	}
 
-	public static void addBrewing (ItemStack output,ItemStack input,List <ItemStack> inputs) {
-		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,inputs,output));
+	public static void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
+		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,Arrays.asList (bottom),output));
 	}
 }
