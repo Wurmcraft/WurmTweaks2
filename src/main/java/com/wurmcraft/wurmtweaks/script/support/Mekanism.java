@@ -1,10 +1,10 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import com.wurmcraft.wurmtweaks.api.IModSupport;
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import mekanism.api.MekanismAPI;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
@@ -13,10 +13,8 @@ import mekanism.api.infuse.InfuseType;
 import mekanism.common.recipe.RecipeHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
-public class Mekanism implements IModSupport {
+public class Mekanism extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -49,375 +47,171 @@ public class Mekanism implements IModSupport {
 
 	@ScriptFunction
 	public void addEnrichmentChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addEnrichmentChamberRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addEnrichmentChamber('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 2,"addEnrichmentChamber('<output> <input>')");
+		isValid (input[0],input[1]);
+		MekanismAPI.recipeHelper ().addEnrichmentChamberRecipe (convertS (input[1]),convertS (input[0]));
 	}
 
 	@ScriptFunction
 	public void addOsmiumCompressor (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addOsmiumCompressorRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addOsmiumCompressor('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 2,"addOsmiumCompressor('<output> <input>')");
+		isValid (input[0],input[1]);
+		MekanismAPI.recipeHelper ().addOsmiumCompressorRecipe (convertS (input[1]),convertS (input[0]));
 	}
 
 	@ScriptFunction
 	public void addCombiner (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addCombinerRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addCombiner('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 2,"addCombiner('<output> <input>')");
+		isValid (input[0],input[1]);
+		MekanismAPI.recipeHelper ().addCombinerRecipe (convertS (input[1]),convertS (input[0]));
 	}
 
 	@ScriptFunction (link = "crushing", linkSize = {2})
-	public void addMCruser (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addCombinerRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addMCruser('<output> <input')");
+	public void addMCrusher (String line) {
+		String[] input = verify (line,line.split (" ").length == 2,"addMCrusher('<output> <input>')");
+		isValid (input[0],input[1]);
+		MekanismAPI.recipeHelper ().addCrusherRecipe (convertS (input[1]),convertS (input[0]));
 	}
 
 	@ScriptFunction
 	public void addPurification (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addPurificationChamberRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addPurification('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 2,"addPurification('<output> <input>')");
+		isValid (input[0],input[1]);
+		MekanismAPI.recipeHelper ().addPurificationChamberRecipe (convertS (input[1]),convertS (input[0]));
 	}
 
 	@ScriptFunction
 	public void addMetallurgicInfuser (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				InfuseType type = InfuseRegistry.get (input[1]);
-				if (type != null) {
-					try {
-						int amount = Integer.parseInt (input[2]);
-						if (amount > 0) {
-							ItemStack inputStack = StackHelper.convert (input[3],null);
-							if (inputStack != ItemStack.EMPTY)
-								MekanismAPI.recipeHelper ().addMetallurgicInfuserRecipe (type,amount,inputStack,output);
-							else
-								WurmScript.info ("Invalid Stack '" + input[3] + "'");
-						} else
-							WurmScript.info ("Number Must Be Greater Than 0!");
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info (input[1] + " is not a valid infusion type!");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addMetallurgicInfuser('<output> <infusionType> <amount> <input>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addMetallurgicInfuser('<output> <input> <infusionType> <amount>')");
+		isValid (input[0],input[1]);
+		InfuseType type = InfuseRegistry.get (input[2]);
+		Preconditions.checkNotNull (type);
+		isValid (EnumInputType.INTEGER,input[3]);
+		MekanismAPI.recipeHelper ().addMetallurgicInfuserRecipe (type,convertNI (input[3]),convertS (input[1]),convertS (input[0]));
 	}
 
 
 	@ScriptFunction
 	public void addChemicalInfuser (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			GasStack output = getGasStack (input[0]);
-			if (output != null) {
-				GasStack inputStack = getGasStack (input[1]);
-				if (inputStack != null) {
-					GasStack inputStack2 = getGasStack (input[2]);
-					if (inputStack2 != null) {
-						MekanismAPI.recipeHelper ().addChemicalInfuserRecipe (inputStack,inputStack2,output);
-					} else
-						WurmScript.info ("Invalid Gas '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Gas '" + input[0] + "'");
-		} else
-			WurmScript.info ("addChemicalInfuser('<%output> <%input1> <%input2>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addChemicalInfuser('<%output> <%input> <%input2>')");
+		GasStack output = getGasStack (input[0]);
+		Preconditions.checkNotNull (output);
+		GasStack inputStack = getGasStack (input[1]);
+		Preconditions.checkNotNull (inputStack);
+		GasStack inputStack2 = getGasStack (input[2]);
+		Preconditions.checkNotNull (inputStack2);
+		MekanismAPI.recipeHelper ().addChemicalInfuserRecipe (inputStack,inputStack2,output);
 	}
 
 	@ScriptFunction
 	public void addChemicalOxidizer (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			GasStack outputGas = getGasStack (input[0]);
-			if (outputGas != null) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addChemicalOxidizerRecipe (inputStack,outputGas);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Gas '" + input[0] + "'");
-		} else
-			WurmScript.info ("addChemicalOxidizer('<%outout> <input>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addChemicalOxidizer('<%output> <input>')");
+		GasStack output = getGasStack (input[0]);
+		Preconditions.checkNotNull (output);
+		isValid (input[1]);
+		MekanismAPI.recipeHelper ().addChemicalOxidizerRecipe (convertS (input[1]),output);
 	}
 
 	@ScriptFunction
 	public void addChemicalInjection (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				GasStack inputGas = getGasStack (input[1]);
-				if (inputGas != null) {
-					ItemStack inputStack = StackHelper.convert (input[2],null);
-					if (inputStack != ItemStack.EMPTY) {
-						MekanismAPI.recipeHelper ().addChemicalInjectionChamberRecipe (inputStack,inputGas.getGas (),output);
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addChemicalOxidizer('<output> <%input> <input>");
+		String[] input = verify (line,line.split ("").length == 3,"addChemicalInjection('<output> <input> <%input>')");
+		isValid (input[0],input[1]);
+		GasStack inputStack = getGasStack (input[2]);
+		Preconditions.checkNotNull (inputStack);
+		MekanismAPI.recipeHelper ().addChemicalInjectionChamberRecipe (convertS (input[1]),inputStack.getGas (),convertS (input[0]));
 	}
 
 	@ScriptFunction
 	public void addElectrolyticSeparator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			GasStack leftOutput = getGasStack (input[0]);
-			if (leftOutput != null) {
-				GasStack rightOutput = getGasStack (input[1]);
-				if (rightOutput != null) {
-					try {
-						double energy = Double.parseDouble (input[2]);
-						if (energy > 0) {
-							FluidStack inputFluid = StackHelper.convertToFluid (input[3]);
-							if (inputFluid != null) {
-								MekanismAPI.recipeHelper ().addElectrolyticSeparatorRecipe (inputFluid,energy,leftOutput,rightOutput);
-							} else
-								WurmScript.info ("Invalid Fluid '" + input[3] + "'");
-						} else
-							WurmScript.info ("Number Must Be Greater Than 0!");
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Gas '" + input[0] + "'");
-		} else
-			WurmScript.info ("addElectrolyticSeparator(''<%leftOutput> <%rightOutput> <energy> <*input>");
+		String[] input = verify (line,line.split (" ").length == 4,"addElectrolyticSeparator('<leftOutput> <rightOutput> <*input> <energy>')");
+		GasStack leftOutput = getGasStack (input[0]);
+		Preconditions.checkNotNull (leftOutput);
+		GasStack rightOutput = getGasStack (input[1]);
+		Preconditions.checkNotNull (rightOutput);
+		isValid (EnumInputType.FLUID,input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		MekanismAPI.recipeHelper ().addElectrolyticSeparatorRecipe (convertF (input[2]),convertNF (input[3]),leftOutput,rightOutput);
+
 	}
 
-	@ScriptFunction
+	@ScriptFunction (link = "saw", linkSize = {2,4})
 	public void addSawmill (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2 || input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					if (input.length == 2)
-						MekanismAPI.recipeHelper ().addPrecisionSawmillRecipe (inputStack,output);
-					else {
-						ItemStack secOutput = StackHelper.convert (input[2],null);
-						if (secOutput != ItemStack.EMPTY) {
-							try {
-								double chance = Double.parseDouble (input[3]);
-								MekanismAPI.recipeHelper ().addPrecisionSawmillRecipe (inputStack,output,secOutput,chance);
-							} catch (NumberFormatException e) {
-								WurmScript.info ("Invalid Number '" + input[3] + "'");
-							}
-						} else
-							WurmScript.info ("Invalid Stack '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addElectrolyticSeparator('<output> <input> | <secondaryOutput> <secondaryChance>')");
+		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 4,"addSawmill('<output> <input> | <secOutput> <secOutput%>')");
+		isValid (input[0],input[1]);
+		if (line.split (" ").length == 2) {
+			MekanismAPI.recipeHelper ().addPrecisionSawmillRecipe (convertS (input[1]),convertS (input[0]));
+		} else {
+			isValid (input[2]);
+			isValid (EnumInputType.FLOATNG,input[3]);
+			MekanismAPI.recipeHelper ().addPrecisionSawmillRecipe (convertS (input[1]),convertS (input[0]),convertS (input[2]),convertNF (input[3]));
+		}
 	}
 
 	@ScriptFunction
 	public void addChemicalDissolution (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			GasStack output = getGasStack (input[0]);
-			if (output != null) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					MekanismAPI.recipeHelper ().addChemicalDissolutionChamberRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Gas '" + input[0] + "'");
-		} else
-			WurmScript.info ("addChemicalDissolution('<%output> <input>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addChemicalDissolution('<%output> <input>')");
+		GasStack output = getGasStack (input[0]);
+		Preconditions.checkNotNull (output);
+		isValid (input[1]);
+		MekanismAPI.recipeHelper ().addChemicalDissolutionChamberRecipe (convertS (input[1]),output);
 	}
 
 	@ScriptFunction
 	public void addChemicalWasher (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			GasStack output = getGasStack (input[0]);
-			if (output != null) {
-				GasStack inputStack = getGasStack (input[1]);
-				if (inputStack != null) {
-					MekanismAPI.recipeHelper ().addChemicalWasherRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Gas '" + input[0] + "'");
-		} else
-			WurmScript.info ("addChemicalWasher('<%output> <%input>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addChemicalWasher('<%output> <%input>')");
+		GasStack output = getGasStack (input[0]);
+		Preconditions.checkNotNull (output);
+		GasStack inputStack = getGasStack (input[1]);
+		Preconditions.checkNotNull (inputStack);
+		MekanismAPI.recipeHelper ().addChemicalWasherRecipe (inputStack,output);
 	}
 
 	@ScriptFunction
 	public void addChemicalCrystallizer (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				GasStack inputStack = getGasStack (input[1]);
-				if (inputStack != null) {
-					MekanismAPI.recipeHelper ().addChemicalCrystallizerRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addChemicalCrystallizer('<output> <%input>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addChemicalCrystallizer('<output> <%input>')");
+		isValid (input[0]);
+		GasStack inputStack = getGasStack (input[1]);
+		Preconditions.checkNotNull (inputStack);
+		MekanismAPI.recipeHelper ().addChemicalCrystallizerRecipe (inputStack,convertS (input[0]));
 	}
 
 	@ScriptFunction ()
 	public void addPressureChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 7) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				GasStack outputGas = getGasStack (input[1]);
-				if (outputGas != null) {
-					GasStack inputGas = getGasStack (input[2]);
-					if (inputGas != null) {
-						FluidStack inputFluid = StackHelper.convertToFluid (input[3]);
-						if (inputFluid != null) {
-							ItemStack inputStack = StackHelper.convert (input[4],null);
-							if (inputStack != ItemStack.EMPTY) {
-								try {
-									double energy = Double.parseDouble (input[5]);
-									try {
-										int time = Integer.parseInt (input[6]);
-										if (time > 0) {
-											MekanismAPI.recipeHelper ().addPRCRecipe (inputStack,inputFluid,inputGas,output,outputGas,energy,time);
-										} else
-											WurmScript.info ("Time Must Be Greater Than 0!");
-									} catch (NumberFormatException f) {
-										WurmScript.info ("Invalid Number '" + input[6] + "'");
-									}
-								} catch (NumberFormatException e) {
-									WurmScript.info ("Invalid Number '" + input[5] + "'");
-								}
-							} else
-								WurmScript.info ("Invalid Stack '" + input[4] + "'");
-						} else
-							WurmScript.info ("Invalid Fluid '" + input[3] + "'");
-					} else
-						WurmScript.info ("Invalid Gas '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')");
+		String[] input = verify (line,line.split (" ").length == 7,"addPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')");
+		isValid (input[0],input[4]);
+		isValid (EnumInputType.FLOATNG,input[5]);
+		isValid (EnumInputType.INTEGER,input[6]);
+		GasStack outputStack = getGasStack (input[1]);
+		Preconditions.checkNotNull (outputStack);
+		GasStack inputStack = getGasStack (input[2]);
+		Preconditions.checkNotNull (inputStack);
+		isValid (EnumInputType.FLUID,input[3]);
+		MekanismAPI.recipeHelper ().addPRCRecipe (convertS (input[4]),convertF (input[3]),inputStack,convertS (input[0]),outputStack,(double) convertNF (input[5]),convertNI (input[6]));
 	}
 
 	@ScriptFunction
 	public void addThermalEvaporation (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack output = StackHelper.convertToFluid (input[0]);
-			if (output != null) {
-				FluidStack inputStack = StackHelper.convertToFluid (input[1]);
-				if (inputStack != null) {
-					MekanismAPI.recipeHelper ().addThermalEvaporationRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Fluid '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addThermalEvaporation('<*output> <*input>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addThermalEvaporation('<*output> <*input>')");
+		MekanismAPI.recipeHelper ().addThermalEvaporationRecipe (convertF (input[0]),convertF (input[1]));
 	}
 
 	@ScriptFunction
 	public void addSolarNeutron (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			GasStack output = getGasStack (input[0]);
-			if (output != null) {
-				GasStack inputStack = getGasStack (input[1]);
-				if (inputStack != null) {
-					MekanismAPI.recipeHelper ().addSolarNeutronRecipe (inputStack,output);
-				} else
-					WurmScript.info ("Invalid Gas '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Gas '" + input[0] + "'");
-		} else
-			WurmScript.info ("addSolarNeutron('<%output> <%input>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addSolarNeutron('<%output> <%input>')");
+		GasStack output = getGasStack (input[0]);
+		Preconditions.checkNotNull (output);
+		GasStack inputStack = getGasStack (input[1]);
+		Preconditions.checkNotNull (inputStack);
+		MekanismAPI.recipeHelper ().addSolarNeutronRecipe (inputStack,output);
 	}
 
 	@ScriptFunction
 	public void addBoxBlacklist (String line) {
 		String[] input = line.split (" ");
-		if (input.length == 1) {
-			ItemStack block = StackHelper.convert (input[0],null);
-			if (block != ItemStack.EMPTY && Block.getBlockFromItem (block.getItem ()) != Blocks.AIR) {
-				MekanismAPI.addBoxBlacklist (Block.getBlockFromItem (block.getItem ()),block.getItemDamage ());
-			} else
-				WurmScript.info ("Invalid Block '" + input[0] + "'");
-		} else
-			WurmScript.info ("addBoxBlacklist('<block'>')");
+		isValid (input[0]);
+		Block block = Block.getBlockFromItem (convertS (input[0]).getItem ());
+		Preconditions.checkArgument (block != Blocks.AIR);
+		MekanismAPI.addBoxBlacklist (block,convertS (input[0]).getItemDamage ());
 	}
 
 	private GasStack getGasStack (String stack) {

@@ -5,14 +5,13 @@ import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
 import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.apibutnotreally.registry.TartaricForgeRecipeRegistry;
-import com.wurmcraft.wurmtweaks.api.IModSupport;
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
-import net.minecraft.item.ItemStack;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 
-public class BloodMagic implements IModSupport {
+public class BloodMagic extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -28,37 +27,13 @@ public class BloodMagic implements IModSupport {
 
 	@ScriptFunction
 	public void addAltar (String line) {
-		String[] input = line.split (" ");
-		if (input.length >= 6) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				try {
-					EnumAltarTier tier = getTier (Integer.parseInt (input[1]));
-					try {
-						int syphon = Integer.parseInt (input[2]);
-						try {
-							int comsume = Integer.parseInt (input[3]);
-							try {
-								int drain = Integer.parseInt (input[4]);
-								boolean fillable = Boolean.getBoolean (input[5]);
-								ItemStack inputStack = StackHelper.convert (input[6],null);
-								AltarRecipeRegistry.registerRecipe (new AltarRecipeRegistry.AltarRecipe (inputStack,output,tier,syphon,comsume,drain,fillable));
-							} catch (NumberFormatException e) {
-								WurmScript.info ("Invalid Drain Rate '" + input[4] + "'");
-							}
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Consume Rate '" + input[3] + "'");
-						}
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Syphon Amount '" + input[2] + "'");
-					}
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Altar Tier '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAltar('<output> <tier> <syphon> <consume> <drain> <fillable> <input>')");
+		String[] input = verify (line,line.split (" ").length == 7,"addAltar('<output> <input> <tier> <syphon> <consume> <drain> <fillable>");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2],input[3],input[4],input[5]);
+		EnumAltarTier tier = getTier (convertNI (input[2]));
+		Preconditions.checkNotNull (tier);
+		isValid (EnumInputType.BOOLEAN,input[6]);
+		AltarRecipeRegistry.registerRecipe (new AltarRecipeRegistry.AltarRecipe (convertS (input[1]),convertS (input[0]),tier,convertNI (input[3]),convertNI (input[4]),convertNI (input[5]),convertB (input[6])));
 	}
 
 	private EnumAltarTier getTier (int tier) {
@@ -83,47 +58,14 @@ public class BloodMagic implements IModSupport {
 
 	@ScriptFunction
 	public void addAlchemyArray (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack catalyst = StackHelper.convert (input[1],null);
-				if (catalyst != ItemStack.EMPTY) {
-					ItemStack inputStack = StackHelper.convert (input[2],null);
-					if (inputStack != ItemStack.EMPTY)
-						AlchemyArrayRecipeRegistry.registerRecipe (inputStack,catalyst,new AlchemyArrayEffectCrafting (output));
-					WurmScript.info ("Invalid Input '" + input[2] + "'");
-				}
-				WurmScript.info ("Invalid Catalyst '" + input[1] + "'");
-			}
-			WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAlchemyArray('<output> <catalyst> <input>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addAlchemyArray('<output> <catalyst> <input')");
+		AlchemyArrayRecipeRegistry.registerRecipe (convertS (input[2]),convertS (input[1]),new AlchemyArrayEffectCrafting (convertS (input[0])));
 	}
 
 	public void addSoulForge (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY)
-				try {
-					double souls = Double.parseDouble (input[1]);
-					try {
-						double drain = Double.parseDouble (input[2]);
-						ItemStack inputStack = StackHelper.convert (input[3],null);
-						if (inputStack != ItemStack.EMPTY)
-							TartaricForgeRecipeRegistry.registerRecipe (output,souls,drain,inputStack);
-						else
-							WurmScript.info ("Invalid Input '" + input[3] + "'");
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Drain " + input[2] + "'");
-					}
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Souls '" + input[1] + "'");
-				}
-			else
-				WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addSoulForge('<output> <souls> <drain> <input>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addSoulForge('<output> <input> <souls> <drain>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2],input[3]);
+		TartaricForgeRecipeRegistry.registerRecipe (convertS (input[0]),convertNF (input[2]),convertNF (input[3]),convertS (input[1]));
 	}
 }

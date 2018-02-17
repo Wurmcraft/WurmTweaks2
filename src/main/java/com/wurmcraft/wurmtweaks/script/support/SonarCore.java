@@ -1,10 +1,8 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -14,7 +12,7 @@ import sonar.core.integration.planting.IFertiliser;
 
 import java.util.Random;
 
-public class SonarCore implements IModSupport {
+public class SonarCore extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -29,15 +27,9 @@ public class SonarCore implements IModSupport {
 
 	@ScriptFunction
 	public void addFertilizer (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 1) {
-			ItemStack stack = StackHelper.convert (input[0],null);
-			if (stack != ItemStack.EMPTY)
-				sonar.core.SonarCore.fertilisers.registerObject (new CustomFertilizer (stack));
-			else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addFertilizer('<fertilizer>'");
+		String[] input = verify (line,line.split (" ").length == 1,"addFertilizer('<stack>')");
+		isValid (input[0]);
+		sonar.core.SonarCore.fertilisers.registerObject (new CustomFertilizer (convertS (input[0])));
 	}
 
 	public class CustomFertilizer implements IFertiliser {

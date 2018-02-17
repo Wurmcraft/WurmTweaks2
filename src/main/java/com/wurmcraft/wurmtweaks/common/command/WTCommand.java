@@ -62,7 +62,7 @@ public class WTCommand extends CommandBase {
 			} else if (args[0].equalsIgnoreCase ("load") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 				if (args.length == 2) {
-					ItemStack stack = StackHelper.convert (args[1],null);
+					ItemStack stack = StackHelper.convert (args[1]);
 					if (stack != ItemStack.EMPTY) {
 						player.addItemStackToInventory (stack);
 					} else

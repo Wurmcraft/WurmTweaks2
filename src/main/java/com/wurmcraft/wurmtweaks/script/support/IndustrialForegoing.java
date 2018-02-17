@@ -5,14 +5,12 @@ import com.buuz135.industrial.api.recipe.BioReactorEntry;
 import com.buuz135.industrial.api.recipe.LaserDrillEntry;
 import com.buuz135.industrial.api.recipe.ProteinReactorEntry;
 import com.buuz135.industrial.api.recipe.SludgeEntry;
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
-import net.minecraft.item.ItemStack;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 
-public class IndustrialForegoing implements IModSupport {
+public class IndustrialForegoing extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -31,68 +29,31 @@ public class IndustrialForegoing implements IModSupport {
 
 	@ScriptFunction
 	public void addBioReactor (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 1) {
-			ItemStack stack = StackHelper.convert (input[0],null);
-			if (stack != ItemStack.EMPTY)
-				IndustrialForegoingHelper.addBioReactorEntry (new BioReactorEntry (stack));
-			else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addBioReactor('<stack>')");
+		String[] input = verify (line,line.split (" ").length == 1,"addBioReactor('<stack>')");
+		isValid (input[0]);
+		IndustrialForegoingHelper.addBioReactorEntry (new BioReactorEntry (convertS (input[0])));
 	}
 
 	@ScriptFunction
 	public void addSludgeRefiner (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack stack = StackHelper.convert (input[0],null);
-			if (stack != ItemStack.EMPTY) {
-				try {
-					int weight = Integer.parseInt (input[1]);
-					IndustrialForegoingHelper.addSludgeRefinerEntry (new SludgeEntry (stack,weight));
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addSludgeRefiner('<stack> <weight>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addSludgeRefiner('<stack> <weight>')");
+		isValid (input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		IndustrialForegoingHelper.addSludgeRefinerEntry (new SludgeEntry (convertS (input[0]),convertNI (input[1])));
 	}
 
 	@ScriptFunction
 	public void addProteinReactor (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 1) {
-			ItemStack stack = StackHelper.convert (input[0],null);
-			if (stack != ItemStack.EMPTY)
-				IndustrialForegoingHelper.addProteinReactorEntry (new ProteinReactorEntry (stack));
-			else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addProteinReactor('<stack>')");
+		String[] input = verify (line,line.split (" ").length == 1,"addProteinReactor('<stack>')");
+		isValid (input[0]);
+		IndustrialForegoingHelper.addProteinReactorEntry (new ProteinReactorEntry (convertS (input[0])));
 	}
 
 	@ScriptFunction (link = "laser", linkSize = {3})
 	public void addLaser (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			try {
-				int weight = Integer.parseInt (input[0]);
-				ItemStack stack = StackHelper.convert (input[1],null);
-				if (stack != ItemStack.EMPTY) {
-					try {
-						int colorMeta = Integer.parseInt (input[2]);
-						IndustrialForegoingHelper.addLaserDrillEntry (new LaserDrillEntry (colorMeta,stack,weight));
-					} catch (NumberFormatException f) {
-						WurmScript.info ("Invalid Number '" + input[2]);
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} catch (NumberFormatException e) {
-				WurmScript.info ("Invalid Number '" + input[0] + "'");
-			}
-		} else
-			WurmScript.info ("addLaser('<stack> <weight> <color>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addLaser('<stack> <color> <weight>')");
+		isValid (input[0]);
+		isValid (EnumInputType.INTEGER,input[1],input[2]);
+		IndustrialForegoingHelper.addLaserDrillEntry (new LaserDrillEntry (convertNI (input[1]),convertS (input[0]),convertNI (input[2])));
 	}
 }

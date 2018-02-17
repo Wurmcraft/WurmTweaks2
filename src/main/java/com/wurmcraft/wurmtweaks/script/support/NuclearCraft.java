@@ -1,15 +1,12 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import nc.recipe.NCRecipes;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
-public class NuclearCraft implements IModSupport {
+public class NuclearCraft extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -33,119 +30,41 @@ public class NuclearCraft implements IModSupport {
 
 	@ScriptFunction
 	public void addManufactory (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int time = Integer.parseInt (input[2]);
-						NCRecipes.MANUFACTORY_RECIPES.addRecipe (inputStack,output,time);
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addManufactory('<output> <input> <time>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addManufactory('<output> <input> <time>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		NCRecipes.MANUFACTORY_RECIPES.addRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
 	}
 
 	@ScriptFunction
 	public void addIsotopeSeparator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack output2 = StackHelper.convert (input[1],null);
-				if (output2 != ItemStack.EMPTY) {
-					ItemStack inputStack = StackHelper.convert (input[2],null);
-					if (inputStack != ItemStack.EMPTY) {
-						try {
-							int time = Integer.parseInt (input[3]);
-							NCRecipes.ISOTOPE_SEPARATOR_RECIPES.addRecipe (inputStack,output,output2,time);
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[1] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addIsotopeSeparator('<output> <output2> <input> <time>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addIsotopeSeparator('<output> <output2> <input> <time')");
+		isValid (input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		NCRecipes.ISOTOPE_SEPARATOR_RECIPES.addRecipe (convertS (input[2]),convertS (input[0]),convertS (input[1]),convertNI (input[3]));
 	}
 
 	@ScriptFunction
 	public void addAlloyFurnace (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						try {
-							int time = Integer.parseInt (input[3]);
-							NCRecipes.ISOTOPE_SEPARATOR_RECIPES.addRecipe (inputStack,inputStack2,output,time);
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[1] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAlloyFurnace('<output> <input> <input2> <time>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addAlloyFurnace('<output> <input> <input2> <time>')");
+		isValid (input[0],input[1],input[2]);
+		isValid (input[3]);
+		NCRecipes.ISOTOPE_SEPARATOR_RECIPES.addRecipe (convertS (input[1]),convertS (input[2]),convertS (input[0]),convertNI (input[3]));
 	}
 
 	@ScriptFunction
 	public void addSupercooler (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			FluidStack output = StackHelper.convertToFluid (input[0]);
-			if (output != null) {
-				FluidStack inputFluid = StackHelper.convertToFluid (input[1]);
-				if (inputFluid != null) {
-					try {
-						int time = Integer.parseInt (input[2]);
-						NCRecipes.SUPERCOOLER_RECIPES.addRecipe (inputFluid,output,time);
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Fluid '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addSupercooler('<*output> <*input> <time>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addSupercooler('<*output> <*input> <time>')");
+		isValid (EnumInputType.FLUID,input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		NCRecipes.SUPERCOOLER_RECIPES.addRecipe (convertF (input[1]),convertF (input[0]),convertNI (input[2]));
 	}
 
 	@ScriptFunction
 	public void addPressurizer (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int time = Integer.parseInt (input[2]);
-						NCRecipes.PRESSURIZER_RECIPES.addRecipe (inputStack,output,time);
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addPressurizer('<output> <input> <time>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addPressurizer('<output> <input> <time>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		NCRecipes.PRESSURIZER_RECIPES.addRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
 	}
 }

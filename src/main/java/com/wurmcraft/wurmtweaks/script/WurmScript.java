@@ -26,29 +26,28 @@ import java.util.List;
 public class WurmScript extends WurmTweaks2API {
 
 	public static final char SPACER = '_';
-	public static final String SPACER_CHAR = "_";
 	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
 	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
-	public static Bindings scriptFunctions = null;
-	public static File currentScript = null;
-	public static int lineNo = 0;
+	public volatile static Bindings scriptFunctions = null;
 	public static boolean reload = false;
+	public File currentScript = null;
+	public int lineNo = 0;
 	protected LinkedRegistry linkRegistry = new LinkedRegistry ();
 
-	public static void setCurrentScript (File currentScript) {
-		WurmScript.currentScript = currentScript;
+	public void setCurrentScript (File currentScript) {
+		this.currentScript = currentScript;
 		lineNo = 1;
 	}
 
-	public static void info (String msg) {
+	public void info (String msg) {
 		LogHandler.script (getScriptName (),lineNo,msg);
 	}
 
-	public static String getScriptName () {
+	public String getScriptName () {
 		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 
-	public static String[] removeComments (String[] withComments) {
+	public String[] removeComments (String[] withComments) {
 		List <String> without = new ArrayList <> ();
 		for (int x = 0; x < withComments.length; x++) {
 			if (withComments[x].startsWith ("//") || withComments[x].replaceAll (" ","").startsWith ("//"))
@@ -64,7 +63,7 @@ public class WurmScript extends WurmTweaks2API {
 		return without.toArray (new String[0]);
 	}
 
-	public static List <IModSupport> getActiveControllers () {
+	public List <IModSupport> getActiveControllers () {
 		return activeControllers;
 	}
 
@@ -73,7 +72,7 @@ public class WurmScript extends WurmTweaks2API {
 			scriptFunctions = new SimpleBindings ();
 		for (IModSupport controller : activeControllers)
 			if (Loader.isModLoaded (controller.getModID ()) || controller.getModID ().equals ("minecraft") || controller.getModID ().equals ("events")) {
-				LogHandler.info ("Loaded " + controller.getModID () + " ModSupport");
+				LogHandler.info ("Loaded " + controller.getModID () + " ModRegistry");
 				controller.init ();
 				Method[] methods = controller.getClass ().getDeclaredMethods ();
 				for (Method method : methods)
@@ -121,7 +120,7 @@ public class WurmScript extends WurmTweaks2API {
 			}
 	}
 
-	public void process (String[] lines) {
+	public void process (List <String> lines) {
 		for (String line : lines) {
 			process (line);
 			lineNo++;

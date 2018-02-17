@@ -49,4 +49,37 @@ public class RecipeUtils {
 	public static void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
 		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,Arrays.asList (bottom),output));
 	}
+
+	public static int findLargest (int[] num) {
+		int highest = 0;
+		for (int i : num)
+			if (i > highest)
+				highest = i;
+		return highest;
+	}
+
+	public static String replaceLastTillDiff (String line,char ch) {
+		StringBuilder build = new StringBuilder (line);
+		for (int index = line.length () - 1; index == 0; index--)
+			if (line.charAt (index) == ch)
+				build.deleteCharAt (index);
+			else
+				break;
+		return build.toString ();
+	}
+
+	public static int[] getRecipeSize (String[] possibleStyle) {
+		int[] temp = new int[possibleStyle.length];
+		for (int index = 0; index < possibleStyle.length; index++)
+			if (possibleStyle[index] != null && possibleStyle[index].length () > 0)
+				temp[index] = replaceLastTillDiff (possibleStyle[index],WurmScript.SPACER).length ();
+		int[] size = new int[2];
+		size[0] = findLargest (temp);
+		int height = 0;
+		for (int t : temp)
+			if (t > 0)
+				height++;
+		size[1] = height;
+		return size;
+	}
 }

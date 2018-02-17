@@ -1,49 +1,126 @@
 package com.wurmcraft.wurmtweaks.script;
 
-import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
-import com.wurmcraft.wurmtweaks.script.support.*;
-import net.minecraftforge.fml.common.Loader;
+import com.google.common.base.Preconditions;
+import com.wurmcraft.wurmtweaks.WurmTweaks;
+import com.wurmcraft.wurmtweaks.api.IModSupport;
+import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.fluids.FluidStack;
 
-public class ModSupport {
+public class ModSupport implements IModSupport {
 
-	public static void init () {
-		WurmScript.register (new Minecraft ());
-		WurmScript.register (new Events ());
-		if (Loader.isModLoaded ("tconstruct"))
-			WurmTweaks2API.register (new TConstruct ());
-		if (Loader.isModLoaded ("immersiveengineering"))
-			WurmTweaks2API.register (new ImmersiveEngineering ());
-		if (Loader.isModLoaded ("extrautils2"))
-			WurmTweaks2API.register (new ExtraUtils2 ());
-		if (Loader.isModLoaded ("draconicevolution"))
-			WurmTweaks2API.register (new DraconicEvolution ());
-		if (Loader.isModLoaded ("environmentaltech"))
-			WurmTweaks2API.register (new EnvironmentalTech ());
-		if (Loader.isModLoaded ("mekanism"))
-			WurmTweaks2API.register (new Mekanism ());
-		if (Loader.isModLoaded ("techreborn"))
-			WurmTweaks2API.register (new TechReborn ());
-		if (Loader.isModLoaded ("sonarcore"))
-			WurmTweaks2API.register (new SonarCore ());
-		if (Loader.isModLoaded ("calculator"))
-			WurmTweaks2API.register (new Calculator ());
-		if (Loader.isModLoaded ("actuallyadditions"))
-			WurmTweaks2API.register (new ActuallyAdditions ());
-		if (Loader.isModLoaded ("industrialforegoing"))
-			WurmTweaks2API.register (new IndustrialForegoing ());
-		if (Loader.isModLoaded ("nuclearcraft"))
-			WurmTweaks2API.register (new NuclearCraft ());
-		if (Loader.isModLoaded ("betterwithmods"))
-			WurmTweaks2API.register (new BetterWithMods ());
-		if (Loader.isModLoaded ("abyssalcraft"))
-			WurmTweaks2API.register (new AbyssalCraft ());
-		if (Loader.isModLoaded ("avaritia"))
-			WurmTweaks2API.register (new Avaritia ());
-		if (Loader.isModLoaded ("botania"))
-			WurmTweaks2API.register (new Botania ());
-		if (Loader.isModLoaded ("bloodmagic"))
-			WurmTweaks2API.register (new BloodMagic ());
-		if (Loader.isModLoaded ("thermalexpansion"))
-			WurmTweaks2API.register (new ThermalExpansion ());
+	protected WurmScript script = WurmTweaks.dl.wurmScript;
+
+	@Override
+	public String getModID () {
+		return "invalid";
+	}
+
+	@Override
+	public void init () {
+
+	}
+
+	protected void isValid (EnumInputType type,String... i) {
+		for (String input : i)
+			switch (type) {
+				case ITEM:
+					try {
+						Preconditions.checkArgument (StackHelper.convert (input) != ItemStack.EMPTY,"Invalid Item '%s'",input);
+					} catch (IllegalArgumentException e) {
+						script.info (e.getMessage ());
+					}
+					break;
+				case FLUID:
+					try {
+						Preconditions.checkArgument (StackHelper.convertToFluid (input) != null,"Invalid Fluid '%s'",input);
+					} catch (IllegalArgumentException e) {
+						script.info (e.getMessage ());
+
+					}
+					break;
+				case INTEGER:
+					try {
+						Integer.parseInt (input);
+					} catch (NumberFormatException f) {
+						script.info ("Invalid Number '" + input + "'");
+					}
+					break;
+				case FLOATNG:
+					try {
+						Float.parseFloat (input);
+					} catch (NumberFormatException f) {
+						script.info ("Invalid Number '" + input + "'");
+					}
+					break;
+				case BOOLEAN:
+					try {
+						Boolean.parseBoolean (input);
+					} catch (NumberFormatException f) {
+						script.info ("Invalid Boolean (True/False) '" + input + "'");
+					}
+					break;
+				case STRING:
+				default:
+					try {
+						Preconditions.checkNotNull (input,"Invalid String '%s'",input);
+					} catch (IllegalArgumentException e) {
+						script.info (e.getMessage ());
+						break;
+					}
+			}
+	}
+
+	protected void isValid (String... stack) {
+		isValid (EnumInputType.ITEM,stack);
+	}
+
+	protected String[] verify (String line,boolean test,String msg) {
+		try {
+			Preconditions.checkArgument (test,msg);
+		} catch (IllegalArgumentException e) {
+			script.info (e.getMessage ());
+		}
+		return line.split (" ");
+	}
+
+	protected ItemStack convertS (String stack) {
+		return StackHelper.convert (stack);
+	}
+
+	protected float convertNF (String num) {
+		try {
+			return Float.parseFloat (num);
+		} catch (NumberFormatException e) {
+			script.info ("Invalid Number '" + num + "'");
+		}
+		return -1;
+	}
+
+	protected Boolean convertB (String bol) {
+		try {
+			return Boolean.parseBoolean (bol);
+		} catch (NumberFormatException e) {
+			script.info ("Invalid Boolean '" + bol + "'");
+		}
+		return null;
+	}
+
+	protected FluidStack convertF (String fluid) {
+		return StackHelper.convertToFluid (fluid);
+	}
+
+	protected Ingredient convertI (String item) {
+		return StackHelper.convert (item,null);
+	}
+
+	protected int convertNI (String num) {
+		try {
+			return Integer.parseInt (num);
+		} catch (NumberFormatException e) {
+			script.info ("Invalid Number '" + num + "'");
+		}
+		return -1;
 	}
 }

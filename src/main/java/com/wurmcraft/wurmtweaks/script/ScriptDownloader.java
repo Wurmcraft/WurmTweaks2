@@ -19,31 +19,31 @@ import java.util.List;
 public class ScriptDownloader {
 
 	public String masterScript;
-	private String slaveScript;
 	public File saveLocation;
 	public List <String> slaveScripts = new ArrayList <> ();
-	private WurmScript wurmScript;
+	public WurmScript wurmScript;
+	private String slaveScript;
+	private ThreadHelper helper;
 
 	public ScriptDownloader (String mainScript,File saveLocation,String slaveScript) {
 		this.masterScript = mainScript;
 		this.saveLocation = saveLocation;
 		this.slaveScript = slaveScript;
+		helper = new ThreadHelper ();
 		init ();
 	}
 
 	public void init () {
 		if (ConfigHandler.checkForRecipeUpdates)
 			downloadFile (masterScript,"master.ws");
+		if (wurmScript == null)
+			wurmScript = new WurmScript ();
 		if (new File (saveLocation + File.separator + "master.ws").exists ()) {
 			try {
 				List <String> masterScriptLines = Files.readAllLines (new File (saveLocation + File.separator + "master.ws").toPath ());
-				String[] withCommentsRemoved = WurmScript.removeComments (masterScriptLines.toArray (new String[0]));
+				String[] withCommentsRemoved = wurmScript.removeComments (masterScriptLines.toArray (new String[0]));
 				Collections.addAll (slaveScripts,withCommentsRemoved);
-				if (wurmScript == null)
-					wurmScript = new WurmScript ();
-				wurmScript.init ();
 				downloadSlaveScripts ();
-				processSlaveScripts ();
 				if (WurmScript.reload) {
 					ForgeRegistry <IRecipe> recipeRegistry = (ForgeRegistry <IRecipe>) ForgeRegistries.RECIPES;
 					recipeRegistry.freeze ();
@@ -81,19 +81,9 @@ public class ScriptDownloader {
 			downloadFile (slaveScript + "/" + script,script);
 	}
 
-	private void processSlaveScripts () {
+	public void processScripts () {
 		if (slaveScript.length () > 0)
-			for (String script : slaveScripts) {
-				try {
-					List <String> slaveScriptLines = Files.readAllLines (new File (saveLocation + File.separator + script).toPath ());
-					if (slaveScriptLines.size () > 0) {
-						String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
-						WurmScript.setCurrentScript (new File (saveLocation + File.separator + script));
-						wurmScript.process (withCommentsRemoved);
-					}
-				} catch (IOException e) {
-					LogHandler.info ("Unable to read " + script + " I/O Exception");
-				}
-			}
+			for (String script : slaveScripts)
+				helper.scheduleScript (new File (saveLocation + File.separator + script));
 	}
 }

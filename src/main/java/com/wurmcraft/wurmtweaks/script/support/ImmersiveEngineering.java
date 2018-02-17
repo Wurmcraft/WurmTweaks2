@@ -1,18 +1,16 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
 import blusunrize.immersiveengineering.api.crafting.*;
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImmersiveEngineering implements IModSupport {
+public class ImmersiveEngineering extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -36,292 +34,97 @@ public class ImmersiveEngineering implements IModSupport {
 
 	@ScriptFunction
 	public void addAlloyRecipe (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack input1 = StackHelper.convert (input[1],null);
-				if (input1 != ItemStack.EMPTY) {
-					ItemStack input2 = StackHelper.convert (input[2],null);
-					if (input2 != ItemStack.EMPTY) {
-						try {
-							int time = Integer.parseInt (input[3]);
-							AlloyRecipe.addRecipe (output,input1,input2,time);
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[0] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[0] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAlloyRecipe('<output> <input1> <input2> <time>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addAlloyRecipe('<output> <input> <input2> <time>");
+		isValid (input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		AlloyRecipe.addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]),convertNI (input[3]));
 	}
 
 	@ScriptFunction
 	public void addArcFurnace (String line) {
-		String[] input = line.split (" ");
-		if (input.length >= 5) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack slag = StackHelper.convert (input[2],null);
-					if (slag != ItemStack.EMPTY) {
-						try {
-							int time = Integer.parseInt (input[3]);
-							try {
-								int energyTick = Integer.parseInt (input[4]);
-								List <ItemStack> additives = new ArrayList <> ();
-								if (input.length > 5)
-									for (int index = 6; index < input.length; index++)
-										if (StackHelper.convert (input[index],null) != ItemStack.EMPTY)
-											additives.add (StackHelper.convert (input[index],null));
-								ArcFurnaceRecipe.addRecipe (output,input,slag,time,energyTick,additives);
-							} catch (NumberFormatException f) {
-								WurmScript.info ("Invalid Number '" + input[4] + "'");
-							}
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[0] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[0] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addArcFurnace('<output> <input> <slag> <time> <energyTick> <additives>...')");
+		String[] input = verify (line,line.split (" ").length >= 5,"addArcFurnace('<output> <slag> <input> <time> <energy> | <additives'");
+		isValid (input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3],input[4]);
+		List <ItemStack> additives = new ArrayList <> ();
+		if (input.length > 5)
+			for (int index = 6; index < input.length; index++) {
+				isValid (input[index]);
+				additives.add (convertS (input[index]));
+			}
+		ArcFurnaceRecipe.addRecipe (convertS (input[0]),convertS (input[2]),convertS (input[1]),convertNI (input[3]),convertNI (input[4]),additives);
 	}
 
 	@ScriptFunction
 	public void addBlastFurnace (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack slagStack = StackHelper.convert (input[2],null);
-					if (slagStack != ItemStack.EMPTY) {
-						try {
-							int time = Integer.parseInt (input[3]);
-							BlastFurnaceRecipe.addRecipe (output,inputStack,time,slagStack);
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addBlastFurnace('<output> <input> <slag> <time>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addBlastFurnace(<output> <slag> <input> <time>')");
+		isValid (input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		BlastFurnaceRecipe.addRecipe (convertS (input[0]),convertS (input[2]),convertNI (input[3]),convertS (input[1]));
 	}
 
 	@ScriptFunction
 	public void addBlastFuel (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack fuel = StackHelper.convert (input[0],null);
-			if (fuel != ItemStack.EMPTY) {
-				try {
-					int time = Integer.parseInt (input[1]);
-					if (time > 0)
-						BlastFurnaceRecipe.addBlastFuel (fuel,time);
-					else
-						WurmScript.info ("Number Must Be Greater Than 0!");
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addBlastFuel('<output> <time>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addBlastFuel('<stack> <time>')");
+		isValid (input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		BlastFurnaceRecipe.addBlastFuel (convertS (input[0]),convertNI (input[1]));
 	}
 
 	@ScriptFunction
 	public void addCokeOven (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int time = Integer.parseInt (input[2]);
-						try {
-							int creosote = Integer.parseInt (input[3]);
-							CokeOvenRecipe.addRecipe (output,inputStack,time,creosote);
-						} catch (NumberFormatException f) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addCokeOven('<output> <input> <time> <creosote>");
+		String[] input = verify (line,line.split (" ").length == 4,"addCokeOven('<output> <input> <creosote> <time>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2],input[3]);
+		CokeOvenRecipe.addRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[3]),convertNI (input[2]));
 	}
 
 	@ScriptFunction (link = "crushing", linkSize = {3,5})
 	public void addCrusher (String line) {
-		String[] input = line.split (" ");
-		if (input.length >= 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int energy = Integer.parseInt (input[2]);
-						if (energy > 0) {
-							if (input.length == 3)
-								CrusherRecipe.addRecipe (output,input,energy);
-							else if (input.length == 5) {
-								ItemStack second = StackHelper.convert (input[3],null);
-								if (second != ItemStack.EMPTY) {
-									try {
-										CrusherRecipe recipe = CrusherRecipe.addRecipe (output,input,energy);
-										Float chance = Float.parseFloat (input[4]);
-										recipe.addToSecondaryOutput (second,chance);
-									} catch (NumberFormatException e) {
-										WurmScript.info ("Invalid Number '" + input[4] + "'");
-									}
-								} else
-									WurmScript.info ("Invalid Stack '" + input[3] + "'");
-							}
-						} else
-							WurmScript.info ("Number Must Be Greater Than 0!");
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addCrusher('<output> <input> <energy> | <secondary> <chance>");
+		String[] input = verify (line,line.split (" ").length == 3 || line.split (" ").length == 5,"addCrusher('<output> <input> <energy> | <secOutput> <secOutput%>");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		if (line.split (" ").length == 3)
+			CrusherRecipe.addRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
+		else {
+			isValid (input[3]);
+			isValid (EnumInputType.FLOATNG,input[4]);
+			CrusherRecipe recipe = new CrusherRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
+			recipe.addToSecondaryOutput (convertS (input[3]),convertNF (input[4]));
+			CrusherRecipe.recipeList.add (recipe);
+		}
 	}
 
 	@ScriptFunction
 	public void addFermenter (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			FluidStack outputFluid = StackHelper.convertToFluid (input[0]);
-			if (outputFluid != null) {
-				ItemStack output = StackHelper.convert (input[1],null);
-				if (output != ItemStack.EMPTY) {
-					ItemStack inputStack = StackHelper.convert (input[2],null);
-					if (inputStack != ItemStack.EMPTY) {
-						try {
-							int energy = Integer.parseInt (input[3]);
-							if (energy > 0)
-								FermenterRecipe.addRecipe (outputFluid,output,inputStack,energy);
-							else
-								WurmScript.info ("Number Must Be Greater Than 0!");
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("");
-		} else
-			WurmScript.info ("addFermenter('<*output> <output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addFermenter('<output> <*output> <input> <energy')");
+		isValid (input[0],input[2]);
+		isValid (EnumInputType.FLUID,input[1]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		FermenterRecipe.addRecipe (convertF (input[1]),convertS (input[0]),convertS (input[2]),convertNI (input[3]));
 	}
 
 	@ScriptFunction
 	public void addMetalPress (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack mold = StackHelper.convert (input[2],null);
-					if (mold != ItemStack.EMPTY) {
-						try {
-							int energy = Integer.parseInt (input[3]);
-							if (energy > 0)
-								MetalPressRecipe.addRecipe (output,inputStack,mold,energy);
-							else
-								WurmScript.info ("Number Must Be Greater Than 0!");
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addMetalPress('<output> <input> <mold> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addMetalPress(<output> <input> <mold> <time>')");
+		isValid (input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		MetalPressRecipe.addRecipe (convertS (input[0]),convertS (input[2]),convertS (input[3]),convertNI (input[1]));
 	}
 
 	@ScriptFunction
 	public void addRefinery (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			FluidStack outputFluid = StackHelper.convertToFluid (input[0]);
-			if (outputFluid != null) {
-				FluidStack inputFluid = StackHelper.convertToFluid (input[1]);
-				if (inputFluid != null) {
-					FluidStack inputFluid2 = StackHelper.convertToFluid (input[2]);
-					if (inputFluid2 != null) {
-						try {
-							int energy = Integer.parseInt (input[3]);
-							if (energy > 0)
-								RefineryRecipe.addRecipe (outputFluid,inputFluid,inputFluid2,energy);
-							else
-								WurmScript.info ("Number Must Be Greater Than 0!");
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Fluid '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Fluid '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addRefinery('<*output> <*input> <*input2> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addRefinery('<*output> <*input> <*input> <energy>')");
+		isValid (EnumInputType.FLUID,input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		RefineryRecipe.addRecipe (convertF (input[0]),convertF (input[1]),convertF (input[2]),convertNI (input[3]));
 	}
 
 	@ScriptFunction
 	public void addSqueezer (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			FluidStack fluidOutput = StackHelper.convertToFluid (input[0]);
-			if (fluidOutput != null) {
-				ItemStack output = StackHelper.convert (input[1],null);
-				if (output != ItemStack.EMPTY) {
-					ItemStack inputStack = StackHelper.convert (input[2],null);
-					if (inputStack != ItemStack.EMPTY) {
-						try {
-							int energy = Integer.parseInt (input[3]);
-							if (energy > 0)
-								SqueezerRecipe.addRecipe (fluidOutput,output,input,energy);
-							else
-								WurmScript.info ("Number Must Be Greater Than 0!");
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addSqueezer('<*output> <output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addSqueezer('<output> <*output> <input> <energy>')");
+		isValid (input[0],input[2]);
+		isValid (EnumInputType.FLUID,input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		SqueezerRecipe.addRecipe (convertF (input[1]),convertS (input[0]),convertS (input[1]),convertNI (input[2]));
 	}
 }

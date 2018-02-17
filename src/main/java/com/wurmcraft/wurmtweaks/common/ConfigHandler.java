@@ -47,6 +47,9 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_LINKED_MACHINES)
 	public static boolean linkedMachines = true;
 
+	@Config.LangKey (Local.CONFIG_CACHE)
+	public static boolean cache = false;
+
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID ().equals (Global.MODID)) {

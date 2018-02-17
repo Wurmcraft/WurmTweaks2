@@ -2,14 +2,12 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.rwtema.extrautils2.api.machine.XUMachineCrusher;
 import com.rwtema.extrautils2.tile.TileResonator;
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
-import net.minecraft.item.ItemStack;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 
-public class ExtraUtils2 implements IModSupport {
+public class ExtraUtils2 extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -27,56 +25,22 @@ public class ExtraUtils2 implements IModSupport {
 
 	@ScriptFunction
 	public void addResonator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int energy = Integer.parseInt (input[2]);
-						if (energy > 0)
-							TileResonator.register (inputStack,output,energy);
-						else
-							WurmScript.info ("Number Must Be Greater Than 0!");
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addResonator('<output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addResonator('<output> <input> <energy>'");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		TileResonator.register (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
 	}
 
 	@ScriptFunction (link = "crushing", linkSize = {2,4})
 	public void addXUCrusher (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2 || input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					if (input.length == 2)
-						XUMachineCrusher.addRecipe (inputStack,output);
-					else {
-						ItemStack secOutput = StackHelper.convert (input[2],null);
-						if (secOutput != ItemStack.EMPTY) {
-							try {
-								Float chance = Float.parseFloat (input[3]);
-								XUMachineCrusher.addRecipe (inputStack,output,secOutput,chance);
-							} catch (NumberFormatException e) {
-								WurmScript.info ("Invalid Number '" + input[3] + "'");
-							}
-						} else
-							WurmScript.info ("Invalid Stack '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addCrusher('<output> <input> |<secondaryOutput> <secondary%>')");
+		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 4,"addXUCrusher('<output> <input> | <secOutput> <secOutput%>");
+		isValid (input[0],input[1]);
+		if (line.split (" ").length == 2)
+			XUMachineCrusher.addRecipe (convertS (input[1]),convertS (input[0]));
+		else {
+			isValid (input[2]);
+			isValid (EnumInputType.FLOATNG,input[3]);
+			XUMachineCrusher.addRecipe (convertS (input[1]),convertS (input[0]),convertS (input[2]),convertNF (input[3]));
+		}
 	}
 }

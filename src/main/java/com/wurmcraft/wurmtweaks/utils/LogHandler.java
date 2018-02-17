@@ -20,10 +20,11 @@ public class LogHandler {
 	static {
 		FileOutputStream fos = null;
 		try {
-			String file = Loader.instance().getConfigDir().getParent() + "/" + Global.MODID + ".log";
-			File logFile = new File(file);
-			if (!logFile.exists()) logFile.createNewFile();
-			fos = new FileOutputStream(logFile);
+			String file = Loader.instance ().getConfigDir ().getParent () + "/" + Global.MODID + ".log";
+			File logFile = new File (file);
+			if (!logFile.exists ())
+				logFile.createNewFile ();
+			fos = new FileOutputStream (logFile);
 		} catch (IOException e) {
 			LOGGER.log (Level.ERROR,"Error opening " + Global.MODID + " log!");
 		} finally {
@@ -31,34 +32,35 @@ public class LogHandler {
 		}
 	}
 
-	private static void logToFile(String data) {
+	private static void logToFile (String data) {
 		if (ConfigHandler.logToFile && FILE_LOG != null)
 			try {
-				FILE_LOG.write(data.getBytes());
+				FILE_LOG.write (data.getBytes ());
 			} catch (IOException e) {
-				SCRIPT_LOGGER.log(Level.ERROR, "ERROR WRITING MESSAGE TO LOG FILE! Message: '" + data + "'");
+				SCRIPT_LOGGER.log (Level.ERROR,"ERROR WRITING MESSAGE TO LOG FILE! Message: '" + data + "'");
 			}
 	}
 
-	private static void log (Level level, String msg) {
-		LOGGER.log(level, msg);
-		logToFile("[" + level.name() + "]: " + msg + "\n");
+	private static void log (Level level,String msg) {
+		LOGGER.log (level,msg);
+		logToFile ("[" + level.name () + "]: " + msg + "\n");
 	}
 
-	public static void info(String msg) {
-		log(Level.INFO, msg);
+	public static void info (String msg) {
+		log (Level.INFO,msg);
 	}
 
-	public static void error(String msg) {
-		log(Level.ERROR, msg);
+	public static void error (String msg) {
+		log (Level.ERROR,msg);
 	}
 
-	public static void debug(String msg) {
-		if (ConfigHandler.debug) log(Level.DEBUG, msg);
+	public static void debug (String msg) {
+		if (ConfigHandler.debug)
+			log (Level.DEBUG,msg);
 	}
 
-	public static void script(String file, int lineNo, String msg) {
-		SCRIPT_LOGGER.log(Level.INFO,file + " [" + lineNo + "]: " + msg);
-		logToFile("[" + Level.INFO.name() + "]: " + file + ":" + lineNo + "\n" + msg + "\n");
+	public static void script (String file,int lineNo,String msg) {
+		SCRIPT_LOGGER.log (Level.INFO,file + " [" + lineNo + "]: " + msg);
+		logToFile ("[" + file + " " + lineNo + "]: " + msg + "\n");
 	}
 }

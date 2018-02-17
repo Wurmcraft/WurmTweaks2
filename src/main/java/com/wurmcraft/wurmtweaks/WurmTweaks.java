@@ -8,7 +8,7 @@ import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.common.items.WTItems;
 import com.wurmcraft.wurmtweaks.common.network.NetworkHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
-import com.wurmcraft.wurmtweaks.script.ModSupport;
+import com.wurmcraft.wurmtweaks.script.ModRegistry;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
 import net.minecraftforge.common.MinecraftForge;
@@ -47,8 +47,10 @@ public class WurmTweaks {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
-		ModSupport.init ();
 		dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
+		ModRegistry.init ();
+		dl.wurmScript.init ();
+		dl.processScripts ();
 	}
 
 	@Mod.EventHandler

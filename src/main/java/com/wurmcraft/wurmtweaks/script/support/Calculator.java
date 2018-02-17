@@ -1,17 +1,16 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import net.minecraft.item.ItemStack;
 import sonar.calculator.mod.common.recipes.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Calculator implements IModSupport {
+public class Calculator extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -40,293 +39,106 @@ public class Calculator implements IModSupport {
 
 	@ScriptFunction
 	public void addAlgorithmSeparator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack output2 = StackHelper.convert (input[1],null);
-				if (output2 != ItemStack.EMPTY) {
-					ItemStack inputStack = StackHelper.convert (input[2],null);
-					if (inputStack != ItemStack.EMPTY) {
-						AlgorithmSeparatorRecipes.instance ().addRecipe (inputStack,output,output2);
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAlgorithmSeparator('<output> <output2> <input>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addCalculator('<output> <output2>  <input2>')");
+		isValid (input[0],input[1],input[2]);
+		AlgorithmSeparatorRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]));
 	}
 
 	@ScriptFunction
 	public void addAtomicCalculator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						ItemStack inputStack3 = StackHelper.convert (input[3],null);
-						if (inputStack3 != ItemStack.EMPTY) {
-							AtomicCalculatorRecipes.instance ().addRecipe (inputStack,inputStack2,inputStack3,output);
-						} else
-							WurmScript.info ("Invalid Stack '" + input[3] + "'");
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAtomicCalculator('<output> <input> <input2> <input3>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addCalculator('<output> <input>  <input2> <input3>')");
+		isValid (input[0],input[1],input[2]);
+		CalculatorRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]),convertS (input[3]));
 	}
 
 	@ScriptFunction
 	public void addCalculator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						CalculatorRecipes.instance ().addRecipe (inputStack,inputStack2,output);
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addCalculator('<output> <input> <input2>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addCalculator('<output> <input>  <input2>')");
+		isValid (input[0],input[1],input[2]);
+		CalculatorRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]));
 	}
 
 	@ScriptFunction
 	public void addConductorMass (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int energy = Integer.parseInt (input[2]);
-						ConductorMastRecipes.instance ().addRecipe (inputStack,output,energy);
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addConductorMass('<output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addConductorMass('<output> <input> <energy>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		ConductorMastRecipes.instance ().addRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
 	}
 
 	@ScriptFunction
 	public void addExtractionChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						ExtractionChamberRecipes.instance ().addRecipe (inputStack,inputStack2,new ExtractionChamberRecipes.ExtractionChamberOutput (output));
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addExtractionChamber('<output> <input> <input2>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addStoneSeperator('<output> <input>  <input2>')");
+		isValid (input[0],input[1],input[2]);
+		StoneSeparatorRecipes.instance ().addRecipe (convertS (input[1]),convertS (input[2]),new ExtractionChamberRecipes.ExtractionChamberOutput (convertS (input[0])));
 	}
 
 	@ScriptFunction
-	public void addFabracation (String line) {
-		String[] input = line.split (" ");
-		if (input.length > 1) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				List <ItemStack> inputItems = new ArrayList <> ();
-				for (int index = 1; index < input.length; index++)
-					if (StackHelper.convert (input[index],null) != ItemStack.EMPTY)
-						inputItems.add (StackHelper.convert (input[index],null));
-					else {
-						WurmScript.info ("Invalid Stack '" + input[index] + "'");
-						return;
-					}
-				FabricationChamberRecipes.instance ().addRecipe (output,inputItems.toArray (new ItemStack[0]));
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addFabracation('<output> <input>...");
+	public void addFabrication (String line) {
+		String[] input = verify (line,line.split (" ").length >= 2,"addFabrication('<output> <input>...')");
+		isValid (input[0]);
+		List <ItemStack> inputItems = new ArrayList <> ();
+		for (int index = 1; index < input.length; index++) {
+			isValid (input[index]);
+			inputItems.add (convertS (input[index]));
+		}
+		FabricationChamberRecipes.instance ().addRecipe (convertS (input[0]),inputItems.toArray (new ItemStack[0]));
 	}
 
 	@ScriptFunction
 	public void addFlawlessCalculator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 5) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						ItemStack inputStack3 = StackHelper.convert (input[3],null);
-						if (inputStack3 != ItemStack.EMPTY) {
-							ItemStack inputStack4 = StackHelper.convert (input[4],null);
-							if (inputStack4 != ItemStack.EMPTY) {
-								FlawlessCalculatorRecipes.instance ().addRecipe (inputStack,inputStack2,inputStack3,inputStack4,output);
-							} else
-								WurmScript.info ("Invalid Stack '" + input[4] + "'");
-						} else
-							WurmScript.info ("Invalid Stack '" + input[3] + "'");
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addFlawlessCalculator('<output> <input> <input2> <input3> <input4>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addPrecisionChamber('<output> <input>  <input2> <input3> <input4>')");
+		isValid (input[0],input[1],input[2],input[3],input[4],input[5]);
+		FlawlessCalculatorRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]),convertS (input[3]),convertS (input[4]),convertS (input[5]));
 	}
 
 	@ScriptFunction
 	public void addHealthProccessor (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack stack = StackHelper.convert (input[0],null);
-			if (stack != ItemStack.EMPTY) {
-				try {
-					int amount = Integer.parseInt (input[1]);
-					HealthProcessorRecipes.instance ().addRecipe (stack,amount);
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalud Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addHealthProccessor('<item> <amount>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addHealthProccessor('<stack> <amount>')");
+		isValid (input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		HealthProcessorRecipes.instance ().addRecipe (convertS (input[0]),convertNI (input[1]));
 	}
 
 	@ScriptFunction
 	public void addPrecisionChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						PrecisionChamberRecipes.instance ().addRecipe (inputStack,inputStack2,new PrecisionChamberRecipes.PrecisionChamberOutput (output));
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addPrecisionChamber('<output> <input> <input2>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addPrecisionChamber('<output> <input>  <input2>')");
+		isValid (input[0],input[1],input[2]);
+		PrecisionChamberRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]));
 	}
 
 	@ScriptFunction
 	public void addScientific (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						ScientificRecipes.instance ().addRecipe (inputStack,inputStack2,output);
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addScientific('<output> <input> <input2>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addScientific('<output> <input>  <input2>')");
+		isValid (input[0],input[1],input[2]);
+		ScientificRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]));
 	}
 
 	@ScriptFunction
 	public void addStoneSeperator (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						StoneSeparatorRecipes.instance ().addRecipe (inputStack,inputStack2,output);
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addStoneSeperator('<output> <input> <input2>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addStoneSeperator('<output> <input>  <input2>')");
+		isValid (input[0],input[1],input[2]);
+		StoneSeparatorRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]),convertS (input[2]));
 	}
 
 	@ScriptFunction
 	public void addProcessingChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ProcessingChamberRecipes.instance ().addRecipe (output,input);
-				} else
-					WurmScript.info ("Invalid Input '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addProcessingChamber('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 3,"addProcessingChamber('<output> <input>')");
+		isValid (input[0],input[1]);
+		ProcessingChamberRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]));
 	}
 
 	@ScriptFunction
 	public void addRestorationChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					RestorationChamberRecipes.instance ().addRecipe (output,input);
-				} else
-					WurmScript.info ("Invalid Input '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addRestorationChamber('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 2,"addRestorationChamber('<output> <input>')");
+		isValid (input[0],input[1]);
+		RestorationChamberRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]));
 	}
 
 	@ScriptFunction
 	public void addReassemblyChamber (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ReassemblyChamberRecipes.instance ().addRecipe (output,input);
-				} else
-					WurmScript.info ("Invalid Input '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Output '" + input[0] + "'");
-		} else
-			WurmScript.info ("addReassemblyChamber('<output> <input')");
+		String[] input = verify (line,line.split (" ").length == 2,"addReassemblyChamber('<output> <input>')");
+		isValid (input[0],input[1]);
+		ReassemblyChamberRecipes.instance ().addRecipe (convertS (input[0]),convertS (input[1]));
 	}
 }

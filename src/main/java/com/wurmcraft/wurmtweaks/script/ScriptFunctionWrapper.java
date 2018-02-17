@@ -1,7 +1,6 @@
 package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.api.IModSupport;
-import joptsimple.internal.Strings;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,9 +18,8 @@ public class ScriptFunctionWrapper implements Function <String, Void> {
 
 	@Override
 	public Void apply (String s) {
-		String[] lines = s.split (" ");
 		try {
-			method.invoke (clazz,Strings.join (lines, " "));
+			method.invoke (clazz,s);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 		e.getCause ().printStackTrace ();
 		}

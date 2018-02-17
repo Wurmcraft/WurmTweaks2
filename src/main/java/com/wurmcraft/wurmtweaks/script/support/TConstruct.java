@@ -1,11 +1,10 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import com.wurmcraft.wurmtweaks.api.IModSupport;
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
-import net.minecraft.item.ItemStack;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO Add Material Support
-public class TConstruct implements IModSupport {
+public class TConstruct extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -55,144 +54,68 @@ public class TConstruct implements IModSupport {
 
 	@ScriptFunction
 	public void addCasting (String line) {
-		String[] input = line.split (" ");
-		if (input.length > 0 && StackHelper.convert (input[0],null) != ItemStack.EMPTY) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (input.length == 3) {
-				if (StackHelper.convert (input[1],null) != null) {
-					ItemStack cast = StackHelper.convert (input[1],null);
-					FluidStack fluidStack = StackHelper.convertToFluid (input[2]);
-					if (fluidStack != null)
-						TinkerRegistry.registerTableCasting (output,cast,fluidStack.getFluid (),fluidStack.amount);
-					else
-						WurmScript.info ("Invalid FluidStack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[0] + "'");
-			} else
-				WurmScript.info ("addCasting('<output> <cast> <*fluid>");
-		} else
-			WurmScript.info ("Invalid Stack '" + input[0] + "'");
+		String[] input = verify (line,line.split (" ").length == 3,"addCasting('<output> <cast> <*fluid>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.FLUID,input[2]);
+		FluidStack fluidStack = convertF (input[2]);
+		TinkerRegistry.registerTableCasting (convertS (input[0]),convertS (input[1]),fluidStack.getFluid (),fluidStack.amount);
 	}
 
 	@ScriptFunction
 	public void addBasin (String line) {
-		String[] input = line.split (" ");
-		if (input.length > 0 && StackHelper.convert (input[0],null) != ItemStack.EMPTY) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (input.length == 3) {
-				if (StackHelper.convert (input[1],null) != null) {
-					ItemStack cast = StackHelper.convert (input[1],null);
-					FluidStack fluidStack = StackHelper.convertToFluid (input[2]);
-					if (fluidStack != null)
-						TinkerRegistry.registerBasinCasting (output,cast,fluidStack.getFluid (),fluidStack.amount);
-					else
-						WurmScript.info ("Invalid FluidStack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[0] + "'");
-			} else
-				WurmScript.info ("addBasin('<output> <cast> <*fluid>");
-		} else
-			WurmScript.info ("Invalid Stack '" + input[0] + "'");
+		String[] input = verify (line,line.split (" ").length == 3,"addBasin('<output> <cast> <*fluid>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.FLUID,input[2]);
+		FluidStack fluidStack = convertF (input[2]);
+		TinkerRegistry.registerBasinCasting (convertS (input[0]),convertS (input[1]),fluidStack.getFluid (),fluidStack.amount);
 	}
 
 	@ScriptFunction
 	public void addAlloy (String line) {
-		String[] input = line.split (" ");
-		if (input.length > 1) {
-			FluidStack outputStack = StackHelper.convertToFluid (input[0]);
-			if (outputStack != null) {
-				List <FluidStack> inputFluids = new ArrayList <> ();
-				for (int index = 1; index < input.length; index++)
-					if (StackHelper.convertToFluid (input[index]) != null)
-						inputFluids.add (StackHelper.convertToFluid (input[index]));
-					else {
-						WurmScript.info ("Invalid FluidStack '" + input[0] + "'");
-						return;
-					}
-				TinkerRegistry.registerAlloy (outputStack,inputFluids.toArray (new FluidStack[0]));
-			} else
-				WurmScript.info ("Invalid FluidStack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAlloy('<*output> <*input>...');");
+		String[] input = verify (line,line.split (" ").length >= 2,"addAlloy('<*output> <*input>...')");
+		isValid (EnumInputType.FLUID,input[0]);
+		List <FluidStack> inputFluids = new ArrayList <> ();
+		for (int index = 1; index < input.length; index++) {
+			isValid (EnumInputType.FLUID,input[index]);
+			inputFluids.add (convertF (input[index]));
+		}
+		TinkerRegistry.registerAlloy (convertF (input[0]),inputFluids.toArray (new FluidStack[0]));
 	}
 
 	@ScriptFunction
 	public void addDrying (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					int time = Integer.parseInt (input[2]);
-					if (time > 0)
-						TinkerRegistry.registerDryingRecipe (inputStack,output,time);
-					else
-						WurmScript.info (time + " must be greater then 0");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[0] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addDrying('<output> <input> <time>');");
+		String[] input = verify (line,line.split (" ").length == 3,"addDrying('<output> <input> <time>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		TinkerRegistry.registerDryingRecipe (convertS (input[1]),convertS (input[2]),convertNI (input[3]));
 	}
 
 	@ScriptFunction
 	public void addFuel (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack fluid = StackHelper.convertToFluid (input[0]);
-			if (fluid != null) {
-				int time = Integer.parseInt (input[1]);
-				if (time > 0) {
-					TinkerRegistry.registerSmelteryFuel (fluid,time);
-				} else
-					WurmScript.info (time + " must be greater then 0");
-			} else
-				WurmScript.info ("Invalid FluidStack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addFuel(<*fluid> <time>");
+		String[] input = verify (line,line.split (" ").length == 2,"addFuel(<*fluid> <time>')");
+		isValid (EnumInputType.FLUID,input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		TinkerRegistry.registerSmelteryFuel (convertF (input[0]),convertNI (input[1]));
 	}
 
 	@ScriptFunction
 	public void addMelting (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack meltingStack = StackHelper.convert (input[0],null);
-			if (meltingStack != ItemStack.EMPTY) {
-				FluidStack fluid = StackHelper.convertToFluid (input[1]);
-				if (fluid != null) {
-					int temp = Integer.parseInt (input[2]);
-					if (temp > 0)
-						TinkerRegistry.registerMelting (new MeltingRecipe (RecipeMatch.of (meltingStack,fluid.amount),fluid,temp));
-					else
-						WurmScript.info (temp + " must be greater then 0");
-				} else
-					WurmScript.info ("Invalid FluidStack '" + input[0] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addMelting('<stack> <*fluid> <temp>');");
+		String[] input = verify (line,line.split (" ").length == 3,"addMelting('<*output> <input> <temp>')");
+		isValid (EnumInputType.FLUID,input[0]);
+		isValid (input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		FluidStack fluidStack = convertF (input[0]);
+		TinkerRegistry.registerMelting (new MeltingRecipe (RecipeMatch.of (convertS (input[1]),fluidStack.amount),fluidStack,convertNI (input[2])));
 	}
 
 	@ScriptFunction
 	public void addEntityMelting (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			EntityEntry entity = null;
-			for (EntityEntry ent : ForgeRegistries.ENTITIES.getValues ()) {
-				if (ent.getName ().equalsIgnoreCase (input[0]))
-					entity = ent;
-			}
-			if (entity != null) {
-				FluidStack fluid = StackHelper.convertToFluid (input[1]);
-				if (fluid != null) {
-					TinkerRegistry.registerEntityMelting (entity.getEntityClass (),fluid);
-				} else
-					WurmScript.info ("Invalid FluidStack '" + input[0] + "'");
-			} else
-				WurmScript.info ("Invalid Entity '" + input[0] + "'");
-		} else
-			WurmScript.info ("addEntityMelting('entityName <*fluid>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addEntityMelting('<*output> entityName')");
+		EntityEntry entity = null;
+		for (EntityEntry ent : ForgeRegistries.ENTITIES.getValues ())
+			if (ent.getName ().equalsIgnoreCase (input[0]))
+				entity = ent;
+		Preconditions.checkNotNull (entity);
+		TinkerRegistry.registerEntityMelting (entity.getEntityClass (),convertF (input[0]));
 	}
 }

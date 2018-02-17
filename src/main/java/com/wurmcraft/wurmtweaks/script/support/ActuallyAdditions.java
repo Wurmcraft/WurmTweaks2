@@ -1,17 +1,13 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
+import com.wurmcraft.wurmtweaks.script.EnumInputType;
+import com.wurmcraft.wurmtweaks.script.ModSupport;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
-public class ActuallyAdditions implements IModSupport {
+public class ActuallyAdditions extends ModSupport {
 
 	@Override
 	public String getModID () {
@@ -33,158 +29,54 @@ public class ActuallyAdditions implements IModSupport {
 
 	@ScriptFunction
 	public void addEmpowerer (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 8) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputCenter = StackHelper.convert (input[1],null);
-				if (inputCenter != ItemStack.EMPTY) {
-					ItemStack inputStack2 = StackHelper.convert (input[2],null);
-					if (inputStack2 != ItemStack.EMPTY) {
-						ItemStack input2 = StackHelper.convert (input[3],null);
-						if (input2 != ItemStack.EMPTY) {
-							ItemStack input3 = StackHelper.convert (input[4],null);
-							if (input3 != ItemStack.EMPTY) {
-								ItemStack input4 = StackHelper.convert (input[5],null);
-								if (input4 != ItemStack.EMPTY) {
-									try {
-										int energy = Integer.parseInt (input[6]);
-										try {
-											int time = Integer.parseInt (input[7]);
-											ActuallyAdditionsAPI.addEmpowererRecipe (inputCenter,output,inputStack2,input3,input3,input4,energy,time,new float[] {1F,91F / 255F,76F / 255F});
-										} catch (NumberFormatException f) {
-											WurmScript.info ("Invalid Number '" + input[7] + "'");
-										}
-									} catch (NumberFormatException e) {
-										WurmScript.info ("Invalid Number '" + input[6] + "'");
-									}
-								} else
-									WurmScript.info ("Invalid Stack '" + input[5] + "'");
-							} else
-								WurmScript.info ("Invalid Stack '" + input[4] + "'");
-						} else
-							WurmScript.info ("Invalid Stack '" + input[3] + "'");
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addEmpowerer('<output> <inputCenter> <input> <input2> <input3> <input4> <energyPerStand> <time>')");
+		String[] input = verify (line,line.split (" ").length == 8,"addEmpowerer('<output> <inputCenter> <input> <input2> <input3> <input4> <energyPerStand> <time>')");
+		isValid (input[0],input[1],input[2],input[3],input[4],input[5]);
+		isValid (EnumInputType.INTEGER,input[6],input[7]);
+		ActuallyAdditionsAPI.addEmpowererRecipe (convertS (input[1]),convertS (input[0]),convertS (input[2]),convertS (input[3]),convertS (input[4]),convertS (input[4]),convertNI (input[5]),convertNI (input[6]),new float[] {1F,91F / 255F,76F / 255F});
 	}
 
 	@ScriptFunction
 	public void addReconstructor (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 3) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					try {
-						int energy = Integer.parseInt (input[2]);
-						ActuallyAdditionsAPI.addReconstructorLensConversionRecipe (inputStack,output,energy);
-					} catch (NumberFormatException e) {
-						WurmScript.info ("Invalid Number '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addReconstructor('<output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 2,"addReconstructor('<output> <input> <energy>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		ActuallyAdditionsAPI.addReconstructorLensConversionRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
 	}
 
 	@ScriptFunction (link = "crushing", linkSize = {4})
 	public void addAACrusher (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY) {
-					ItemStack secOutput = StackHelper.convert (input[2],null);
-					if (secOutput != ItemStack.EMPTY) {
-						try {
-							int chance = Integer.parseInt (input[3]);
-							ActuallyAdditionsAPI.addCrusherRecipe (inputStack,output,secOutput,chance);
-						} catch (NumberFormatException e) {
-							WurmScript.info ("Invalid Number '" + input[3] + "'");
-						}
-					} else
-						WurmScript.info ("Invalid Stack '" + input[2] + "'");
-				} else
-					WurmScript.info ("Invalid Stack '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack '" + input[0] + "'");
-		} else
-			WurmScript.info ("addAACrusher('<output> <input> <secendaryOutput> <output%>')");
+		String[] input = verify (line,line.split (" ").length == 4,"addAACrusher('<output> <input> <secOutput> <secOutput%>')");
+		isValid (input[0],input[1],input[2]);
+		isValid (EnumInputType.INTEGER,input[3]);
+		ActuallyAdditionsAPI.addCrusherRecipe (convertS (input[1]),convertS (input[0]),convertS (input[2]),convertNI (input[3]));
 	}
 
 
 	@ScriptFunction (link = "laser", linkSize = {2})
 	public void addMiningLensStone (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			String oreDict = input[0];
-			if (OreDictionary.doesOreNameExist (oreDict)) {
-				try {
-					int weight = Integer.parseInt (input[1]);
-					ActuallyAdditionsAPI.addMiningLensStoneOre (oreDict,weight);
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Ore Dict Entry '" + input[0] + "'");
-		} else
-			WurmScript.info ("addMiningLensStone('<oreDict> <weight>'))");
+		String[] input = verify (line,line.split (" ").length == 2,"addMiningLensStone('<oreDict> <weight>')");
+		isValid (EnumInputType.STRING,input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		ActuallyAdditionsAPI.addMiningLensStoneOre (input[0],convertNI (input[1]));
 	}
 
 	@ScriptFunction
 	public void addMiningLensNether (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			String oreDict = input[0];
-			if (OreDictionary.doesOreNameExist (oreDict)) {
-				try {
-					int weight = Integer.parseInt (input[1]);
-					ActuallyAdditionsAPI.addMiningLensNetherOre (oreDict,weight);
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Ore Dict Entry '" + input[0] + "'");
-		} else
-			WurmScript.info ("addMiningLensNether('<oreDict> <weight>'))");
+		String[] input = verify (line,line.split (" ").length == 2,"addMiningLensNether('<oreDict> <weight>')");
+		isValid (EnumInputType.STRING,input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		ActuallyAdditionsAPI.addMiningLensNetherOre (input[0],convertNI (input[1]));
 	}
 
 	@ScriptFunction
 	public void addComposter (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2 || input.length == 4) {
-			ItemStack output = StackHelper.convert (input[0],null);
-			if (output != ItemStack.EMPTY && input.length == 4 || input.length == 2 && output != ItemStack.EMPTY && Block.getBlockFromItem (output.getItem ()) != Blocks.AIR) {
-				ItemStack inputStack = StackHelper.convert (input[1],null);
-				if (inputStack != ItemStack.EMPTY && input.length == 4 || input.length == 2 && inputStack != ItemStack.EMPTY && Block.getBlockFromItem (inputStack.getItem ()) != Blocks.AIR) {
-					if (input.length == 2)
-						ActuallyAdditionsAPI.addCompostRecipe (inputStack,Block.getBlockFromItem (inputStack.getItem ()),output,Block.getBlockFromItem (output.getItem ()));
-					else {
-						ItemStack displayOutput = StackHelper.convert (input[2],null);
-						if (displayOutput != ItemStack.EMPTY && Block.getBlockFromItem (displayOutput.getItem ()) != Blocks.AIR) {
-							ItemStack displayInput = StackHelper.convert (input[3],null);
-							if (displayInput != ItemStack.EMPTY && Block.getBlockFromItem (displayInput.getItem ()) != Blocks.AIR) {
-								ActuallyAdditionsAPI.addCompostRecipe (inputStack,Block.getBlockFromItem (displayInput.getItem ()),output,Block.getBlockFromItem (displayOutput.getItem ()));
-							} else
-								WurmScript.info ("Invalid Block '" + input[3] + "'");
-						} else
-							WurmScript.info ("Invalid Block '" + input[2] + "'");
-					}
-				} else
-					WurmScript.info ("Invalid Stack/Block '" + input[1] + "'");
-			} else
-				WurmScript.info ("Invalid Stack/Block '" + input[0] + "'");
-		} else
-			WurmScript.info ("addComposter('<output> <input> | <displayOutput> <displayInput>')");
+		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 4,"addComposter('<output> <input> | <outputDisplay> <inputDisplay')");
+		isValid (input[0],input[1]);
+		if (line.split (" ").length == 2) {
+			ActuallyAdditionsAPI.addCompostRecipe (convertS (input[1]),Block.getBlockFromItem (convertS (input[1]).getItem ()),convertS (input[0]),Block.getBlockFromItem (convertS (input[0]).getItem ()));
+		} else {
+			isValid (input[2],input[3]);
+			ActuallyAdditionsAPI.addCompostRecipe (convertS (input[1]),Block.getBlockFromItem (convertS (input[2]).getItem ()),convertS (input[0]),Block.getBlockFromItem (convertS (input[3]).getItem ()));
+		}
 	}
 }
