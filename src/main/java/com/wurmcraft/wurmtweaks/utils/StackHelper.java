@@ -1,7 +1,7 @@
 package com.wurmcraft.wurmtweaks.utils;
 
-import com.wurmcraft.wurmtweaks.WurmTweaks;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
+import com.wurmcraft.wurmtweaks.script.WurmScript;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
@@ -48,7 +48,7 @@ public class StackHelper {
 					try {
 						stack.setTagCompound (JsonToNBT.getTagFromJson (item.substring (item.indexOf ("^") + 1,item.length () - 1)));
 					} catch (NBTException e) {
-						WurmTweaks.dl.wurmScript.info ("Invalid NBT '" + item.substring (item.indexOf ("^") + 1,item.length () - 1) + "'" + " for the item '" + item + "'");
+						WurmScript.info ("Invalid NBT '" + item.substring (item.indexOf ("^") + 1,item.length () - 1) + "'" + " for the item '" + item + "'");
 					}
 				if (ConfigHandler.cache)
 					cachedItems.putIfAbsent (input,stack);

@@ -40,7 +40,7 @@ public class Minecraft extends ModSupport {
 		if (inputStacks.size () > 0)
 			RecipeUtils.addShapeless (output,inputStacks.toArray (new Ingredient[0]));
 		else
-			script.info ("Invalid Recipe, No Items Found!");
+			WurmScript.info ("Invalid Recipe, No Items Found!");
 	}
 
 	@ScriptFunction
@@ -77,13 +77,13 @@ public class Minecraft extends ModSupport {
 				} else
 					recipeFormat.put (input[index].charAt (0),Ingredient.EMPTY);
 			} else if (input[index].length () > 1) {
-				script.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
+				WurmScript.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
 				return;
 			}
 		boolean valid = true;
 		for (Character ch : recipeFormat.keySet ())
 			if (recipeFormat.get (ch) == Ingredient.EMPTY) {
-				script.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
+				WurmScript.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
 				valid = false;
 			}
 		if (valid) {

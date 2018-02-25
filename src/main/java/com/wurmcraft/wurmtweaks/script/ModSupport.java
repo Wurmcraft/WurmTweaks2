@@ -1,7 +1,6 @@
 package com.wurmcraft.wurmtweaks.script;
 
 import com.google.common.base.Preconditions;
-import com.wurmcraft.wurmtweaks.WurmTweaks;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
@@ -9,8 +8,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ModSupport implements IModSupport {
-
-	protected WurmScript script = WurmTweaks.dl.wurmScript;
 
 	@Override
 	public String getModID () {
@@ -29,36 +26,35 @@ public class ModSupport implements IModSupport {
 					try {
 						Preconditions.checkArgument (StackHelper.convert (input) != ItemStack.EMPTY,"Invalid Item '%s'",input);
 					} catch (IllegalArgumentException e) {
-						script.info (e.getMessage ());
+						WurmScript.info (e.getMessage ());
 					}
 					break;
 				case FLUID:
 					try {
 						Preconditions.checkArgument (StackHelper.convertToFluid (input) != null,"Invalid Fluid '%s'",input);
 					} catch (IllegalArgumentException e) {
-						script.info (e.getMessage ());
-
+						WurmScript.info (e.getMessage ());
 					}
 					break;
 				case INTEGER:
 					try {
 						Integer.parseInt (input);
 					} catch (NumberFormatException f) {
-						script.info ("Invalid Number '" + input + "'");
+						WurmScript.info ("Invalid Number '" + input + "'");
 					}
 					break;
 				case FLOATNG:
 					try {
 						Float.parseFloat (input);
 					} catch (NumberFormatException f) {
-						script.info ("Invalid Number '" + input + "'");
+						WurmScript.info ("Invalid Number '" + input + "'");
 					}
 					break;
 				case BOOLEAN:
 					try {
 						Boolean.parseBoolean (input);
 					} catch (NumberFormatException f) {
-						script.info ("Invalid Boolean (True/False) '" + input + "'");
+						WurmScript.info ("Invalid Boolean (True/False) '" + input + "'");
 					}
 					break;
 				case STRING:
@@ -66,7 +62,7 @@ public class ModSupport implements IModSupport {
 					try {
 						Preconditions.checkNotNull (input,"Invalid String '%s'",input);
 					} catch (IllegalArgumentException e) {
-						script.info (e.getMessage ());
+						WurmScript.info (e.getMessage ());
 						break;
 					}
 			}
@@ -80,7 +76,7 @@ public class ModSupport implements IModSupport {
 		try {
 			Preconditions.checkArgument (test,msg);
 		} catch (IllegalArgumentException e) {
-			script.info (e.getMessage ());
+			WurmScript.info (e.getMessage ());
 		}
 		return line.split (" ");
 	}
@@ -93,7 +89,7 @@ public class ModSupport implements IModSupport {
 		try {
 			return Float.parseFloat (num);
 		} catch (NumberFormatException e) {
-			script.info ("Invalid Number '" + num + "'");
+			WurmScript.info ("Invalid Number '" + num + "'");
 		}
 		return -1;
 	}
@@ -102,7 +98,7 @@ public class ModSupport implements IModSupport {
 		try {
 			return Boolean.parseBoolean (bol);
 		} catch (NumberFormatException e) {
-			script.info ("Invalid Boolean '" + bol + "'");
+			WurmScript.info ("Invalid Boolean '" + bol + "'");
 		}
 		return null;
 	}
@@ -119,7 +115,7 @@ public class ModSupport implements IModSupport {
 		try {
 			return Integer.parseInt (num);
 		} catch (NumberFormatException e) {
-			script.info ("Invalid Number '" + num + "'");
+			WurmScript.info ("Invalid Number '" + num + "'");
 		}
 		return -1;
 	}

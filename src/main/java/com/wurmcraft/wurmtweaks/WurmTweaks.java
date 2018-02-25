@@ -47,10 +47,8 @@ public class WurmTweaks {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
-		dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 		ModRegistry.init ();
-		dl.wurmScript.init ();
-		dl.processScripts ();
+		dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
 
 	@Mod.EventHandler

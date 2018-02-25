@@ -58,7 +58,7 @@ public class TechReborn extends ModSupport {
 		if (inputStacks.size () > 0)
 			TechRebornAPI.addShapelessOreRollingMachinceRecipe (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + inputStacks.hashCode ()),output,inputStacks.toArray (new Ingredient[0]));
 		else
-			script.info ("Invalid Recipe, No Items Found!");
+			WurmScript.info ("Invalid Recipe, No Items Found!");
 	}
 
 	@ScriptFunction
@@ -95,13 +95,13 @@ public class TechReborn extends ModSupport {
 				} else
 					recipeFormat.put (input[index].charAt (0),Ingredient.EMPTY);
 			} else if (input[index].length () > 1) {
-				script.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
+				WurmScript.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
 				return;
 			}
 		boolean valid = true;
 		for (Character ch : recipeFormat.keySet ())
 			if (recipeFormat.get (ch) == Ingredient.EMPTY) {
-				script.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
+				WurmScript.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
 				valid = false;
 			}
 		if (valid) {
@@ -135,14 +135,14 @@ public class TechReborn extends ModSupport {
 					if (energy > 0) {
 						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.THERMAL,fluid.getFluid (),energy);
 					} else
-						script.info ("Energy must be Greater Than 0!");
+						WurmScript.info ("Energy must be Greater Than 0!");
 				} catch (NumberFormatException e) {
-					script.info ("Invalid Number '" + input[1] + "'");
+					WurmScript.info ("Invalid Number '" + input[1] + "'");
 				}
 			} else
-				script.info ("Invalid Fluid '" + input[0] + "'");
+				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
 		} else
-			script.info ("addThermalGeneratorFluid('<*fluid> <energy>')");
+			WurmScript.info ("addThermalGeneratorFluid('<*fluid> <energy>')");
 	}
 
 	@ScriptFunction
@@ -156,14 +156,14 @@ public class TechReborn extends ModSupport {
 					if (energy > 0) {
 						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.DIESEL,fluid.getFluid (),energy);
 					} else
-						script.info ("Energy must be Greater Than 0!");
+						WurmScript.info ("Energy must be Greater Than 0!");
 				} catch (NumberFormatException e) {
-					script.info ("Invalid Number '" + input[1] + "'");
+					WurmScript.info ("Invalid Number '" + input[1] + "'");
 				}
 			} else
-				script.info ("Invalid Fluid '" + input[0] + "'");
+				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
 		} else
-			script.info ("addDieselGeneratorFluid('<*fluid> <energy>')");
+			WurmScript.info ("addDieselGeneratorFluid('<*fluid> <energy>')");
 	}
 
 	@ScriptFunction
@@ -177,14 +177,14 @@ public class TechReborn extends ModSupport {
 					if (energy > 0) {
 						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.GAS,fluid.getFluid (),energy);
 					} else
-						script.info ("Energy must be Greater Than 0!");
+						WurmScript.info ("Energy must be Greater Than 0!");
 				} catch (NumberFormatException e) {
-					script.info ("Invalid Number '" + input[1] + "'");
+					WurmScript.info ("Invalid Number '" + input[1] + "'");
 				}
 			} else
-				script.info ("Invalid Fluid '" + input[0] + "'");
+				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
 		} else
-			script.info ("addGasGeneratorFluid('<*fluid> <energy>')");
+			WurmScript.info ("addGasGeneratorFluid('<*fluid> <energy>')");
 	}
 
 	@ScriptFunction
@@ -198,14 +198,14 @@ public class TechReborn extends ModSupport {
 					if (energy > 0) {
 						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.PLASMA,fluid.getFluid (),energy);
 					} else
-						script.info ("Energy must be Greater Than 0!");
+						WurmScript.info ("Energy must be Greater Than 0!");
 				} catch (NumberFormatException e) {
-					script.info ("Invalid Number '" + input[1] + "'");
+					WurmScript.info ("Invalid Number '" + input[1] + "'");
 				}
 			} else
-				script.info ("Invalid Fluid '" + input[0] + "'");
+				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
 		} else
-			script.info ("addPlasmaGeneratorFluid('<*fluid> <energy>')");
+			WurmScript.info ("addPlasmaGeneratorFluid('<*fluid> <energy>')");
 	}
 
 	@ScriptFunction
@@ -219,14 +219,14 @@ public class TechReborn extends ModSupport {
 					if (energy > 0) {
 						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.SEMIFLUID,fluid.getFluid (),energy);
 					} else
-						script.info ("Energy must be Greater Than 0!");
+						WurmScript.info ("Energy must be Greater Than 0!");
 				} catch (NumberFormatException e) {
-					script.info ("Invalid Number '" + input[1] + "'");
+					WurmScript.info ("Invalid Number '" + input[1] + "'");
 				}
 			} else
-				script.info ("Invalid Fluid '" + input[0] + "'");
+				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
 		} else
-			script.info ("addSemiFluidGeneratorFluid('<*fluid> <energy>')");
+			WurmScript.info ("addSemiFluidGeneratorFluid('<*fluid> <energy>')");
 	}
 
 	@ScriptFunction

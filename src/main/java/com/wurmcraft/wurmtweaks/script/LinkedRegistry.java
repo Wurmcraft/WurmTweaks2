@@ -1,6 +1,5 @@
 package com.wurmcraft.wurmtweaks.script;
 
-import com.wurmcraft.wurmtweaks.WurmTweaks;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import joptsimple.internal.Strings;
@@ -21,7 +20,7 @@ public class LinkedRegistry {
 
 	public Method[] getLinkedMachines (String linkName) {
 		List <Method> linkMethods = new ArrayList <> ();
-		for (IModSupport support : WurmTweaks.dl.wurmScript.getActiveControllers ()) {
+		for (IModSupport support : WurmScript.getActiveControllers ()) {
 			Method[] supportMethods = support.getClass ().getDeclaredMethods ();
 			for (Method method : supportMethods)
 				if (method.getAnnotation (ScriptFunction.class) != null && method.getAnnotation (ScriptFunction.class).link ().length () > 0 && method.getAnnotation (ScriptFunction.class).link ().equals (linkName))

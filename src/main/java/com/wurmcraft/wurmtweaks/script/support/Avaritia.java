@@ -67,13 +67,13 @@ public class Avaritia extends ModSupport {
 				} else
 					recipeFormat.put (input[index].charAt (0),Ingredient.EMPTY);
 			} else if (input[index].length () > 1) {
-				script.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
+				WurmScript.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
 				return;
 			}
 		boolean valid = true;
 		for (Character ch : recipeFormat.keySet ())
 			if (recipeFormat.get (ch) == Ingredient.EMPTY) {
-				script.info ("Invalid Stack For '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
+				WurmScript.info ("Invalid Stack For '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
 				valid = false;
 			}
 		if (valid) {
@@ -101,12 +101,12 @@ public class Avaritia extends ModSupport {
 			if (tempInput != Ingredient.EMPTY)
 				inputStacks.add (tempInput);
 			else
-				script.info ("Invalid Input '" + input[index] + "'");
+				WurmScript.info ("Invalid Input '" + input[index] + "'");
 		}
 		if (inputStacks.size () > 0)
 			AvaritiaRecipeManager.EXTREME_RECIPES.put (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + inputStacks.hashCode ()),new ExtremeShapelessRecipe (inputStacks,output));
 		else
-			script.info ("Invalid Recipe, No Items Found!");
+			WurmScript.info ("Invalid Recipe, No Items Found!");
 	}
 
 	@ScriptFunction
