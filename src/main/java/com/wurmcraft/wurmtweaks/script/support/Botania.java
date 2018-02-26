@@ -71,4 +71,28 @@ public class Botania extends ModSupport {
 		isValid (input[0],input[1]);
 		BotaniaAPI.registerElvenTradeRecipe (new ItemStack[] {convertS (input[0])},convertS (input[1]));
 	}
+
+	@ScriptFunction
+	public void addInfusion (String line) {
+		String[] input = verify (line,line.split (" ").length == 3,"addInfusion('<output> <input> <mana>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		BotaniaAPI.registerManaInfusionRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
+	}
+
+	@ScriptFunction
+	public void addAlchemy (String line) {
+		String[] input = verify (line,line.split (" ").length == 3,"addAlchemy('<output> <input> <mana>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		BotaniaAPI.registerManaAlchemyRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
+	}
+
+	@ScriptFunction
+	public void addConjuration (String line) {
+		String[] input = verify (line,line.split (" ").length == 3,"addConjuration('<output> <input> <mana>')");
+		isValid (input[0],input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		BotaniaAPI.registerManaConjurationRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
+	}
 }
