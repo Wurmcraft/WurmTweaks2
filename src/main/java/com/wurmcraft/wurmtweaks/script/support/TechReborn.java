@@ -1,5 +1,6 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
@@ -7,11 +8,9 @@ import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.StringUtils;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.RollingMachineRecipe;
@@ -49,16 +48,10 @@ public class TechReborn extends ModSupport {
 	public void addShapelessRolling (String line) {
 		String[] input = verify (line,(StringUtils.countMatches (line," ") >= 2 && StringUtils.countMatches (line," ") <= 10),"addShapeless('<output> <input>...')");
 		isValid (input[0]);
+		List <Ingredient> inputs = RecipeUtils.getShapelessRecipeItems (input,null,1);
 		ItemStack output = convertS (input[0]);
-		List <Ingredient> inputStacks = new ArrayList <> ();
-		for (int index = 1; index < input.length; index++) {
-			isValid (input[index]);
-			inputStacks.add (convertI (input[index]));
-		}
-		if (inputStacks.size () > 0)
-			TechRebornAPI.addShapelessOreRollingMachinceRecipe (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + inputStacks.hashCode ()),output,inputStacks.toArray (new Ingredient[0]));
-		else
-			WurmScript.info ("Invalid Recipe, No Items Found!");
+		Preconditions.checkArgument (!inputs.isEmpty (),"Invalid Inputs!");
+		TechRebornAPI.addShapelessOreRollingMachinceRecipe (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + inputs.hashCode ()),output,inputs.toArray (new Ingredient[0]));
 	}
 
 	@ScriptFunction
@@ -125,113 +118,21 @@ public class TechReborn extends ModSupport {
 	}
 
 	@ScriptFunction
-	public void addThermalGeneratorFluid (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack fluid = StackHelper.convertToFluid (input[0]);
-			if (fluid != null) {
-				try {
-					int energy = Integer.parseInt (input[1]);
-					if (energy > 0) {
-						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.THERMAL,fluid.getFluid (),energy);
-					} else
-						WurmScript.info ("Energy must be Greater Than 0!");
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addThermalGeneratorFluid('<*fluid> <energy>')");
+	public void addGeneratorFluid (String line) {
+		String[] input = verify (line,line.split (" ").length == 3,"addGeneratorFluid('<type> <*fluid> <energy>')");
+		Preconditions.checkNotNull (getGeneratorType (input[0]));
+		isValid (EnumInputType.FLUID,input[1]);
+		isValid (EnumInputType.INTEGER,input[2]);
+		GeneratorRecipeHelper.registerFluidRecipe (getGeneratorType (input[0]),convertF (input[1]).getFluid (),convertNI (input[2]));
 	}
 
-	@ScriptFunction
-	public void addDieselGeneratorFluid (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack fluid = StackHelper.convertToFluid (input[0]);
-			if (fluid != null) {
-				try {
-					int energy = Integer.parseInt (input[1]);
-					if (energy > 0) {
-						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.DIESEL,fluid.getFluid (),energy);
-					} else
-						WurmScript.info ("Energy must be Greater Than 0!");
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addDieselGeneratorFluid('<*fluid> <energy>')");
-	}
-
-	@ScriptFunction
-	public void addGasGeneratorFluid (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack fluid = StackHelper.convertToFluid (input[0]);
-			if (fluid != null) {
-				try {
-					int energy = Integer.parseInt (input[1]);
-					if (energy > 0) {
-						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.GAS,fluid.getFluid (),energy);
-					} else
-						WurmScript.info ("Energy must be Greater Than 0!");
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addGasGeneratorFluid('<*fluid> <energy>')");
-	}
-
-	@ScriptFunction
-	public void addPlasmaGeneratorFluid (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack fluid = StackHelper.convertToFluid (input[0]);
-			if (fluid != null) {
-				try {
-					int energy = Integer.parseInt (input[1]);
-					if (energy > 0) {
-						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.PLASMA,fluid.getFluid (),energy);
-					} else
-						WurmScript.info ("Energy must be Greater Than 0!");
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addPlasmaGeneratorFluid('<*fluid> <energy>')");
-	}
-
-	@ScriptFunction
-	public void addSemiFluidGeneratorFluid (String line) {
-		String[] input = line.split (" ");
-		if (input.length == 2) {
-			FluidStack fluid = StackHelper.convertToFluid (input[0]);
-			if (fluid != null) {
-				try {
-					int energy = Integer.parseInt (input[1]);
-					if (energy > 0) {
-						GeneratorRecipeHelper.registerFluidRecipe (EFluidGenerator.SEMIFLUID,fluid.getFluid (),energy);
-					} else
-						WurmScript.info ("Energy must be Greater Than 0!");
-				} catch (NumberFormatException e) {
-					WurmScript.info ("Invalid Number '" + input[1] + "'");
-				}
-			} else
-				WurmScript.info ("Invalid Fluid '" + input[0] + "'");
-		} else
-			WurmScript.info ("addSemiFluidGeneratorFluid('<*fluid> <energy>')");
+	private EFluidGenerator getGeneratorType (String name) {
+		return EFluidGenerator.valueOf (name.toUpperCase ());
 	}
 
 	@ScriptFunction
 	public void addTechFusion (String line) {
-		String[] input = verify (line,line.split (" ").length == 6,"addTechFusion('<output> <topInput> <bottomInput> <startEU> <euTick> <time>'");
+		String[] input = verify (line,line.split (" ").length == 6,"addTechFusion('<output> <topInput> <bottomInput> <startEU> <euTick> <time>')");
 		isValid (input[0],input[1],input[2]);
 		isValid (EnumInputType.INTEGER,input[3],input[4],input[5]);
 		FusionReactorRecipeHelper.registerRecipe (new FusionReactorRecipe (convertS (input[1]),convertS (input[2]),convertS (input[0]),convertNI (input[3]),convertNI (input[4]),convertNI (input[5])));
@@ -239,7 +140,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addAlloySmelter (String line) {
-		String[] input = verify (line,line.split (" ").length == 5,"addAlloySmelter('<output> <input> <input2> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 5,"addAlloySmelter('<output> <input> <input2> <time> <euTick>')");
 		isValid (input[0],input[1],input[2]);
 		isValid (EnumInputType.INTEGER,input[3],input[4]);
 		RecipeHandler.addRecipe (new AlloySmelterRecipe (convertS (input[1]),convertS (input[2]),convertS (input[0]),convertNI (input[3]),convertNI (input[4])));
@@ -255,7 +156,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addIndustrialBlastFurnace (String line) {
-		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialBlastFurnace('<output> <output2> <input> <input2> <time> <euTick> <heat>'");
+		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialBlastFurnace('<output> <output2> <input> <input2> <time> <euTick> <heat>')");
 		isValid (input[0],input[1],input[2],input[3]);
 		isValid (EnumInputType.INTEGER,input[4],input[5],input[6]);
 		RecipeHandler.addRecipe (new BlastFurnaceRecipe (convertS (input[2]),convertS (input[3]),convertS (input[0]),convertS (input[1]),convertNI (input[4]),convertNI (input[5]),convertNI (input[6])));
@@ -263,7 +164,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addCenterfuge (String line) {
-		String[] input = verify (line,line.split (" ").length == 8,"addIndustrialElectrolyzer('<output> <output2> <output3> <output4> <input> <input2> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 8,"addIndustrialElectrolyzer('<output> <output2> <output3> <output4> <input> <input2> <time> <euTick>')");
 		isValid (input[0],input[1],input[2],input[3],input[4],input[5]);
 		isValid (EnumInputType.INTEGER,input[6],input[7]);
 		RecipeHandler.addRecipe (new CentrifugeRecipe (convertS (input[4]),convertS (input[5]),convertS (input[0]),convertS (input[1]),convertS (input[2]),convertS (input[3]),convertNI (input[6]),convertNI (input[7])));
@@ -279,7 +180,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addCompressor (String line) {
-		String[] input = verify (line,line.split (" ").length == 4,"addGrinder('<output> <input> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 4,"addGrinder('<output> <input> <time> <euTick>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2],input[3]);
 		RecipeHandler.addRecipe (new CompressorRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]),convertNI (input[3])));
@@ -295,7 +196,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addExtractor (String line) {
-		String[] input = verify (line,line.split (" ").length == 4,"addExtractor('<output> <input> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 4,"addExtractor('<output> <input> <time> <euTick>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2],input[3]);
 		RecipeHandler.addRecipe (new ExtractorRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]),convertNI (input[3])));
@@ -303,7 +204,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction (link = "crushing", linkSize = {4})
 	public void addGrinder (String line) {
-		String[] input = verify (line,line.split (" ").length == 4,"addGrinder('<output> <input> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 4,"addGrinder('<output> <input> <time> <euTick>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2],input[3]);
 		RecipeHandler.addRecipe (new GrinderRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]),convertNI (input[3]) * 10));
@@ -319,7 +220,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addIndustrialElectrolyzer (String line) {
-		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialElectrolyzer('<output> <output2> <output3> <input> <input2> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialElectrolyzer('<output> <output2> <output3> <input> <input2> <time> <euTick>')");
 		isValid (input[0],input[1],input[2],input[3],input[4],input[5]);
 		isValid (EnumInputType.INTEGER,input[6],input[7]);
 		RecipeHandler.addRecipe (new IndustrialElectrolyzerRecipe (convertS (input[4]),convertS (input[5]),convertS (input[0]),convertS (input[1]),convertS (input[2]),convertS (input[3]),convertNI (input[6]),convertNI (input[7])));
@@ -327,7 +228,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addIndustrialGrinder (String line) {
-		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialGrinder('<output> <output2> <output3> <input> <input2> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialGrinder('<output> <output2> <output3> <input> <input2> <time> <euTick>')");
 		isValid (input[0],input[1],input[2],input[3],input[4]);
 		isValid (EnumInputType.INTEGER,input[6],input[7]);
 		isValid (EnumInputType.FLUID,input[5]);
@@ -336,7 +237,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addIndustrialSawmill (String line) {
-		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialSawmill('<output> <output2> <output3> <input> <input2> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 7,"addIndustrialSawmill('<output> <output2> <output3> <input> <input2> <time> <euTick>')");
 		isValid (input[0],input[1],input[2],input[3]);
 		isValid (EnumInputType.INTEGER,input[5],input[6]);
 		isValid (EnumInputType.FLUID,input[4]);

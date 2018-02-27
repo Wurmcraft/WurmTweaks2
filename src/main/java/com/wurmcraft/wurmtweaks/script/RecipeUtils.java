@@ -3,6 +3,7 @@ package com.wurmcraft.wurmtweaks.script;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapedOreRecipe;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapelessOreRecipe;
+import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -81,5 +82,23 @@ public class RecipeUtils {
 				height++;
 		size[1] = height;
 		return size;
+	}
+
+	public static List <Ingredient> getShapelessRecipeItems (String[] input,Void empty,int startIndex) {
+		List <Ingredient> inputStacks = new ArrayList <> ();
+		for (int index = startIndex; index < input.length; index++)
+			if (StackHelper.convert (input[index],null) != Ingredient.EMPTY)
+				inputStacks.add (StackHelper.convert (input[index],null));
+		return inputStacks;
+	}
+
+	public static List <Object> getRecipeItems (String[] input,int startIndex) {
+		List <Object> inputStacks = new ArrayList <> ();
+		for (int index = startIndex; index < input.length; index++)
+			if (StackHelper.convert (input[index]) != ItemStack.EMPTY)
+				inputStacks.add (StackHelper.convert (input[index]));
+			else
+				inputStacks.add (input[index]);
+		return inputStacks;
 	}
 }

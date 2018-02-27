@@ -1,6 +1,7 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
 
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
@@ -9,6 +10,7 @@ import com.wurmcraft.wurmtweaks.script.WurmScript;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,18 +31,11 @@ public class Minecraft extends ModSupport {
 
 	@ScriptFunction
 	public void addShapeless (String line) {
-		String[] input = verify (line,(line.split (" ").length >= 2 && line.split (" ").length <= 10),"addShapeless('<output> <input>...')");
+		String[] input = verify (line,(StringUtils.countMatches (line," ") >= 2 && StringUtils.countMatches (line," ") <= 10),"addShapeless('<output> <input>...')");
 		isValid (input[0]);
-		ItemStack output = convertS (input[0]);
-		List <Ingredient> inputStacks = new ArrayList <> ();
-		for (int index = 1; index < input.length; index++) {
-			isValid (input[index]);
-			inputStacks.add (convertI (input[index]));
-		}
-		if (inputStacks.size () > 0)
-			RecipeUtils.addShapeless (output,inputStacks.toArray (new Ingredient[0]));
-		else
-			WurmScript.info ("Invalid Recipe, No Items Found!");
+		List <Ingredient> inputs = RecipeUtils.getShapelessRecipeItems (input,null,1);
+		Preconditions.checkArgument (!inputs.isEmpty (),"Invalid Inputs!");
+		RecipeUtils.addShapeless (convertS (input[0]),inputs.toArray (new Ingredient[0]));
 	}
 
 	@ScriptFunction
