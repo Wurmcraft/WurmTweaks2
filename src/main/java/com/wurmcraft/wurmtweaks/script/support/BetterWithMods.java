@@ -7,25 +7,21 @@ import betterwithmods.common.registry.anvil.ShapedAnvilRecipe;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.*;
 import betterwithmods.util.InvUtils;
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
-import com.wurmcraft.wurmtweaks.script.WurmScript;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
-import scala.collection.mutable.StringBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class BetterWithMods extends ModSupport {
@@ -149,56 +145,10 @@ public class BetterWithMods extends ModSupport {
 	@ScriptFunction
 	public void addAnvil (String line) {
 		String[] input = verify (line,line.split (" ").length > 4,"addAnvil(<output> <style> <format>')");
-		int indexFirstVar = 1;
-		for (; indexFirstVar < input.length; indexFirstVar++) {
-			if (input[indexFirstVar - 1].length () == 1 && input[indexFirstVar].contains ("<")) {
-				indexFirstVar -= 1;
-				break;
-			}
-		}
 		isValid (input[0]);
 		ItemStack output = convertS (input[0]);
-		int[] recipeSize = RecipeUtils.getRecipeSize (Arrays.copyOfRange (input,1,indexFirstVar));
-		String[] recipeStyle = new String[recipeSize[1]];
-		for (int index = 1; index < (recipeSize[1] + 1); index++) {
-			StringBuilder temp = new StringBuilder (RecipeUtils.replaceLastTillDiff (input[index],WurmScript.SPACER));
-			if (temp.length () < recipeSize[0])
-				while (temp.length () < recipeSize[0])
-					temp.append (" ");
-			recipeStyle[index - 1] = temp.toString ().replaceAll (WurmScript.SPACER + ""," ");
-		}
-		HashMap <Character, Ingredient> recipeFormat = new HashMap <> ();
-		HashMap <Character, String> invalidFormat = new HashMap <> ();
-		for (int index = (recipeSize[1] + 1); index < input.length; index++)
-			if (!input[index].startsWith ("<") && input[index].length () == 1) {
-				if ((index + 1) < input.length) {
-					Ingredient stack = convertI (input[index + 1]);
-					recipeFormat.put (input[index].charAt (0),stack);
-					if (stack == Ingredient.EMPTY)
-						invalidFormat.put (input[index].charAt (0),input[index + 1]);
-					index++;
-				} else
-					recipeFormat.put (input[index].charAt (0),Ingredient.EMPTY);
-			} else if (input[index].length () > 1) {
-				WurmScript.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
-				return;
-			}
-		boolean valid = true;
-		for (Character ch : recipeFormat.keySet ())
-			if (recipeFormat.get (ch) == Ingredient.EMPTY) {
-				WurmScript.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
-				valid = false;
-			}
-		if (valid) {
-			List <Object> temp = new ArrayList <> ();
-			for (Character ch : recipeFormat.keySet ()) {
-				temp.add (ch);
-				temp.add (recipeFormat.get (ch));
-			}
-			List <Object> finalRecipe = new ArrayList <> ();
-			finalRecipe.addAll (Arrays.asList (recipeStyle));
-			finalRecipe.addAll (temp);
-			AnvilCraftingManager.ANVIL_CRAFTING.add (new ShapedAnvilRecipe (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + finalRecipe.hashCode ()),output,finalRecipe.toArray (new Object[0])));
-		}
+		List <Object> recipe = RecipeUtils.getShapedRecipe (input);
+		Preconditions.checkNotNull (recipe);
+		AnvilCraftingManager.ANVIL_CRAFTING.add (new ShapedAnvilRecipe (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + recipe.hashCode ()),output,recipe.toArray (new Object[0])));
 	}
 }
