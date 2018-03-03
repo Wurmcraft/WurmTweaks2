@@ -7,9 +7,11 @@ import net.minecraft.block.material.Material;
 public class WTBlocks {
 
 	public static Block transparentAluminum;
+	public static Block stoneMagic;
 
 	public static void register () {
 		register (transparentAluminum = new BlockTransparentAluminum (Material.GLASS),"transparentAluminum");
+		register (stoneMagic = new BlockBasic (Material.ROCK),"stoneMagic");
 	}
 
 	private static Block register (Block block,String name) {

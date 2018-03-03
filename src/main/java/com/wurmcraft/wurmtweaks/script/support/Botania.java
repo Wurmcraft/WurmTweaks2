@@ -25,6 +25,7 @@ public class Botania extends ModSupport {
 		if (ConfigHandler.removeAllMachineRecipes) {
 			BotaniaAPI.manaInfusionRecipes.clear ();
 			BotaniaAPI.elvenTradeRecipes.clear ();
+			BotaniaAPI.pureDaisyRecipes.clear ();
 		}
 	}
 

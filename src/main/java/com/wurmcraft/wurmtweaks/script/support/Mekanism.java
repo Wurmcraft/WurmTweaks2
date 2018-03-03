@@ -13,6 +13,7 @@ import mekanism.api.infuse.InfuseType;
 import mekanism.common.recipe.RecipeHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 
 public class Mekanism extends ModSupport {
 
@@ -212,6 +213,19 @@ public class Mekanism extends ModSupport {
 		Block block = Block.getBlockFromItem (convertS (input[0]).getItem ());
 		Preconditions.checkArgument (block != Blocks.AIR);
 		MekanismAPI.addBoxBlacklist (block,convertS (input[0]).getItemDamage ());
+	}
+
+	@ScriptFunction
+	public void createMachineUpgradeRecipes (String line) {
+		String[] input = line.split (" ");
+		isValid (input[0]);
+
+	}
+
+	private ItemStack addUpgrade (ItemStack machine,int type,int amount) {
+		ItemStack moddedMachine = machine.copy ();
+
+		return machine;
 	}
 
 	private GasStack getGasStack (String stack) {

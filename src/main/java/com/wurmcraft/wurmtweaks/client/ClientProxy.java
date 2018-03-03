@@ -59,5 +59,6 @@ public class ClientProxy extends CommonProxy {
 		for (int index = 0; index < metaItems.length; index++)
 			createModel (WTItems.itemMeta,index,metaItems[index]);
 		createModel (Item.getItemFromBlock (WTBlocks.transparentAluminum),0,"transparentAluminum");
+		createModel (Item.getItemFromBlock (WTBlocks.stoneMagic),0,"stoneMagic");
 	}
 }
