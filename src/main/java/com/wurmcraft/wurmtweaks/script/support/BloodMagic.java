@@ -1,10 +1,10 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
-import WayofTime.bloodmagic.apibutnotreally.alchemyCrafting.AlchemyArrayEffectCrafting;
-import WayofTime.bloodmagic.apibutnotreally.altar.EnumAltarTier;
-import WayofTime.bloodmagic.apibutnotreally.registry.AlchemyArrayRecipeRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.apibutnotreally.registry.TartaricForgeRecipeRegistry;
+import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectCrafting;
+import WayofTime.bloodmagic.altar.EnumAltarTier;
+import WayofTime.bloodmagic.core.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.core.registry.TartaricForgeRecipeRegistry;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
