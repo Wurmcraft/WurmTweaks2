@@ -6,6 +6,7 @@ import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -15,7 +16,6 @@ import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.SimpleBindings;
 import java.io.File;
 import java.lang.reflect.Method;
@@ -25,7 +25,7 @@ import java.util.List;
 public class WurmScript extends WurmTweaks2API {
 
 	public static final char SPACER = '_';
-	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
+	private static final ScriptEngine engine = new NashornScriptEngineFactory ().getScriptEngine ("--no-java");
 	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 	public static Bindings scriptFunctions = null;
 	public static File currentScript = null;
@@ -70,7 +70,7 @@ public class WurmScript extends WurmTweaks2API {
 			scriptFunctions = new SimpleBindings ();
 		if (activeControllers.size () > 0) {
 			for (IModSupport controller : activeControllers)
-				if (Loader.isModLoaded (controller.getModID ()) || controller.getModID ().equals ("minecraft")) {
+				if (Loader.isModLoaded (controller.getModID ()) || controller.getModID ().equals ("minecraft") || controller.getModID ().equals ("events")) {
 					LogHandler.info ("Loaded " + controller.getModID () + " ModSupport");
 					controller.init ();
 					Method[] methods = controller.getClass ().getDeclaredMethods ();
