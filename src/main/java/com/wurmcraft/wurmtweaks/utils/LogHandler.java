@@ -42,8 +42,10 @@ public class LogHandler {
 	}
 
 	private static void log (Level level,String msg) {
-		LOGGER.log (level,msg);
-		logToFile ("[" + level.name () + "]: " + msg + "\n");
+		if (msg.length () > 0) {
+			LOGGER.log (level,msg);
+			logToFile ("[" + level.name () + "]: " + msg + "\n");
+		}
 	}
 
 	public static void info (String msg) {

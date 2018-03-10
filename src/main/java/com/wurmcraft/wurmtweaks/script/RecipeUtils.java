@@ -5,9 +5,7 @@ import com.wurmcraft.wurmtweaks.utils.DynamicShapedOreRecipe;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapelessOreRecipe;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
@@ -152,5 +150,22 @@ public class RecipeUtils {
 			return finalRecipe;
 		}
 		return null;
+	}
+
+	// Fix Shaped Recipe Support (Just Rough Stack Export ATM)
+	private String convert (IRecipe recipe) {
+		StringBuilder builder = new StringBuilder ();
+		if (recipe instanceof ShapedRecipes) {
+			builder.append ("addShaped('");
+			builder.append (StackHelper.convert (recipe.getRecipeOutput (),0));
+			for (Ingredient obj : recipe.getIngredients ())
+				builder.append (StackHelper.convert (obj));
+		} else if (recipe instanceof ShapelessRecipes) {
+			builder.append ("addShapeless('");
+			builder.append (StackHelper.convert (recipe.getRecipeOutput (),0) + " ");
+			for (Ingredient ingredient : recipe.getIngredients ())
+				builder.append (StackHelper.convert (ingredient));
+		}
+		return builder.toString ();
 	}
 }

@@ -58,7 +58,14 @@ item.darkMatter.name=Dark Matter
 item.redMatter.name=Red Matter
 item.unstableMatter.name=Unstable Matter
 item.shielding.name=Shielding
+item.neuralS.name=Neural (S)
+item.neuralN.name=Neural (N)
+item.superComputer.name=Super-Computer
+item.antiMatter.name=AntiMatter
+item.rocketEngine.name=Rocket Engine
+item.electroShielding.name=Electro-Magnetic Shielding
 
 # Block
 tile.transparentAluminum.name=Transparent Aluminum
 tile.stoneMagic.name=Magic Infused Stone
+tile.logMagic.name=Magic Infused Log
