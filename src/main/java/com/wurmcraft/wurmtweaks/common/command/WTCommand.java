@@ -69,6 +69,8 @@ public class WTCommand extends CommandBase {
 						sender.sendMessage (new TextComponentString ("Invalid Stack '" + args[1] + "'"));
 				} else
 					sender.sendMessage (new TextComponentString ("/wt load <item>"));
+			} else if (args[0].equalsIgnoreCase ("exportInv") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
+				exportInv (sender);
 			}
 		} else
 			sender.sendMessage (new TextComponentString (TextFormatting.GOLD + getUsage (sender)));
@@ -84,7 +86,7 @@ public class WTCommand extends CommandBase {
 					for (int id : OreDictionary.getOreIDs (player.getHeldItemMainhand ()))
 						oreEntrys.add (OreDictionary.getOreName (id));
 				player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + item).replaceAll ("'",TextFormatting.RED + "'")));
-				if (player.getHeldItemMainhand ().getItem () instanceof ItemBucket || player.getHeldItemMainhand ().getItem () == ForgeModContainer.getInstance ().universalBucket)
+				if (player.getHeldItemMainhand ().getItem () instanceof ItemBucket || player.getHeldItemMainhand ().getItem () == ForgeModContainer.getInstance ().universalBucket && player.getHeldItemMainhand ().hasTagCompound ())
 					oreEntrys.add (StackHelper.convert (player.getHeldItemMainhand (),1));
 				if (!player.getHeldItemMainhand ().isEmpty ())
 					player.sendMessage (new TextComponentString (TextFormatting.GOLD + I18n.translateToLocal (Local.HELD_ITEM).replaceAll ("%ITEM%",TextFormatting.LIGHT_PURPLE + Strings.join (oreEntrys,",")).replaceAll ("'",TextFormatting.RED + "'")));
@@ -94,5 +96,26 @@ public class WTCommand extends CommandBase {
 				sender.sendMessage (new TextComponentString (TextFormatting.RED + I18n.translateToLocal (Local.EMPTY_HAND)));
 		} else
 			sender.sendMessage (new TextComponentString (TextFormatting.RED + I18n.translateToLocal (Local.REQUIRES_PLAYER)));
+	}
+
+	private void exportInv (ICommandSender sender) {
+		if (sender.getCommandSenderEntity () instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
+			if (!player.inventory.isEmpty ()) {
+				StringBuilder items = new StringBuilder ();
+				for (ItemStack inv : player.inventory.mainInventory)
+					items.append (getName (inv) + "\n");
+				if (ConfigHandler.copyItemName)
+					NetworkHandler.sendTo (new CopyMessage (items.toString ()),(EntityPlayerMP) player);
+			}
+		} else
+			sender.sendMessage (new TextComponentString (TextFormatting.RED + I18n.translateToLocal (Local.REQUIRES_PLAYER)));
+	}
+
+	private String getName (ItemStack stack) {
+		if (stack.getItem () instanceof ItemBucket || stack.getItem () == ForgeModContainer.getInstance ().universalBucket && stack.hasTagCompound ())
+			return StackHelper.convert (stack,1);
+		else
+			return StackHelper.convert (stack,0);
 	}
 }

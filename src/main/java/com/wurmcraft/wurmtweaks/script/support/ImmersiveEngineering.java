@@ -84,11 +84,11 @@ public class ImmersiveEngineering extends ModSupport {
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2]);
 		if (line.split (" ").length == 3)
-			CrusherRecipe.addRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
+			CrusherRecipe.addRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
 		else {
 			isValid (input[3]);
 			isValid (EnumInputType.FLOATNG,input[4]);
-			CrusherRecipe recipe = new CrusherRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));
+			CrusherRecipe recipe = new CrusherRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
 			recipe.addToSecondaryOutput (convertS (input[3]),convertNF (input[4]));
 			CrusherRecipe.recipeList.add (recipe);
 		}

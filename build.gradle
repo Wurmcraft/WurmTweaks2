@@ -63,8 +63,6 @@ dependencies {
 	compile name: 'environmentaltech', version: "${environmentaltech_version}", ext: 'jar'
 	compile name: 'valkyrielib', version: "${valkyrielib_version}", ext: 'jar'
 	compile name: 'Mekanism', version: "${mekanism_version}", ext: 'jar'
-	compile name: 'TechReborn', version: "${techreborn_version}", ext: 'jar'
-	compile name: 'RebornCore', version: "${reborncore_version}", ext: 'jar'
 	compile name: 'calculator', version: "${calculator_version}", ext: 'jar'
 	compile name: 'sonarcore', version: "${sonarcore_version}", ext: 'jar'
 	compile name: 'ActuallyAdditions', version: "${actuallyadditions_version}", ext: 'jar'

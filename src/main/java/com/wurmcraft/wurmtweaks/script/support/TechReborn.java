@@ -98,7 +98,7 @@ public class TechReborn extends ModSupport {
 
 	@ScriptFunction
 	public void addAssemblingMachine (String line) {
-		String[] input = verify (line,line.split (" ").length == 5,"addAssemblingMachine('<output> <input> <input2> <time> <euTick>'");
+		String[] input = verify (line,line.split (" ").length == 5,"addAssemblingMachine('<output> <input> <input2> <time> <euTick>')");
 		isValid (input[0],input[1],input[2]);
 		isValid (EnumInputType.INTEGER,input[3],input[4]);
 		RecipeHandler.addRecipe (new AssemblingMachineRecipe (convertS (input[1]),convertS (input[2]),convertS (input[0]),convertNI (input[3]),convertNI (input[4])));

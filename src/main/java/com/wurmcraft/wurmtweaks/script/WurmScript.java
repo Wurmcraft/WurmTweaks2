@@ -3,6 +3,7 @@ package com.wurmcraft.wurmtweaks.script;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.api.WurmTweaks2API;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
@@ -31,6 +32,7 @@ public class WurmScript extends WurmTweaks2API {
 	public static File currentScript = null;
 	public static int lineNo = 0;
 	public static boolean reload = false;
+	protected LinkedRegistry linkRegistry = new LinkedRegistry ();
 
 	public static void setCurrentScript (File currentScript) {
 		WurmScript.currentScript = currentScript;
@@ -84,6 +86,7 @@ public class WurmScript extends WurmTweaks2API {
 			info ("Warning: No Controllers Exist!");
 	}
 
+	// TODO FIX
 	public void reload () {
 		reload = true;
 		scriptFunctions = null;
@@ -102,7 +105,17 @@ public class WurmScript extends WurmTweaks2API {
 	public void process (String line) {
 		if (!line.startsWith ("//") && line.length () > 0)
 			try {
-				engine.eval (line,scriptFunctions);
+				if (ConfigHandler.linkedMachines) {
+					String linkedMachine = line.substring (0,line.indexOf ("('")).replaceAll ("add","").toLowerCase ();
+					Method[] methods = linkRegistry.getLinkedMachines (linkedMachine);
+					String[] recipes = linkRegistry.getLinkedMachinesRecipes (linkedMachine,line);
+					if (methods.length > 0 && recipes.length > 0)
+						for (String ln : linkRegistry.getLinkedMachinesRecipes (linkedMachine,line))
+							engine.eval (ln,scriptFunctions);
+					else
+						engine.eval (line,scriptFunctions);
+				} else
+					engine.eval (line,scriptFunctions);
 			} catch (Exception e) {
 				info (e.getLocalizedMessage ());
 			}

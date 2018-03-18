@@ -11,27 +11,25 @@ import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RecipeUtils {
 
 	private static final ResourceLocation RECIPE_GROUP = new ResourceLocation (Global.NAME,"Recipes");
+	private static final Random RAND = new Random (System.nanoTime ());
 	public static List <IRecipe> activeRecipes = new ArrayList <> ();
 	public static HashMap <ItemStack, ItemStack> activeFurnace = new HashMap <> ();
 
 	public static void addShapeless (ItemStack output,Ingredient... inputItems) {
 		DynamicShapelessOreRecipe recipe = new DynamicShapelessOreRecipe (RECIPE_GROUP,output,inputItems);
-		recipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (inputItems)));
+		recipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (inputItems) + RAND.nextInt (100)));
 		ForgeRegistries.RECIPES.register (recipe);
 		activeRecipes.add (recipe);
 	}
 
 	public static void addShaped (ItemStack output,Object... recipe) {
 		DynamicShapedOreRecipe shapedRecipe = new DynamicShapedOreRecipe (RECIPE_GROUP,output,recipe);
-		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (recipe)));
+		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (recipe) + RAND.nextInt (100)));
 		ForgeRegistries.RECIPES.register (shapedRecipe);
 		activeRecipes.add (shapedRecipe);
 	}
@@ -46,7 +44,7 @@ public class RecipeUtils {
 	}
 
 	public static void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
-		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,Arrays.asList (bottom),output));
+		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,Collections.singletonList (bottom),output));
 	}
 
 	public static int findLargest (int[] num) {
