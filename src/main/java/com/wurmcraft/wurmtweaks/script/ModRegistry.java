@@ -45,5 +45,9 @@ public class ModRegistry {
 			WurmTweaks2API.register (new BloodMagic ());
 		if (Loader.isModLoaded ("thermalexpansion"))
 			WurmTweaks2API.register (new ThermalExpansion ());
+		if (Loader.isModLoaded ("galacticraftcore"))
+			WurmTweaks2API.register (new GalacticCraft ());
+		if (Loader.isModLoaded ("pneumaticcraft"))
+			WurmTweaks2API.register (new PnumaticCraft ());
 	}
 }

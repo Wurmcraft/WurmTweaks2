@@ -85,7 +85,7 @@ public class BetterWithMods extends ModSupport {
 
 	@ScriptFunction
 	public void addStokedCrucible (String line) {
-		String[] input = verify (line,line.split (" ").length >= 2,"addStokedCrucible('<output> <input>...");
+		String[] input = verify (line,line.split (" ").length >= 2,"addStokedCrucible('<output> <input>...')");
 		isValid (input[0]);
 		List <ItemStack> inputStacks = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {

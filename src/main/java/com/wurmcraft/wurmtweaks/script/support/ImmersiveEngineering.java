@@ -85,7 +85,7 @@ public class ImmersiveEngineering extends ModSupport {
 		isValid (EnumInputType.INTEGER,input[2]);
 		if (line.split (" ").length == 3)
 			CrusherRecipe.addRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
-		else {
+		else if (line.split (" ").length == 5){
 			isValid (input[3]);
 			isValid (EnumInputType.FLOATNG,input[4]);
 			CrusherRecipe recipe = new CrusherRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));

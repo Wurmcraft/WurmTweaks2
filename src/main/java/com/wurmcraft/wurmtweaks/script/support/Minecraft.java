@@ -44,10 +44,13 @@ public class Minecraft extends ModSupport {
 
 	@ScriptFunction (linkSize = 3, link = "furnace")
 	public void addFurnace (String line) {
-		String[] input = verify (line,line.split (" ").length == 3,"addFurnace('<output> <input> <exp>')");
+		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 3,"addFurnace('<output> <input> <exp>')");
 		isValid (input[0],input[1]);
-		isValid (EnumInputType.FLOATNG,input[2]);
-		RecipeUtils.addFurnace (convertS (input[0]),convertS (input[1]),convertNF (input[2]));
+		if (line.length () == 3) {
+			isValid (EnumInputType.FLOATNG,input[2]);
+			RecipeUtils.addFurnace (convertS (input[0]),convertS (input[1]),convertNF (input[2]));
+		} else
+			RecipeUtils.addFurnace (convertS (input[0]),convertS (input[1]),1);
 	}
 
 	@ScriptFunction
