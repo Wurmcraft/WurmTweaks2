@@ -27,10 +27,8 @@ public class PnumaticCraft extends ModSupport {
 			AssemblyRecipe.drillRecipes.clear ();
 			AssemblyRecipe.laserRecipes.clear ();
 			PressureChamberRecipe.chamberRecipes.clear ();
-			for (AmadronOffer offer : AmadronOfferManager.getInstance ().getStaticOffers ())
-				AmadronOfferManager.getInstance ().removeStaticOffer (offer);
-			for (AmadronOffer offer : AmadronOfferManager.getInstance ().getPeriodicOffers ())
-				AmadronOfferManager.getInstance ().removePeriodicOffer (offer);
+			AmadronOfferManager.getInstance ().getStaticOffers ().clear ();
+			AmadronOfferManager.getInstance ().getPeriodicOffers ().clear ();
 			AmadronOfferManager.getInstance ().recompileOffers ();
 		}
 	}
