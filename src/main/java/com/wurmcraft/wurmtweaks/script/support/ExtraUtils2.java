@@ -33,7 +33,7 @@ public class ExtraUtils2 extends ModSupport {
 
 	@ScriptFunction (link = "crushing", linkSize = {2,4})
 	public void addXUCrusher (String line) {
-		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 4,"addXUCrusher('<output> <input> | <secOutput> <secOutput%>");
+		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 4,"addXUCrusher('<output> <input> | <secOutput> <secOutput%>')");
 		isValid (input[0],input[1]);
 		if (line.split (" ").length == 2)
 			XUMachineCrusher.addRecipe (convertS (input[1]),convertS (input[0]));

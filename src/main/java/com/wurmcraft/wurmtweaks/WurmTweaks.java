@@ -11,7 +11,9 @@ import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ModRegistry;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import net.minecraft.launchwrapper.Launch;
+import com.wurmcraft.wurmtweaks.utils.LogHandler;
+import mekanism.api.gas.Gas;
+import mekanism.api.gas.GasRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -55,6 +57,8 @@ public class WurmTweaks {
 	@Mod.EventHandler
 	public void onServerStarting (FMLServerStartingEvent e) {
 		e.registerServerCommand (new WTCommand ());
+		for (Gas stack : GasRegistry.getRegisteredGasses ())
+			LogHandler.info ("Gas: " + stack.getUnlocalizedName ());
 	}
 
 }

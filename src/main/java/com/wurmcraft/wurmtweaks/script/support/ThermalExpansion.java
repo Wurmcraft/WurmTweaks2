@@ -95,7 +95,7 @@ public class ThermalExpansion extends ModSupport {
 
 	@ScriptFunction (link = "centerfuge", linkSize = {7})
 	public void addTECenterfuge (String line) {
-		String[] input = verify (line,line.split (" ").length == 7,"addCenterfuge('<output> <output2> <output3> <output4> <input> <energy> <*output5>");
+		String[] input = verify (line,line.split (" ").length == 7,"addCenterfuge('<output> <output2> <output3> <output4> <input> <energy> <*output5>')");
 		isValid (input[0],input[1],input[2],input[3],input[4]);
 		isValid (EnumInputType.INTEGER,input[5]);
 		CentrifugeManager.addRecipe (convertNI (input[5]),convertS (input[4]),Arrays.asList (convertS (input[0]),convertS (input[1]),convertS (input[2]),convertS (input[3])),convertF (input[6]));
