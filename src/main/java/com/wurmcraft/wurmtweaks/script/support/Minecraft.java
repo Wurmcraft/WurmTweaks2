@@ -3,12 +3,12 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -21,12 +21,14 @@ public class Minecraft extends ModSupport {
 
 	@Override
 	public void init () {
+		if(ConfigHandler.removeAllMachineRecipes) {
 
+		}
 	}
 
 	@ScriptFunction
 	public void addShapeless (String line) {
-		String[] input = verify (line,(StringUtils.countMatches (line," ") >= 2 && StringUtils.countMatches (line," ") <= 10),"addShapeless('<output> <input>...')");
+		String[] input = verify (line,(line.split (" ").length >= 2),"addShapeless('<output> <input>...')");
 		isValid (input[0]);
 		List <Ingredient> inputs = RecipeUtils.getShapelessRecipeItems (input,null,1);
 		Preconditions.checkArgument (!inputs.isEmpty (),"Invalid Inputs!");
@@ -42,7 +44,7 @@ public class Minecraft extends ModSupport {
 		RecipeUtils.addShaped (convertS (input[0]),recipe.toArray (new Object[0]));
 	}
 
-	@ScriptFunction (linkSize = 3, link = "furnace")
+	@ScriptFunction (linkSize = {2,3}, link = "smelting")
 	public void addFurnace (String line) {
 		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 3,"addFurnace('<output> <input> <exp>')");
 		isValid (input[0],input[1]);

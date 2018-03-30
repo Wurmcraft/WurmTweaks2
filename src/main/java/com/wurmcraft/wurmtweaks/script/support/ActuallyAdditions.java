@@ -32,12 +32,12 @@ public class ActuallyAdditions extends ModSupport {
 		String[] input = verify (line,line.split (" ").length == 8,"addEmpowerer('<output> <inputCenter> <input> <input2> <input3> <input4> <energyPerStand> <time>')");
 		isValid (input[0],input[1],input[2],input[3],input[4],input[5]);
 		isValid (EnumInputType.INTEGER,input[6],input[7]);
-		ActuallyAdditionsAPI.addEmpowererRecipe (convertS (input[1]),convertS (input[0]),convertS (input[2]),convertS (input[3]),convertS (input[4]),convertS (input[4]),convertNI (input[5]),convertNI (input[6]),new float[] {1F,91F / 255F,76F / 255F});
+		ActuallyAdditionsAPI.addEmpowererRecipe (convertS (input[1]),convertS (input[0]),convertS (input[2]),convertS (input[3]),convertS (input[4]),convertS (input[5]),convertNI (input[6]),convertNI (input[7]),new float[] {1F,91F / 255F,76F / 255F});
 	}
 
 	@ScriptFunction
 	public void addReconstructor (String line) {
-		String[] input = verify (line,line.split (" ").length == 2,"addReconstructor('<output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length == 3,"addReconstructor('<output> <input> <energy>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2]);
 		ActuallyAdditionsAPI.addReconstructorLensConversionRecipe (convertS (input[1]),convertS (input[0]),convertNI (input[2]));

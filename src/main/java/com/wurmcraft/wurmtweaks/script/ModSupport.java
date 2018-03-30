@@ -24,7 +24,7 @@ public class ModSupport implements IModSupport {
 			switch (type) {
 				case ITEM:
 					try {
-						Preconditions.checkArgument (StackHelper.convert (input) != ItemStack.EMPTY,"Invalid Item '%s'",input);
+						Preconditions.checkArgument (StackHelper.convert (input) != ItemStack.EMPTY || input.equalsIgnoreCase ("<empty>"),"Invalid Item '%s'",input);
 					} catch (IllegalArgumentException e) {
 						WurmScript.info (e.getMessage ());
 					}

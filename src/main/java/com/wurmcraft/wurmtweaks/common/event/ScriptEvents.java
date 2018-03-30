@@ -21,11 +21,11 @@ import java.util.List;
 public class ScriptEvents {
 
 	public static List <ItemStack> throwEvent = new ArrayList <> ();
-	private static List <Item> throwQuickCheck = new ArrayList <> ();
 	public static HashMap <ItemStack, ItemStack> dropPickupEvent = new HashMap <> ();
 	public static List <Item> pickupQuick = new ArrayList <> ();
 	public static HashMap <ItemStack, String[]> tooltipEvent = new HashMap <> ();
 	public static List <Item> tooltipQuick = new ArrayList <> ();
+	private static List <Item> throwQuickCheck = new ArrayList <> ();
 
 	public static void addThrowCancelEvent (ItemStack stack) {
 		if (stack != ItemStack.EMPTY) {
@@ -71,21 +71,20 @@ public class ScriptEvents {
 				}
 	}
 
-	private ItemStack convertToCorrect (ItemStack pickupItem,ItemStack convertion) {
-		if (convertion == ItemStack.EMPTY)
+	private ItemStack convertToCorrect (ItemStack pickupItem,ItemStack conversion) {
+		if (conversion == ItemStack.EMPTY)
 			return ItemStack.EMPTY;
-		else if (pickupItem.getCount () == convertion.getCount ())
-			return convertion;
-		else if (pickupItem.getCount () > convertion.getCount ()) {
-			ItemStack temp = convertion.copy ();
-			temp.setCount (pickupItem.getCount () / convertion.getCount ());
+		else if (pickupItem.getCount () == conversion.getCount ())
+			return conversion;
+		else if (pickupItem.getCount () > conversion.getCount ()) {
+			ItemStack temp = conversion.copy ();
+			temp.setCount (pickupItem.getCount () / conversion.getCount ());
 			return temp;
-		} else if (pickupItem.getCount () < convertion.getCount ()) {
-			ItemStack temp = convertion.copy ();
-			temp.setCount (pickupItem.getCount () * convertion.getCount ());
+		} else {
+			ItemStack temp = conversion.copy ();
+			temp.setCount (pickupItem.getCount () * conversion.getCount ());
 			return temp;
 		}
-		return ItemStack.EMPTY;
 	}
 
 	@SubscribeEvent
@@ -95,6 +94,13 @@ public class ScriptEvents {
 			for (ItemStack item : tooltipEvent.keySet ())
 				if (StackHelper.isSameIgnoreSize (item,e.getItemStack ()))
 					for (String str : tooltipEvent.get (item))
-						e.getToolTip ().add (str.replaceAll ("&","§"));
+						e.getToolTip ().add (format (str));
+	}
+
+	private String format (String unformatted) {
+		String formatted = unformatted.replaceAll ("&","§");
+		if (formatted.contains ("§"))
+			formatted = formatted.substring (1,formatted.length ());
+		return formatted;
 	}
 }

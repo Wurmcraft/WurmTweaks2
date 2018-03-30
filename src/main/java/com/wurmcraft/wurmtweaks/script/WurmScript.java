@@ -50,8 +50,6 @@ public class WurmScript extends WurmTweaks2API {
 	public static String[] removeComments (String[] withComments) {
 		List <String> without = new ArrayList <> ();
 		for (int x = 0; x < withComments.length; x++) {
-			if (withComments[x].startsWith ("//") || withComments[x].replaceAll (" ","").startsWith ("//"))
-				continue;
 			if (withComments[x].startsWith ("/*") || withComments[x].replaceAll (" ","").startsWith ("/*"))
 				for (int y = (x + 1); y < withComments.length; y++)
 					if (withComments[y].startsWith ("*/") || withComments[y].replaceAll (" ","").startsWith ("*/")) {

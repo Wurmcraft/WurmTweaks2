@@ -127,7 +127,7 @@ public class RecipeUtils {
 				} else
 					recipeFormat.put (input[index].charAt (0),Ingredient.EMPTY);
 			} else if (input[index].length () > 1) {
-				WurmScript.info ("Invalid Format, '" + input[index] + " Should Be A Single Character!");
+				WurmScript.info ("Invalid Format, '" + input[index] + "' Should Be A Single Character!");
 				break;
 			}
 		boolean valid = true;

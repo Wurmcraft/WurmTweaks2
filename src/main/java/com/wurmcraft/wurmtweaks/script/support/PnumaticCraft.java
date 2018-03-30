@@ -29,7 +29,7 @@ public class PnumaticCraft extends ModSupport {
 			PressureChamberRecipe.chamberRecipes.clear ();
 			AmadronOfferManager.getInstance ().getStaticOffers ().clear ();
 			AmadronOfferManager.getInstance ().getPeriodicOffers ().clear ();
-			AmadronOfferManager.getInstance ().recompileOffers ();
+			AmadronOfferManager.getInstance ().getAllOffers ().clear ();
 		}
 	}
 

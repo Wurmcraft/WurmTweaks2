@@ -215,19 +215,6 @@ public class Mekanism extends ModSupport {
 		MekanismAPI.addBoxBlacklist (block,convertS (input[0]).getItemDamage ());
 	}
 
-	@ScriptFunction
-	public void createMachineUpgradeRecipes (String line) {
-		String[] input = line.split (" ");
-		isValid (input[0]);
-
-	}
-
-	private ItemStack addUpgrade (ItemStack machine,int type,int amount) {
-		ItemStack moddedMachine = machine.copy ();
-
-		return machine;
-	}
-
 	private GasStack getGasStack (String stack) {
 		if (stack.startsWith ("<%")) {
 			String name = stack.substring (stack.indexOf ("x") + 1,stack.indexOf (">"));

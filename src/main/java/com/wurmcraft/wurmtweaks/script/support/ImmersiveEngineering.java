@@ -42,16 +42,18 @@ public class ImmersiveEngineering extends ModSupport {
 
 	@ScriptFunction
 	public void addArcFurnace (String line) {
-		String[] input = verify (line,line.split (" ").length >= 5,"addArcFurnace('<output> <slag> <input> <time> <energy> | <additives'");
+		String[] input = verify (line,line.split (" ").length >= 4,"addArcFurnace('<output> <slag> <input> <time> <energy> | <additives'");
 		isValid (input[0],input[1],input[2]);
 		isValid (EnumInputType.INTEGER,input[3],input[4]);
 		List <ItemStack> additives = new ArrayList <> ();
-		if (input.length > 5)
-			for (int index = 6; index < input.length; index++) {
+		if (input.length > 5) {
+			for (int index = 5; index < input.length; index++) {
 				isValid (input[index]);
 				additives.add (convertS (input[index]));
 			}
-		ArcFurnaceRecipe.addRecipe (convertS (input[0]),convertS (input[2]),convertS (input[1]),convertNI (input[3]),convertNI (input[4]),additives);
+			ArcFurnaceRecipe.addRecipe (convertS (input[0]),convertS (input[2]),convertS (input[1]),convertNI (input[3]),convertNI (input[4]),additives);
+		} else
+			ArcFurnaceRecipe.addRecipe (convertS (input[0]),convertS (input[2]),convertS (input[1]),convertNI (input[3]),convertNI (input[4]));
 	}
 
 	@ScriptFunction
@@ -85,7 +87,7 @@ public class ImmersiveEngineering extends ModSupport {
 		isValid (EnumInputType.INTEGER,input[2]);
 		if (line.split (" ").length == 3)
 			CrusherRecipe.addRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
-		else if (line.split (" ").length == 5){
+		else if (line.split (" ").length == 5) {
 			isValid (input[3]);
 			isValid (EnumInputType.FLOATNG,input[4]);
 			CrusherRecipe recipe = new CrusherRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));

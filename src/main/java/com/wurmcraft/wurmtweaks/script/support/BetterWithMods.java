@@ -6,6 +6,7 @@ import betterwithmods.common.registry.anvil.AnvilCraftingManager;
 import betterwithmods.common.registry.anvil.ShapedAnvilRecipe;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.*;
+import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import betterwithmods.util.InvUtils;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
@@ -14,6 +15,7 @@ import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -150,5 +152,14 @@ public class BetterWithMods extends ModSupport {
 		List <Object> recipe = RecipeUtils.getShapedRecipe (input);
 		Preconditions.checkNotNull (recipe);
 		AnvilCraftingManager.ANVIL_CRAFTING.add (new ShapedAnvilRecipe (new ResourceLocation (Global.MODID,output.getUnlocalizedName ().substring (5) + recipe.hashCode ()),output,recipe.toArray (new Object[0])));
+	}
+
+	@ScriptFunction
+	public void addBlockHeat (String line) {
+		String[] input = verify (line,line.split (" ").length == 2,"addBlcokHeat(<block> <heat>')");
+		isValid (input[0]);
+		isValid (EnumInputType.INTEGER,input[1]);
+		Block heatBlock = Block.getBlockFromItem (convertS (input[0]).getItem ());
+		BWMHeatRegistry.addHeatSource (heatBlock,convertS (input[0]).getItemDamage (),convertNI (input[1]));
 	}
 }

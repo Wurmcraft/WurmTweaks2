@@ -32,7 +32,7 @@ public class WTCommand extends CommandBase {
 
 	@Override
 	public String getUsage (ICommandSender sender) {
-		return "/wt <hand | reload | load> <data>";
+		return "/wt <hand | reload | load | exportInv>";
 	}
 
 	@Override
@@ -66,10 +66,11 @@ public class WTCommand extends CommandBase {
 					if (stack != ItemStack.EMPTY) {
 						player.addItemStackToInventory (stack);
 					} else
-						sender.sendMessage (new TextComponentString ("Invalid Stack '" + args[1] + "'"));
+						sender.sendMessage (new TextComponentString (TextFormatting.RED + "Invalid Stack '" + args[1] + "'"));
 				} else
-					sender.sendMessage (new TextComponentString ("/wt load <item>"));
+					sender.sendMessage (new TextComponentString (TextFormatting.GOLD + "/wt load <item>"));
 			} else if (args[0].equalsIgnoreCase ("exportInv") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
+				sender.sendMessage (new TextComponentString (TextFormatting.GOLD + "Inventory Exported!"));
 				exportInv (sender);
 			}
 		} else
@@ -104,7 +105,8 @@ public class WTCommand extends CommandBase {
 			if (!player.inventory.isEmpty ()) {
 				StringBuilder items = new StringBuilder ();
 				for (ItemStack inv : player.inventory.mainInventory)
-					items.append (getName (inv) + "\n");
+					if (!inv.isEmpty () || inv != ItemStack.EMPTY)
+						items.append (getName (inv) + "\n");
 				if (ConfigHandler.copyItemName)
 					NetworkHandler.sendTo (new CopyMessage (items.toString ()),(EntityPlayerMP) player);
 			}

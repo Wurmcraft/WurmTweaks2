@@ -33,12 +33,15 @@ public class ThermalExpansion extends ModSupport {
 		}
 	}
 
-	@ScriptFunction (linkSize = 3, link = "furnace")
+	@ScriptFunction (linkSize = {2,3}, link = "smelting")
 	public void addRedstoneFurnace (String line) {
-		String[] input = verify (line,line.split (" ").length == 3,"addRedstoneFurnace('<output> <input> <energy>')");
+		String[] input = verify (line,line.split (" ").length >= 2,"addRedstoneFurnace('<output> <input> <energy>')");
 		isValid (input[0],input[1]);
-		isValid (EnumInputType.INTEGER,input[2]);
-		FurnaceManager.addRecipe (convertNI (input[2]),convertS (input[1]),convertS (input[0]));
+		if (line.split (" ").length == 3) {
+			isValid (EnumInputType.INTEGER,input[2]);
+			FurnaceManager.addRecipe (convertNI (input[2]),convertS (input[1]),convertS (input[0]));
+		} else
+			FurnaceManager.addRecipe (8000,convertS (input[1]),convertS (input[0]));
 	}
 
 	@ScriptFunction (link = "crushing", linkSize = {3,5})
@@ -90,12 +93,11 @@ public class ThermalExpansion extends ModSupport {
 		CrucibleManager.addRecipe (convertNI (input[2]),convertS (input[1]),convertF (input[0]));
 	}
 
-	@ScriptFunction
-	public void addCenterfuge (String line) {
+	@ScriptFunction (link = "centerfuge", linkSize = {7})
+	public void addTECenterfuge (String line) {
 		String[] input = verify (line,line.split (" ").length == 7,"addCenterfuge('<output> <output2> <output3> <output4> <input> <energy> <*output5>");
 		isValid (input[0],input[1],input[2],input[3],input[4]);
 		isValid (EnumInputType.INTEGER,input[5]);
-		isValid (EnumInputType.FLUID,input[6]);
 		CentrifugeManager.addRecipe (convertNI (input[5]),convertS (input[4]),Arrays.asList (convertS (input[0]),convertS (input[1]),convertS (input[2]),convertS (input[3])),convertF (input[6]));
 	}
 

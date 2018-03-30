@@ -11,9 +11,7 @@ import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ModRegistry;
 import com.wurmcraft.wurmtweaks.script.ScriptDownloader;
 import com.wurmcraft.wurmtweaks.script.WurmScript;
-import com.wurmcraft.wurmtweaks.utils.LogHandler;
-import com.wurmcraft.wurmtweaks.utils.StackHelper;
-import net.minecraft.item.crafting.*;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -21,8 +19,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-
-import java.util.Iterator;
 
 @Mod (modid = Global.MODID, name = Global.NAME, version = Global.VERSION, dependencies = Global.DEPEND, acceptedMinecraftVersions = Global.MC_VERSIONS)
 public class WurmTweaks {
@@ -45,13 +41,13 @@ public class WurmTweaks {
 	public void init (FMLInitializationEvent e) {
 		proxy.init ();
 		NetworkHandler.registerPackets ();
+		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
 	}
 
 	@Mod.EventHandler
 	public void postInit (FMLPostInitializationEvent e) {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
-		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
 		ModRegistry.init ();
 		dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
 	}
