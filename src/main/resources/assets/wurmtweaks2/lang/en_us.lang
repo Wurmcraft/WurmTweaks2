@@ -8,6 +8,15 @@ config.masterScript.name=URL For Master.js (Master Script)
 config.recipeUpdates.name=Check For Script Updates
 config.removeAllMachineRecipes.name=Remove All Machine Recipes
 config.linkedMachines.name=Linked Machines
+config.emptyStack.name=Name for an empty ItemStack
+config.spaceChar.name=Character used for nbt white space (Don't change unless you know what this does)
+config.nbtChar.name=Character used for nbt (Don't change unless you know what this does)
+config.metaChar.name=Character used for ItemStack MetaData (Don't change unless you know what this does)
+config.startChar.name=Character used for finding first location of an ItemStack
+config.endChar.name=Character used for finding last location of an ItemStack
+config.sizeChar.name=Character used for ItemStack Count (StackSize) (Don't change unless you know what this does)
+config.fluidChar.name=Character used to designate an FluidStack (Don't change unless you know what this does)
+config.gasChar.name=Character used to designate an GasStack (Don't change unless you know what this does) (Needs Mekanism)
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!

@@ -14,6 +14,15 @@ public class Local {
 	public static final String CONFIG_REMOVE_ALL_MACHINE_RECIPES = "config.removeAllMachineRecipes.name";
 	public static final String CONFIG_LINKED_MACHINES = "config.linkedMachines.name";
 	public static final String CONFIG_CACHE = "config.cache.name";
+	public static final String CONFIG_EMPTY_STACK = "config.emptyStack.name";
+	public static final String CONFIG_SPACE_CHAR = "config.spaceChar.name";
+	public static final String CONFIG_NBT_CHAR = "config.nbtChar.name";
+	public static final String CONFIG_META_CHAR = "config.metaChar.name";
+	public static final String CONFIG_START_CHAR = "config.startChar.name";
+	public static final String CONFIG_END_CHAR = "config.endChar.name";
+	public static final String CONFIG_SIZE_CHAR = "config.sizeChar.name";
+	public static final String CONFIG_FLUID_CHAR = "config.fluidChar.name";
+	public static final String CONFIG_GAS_CHAR = "config.gasChar.name";
 
 	// Command
 	public static final String REQUIRES_PLAYER = "info.requiresPlayer.name";

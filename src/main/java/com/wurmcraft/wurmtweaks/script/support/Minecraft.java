@@ -13,6 +13,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -86,6 +88,13 @@ public class Minecraft extends ModSupport {
 		ResourceLocation loc = input[0].contains (":") ? new ResourceLocation (input[0].substring (0,input[0].indexOf (":")),input[0].substring (input[0].indexOf (":"),input[0].length ())) : new ResourceLocation ("minecraft",input[0]);
 		VillagerRegistry.VillagerProfession villager = ForgeRegistries.VILLAGER_PROFESSIONS.getValue (loc);
 		villager.getCareer (100 + RAND.nextInt (100)).addTrade (1,new VillagerTrade (convertS (input[1]),convertS (input[2])));
+	}
+
+	public static String getFluids () {
+		StringBuilder builder = new StringBuilder ();
+		for (Fluid stack : FluidRegistry.getRegisteredFluids ().values ())
+			builder.append (stack.getUnlocalizedName () + "\n");
+		return builder.toString ();
 	}
 
 	public class VillagerTrade implements EntityVillager.ITradeList {

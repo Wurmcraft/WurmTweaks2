@@ -5,6 +5,9 @@ import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.network.NetworkHandler;
 import com.wurmcraft.wurmtweaks.common.network.msg.CopyMessage;
 import com.wurmcraft.wurmtweaks.reference.Local;
+import com.wurmcraft.wurmtweaks.script.support.Mekanism;
+import com.wurmcraft.wurmtweaks.script.support.Minecraft;
+import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import joptsimple.internal.Strings;
 import net.minecraft.command.CommandBase;
@@ -18,6 +21,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ public class WTCommand extends CommandBase {
 
 	@Override
 	public String getUsage (ICommandSender sender) {
-		return "/wt <hand | reload | load | exportInv>";
+		return "/wt <hand | reload | load | exportInv | getFluid | getGas>";
 	}
 
 	@Override
@@ -72,7 +76,10 @@ public class WTCommand extends CommandBase {
 			} else if (args[0].equalsIgnoreCase ("exportInv") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
 				sender.sendMessage (new TextComponentString (TextFormatting.GOLD + "Inventory Exported!"));
 				exportInv (sender);
-			}
+			} else if (args[0].equalsIgnoreCase ("getFluid") || args[0].equalsIgnoreCase ("fluid"))
+				getFluid (sender);
+			else if (args[0].equalsIgnoreCase ("getGas") || args[0].equalsIgnoreCase ("gas"))
+				getGas (sender);
 		} else
 			sender.sendMessage (new TextComponentString (TextFormatting.GOLD + getUsage (sender)));
 	}
@@ -119,5 +126,14 @@ public class WTCommand extends CommandBase {
 			return StackHelper.convert (stack,1);
 		else
 			return StackHelper.convert (stack,0);
+	}
+
+	private void getFluid (ICommandSender sender) {
+		LogHandler.info (Minecraft.getFluids ());
+	}
+
+	private void getGas (ICommandSender sender) {
+		if (Loader.isModLoaded ("mekanism"))
+			LogHandler.info (Mekanism.getGases ());
 	}
 }

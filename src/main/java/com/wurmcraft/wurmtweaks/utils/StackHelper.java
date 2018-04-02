@@ -31,24 +31,24 @@ public class StackHelper {
 			if (stack != ItemStack.EMPTY)
 				return stack;
 		}
-		if (input.equalsIgnoreCase ("empty"))
+		if (input.equalsIgnoreCase (ConfigHandler.startChar + ConfigHandler.emptyStack + ConfigHandler.endChar))
 			return ItemStack.EMPTY;
-		String item = input.replaceAll ("%"," ");
+		String item = input.replaceAll (ConfigHandler.spaceChar," ");
 		boolean isOreEntry = isOreDictionaryEntry (item);
 		if (isOreEntry)
 			return OreDictionary.getOres (item.substring (1,item.length () - 1)).get (0);
-		else if (item != null && item.length () > 0 && item.contains (":") && item.startsWith ("<") && item.endsWith (">")) {
-			ResourceLocation itemLookup = new ResourceLocation (item.substring (item.indexOf ("x") + 1,item.indexOf (":")),item.substring (item.indexOf (":") + 1,item.indexOf ("@")));
+		else if (item != null && item.length () > 0 && item.contains (":") && item.startsWith (ConfigHandler.startChar) && item.endsWith (ConfigHandler.endChar)) {
+			ResourceLocation itemLookup = new ResourceLocation (item.substring (item.indexOf (ConfigHandler.sizeChar) + 1,item.indexOf (":")),item.substring (item.indexOf (":") + 1,item.indexOf (ConfigHandler.metaChar)));
 			Item validItem = ForgeRegistries.ITEMS.getValue (itemLookup);
 			if (validItem != null) {
-				int stackSize = Integer.valueOf (item.substring (1,item.indexOf ("x")));
-				int meta = Integer.valueOf (item.substring (item.indexOf ("@") + 1,item.contains ("^") ? item.indexOf ("^") : item.indexOf (">")));
+				int stackSize = Integer.valueOf (item.substring (1,item.indexOf (ConfigHandler.sizeChar)));
+				int meta = Integer.valueOf (item.substring (item.indexOf (ConfigHandler.metaChar) + 1,item.contains (ConfigHandler.nbtChar) ? item.indexOf (ConfigHandler.nbtChar) : item.indexOf (ConfigHandler.endChar)));
 				ItemStack stack = new ItemStack (validItem,stackSize,meta);
-				if (item.contains ("^"))
+				if (item.contains (ConfigHandler.nbtChar))
 					try {
-						stack.setTagCompound (JsonToNBT.getTagFromJson (item.substring (item.indexOf ("^") + 1,item.length () - 1)));
+						stack.setTagCompound (JsonToNBT.getTagFromJson (item.substring (item.indexOf (ConfigHandler.nbtChar) + 1,item.length () - 1)));
 					} catch (NBTException e) {
-						WurmScript.info ("Invalid NBT '" + item.substring (item.indexOf ("^") + 1,item.length () - 1) + "'" + " for the item '" + item + "'");
+						WurmScript.info ("Invalid NBT '" + item.substring (item.indexOf (ConfigHandler.nbtChar) + 1,item.length () - 1) + "'" + " for the item '" + item + "'");
 					}
 				if (ConfigHandler.cache)
 					cachedItems.putIfAbsent (input,stack);
@@ -92,15 +92,15 @@ public class StackHelper {
 
 	public static String convert (FluidStack stack) {
 		if (stack != null && stack.getUnlocalizedName () != null && stack.getUnlocalizedName ().length () > 0)
-			return "<*" + stack.amount + "x" + stack.getFluid ().getName () + ">";
+			return ConfigHandler.startChar + ConfigHandler.fluidChar + stack.amount + ConfigHandler.sizeChar + stack.getFluid ().getName () + ConfigHandler.endChar;
 		else
 			return "Invalid FluidStack " + stack.getUnlocalizedName ();
 	}
 
 	public static FluidStack convertToFluid (String fluidStack) {
-		if (fluidStack.startsWith ("<*")) {
-			int amount = Integer.parseInt (fluidStack.substring (fluidStack.indexOf ("<*") + 2,fluidStack.indexOf ("x")));
-			Fluid fluid = FluidRegistry.getFluid (fluidStack.substring (fluidStack.indexOf ("x") + 1,fluidStack.indexOf (">")));
+		if (fluidStack.startsWith (ConfigHandler.startChar + ConfigHandler.fluidChar)) {
+			int amount = Integer.parseInt (fluidStack.substring (fluidStack.indexOf (ConfigHandler.startChar + ConfigHandler.fluidChar) + 2,fluidStack.indexOf (ConfigHandler.sizeChar)));
+			Fluid fluid = FluidRegistry.getFluid (fluidStack.substring (fluidStack.indexOf (ConfigHandler.sizeChar) + 1,fluidStack.indexOf (ConfigHandler.endChar)));
 			if (fluid != null)
 				return new FluidStack (fluid,amount);
 		}
@@ -110,21 +110,21 @@ public class StackHelper {
 	public static String convert (Object stack,boolean ore) {
 		if (ore && stack instanceof String)
 			if (((String) stack).length () > 0 && OreDictionary.doesOreNameExist (((String) stack)))
-				return "<" + stack + ">";
+				return ConfigHandler.startChar + stack + ConfigHandler.endChar;
 			else
 				return "Ore Name '" + stack + "' does not exist!";
 		else if (!ore && stack instanceof ItemStack && !((ItemStack) stack).isEmpty ()) {
 			ItemStack item = (ItemStack) stack;
-			String temp = "<" + item.getCount () + "x" + item.getItem ().getRegistryName ().getResourceDomain () + ":" + item.getItem ().getRegistryName ().getResourcePath () + "@" + ((ItemStack) stack).getItemDamage ();
+			String temp = ConfigHandler.startChar + item.getCount () + ConfigHandler.sizeChar + item.getItem ().getRegistryName ().getResourceDomain () + ":" + item.getItem ().getRegistryName ().getResourcePath () + ConfigHandler.metaChar + ((ItemStack) stack).getItemDamage ();
 			if (item.hasTagCompound ())
-				return temp + "^" + item.getTagCompound () + ">".replaceAll (" ","%");
-			return temp + ">".replaceAll (" ","%");
+				return temp.replaceAll (" ",ConfigHandler.spaceChar) + ConfigHandler.nbtChar + item.getTagCompound () + ConfigHandler.endChar;
+			return temp.replaceAll (" ",ConfigHandler.spaceChar) + ConfigHandler.endChar;
 		}
 		return "'" + stack + "' is a Invalid / Empty Item!";
 	}
 
 	private static boolean isOreDictionaryEntry (String stack) {
-		return stack != null && stack.length () > 2 && stack.startsWith ("<") && stack.endsWith (">") && stack.substring (1,stack.length () - 1).length () > 0 && OreDictionary.doesOreNameExist (stack.substring (1,stack.length () - 1));
+		return stack != null && stack.length () > 2 && stack.startsWith (ConfigHandler.startChar) && stack.endsWith (ConfigHandler.endChar) && stack.substring (1,stack.length () - 1).length () > 0 && OreDictionary.doesOreNameExist (stack.substring (1,stack.length () - 1));
 	}
 
 	public static boolean isSameIgnoreSize (ItemStack a,ItemStack b) {

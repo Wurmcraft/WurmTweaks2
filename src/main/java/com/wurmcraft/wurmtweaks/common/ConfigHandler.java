@@ -36,7 +36,7 @@ public class ConfigHandler {
 	public static boolean checkForRecipeUpdates = true;
 
 	@Config.LangKey (Local.CONFIG_META_ITEM)
-	public static String metaItems = "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, nanoTech, solarPanel, thruster, flintChunk, flux, rawSteelIngot, machineFramework, quarryCore, mortar, magicChunk, aerogel, hyperDiamond, metallicHydrogen, quantumFoam, quantumSingularity, mixedSheet, boneChunk, creativeParts, creativePartsEnergy, creativePartsMagic, advMachineFramework, computationalCore, engineCoil, natureCore, token, advCraftingParts, gearMixedSheet, darkMatter, redMatter, unstableMatter, shielding";
+	public static String metaItems = "battery, cardboard, flippers, goggles, mechanicalComponent, nanoTech, solarPanel, aerogel, hyperDiamond, engineCoil";
 
 	@Config.LangKey (Local.CONFIG_FILE_LOGGER)
 	public static boolean logToFile = true;
@@ -48,7 +48,34 @@ public class ConfigHandler {
 	public static boolean linkedMachines = true;
 
 	@Config.LangKey (Local.CONFIG_CACHE)
-	public static boolean cache = false;
+	public static boolean cache = true;
+
+	@Config.LangKey (Local.CONFIG_EMPTY_STACK)
+	public static String emptyStack = "empty";
+
+	@Config.LangKey (Local.CONFIG_SPACE_CHAR)
+	public static String spaceChar = "%";
+
+	@Config.LangKey (Local.CONFIG_NBT_CHAR)
+	public static String nbtChar = "^";
+
+	@Config.LangKey (Local.CONFIG_META_CHAR)
+	public static String metaChar = "@";
+
+	@Config.LangKey (Local.CONFIG_START_CHAR)
+	public static String startChar = "<";
+
+	@Config.LangKey (Local.CONFIG_END_CHAR)
+	public static String endChar = ">";
+
+	@Config.LangKey (Local.CONFIG_SIZE_CHAR)
+	public static String sizeChar = "x";
+
+	@Config.LangKey (Local.CONFIG_FLUID_CHAR)
+	public static String fluidChar = "*";
+
+	@Config.LangKey (Local.CONFIG_GAS_CHAR)
+	public static String gasChar = "%";
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -60,9 +87,8 @@ public class ConfigHandler {
 
 	public static void handleLateConfigSettings () {
 		if (removeAllCraftingRecipes)
-			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ()) {
+			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ())
 				ForgeRegistries.RECIPES.register (new InvalidRecipe (recipe));
-			}
 		if (removeAllFurnaceRecipes)
 			FurnaceRecipes.instance ().getSmeltingList ().clear ();
 	}

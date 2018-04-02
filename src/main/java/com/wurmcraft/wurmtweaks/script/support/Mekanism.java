@@ -6,6 +6,7 @@ import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import mekanism.api.MekanismAPI;
+import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
 import mekanism.api.infuse.InfuseRegistry;
@@ -13,7 +14,6 @@ import mekanism.api.infuse.InfuseType;
 import mekanism.common.recipe.RecipeHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 
 public class Mekanism extends ModSupport {
 
@@ -215,10 +215,17 @@ public class Mekanism extends ModSupport {
 		MekanismAPI.addBoxBlacklist (block,convertS (input[0]).getItemDamage ());
 	}
 
+	public static String getGases () {
+		StringBuilder builder = new StringBuilder ();
+		for (Gas stack : GasRegistry.getRegisteredGasses ())
+			builder.append (stack.getFluid ().getUnlocalizedName () + "\n");
+		return builder.toString ();
+	}
+
 	private GasStack getGasStack (String stack) {
-		if (stack.startsWith ("<%")) {
-			String name = stack.substring (stack.indexOf ("x") + 1,stack.indexOf (">"));
-			int amount = Integer.parseInt (stack.substring (stack.indexOf ("<%") + 2,stack.indexOf ("x")));
+		if (stack.startsWith (ConfigHandler.startChar + ConfigHandler.gasChar)) {
+			String name = stack.substring (stack.indexOf (ConfigHandler.startChar.charAt (0)) + 1,stack.indexOf (ConfigHandler.endChar.charAt (0)));
+			int amount = Integer.parseInt (stack.substring (stack.indexOf (ConfigHandler.startChar + ConfigHandler.gasChar) + 2,stack.indexOf (ConfigHandler.sizeChar)));
 			if (GasRegistry.containsGas (name.toUpperCase ()))
 				return new GasStack (GasRegistry.getGas (name.toUpperCase ()),amount);
 		}

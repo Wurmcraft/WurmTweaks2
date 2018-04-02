@@ -56,4 +56,9 @@ public class BlockTransparentAluminum extends Block {
 	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
+
+	@Override
+	public boolean isTranslucent (IBlockState state) {
+		return true;
+	}
 }
