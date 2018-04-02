@@ -5,10 +5,10 @@
   "description": "A Mod Used to help modpack creators create recipes along with some unique features like Web Based Recipes and Custom Crafting Items",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/Wurmcraft/WurmTweaks2",
+  "url": "https://github.com/Wurmcraft/WurmTweaks2/",
   "updateUrl": "",
   "authorList": ["Wurmatron"],
-  "credits": "",
+  "credits": "Specal Thanks to Matthewacon for the small random things he did to help",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
