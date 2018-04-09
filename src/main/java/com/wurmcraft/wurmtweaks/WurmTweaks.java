@@ -4,6 +4,7 @@ import com.wurmcraft.wurmtweaks.common.CommonProxy;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.block.WTBlocks;
 import com.wurmcraft.wurmtweaks.common.command.WTCommand;
+import com.wurmcraft.wurmtweaks.common.event.DamageModEvent;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.common.items.WTItems;
 import com.wurmcraft.wurmtweaks.common.network.NetworkHandler;
@@ -42,6 +43,8 @@ public class WurmTweaks {
 		proxy.init ();
 		NetworkHandler.registerPackets ();
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
+		if (ConfigHandler.damageMod > 1)
+			MinecraftForge.EVENT_BUS.register (new DamageModEvent ());
 	}
 
 	@Mod.EventHandler

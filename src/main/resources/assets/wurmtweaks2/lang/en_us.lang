@@ -17,6 +17,7 @@ config.endChar.name=Character used for finding last location of an ItemStack
 config.sizeChar.name=Character used for ItemStack Count (StackSize) (Don't change unless you know what this does)
 config.fluidChar.name=Character used to designate an FluidStack (Don't change unless you know what this does)
 config.gasChar.name=Character used to designate an GasStack (Don't change unless you know what this does) (Needs Mekanism)
+config.damageMod.name=Scale all damage taken to this amount
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!

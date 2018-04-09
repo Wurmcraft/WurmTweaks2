@@ -17,6 +17,14 @@ import net.minecraft.init.Blocks;
 
 public class Mekanism extends ModSupport {
 
+	public static String getGases () {
+		StringBuilder builder = new StringBuilder ();
+		for (Gas stack : GasRegistry.getRegisteredGasses ())
+			if (stack != null && stack.getFluid () != null)
+				builder.append (stack.getFluid ().getUnlocalizedName () + "\n");
+		return builder.toString ();
+	}
+
 	@Override
 	public String getModID () {
 		return "mekanism";
@@ -90,7 +98,6 @@ public class Mekanism extends ModSupport {
 		isValid (EnumInputType.INTEGER,input[3]);
 		MekanismAPI.recipeHelper ().addMetallurgicInfuserRecipe (type,convertNI (input[3]),convertS (input[1]),convertS (input[0]));
 	}
-
 
 	@ScriptFunction
 	public void addChemicalInfuser (String line) {
@@ -213,13 +220,6 @@ public class Mekanism extends ModSupport {
 		Block block = Block.getBlockFromItem (convertS (input[0]).getItem ());
 		Preconditions.checkArgument (block != Blocks.AIR);
 		MekanismAPI.addBoxBlacklist (block,convertS (input[0]).getItemDamage ());
-	}
-
-	public static String getGases () {
-		StringBuilder builder = new StringBuilder ();
-		for (Gas stack : GasRegistry.getRegisteredGasses ())
-			builder.append (stack.getFluid ().getUnlocalizedName () + "\n");
-		return builder.toString ();
 	}
 
 	private GasStack getGasStack (String stack) {

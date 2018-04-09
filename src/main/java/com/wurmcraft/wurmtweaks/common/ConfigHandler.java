@@ -74,8 +74,10 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_FLUID_CHAR)
 	public static String fluidChar = "*";
 
-	@Config.LangKey (Local.CONFIG_GAS_CHAR)
-	public static String gasChar = "%";
+	@Config.LangKey (Local.CONFIG_DAMAGE_MOD)
+	public static double damageMod = 1.0;
+
+
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
