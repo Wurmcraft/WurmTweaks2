@@ -53,5 +53,7 @@ public class ModRegistry {
 			WurmTweaks2API.register (new ToughAsNails ());
 		if(Loader.isModLoaded ("orestages"))
 			WurmTweaks2API.register (new OreStages ());
+		if(Loader.isModLoaded ("charcoal_pit"))
+			WurmTweaks2API.register (new CharcoalPit ());
 	}
 }
