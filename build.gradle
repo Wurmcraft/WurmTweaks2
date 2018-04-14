@@ -46,7 +46,6 @@ repositories {
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2516/439/[module]-${mc_version}-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2509/629/[module]-1.12-[revision].[ext]"}
 	maven {url "http://maven.shadowfacts.net/"}
-	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2516/240/[module]-1.12-[revision].[ext]"}
 	ivy {artifactPattern "https://addons-origin.cursecdn.com/files/2508/832/[module]-${mc_version}-[revision].[ext]"}
 }
 
