@@ -67,7 +67,6 @@ dependencies {
 	compile name: 'industrialforegoing', version: "${industrialforegoing_version}", ext: 'jar'
 	compile name: 'tesla-core-lib', version: "${teslacorelib_version}", ext: 'jar'
 	compile group: "net.shadowfacts", name: "Forgelin", version: "1.6.0"
-	compile name: 'BetterWithMods', version: "${betterwithmods_version}", ext: 'jar'
 	compile name: 'AbyssalCraft', version: "${abyssalcraft_version}", ext: 'jar'
 }
 

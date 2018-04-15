@@ -1,5 +1,6 @@
 package com.wurmcraft.wurmtweaks.script;
 
+import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapedOreRecipe;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapelessOreRecipe;
@@ -21,6 +22,9 @@ public class RecipeUtils {
 	public static HashMap <ItemStack, ItemStack> activeFurnace = new HashMap <> ();
 
 	public static void addShapeless (ItemStack output,Ingredient... inputItems) {
+		for (Ingredient input : inputItems)
+			if (input == Ingredient.EMPTY)
+				return;
 		DynamicShapelessOreRecipe recipe = new DynamicShapelessOreRecipe (RECIPE_GROUP,output,inputItems);
 		recipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (inputItems) + RAND.nextInt (100)));
 		ForgeRegistries.RECIPES.register (recipe);
@@ -29,7 +33,7 @@ public class RecipeUtils {
 
 	public static void addShaped (ItemStack output,Object... recipe) {
 		DynamicShapedOreRecipe shapedRecipe = new DynamicShapedOreRecipe (RECIPE_GROUP,output,recipe);
-		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + Arrays.hashCode (recipe) + RAND.nextInt (100)));
+		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + output.getCount () + (output.hasTagCompound () ? output.getTagCompound ().hashCode () : "") + Arrays.hashCode (recipe) + RAND.nextInt (100)));
 		ForgeRegistries.RECIPES.register (shapedRecipe);
 		activeRecipes.add (shapedRecipe);
 	}

@@ -21,6 +21,7 @@ import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -53,66 +54,76 @@ public class BetterWithMods extends ModSupport {
 	public void addCauldron (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addCauldron('<output> <input>...");
 		isValid (input[0]);
-		List <ItemStack> inputStacks = new ArrayList <> ();
+		List <Ingredient> inputStacks = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {
 			isValid (input[index]);
-			inputStacks.add (convertS (input[index]));
+			inputStacks.add (convertI (input[index]));
 		}
-		BWRegistry.CAULDRON.addUnstokedRecipe (convertS (input[0]),inputStacks.toArray (new ItemStack[0]));
+		List <ItemStack> outputStacks = new ArrayList <> ();
+		outputStacks.add (convertS (input[0]));
+		BWRegistry.CAULDRON.addUnstokedRecipe (inputStacks,outputStacks);
 	}
 
 	@ScriptFunction
 	public void addStokedCauldron (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addStokedCauldron('<output> <input>...");
 		isValid (input[0]);
-		List <ItemStack> inputStacks = new ArrayList <> ();
+		List <Ingredient> inputStacks = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {
 			isValid (input[index]);
-			inputStacks.add (convertS (input[index]));
+			inputStacks.add (convertI (input[index]));
 		}
-		BWRegistry.CAULDRON.addStokedRecipe (convertS (input[0]),inputStacks.toArray (new ItemStack[0]));
+		List <ItemStack> outputStacks = new ArrayList <> ();
+		outputStacks.add (convertS (input[0]));
+		BWRegistry.CAULDRON.addStokedRecipe (inputStacks,outputStacks);
 	}
 
 	@ScriptFunction
 	public void addCrucible (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addCrucible('<output> <input>...");
 		isValid (input[0]);
-		List <ItemStack> inputStacks = new ArrayList <> ();
+		List <Ingredient> inputStacks = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {
 			isValid (input[index]);
-			inputStacks.add (convertS (input[index]));
+			inputStacks.add (convertI (input[index]));
 		}
-		BWRegistry.CRUCIBLE.addUnstokedRecipe (convertS (input[0]),inputStacks.toArray (new ItemStack[0]));
+		List <ItemStack> outputStacks = new ArrayList <> ();
+		outputStacks.add (convertS (input[0]));
+		BWRegistry.CRUCIBLE.addUnstokedRecipe (inputStacks,outputStacks);
 	}
 
 	@ScriptFunction
 	public void addStokedCrucible (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addStokedCrucible('<output> <input>...')");
 		isValid (input[0]);
-		List <ItemStack> inputStacks = new ArrayList <> ();
+		List <Ingredient> inputStacks = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {
 			isValid (input[index]);
-			inputStacks.add (convertS (input[index]));
+			inputStacks.add (convertI (input[index]));
 		}
-		BWRegistry.CRUCIBLE.addStokedRecipe (convertS (input[0]),inputStacks.toArray (new ItemStack[0]));
+		List <ItemStack> outputStacks = new ArrayList <> ();
+		outputStacks.add (convertS (input[0]));
+		BWRegistry.CRUCIBLE.addStokedRecipe (inputStacks,outputStacks);
 	}
 
 	@ScriptFunction
 	public void addMill (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addMill('<output> <input>...')");
-		List <ItemStack> inputStacks = new ArrayList <> ();
+		List <Ingredient> inputStacks = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {
 			isValid (input[index]);
-			inputStacks.add (convertS (input[index]));
+			inputStacks.add (convertI (input[index]));
 		}
-		BWRegistry.MILLSTONE.addMillRecipe (convertS (input[0]),inputStacks);
+		List <ItemStack> outputStacks = new ArrayList <> ();
+		outputStacks.add (convertS (input[0]));
+		BWRegistry.MILLSTONE.addMillRecipe (inputStacks,outputStacks);
 	}
 
 	@ScriptFunction
 	public void addWoodSaw (String line) {
 		String[] input = verify (line,line.split (" ").length == 2,"addWoodSaw('<output> <input>')");
 		isValid (input[0],input[1]);
-		BWRegistry.WOOD_SAW.addRecipe (convertS (input[1]),convertS (input[0]));
+		BWRegistry.WOOD_SAW.addRecipe (convertS (input[0]),convertS (input[1]));
 	}
 
 	@ScriptFunction
