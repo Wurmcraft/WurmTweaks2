@@ -4,6 +4,7 @@ import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.reference.Local;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Config;
@@ -80,6 +81,9 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_DAMAGE_MOD)
 	public static double damageMod = 1.0;
 
+	@Config.LangKey (Local.CONFIG_REMOVAL_WHITELIST)
+	public static String[] removalWhitelist = new String[] {"test"};
+
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID ().equals (Global.MODID)) {
@@ -91,8 +95,17 @@ public class ConfigHandler {
 	public static void handleLateConfigSettings () {
 		if (removeAllCraftingRecipes)
 			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ())
-				ForgeRegistries.RECIPES.register (new InvalidRecipe (recipe));
+				if (canRemoveRecipe (recipe.getRecipeOutput ()))
+					ForgeRegistries.RECIPES.register (new InvalidRecipe (recipe));
 		if (removeAllFurnaceRecipes)
 			FurnaceRecipes.instance ().getSmeltingList ().clear ();
+	}
+
+	private static boolean canRemoveRecipe (ItemStack stack) {
+		String[] whitelistedMods = ConfigHandler.removalWhitelist;
+		for (String modid : whitelistedMods)
+			if (stack.getItem ().getRegistryName ().getResourceDomain ().equalsIgnoreCase (modid))
+				return false;
+		return true;
 	}
 }
