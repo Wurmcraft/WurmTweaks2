@@ -5,6 +5,8 @@ import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.common.block.WTBlocks;
 import com.wurmcraft.wurmtweaks.common.command.WTCommand;
 import com.wurmcraft.wurmtweaks.common.event.DamageModEvent;
+import com.wurmcraft.wurmtweaks.common.event.JoinWorldEvent;
+import com.wurmcraft.wurmtweaks.common.event.LootDestroyer;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
 import com.wurmcraft.wurmtweaks.common.items.WTItems;
 import com.wurmcraft.wurmtweaks.common.network.NetworkHandler;
@@ -45,6 +47,10 @@ public class WurmTweaks {
 		MinecraftForge.EVENT_BUS.register (new ScriptEvents ());
 		if (ConfigHandler.damageMod > 1)
 			MinecraftForge.EVENT_BUS.register (new DamageModEvent ());
+		if (ConfigHandler.destroyLootTable)
+			MinecraftForge.EVENT_BUS.register (new LootDestroyer ());
+		if (ConfigHandler.healOnJoin)
+			MinecraftForge.EVENT_BUS.register (new JoinWorldEvent ());
 	}
 
 	@Mod.EventHandler

@@ -1,6 +1,6 @@
 package com.wurmcraft.wurmtweaks.script;
 
-import com.google.common.base.Preconditions;
+
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapedOreRecipe;
 import com.wurmcraft.wurmtweaks.utils.DynamicShapelessOreRecipe;
@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 
@@ -32,10 +33,26 @@ public class RecipeUtils {
 	}
 
 	public static void addShaped (ItemStack output,Object... recipe) {
+		if (!isValid (recipe))
+			return;
 		DynamicShapedOreRecipe shapedRecipe = new DynamicShapedOreRecipe (RECIPE_GROUP,output,recipe);
 		shapedRecipe.setRegistryName (new ResourceLocation (Global.MODID,output.getUnlocalizedName () + output.getCount () + (output.hasTagCompound () ? output.getTagCompound ().hashCode () : "") + Arrays.hashCode (recipe) + RAND.nextInt (100)));
 		ForgeRegistries.RECIPES.register (shapedRecipe);
 		activeRecipes.add (shapedRecipe);
+	}
+
+	private static boolean isValid (Object... recipeInput) {
+		for (Object obj : recipeInput)
+			if (obj instanceof ItemStack) {
+				if (obj == ItemStack.EMPTY)
+					return false;
+			} else if (obj instanceof Ingredient) {
+				if (obj == Ingredient.EMPTY)
+					return false;
+			} else if (obj instanceof String)
+				if (((String) obj).length () > 3 && !OreDictionary.doesOreNameExist (((String) obj)))
+					return false;
+		return true;
 	}
 
 	public static int countRecipeStyle (String style) {

@@ -84,6 +84,12 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_REMOVAL_WHITELIST)
 	public static String[] removalWhitelist = new String[] {"test"};
 
+	@Config.LangKey (Local.CONFIG_DESTORY_TABLE)
+	public static boolean destroyLootTable = false;
+
+	@Config.LangKey (Local.CONFIG_REMOVAL_WHITELIST)
+	public static boolean healOnJoin = true;
+
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID ().equals (Global.MODID)) {
