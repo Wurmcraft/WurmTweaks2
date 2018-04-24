@@ -27,20 +27,22 @@ public class CraftEvent {
 		String possibleStage = getStage (e.crafting);
 		if (possibleStage.length () > 0) {
 			PlayerDataHandler.getStageData (e.player).unlockStage (possibleStage);
-			PlayerDataHandler.getStageData (e.player).setSynced (false);
-			if (e.player.world.isRemote)
+			if (e.player.world.isRemote) {
 				e.player.sendMessage (new TextComponentString ("You have just unlocked the # stage".replaceAll ("#",possibleStage)));
+				PlayerDataHandler.getStageData (e.player).setSynced (false);
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onPickup (PlayerEvent.ItemPickupEvent e) {
 		String possibleStage = getStage (e.getStack ());
-		if (possibleStage.length () > 0) {
+		if (possibleStage.length () > 0 && !PlayerDataHandler.getStageData (e.player).getUnlockedStages ().contains (possibleStage)) {
 			PlayerDataHandler.getStageData (e.player).unlockStage (possibleStage);
-			PlayerDataHandler.getStageData (e.player).setSynced (false);
-			if (e.player.world.isRemote)
+			if (e.player.world.isRemote) {
 				e.player.sendMessage (new TextComponentString ("You have just unlocked the # stage".replaceAll ("#",possibleStage)));
+				PlayerDataHandler.getStageData (e.player).setSynced (false);
+			}
 		}
 	}
 }

@@ -76,7 +76,7 @@ public class ScriptEvents {
 			return ItemStack.EMPTY;
 		else if (pickupItem.getCount () == conversion.getCount ())
 			return conversion;
-		else if (pickupItem.getCount () > conversion.getCount ()) {
+		else if (pickupItem.getCount () > conversion.getCount () && conversion.getCount () > 0) {
 			ItemStack temp = conversion.copy ();
 			temp.setCount (pickupItem.getCount () / conversion.getCount ());
 			return temp;

@@ -59,6 +59,8 @@ public class StackHelper {
 	}
 
 	public static Ingredient convert (String item,Void empty) {
+		if (isOreDictionaryEntry (item))
+			return new IngredientHelper (OreDictionary.getOres (item.substring (1,item.length () - 1)).toArray (new ItemStack[0]));
 		return new IngredientHelper (convert (item));
 	}
 
