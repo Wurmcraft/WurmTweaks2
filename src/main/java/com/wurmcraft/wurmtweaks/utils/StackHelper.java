@@ -130,6 +130,6 @@ public class StackHelper {
 	}
 
 	public static boolean isSameIgnoreSize (ItemStack a,ItemStack b) {
-		return a.getItem ().equals (b.getItem ()) && a.getTagCompound () == b.getTagCompound () && a.getItemDamage () == b.getItemDamage ();
+		return a.getItem ().equals (b.getItem ()) && a.getTagCompound () == b.getTagCompound () && ((a.getItemDamage () == b.getItemDamage ()) || a.getItemDamage () == Short.MAX_VALUE);
 	}
 }
