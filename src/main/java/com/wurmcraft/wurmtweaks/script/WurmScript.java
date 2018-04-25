@@ -14,11 +14,10 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 
-import javax.script.Bindings;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.SimpleBindings;
+import javax.script.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +122,14 @@ public class WurmScript extends WurmTweaks2API {
 		for (String line : lines) {
 			process (line);
 			lineNo++;
+		}
+	}
+
+	public void process (File file) {
+		try {
+			engine.eval (new FileReader (file),scriptFunctions);
+		} catch (FileNotFoundException | ScriptException e) {
+			e.printStackTrace ();
 		}
 	}
 }

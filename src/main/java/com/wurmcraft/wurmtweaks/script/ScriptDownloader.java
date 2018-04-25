@@ -89,6 +89,7 @@ public class ScriptDownloader {
 					if (slaveScriptLines.size () > 0) {
 						String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
 						WurmScript.setCurrentScript (new File (saveLocation + File.separator + script));
+						//						wurmScript.process (new File (saveLocation + File.separator + script));
 						wurmScript.process (withCommentsRemoved);
 					}
 				} catch (IOException e) {

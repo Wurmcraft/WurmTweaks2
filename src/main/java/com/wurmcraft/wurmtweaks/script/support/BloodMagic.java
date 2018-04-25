@@ -29,9 +29,9 @@ public class BloodMagic extends ModSupport {
 				BloodMagicAPI.INSTANCE.getRecipeRegistrar ().removeBloodAltar (altar.getInput ().getMatchingStacks ()[0]);
 		// Due to Blood Magic having horrably designed API
 		try {
-			Field field = BloodMagicAPI.INSTANCE.getRecipeRegistrar ().getClass ().getField ("tartaricForgeRecipes");
+			Field field = BloodMagicAPI.INSTANCE.getRecipeRegistrar ().getClass ().getDeclaredField ("tartaricForgeRecipes");
 			ReflectionHelper.setFinalStatic (field,Sets.newHashSet ());
-			Field field2 = BloodMagicAPI.INSTANCE.getRecipeRegistrar ().getClass ().getField ("tartaricForgeRecipes");
+			Field field2 = BloodMagicAPI.INSTANCE.getRecipeRegistrar ().getClass ().getDeclaredField ("alchemyArrayRecipes");
 			ReflectionHelper.setFinalStatic (field2,Sets.newHashSet ());
 		} catch (Exception e) {
 			e.printStackTrace ();
