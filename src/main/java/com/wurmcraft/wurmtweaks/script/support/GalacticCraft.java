@@ -1,9 +1,9 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
 import com.google.common.base.Preconditions;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;

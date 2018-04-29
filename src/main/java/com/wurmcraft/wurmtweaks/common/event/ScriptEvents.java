@@ -20,11 +20,11 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public class ScriptEvents {
 
-	public static List <ItemStack> throwEvent = new ArrayList <> ();
-	public static HashMap <ItemStack, ItemStack> dropPickupEvent = new HashMap <> ();
-	public static List <Item> pickupQuick = new ArrayList <> ();
-	public static HashMap <ItemStack, String[]> tooltipEvent = new HashMap <> ();
-	public static List <Item> tooltipQuick = new ArrayList <> ();
+	private static List <ItemStack> throwEvent = new ArrayList <> ();
+	private static HashMap <ItemStack, ItemStack> dropPickupEvent = new HashMap <> ();
+	private static List <Item> pickupQuick = new ArrayList <> ();
+	private static HashMap <ItemStack, String[]> tooltipEvent = new HashMap <> ();
+	private static List <Item> tooltipQuick = new ArrayList <> ();
 	private static List <Item> throwQuickCheck = new ArrayList <> ();
 
 	public static void addThrowCancelEvent (ItemStack stack) {

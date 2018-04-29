@@ -2,30 +2,21 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 
 import betterwithmods.common.BWRegistry;
-import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
 import betterwithmods.common.registry.HopperInteractions;
 import betterwithmods.common.registry.anvil.AnvilCraftingManager;
 import betterwithmods.common.registry.anvil.ShapedAnvilRecipe;
-import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.heat.BWMHeatRegistry;
-import betterwithmods.module.gameplay.SawRecipes;
-import betterwithmods.util.InvUtils;
-import cofh.thermalexpansion.util.managers.machine.CrucibleManager;
 import com.google.common.base.Preconditions;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
 import java.util.List;

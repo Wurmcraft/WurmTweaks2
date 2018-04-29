@@ -3,9 +3,9 @@ package com.wurmcraft.wurmtweaks.script.support;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import com.google.common.collect.Sets;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.utils.ReflectionHelper;
 import net.minecraft.item.ItemStack;
@@ -73,6 +73,6 @@ public class BloodMagic extends ModSupport {
 			isValid (input[index]);
 			inputs.add (convertI (input[index]));
 		}
-		BloodMagicAPI.INSTANCE.getRecipeRegistrar ().addAlchemyTable (convertS (input[0]),convertNI (input[1]),convertNI (input[2]), convertNI (input[3]),inputs.toArray ());
+		BloodMagicAPI.INSTANCE.getRecipeRegistrar ().addAlchemyTable (convertS (input[0]),convertNI (input[1]),convertNI (input[2]),convertNI (input[3]),inputs.toArray ());
 	}
 }

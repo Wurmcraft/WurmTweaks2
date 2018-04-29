@@ -1,8 +1,8 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

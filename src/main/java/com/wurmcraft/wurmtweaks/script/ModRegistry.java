@@ -49,11 +49,13 @@ public class ModRegistry {
 			WurmTweaks2API.register (new GalacticCraft ());
 		if (Loader.isModLoaded ("pneumaticcraft"))
 			WurmTweaks2API.register (new PnumaticCraft ());
-		if(Loader.isModLoaded ("toughasnails"))
+		if (Loader.isModLoaded ("toughasnails"))
 			WurmTweaks2API.register (new ToughAsNails ());
-		if(Loader.isModLoaded ("orestages"))
+		if (Loader.isModLoaded ("orestages"))
 			WurmTweaks2API.register (new OreStages ());
-		if(Loader.isModLoaded ("charcoal_pit"))
+		if (Loader.isModLoaded ("charcoal_pit"))
 			WurmTweaks2API.register (new CharcoalPit ());
+		if (Loader.isModLoaded ("thaumcraft"))
+			WurmTweaks2API.register (new Thaumcraft ());
 	}
 }

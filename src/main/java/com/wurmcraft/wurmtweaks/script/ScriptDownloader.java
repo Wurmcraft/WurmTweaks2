@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.apache.commons.io.FileUtils;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,9 +19,9 @@ import java.util.List;
 
 public class ScriptDownloader {
 
-	public String masterScript;
-	public File saveLocation;
-	public List <String> slaveScripts = new ArrayList <> ();
+	private String masterScript;
+	private File saveLocation;
+	private List <String> slaveScripts = new ArrayList <> ();
 	private String slaveScript;
 	private WurmScript wurmScript;
 
@@ -84,7 +83,13 @@ public class ScriptDownloader {
 	}
 
 	private void processSlaveScripts () {
-		if (slaveScript.length () > 0)
+		if (slaveScript.length () > 0) {
+			if (ConfigHandler.initScript.length () > 0)
+				for (String script : slaveScripts)
+					if (script.equalsIgnoreCase (ConfigHandler.initScript)) {
+						LogHandler.script (ConfigHandler.initScript,0,"Loading / Proccessing " + ConfigHandler.initScript);
+						wurmScript.process (new File (saveLocation + File.separator + script));
+					}
 			if (ConfigHandler.multithread) {
 				String[][] threadWork = new String[][] {slaveScripts.subList (0,slaveScripts.size () / 2).toArray (new String[0]),slaveScripts.subList ((slaveScripts.size () / 2) + 1,slaveScripts.size ()).toArray (new String[0])};
 				for (int index = 0; index < threadWork.length; index++) {
@@ -95,12 +100,14 @@ public class ScriptDownloader {
 				for (String script : slaveScripts)
 					wurmScript.process (new File (saveLocation + File.separator + script));
 			}
+		}
 	}
 
 	private File[] convertToFiles (String[] scriptNames) {
 		List <File> files = new ArrayList <> ();
 		for (String name : scriptNames)
-			files.add (new File (saveLocation + File.separator + name));
+			if (!name.equalsIgnoreCase (ConfigHandler.initScript))
+				files.add (new File (saveLocation + File.separator + name));
 		return files.toArray (new File[0]);
 	}
 }

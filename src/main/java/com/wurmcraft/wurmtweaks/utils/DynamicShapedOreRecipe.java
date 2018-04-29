@@ -27,14 +27,13 @@ public class DynamicShapedOreRecipe extends ShapedOreRecipe {
 				int subX = x - startX;
 				int subY = y - startY;
 				Ingredient target = Ingredient.EMPTY;
-				if (subX >= 0 && subY >= 0 && subX < width && subY < height) {
+				if (subX >= 0 && subY >= 0 && subX < width && subY < height)
 					if (mirror)
 						target = input.get (width - subX - 1 + subY * width);
-				} else
-					target = input.get (subX + subY * width);
-				if (!apply (target,inv.getStackInRowAndColumn (x,y))) {
+					else
+						target = input.get (subX + subY * width);
+				if (!apply (target,inv.getStackInRowAndColumn (x,y)))
 					return false;
-				}
 			}
 		return true;
 	}

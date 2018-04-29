@@ -2,8 +2,8 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 
 import com.google.common.base.Preconditions;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
 import net.minecraft.entity.IMerchant;
@@ -25,6 +25,13 @@ import java.util.Random;
 public class Minecraft extends ModSupport {
 
 	private static final Random RAND = new Random (System.nanoTime ());
+
+	public static String getFluids () {
+		StringBuilder builder = new StringBuilder ();
+		for (Fluid stack : FluidRegistry.getRegisteredFluids ().values ())
+			builder.append (stack.getUnlocalizedName () + "\n");
+		return builder.toString ();
+	}
 
 	@Override
 	public String getModID () {
@@ -65,7 +72,7 @@ public class Minecraft extends ModSupport {
 	}
 
 	@ScriptFunction
-	public void addOreEntry (String line) {
+	public synchronized void addOreEntry (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addOreEntry('<stack> entry')");
 		isValid (input[0]);
 		for (int index = 1; index < input.length; index++) {
@@ -88,13 +95,6 @@ public class Minecraft extends ModSupport {
 		ResourceLocation loc = input[0].contains (":") ? new ResourceLocation (input[0].substring (0,input[0].indexOf (":")),input[0].substring (input[0].indexOf (":"),input[0].length ())) : new ResourceLocation ("minecraft",input[0]);
 		VillagerRegistry.VillagerProfession villager = ForgeRegistries.VILLAGER_PROFESSIONS.getValue (loc);
 		villager.getCareer (100 + RAND.nextInt (100)).addTrade (1,new VillagerTrade (convertS (input[1]),convertS (input[2])));
-	}
-
-	public static String getFluids () {
-		StringBuilder builder = new StringBuilder ();
-		for (Fluid stack : FluidRegistry.getRegisteredFluids ().values ())
-			builder.append (stack.getUnlocalizedName () + "\n");
-		return builder.toString ();
 	}
 
 	public class VillagerTrade implements EntityVillager.ITradeList {

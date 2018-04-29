@@ -2,9 +2,9 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.rwtema.extrautils2.api.machine.XUMachineCrusher;
 import com.rwtema.extrautils2.tile.TileResonator;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 
 public class ExtraUtils2 extends ModSupport {

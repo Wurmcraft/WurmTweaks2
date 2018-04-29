@@ -21,6 +21,8 @@ config.damageMod.name=Scale all damage taken to this amount
 config.removalWhitelist.name=Whitelist modid to not get recipes removed (removeAllCraftingRecipes = true)
 config.destroyTable.name=Destroy the loot table?
 config.multiThread.name=MultiThread WurmScript?
+config.aspectChar.name=Char used by WurmScript for an Thaumcraft Aspect
+config.initScript.name=Script Loaded before anyone else
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!
@@ -77,6 +79,7 @@ item.superComputer.name=Super-Computer
 item.antiMatter.name=AntiMatter
 item.rocketEngine.name=Rocket Engine
 item.electroShielding.name=Electro-Magnetic Shielding
+item.lithium.name=Lithium
 
 # Block
 tile.transparentAluminum.name=Transparent Aluminum

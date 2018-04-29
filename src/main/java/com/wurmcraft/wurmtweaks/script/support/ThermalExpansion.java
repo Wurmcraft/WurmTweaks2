@@ -2,9 +2,9 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import cofh.thermalexpansion.util.managers.machine.*;
 import com.google.common.base.Preconditions;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 
 import java.util.Arrays;

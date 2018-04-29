@@ -62,7 +62,7 @@ public class WTCommand extends CommandBase {
 				hand (sender);
 			else if (args[0].equalsIgnoreCase ("reload")) {
 				WurmTweaks.dl.reload ();
-				sender.sendMessage (new TextComponentString (TextFormatting.RED + "Reloaded! (Old Machine Recipes Are Not Removed!)"));
+				sender.sendMessage (new TextComponentString (TextFormatting.RED + "Reload Request Sent! (Please Allow a few seconds for the thread(s) to finish)"));
 			} else if (args[0].equalsIgnoreCase ("load") && sender.getCommandSenderEntity () instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity ();
 				if (args.length == 2) {

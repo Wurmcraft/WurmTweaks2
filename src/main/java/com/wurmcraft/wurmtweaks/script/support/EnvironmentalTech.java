@@ -4,9 +4,9 @@ import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_botanic.VMBotanic;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_ore.VMOre;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_res.VMRes;
 import com.valkyrieofnight.valkyrielib.lib.stack.WeightedItemStack;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 
 public class EnvironmentalTech extends ModSupport {

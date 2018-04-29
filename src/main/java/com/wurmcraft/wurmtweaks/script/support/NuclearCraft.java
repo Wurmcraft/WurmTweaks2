@@ -1,7 +1,7 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import nc.recipe.NCRecipes;
 
@@ -15,15 +15,15 @@ public class NuclearCraft extends ModSupport {
 	@Override
 	public void init () {
 		//		if (ConfigHandler.removeAllMachineRecipes) {
-			NCRecipes.Type.PRESSURIZER.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.MANUFACTORY.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.ALLOY_FURNACE.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.CHEMICAL_REACTOR.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.SUPERCOOLER.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.INFUSER.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.INGOT_FORMER.getRecipeHandler ().recipes.clear ();
-			NCRecipes.Type.MELTER.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.PRESSURIZER.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.MANUFACTORY.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.ALLOY_FURNACE.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.CHEMICAL_REACTOR.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.SUPERCOOLER.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.INFUSER.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.INGOT_FORMER.getRecipeHandler ().recipes.clear ();
+		NCRecipes.Type.MELTER.getRecipeHandler ().recipes.clear ();
 		//		}
 	}
 

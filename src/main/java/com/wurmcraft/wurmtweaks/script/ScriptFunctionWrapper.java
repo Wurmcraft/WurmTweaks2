@@ -21,7 +21,7 @@ public class ScriptFunctionWrapper implements Function <String, Void> {
 		try {
 			method.invoke (clazz,s);
 		} catch (IllegalAccessException | InvocationTargetException e) {
-		e.getCause ().printStackTrace ();
+			e.getCause ().printStackTrace ();
 		}
 		return null;
 	}

@@ -1,13 +1,11 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.event.ScriptEvents;
-import com.wurmcraft.wurmtweaks.script.EnumInputType;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.tan.ArmorTemp;
 import toughasnails.api.temperature.TemperatureHelper;
-
-import javax.script.ScriptEngine;
 
 public class ToughAsNails extends ModSupport {
 
@@ -27,6 +25,6 @@ public class ToughAsNails extends ModSupport {
 		isValid (input[0]);
 		isValid (EnumInputType.INTEGER,input[1]);
 		ArmorTemp.setArmorTemp (convertS (input[0]),convertNI (input[1]));
-		ScriptEvents.addToolTipEntry (convertS (input[0]), new String[] {"&c+" + input[1] + " Heat Resistance"});
+		ScriptEvents.addToolTipEntry (convertS (input[0]),new String[] {"&c+" + input[1] + " Heat Resistance"});
 	}
 }

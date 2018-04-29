@@ -23,10 +23,12 @@ public class Local {
 	public static final String CONFIG_SIZE_CHAR = "config.sizeChar.name";
 	public static final String CONFIG_FLUID_CHAR = "config.fluidChar.name";
 	public static final String CONFIG_GAS_CHAR = "config.gasChar.name";
+	public static final String CONFIG_ASPECT_CHAR = "config.aspectChar.name";
 	public static final String CONFIG_DAMAGE_MOD = "config.damageMod.name";
 	public static final String CONFIG_REMOVAL_WHITELIST = "config.removalWhitelist.name";
 	public static final String CONFIG_DESTORY_TABLE = "config.destroyTable.name";
 	public static final String CONFIG_MULTITHREAD = "config.multiThread.name";
+	public static final String CONFIG_INIT_SCRIPT = "config.initScript.name";
 
 	// Command
 	public static final String REQUIRES_PLAYER = "info.requiresPlayer.name";

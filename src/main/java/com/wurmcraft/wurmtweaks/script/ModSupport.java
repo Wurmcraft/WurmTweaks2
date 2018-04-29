@@ -1,6 +1,7 @@
 package com.wurmcraft.wurmtweaks.script;
 
 import com.google.common.base.Preconditions;
+import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;

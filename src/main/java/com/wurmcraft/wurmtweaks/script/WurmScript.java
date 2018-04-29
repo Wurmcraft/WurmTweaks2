@@ -25,29 +25,16 @@ import java.util.List;
 public class WurmScript extends WurmTweaks2API {
 
 	public static final char SPACER = '_';
-	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
 	public static final File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
+	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
 	public static Bindings scriptFunctions = null;
+	public static boolean reload = false;
 	public File currentScript = null;
 	public int lineNo = 0;
-	public static boolean reload = false;
 	protected LinkedRegistry linkRegistry = new LinkedRegistry ();
 
-	public void setCurrentScript (File currentScript) {
-		this.currentScript = currentScript;
-		lineNo = 1;
-	}
-
-	public void info (String msg) {
-		LogHandler.script (getScriptName (),lineNo,msg);
-	}
-
-	public static void info(String msg, Void empty) {
+	public static void info (String msg,Void empty) {
 		LogHandler.script ("Thread",0,msg);
-	}
-
-	public String getScriptName () {
-		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 
 	public static String[] removeComments (String[] withComments) {
@@ -66,6 +53,19 @@ public class WurmScript extends WurmTweaks2API {
 
 	public static List <IModSupport> getActiveControllers () {
 		return activeControllers;
+	}
+
+	public void setCurrentScript (File currentScript) {
+		this.currentScript = currentScript;
+		lineNo = 1;
+	}
+
+	public void info (String msg) {
+		LogHandler.script (getScriptName (),lineNo,msg);
+	}
+
+	public String getScriptName () {
+		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 
 	public void init () {

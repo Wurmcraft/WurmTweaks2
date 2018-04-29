@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 
@@ -46,25 +45,18 @@ public class RecipeUtils {
 			if (obj instanceof ItemStack) {
 				if (obj == ItemStack.EMPTY)
 					return false;
-			} else if (obj instanceof Ingredient) {
+			} else if (obj instanceof Ingredient)
 				if (obj == Ingredient.EMPTY)
-					return false;
-			} else if (obj instanceof String)
-				if (((String) obj).length () > 3 && !OreDictionary.doesOreNameExist (((String) obj)))
 					return false;
 		return true;
 	}
 
-	public static int countRecipeStyle (String style) {
-		return (int) style.chars ().distinct ().count ();
-	}
-
-	public static void addFurnace (ItemStack output,ItemStack input,float exp) {
+	public static synchronized void addFurnace (ItemStack output,ItemStack input,float exp) {
 		FurnaceRecipes.instance ().addSmeltingRecipe (input,output,exp);
 		activeFurnace.put (input,output);
 	}
 
-	public static void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
+	public static synchronized void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
 		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,Collections.singletonList (bottom),output));
 	}
 
