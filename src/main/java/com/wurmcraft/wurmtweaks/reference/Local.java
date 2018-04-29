@@ -26,6 +26,7 @@ public class Local {
 	public static final String CONFIG_DAMAGE_MOD = "config.damageMod.name";
 	public static final String CONFIG_REMOVAL_WHITELIST = "config.removalWhitelist.name";
 	public static final String CONFIG_DESTORY_TABLE = "config.destroyTable.name";
+	public static final String CONFIG_MULTITHREAD = "config.multiThread.name";
 
 	// Command
 	public static final String REQUIRES_PLAYER = "info.requiresPlayer.name";

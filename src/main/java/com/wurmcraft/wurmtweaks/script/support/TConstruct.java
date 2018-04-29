@@ -98,7 +98,7 @@ public class TConstruct extends ModSupport {
 		String[] input = verify (line,line.split (" ").length == 3,"addDrying('<output> <input> <time>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2]);
-		TinkerRegistry.registerDryingRecipe (convertS (input[1]),convertS (input[2]),convertNI (input[3]));
+		TinkerRegistry.registerDryingRecipe (convertS (input[0]),convertS (input[1]),convertNI (input[2]));
 	}
 
 	@ScriptFunction

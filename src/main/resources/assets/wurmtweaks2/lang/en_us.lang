@@ -20,6 +20,7 @@ config.gasChar.name=Character used to designate an GasStack (Don't change unless
 config.damageMod.name=Scale all damage taken to this amount
 config.removalWhitelist.name=Whitelist modid to not get recipes removed (removeAllCraftingRecipes = true)
 config.destroyTable.name=Destroy the loot table?
+config.multiThread.name=MultiThread WurmScript?
 
 # Command
 info.requiresPlayer.name=Command Must Be Run From Someone With Hands!

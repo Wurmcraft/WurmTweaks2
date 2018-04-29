@@ -90,6 +90,9 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_REMOVAL_WHITELIST)
 	public static boolean healOnJoin = true;
 
+	@Config.LangKey (Local.CONFIG_MULTITHREAD)
+	public static boolean multithread = false;
+
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID ().equals (Global.MODID)) {

@@ -1,11 +1,13 @@
 package com.wurmcraft.wurmtweaks.script;
 
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
+import com.wurmcraft.wurmtweaks.script.thread.WorkerThread;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.apache.commons.io.FileUtils;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +21,9 @@ import java.util.List;
 public class ScriptDownloader {
 
 	public String masterScript;
-	private String slaveScript;
 	public File saveLocation;
 	public List <String> slaveScripts = new ArrayList <> ();
+	private String slaveScript;
 	private WurmScript wurmScript;
 
 	public ScriptDownloader (String mainScript,File saveLocation,String slaveScript) {
@@ -83,18 +85,22 @@ public class ScriptDownloader {
 
 	private void processSlaveScripts () {
 		if (slaveScript.length () > 0)
-			for (String script : slaveScripts) {
-				try {
-					List <String> slaveScriptLines = Files.readAllLines (new File (saveLocation + File.separator + script).toPath ());
-					if (slaveScriptLines.size () > 0) {
-						String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
-						WurmScript.setCurrentScript (new File (saveLocation + File.separator + script));
-						//						wurmScript.process (new File (saveLocation + File.separator + script));
-						wurmScript.process (withCommentsRemoved);
-					}
-				} catch (IOException e) {
-					LogHandler.info ("Unable to read " + script + " I/O Exception");
+			if (ConfigHandler.multithread) {
+				String[][] threadWork = new String[][] {slaveScripts.subList (0,slaveScripts.size () / 2).toArray (new String[0]),slaveScripts.subList (slaveScripts.size () / 2,slaveScripts.size ()).toArray (new String[0])};
+				for (int index = 0; index < threadWork.length; index++) {
+					WorkerThread workerThread = new WorkerThread (convertToFiles (threadWork[index]));
+					workerThread.start ();
 				}
+			} else {
+				for (String script : slaveScripts)
+					wurmScript.process (new File (saveLocation + File.separator + script));
 			}
+	}
+
+	private File[] convertToFiles (String[] scriptNames) {
+		List <File> files = new ArrayList <> ();
+		for (String name : scriptNames)
+			files.add (new File (saveLocation + File.separator + name));
+		return files.toArray (new File[0]);
 	}
 }

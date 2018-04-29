@@ -56,7 +56,6 @@ dependencies {
 	compile name: 'extrautils2', version: "${extrautils2_version}", ext: 'jar'
 	compile name: 'Draconic-Evolution', version: "${draconicvolution_version}", ext: 'jar'
 	compile name: 'BrandonsCore', version: "${brandonscore_version}", ext: 'jar'
-	compile name: 'CodeChickenLib', version: "${codechickenlib_version}", ext: 'jar'
 	deobfCompile "cofh:RedstoneFlux:1.12-${rf_version}:universal"
 	compile name: 'environmentaltech', version: "${environmentaltech_version}", ext: 'jar'
 	compile name: 'valkyrielib', version: "${valkyrielib_version}", ext: 'jar'
