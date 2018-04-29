@@ -38,7 +38,7 @@ public class Events extends ModSupport {
 		isValid (input[0]);
 		List <String> tooltip = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++)
-			tooltip.add (input[index].replaceAll ("&","§").replaceAll ("_"," "));
+			tooltip.add (input[index].replaceAll ("&","\u00A7").replaceAll ("_"," "));
 		ScriptEvents.addToolTipEntry (convertS (input[0]),tooltip.toArray (new String[0]));
 	}
 }

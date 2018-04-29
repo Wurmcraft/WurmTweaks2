@@ -48,7 +48,7 @@ public class StackHelper {
 					try {
 						stack.setTagCompound (JsonToNBT.getTagFromJson (item.substring (item.indexOf (ConfigHandler.nbtChar) + 1,item.length () - 1)));
 					} catch (NBTException e) {
-						WurmScript.info ("Invalid NBT '" + item.substring (item.indexOf (ConfigHandler.nbtChar) + 1,item.length () - 1) + "'" + " for the item '" + item + "'");
+						WurmScript.info ("Invalid NBT '" + item.substring (item.indexOf (ConfigHandler.nbtChar) + 1,item.length () - 1) + "'" + " for the item '" + item + "'",null);
 					}
 				if (ConfigHandler.cache)
 					cachedItems.putIfAbsent (input,stack);

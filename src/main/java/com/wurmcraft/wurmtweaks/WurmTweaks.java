@@ -59,9 +59,7 @@ public class WurmTweaks {
 		proxy.postInit ();
 		ConfigHandler.handleLateConfigSettings ();
 		ModRegistry.init ();
-		long time = System.currentTimeMillis ();
 		dl = new ScriptDownloader (ConfigHandler.masterScript,WurmScript.wurmScriptLocation,ConfigHandler.masterScript.replaceAll ("/master.ws",""));
-		LogHandler.debug ("Script Loading Time: " + (System.currentTimeMillis () - time) + "ms");
 	}
 
 	@Mod.EventHandler

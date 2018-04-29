@@ -26,23 +26,27 @@ public class WurmScript extends WurmTweaks2API {
 
 	public static final char SPACER = '_';
 	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
-	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
+	public static final File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 	public static Bindings scriptFunctions = null;
-	public static File currentScript = null;
-	public static int lineNo = 0;
+	public File currentScript = null;
+	public int lineNo = 0;
 	public static boolean reload = false;
 	protected LinkedRegistry linkRegistry = new LinkedRegistry ();
 
-	public static void setCurrentScript (File currentScript) {
-		WurmScript.currentScript = currentScript;
+	public void setCurrentScript (File currentScript) {
+		this.currentScript = currentScript;
 		lineNo = 1;
 	}
 
-	public static void info (String msg) {
+	public void info (String msg) {
 		LogHandler.script (getScriptName (),lineNo,msg);
 	}
 
-	public static String getScriptName () {
+	public static void info(String msg, Void empty) {
+		LogHandler.script ("Thread",0,msg);
+	}
+
+	public String getScriptName () {
 		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 

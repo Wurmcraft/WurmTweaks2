@@ -86,9 +86,9 @@ public class ScriptDownloader {
 	private void processSlaveScripts () {
 		if (slaveScript.length () > 0)
 			if (ConfigHandler.multithread) {
-				String[][] threadWork = new String[][] {slaveScripts.subList (0,slaveScripts.size () / 2).toArray (new String[0]),slaveScripts.subList (slaveScripts.size () / 2,slaveScripts.size ()).toArray (new String[0])};
+				String[][] threadWork = new String[][] {slaveScripts.subList (0,slaveScripts.size () / 2).toArray (new String[0]),slaveScripts.subList ((slaveScripts.size () / 2) + 1,slaveScripts.size ()).toArray (new String[0])};
 				for (int index = 0; index < threadWork.length; index++) {
-					WorkerThread workerThread = new WorkerThread (convertToFiles (threadWork[index]));
+					WorkerThread workerThread = new WorkerThread (index + 1,convertToFiles (threadWork[index]));
 					workerThread.start ();
 				}
 			} else {

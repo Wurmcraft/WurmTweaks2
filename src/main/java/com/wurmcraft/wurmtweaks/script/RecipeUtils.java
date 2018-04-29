@@ -22,7 +22,7 @@ public class RecipeUtils {
 	public static List <IRecipe> activeRecipes = new ArrayList <> ();
 	public static HashMap <ItemStack, ItemStack> activeFurnace = new HashMap <> ();
 
-	public static void addShapeless (ItemStack output,Ingredient... inputItems) {
+	public static synchronized void addShapeless (ItemStack output,Ingredient... inputItems) {
 		for (Ingredient input : inputItems)
 			if (input == Ingredient.EMPTY)
 				return;
@@ -32,7 +32,7 @@ public class RecipeUtils {
 		activeRecipes.add (recipe);
 	}
 
-	public static void addShaped (ItemStack output,Object... recipe) {
+	public static synchronized void addShaped (ItemStack output,Object... recipe) {
 		if (!isValid (recipe))
 			return;
 		DynamicShapedOreRecipe shapedRecipe = new DynamicShapedOreRecipe (RECIPE_GROUP,output,recipe);
@@ -147,16 +147,11 @@ public class RecipeUtils {
 					index++;
 				} else
 					recipeFormat.put (input[index].charAt (0),Ingredient.EMPTY);
-			} else if (input[index].length () > 1) {
-				WurmScript.info ("Invalid Format, '" + input[index] + "' Should Be A Single Character!");
-				break;
 			}
 		boolean valid = true;
 		for (Character ch : recipeFormat.keySet ())
-			if (recipeFormat.get (ch) == Ingredient.EMPTY) {
-				WurmScript.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
+			if (recipeFormat.get (ch) == Ingredient.EMPTY)
 				valid = false;
-			}
 		if (valid) {
 			List <Object> temp = new ArrayList <> ();
 			for (Character ch : recipeFormat.keySet ()) {
