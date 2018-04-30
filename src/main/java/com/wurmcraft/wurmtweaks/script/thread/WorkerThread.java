@@ -4,6 +4,9 @@ import com.wurmcraft.wurmtweaks.script.WurmScript;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 // TODO WIP
 public class WorkerThread implements Runnable {
@@ -26,7 +29,15 @@ public class WorkerThread implements Runnable {
 		long time = System.currentTimeMillis ();
 		for (File f : file) {
 			LogHandler.info ("Starting " + f.getName ());
-			script.process (f);
+			try {
+				List <String> slaveScriptLines = Files.readAllLines (f.toPath ());
+				if (slaveScriptLines.size () > 0) {
+					String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
+					script.process (withCommentsRemoved);
+				}
+			} catch (IOException e) {
+				LogHandler.info ("Unable to read " + script + " I/O Exception");
+			}
 		}
 		LogHandler.debug ("Script Loading Time: " + (System.currentTimeMillis () - time));
 		thread.interrupt ();

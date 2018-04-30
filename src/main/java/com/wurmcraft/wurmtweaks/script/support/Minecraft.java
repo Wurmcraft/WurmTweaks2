@@ -6,6 +6,7 @@ import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
+import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.ItemStack;
@@ -43,7 +44,7 @@ public class Minecraft extends ModSupport {
 	}
 
 	@ScriptFunction
-	public void addShapeless (String line) {
+	public synchronized void addShapeless (String line) {
 		String[] input = verify (line,(line.split (" ").length >= 2),"addShapeless('<output> <input>...')");
 		isValid (input[0]);
 		List <Ingredient> inputs = RecipeUtils.getShapelessRecipeItems (input,null,1);
@@ -52,7 +53,7 @@ public class Minecraft extends ModSupport {
 	}
 
 	@ScriptFunction
-	public void addShaped (String line) {
+	public synchronized void addShaped (String line) {
 		String[] input = verify (line,line.split (" ").length > 4,"addShaped(<output> <style> <format>')");
 		isValid (input[0]);
 		List <Object> recipe = RecipeUtils.getShapedRecipe (input);
@@ -61,7 +62,7 @@ public class Minecraft extends ModSupport {
 	}
 
 	@ScriptFunction (linkSize = {2,3}, link = "smelting")
-	public void addFurnace (String line) {
+	public synchronized void addFurnace (String line) {
 		String[] input = verify (line,line.split (" ").length == 2 || line.split (" ").length == 3,"addFurnace('<output> <input> <exp>')");
 		isValid (input[0],input[1]);
 		if (line.length () == 3) {
@@ -71,18 +72,27 @@ public class Minecraft extends ModSupport {
 			RecipeUtils.addFurnace (convertS (input[0]),convertS (input[1]),1);
 	}
 
+	public synchronized void addOreEntry (ItemStack stack,String entry) {
+		OreDictionary.registerOre (entry,stack);
+	}
+
 	@ScriptFunction
-	public synchronized void addOreEntry (String line) {
+	public void addOreEntry (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addOreEntry('<stack> entry')");
-		isValid (input[0]);
-		for (int index = 1; index < input.length; index++) {
-			isValid (EnumInputType.STRING,input[index]);
-			OreDictionary.registerOre (input[index].replaceAll ("[<>]",""),convertS (input[0]));
+		if (input.length == 2) {
+			isValid (input[0]);
+			ItemStack stack = StackHelper.convert (input[0]);
+			for (int index = 1; index < input.length; index++) {
+				if (stack != ItemStack.EMPTY) {
+					isValid (EnumInputType.STRING,input[index]);
+					OreDictionary.registerOre (input[index].replaceAll ("[<>]",""),convertS (input[0]));
+				}
+			}
 		}
 	}
 
 	@ScriptFunction
-	public void addBrewing (String line) {
+	public synchronized void addBrewing (String line) {
 		String[] input = verify (line,line.split (" ").length == 3,"addBrewing('<output> <input> <bottom>')");
 		for (int index = 0; index < 2; index++)
 			isValid (input[index]);

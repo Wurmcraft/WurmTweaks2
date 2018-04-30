@@ -83,24 +83,25 @@ public class ScriptDownloader {
 	}
 
 	private void processSlaveScripts () {
-		if (slaveScript.length () > 0) {
-			if (ConfigHandler.initScript.length () > 0)
-				for (String script : slaveScripts)
-					if (script.equalsIgnoreCase (ConfigHandler.initScript)) {
-						LogHandler.script (ConfigHandler.initScript,0,"Loading / Proccessing " + ConfigHandler.initScript);
-						wurmScript.process (new File (saveLocation + File.separator + script));
-					}
+		if (slaveScript.length () > 0)
 			if (ConfigHandler.multithread) {
 				String[][] threadWork = new String[][] {slaveScripts.subList (0,slaveScripts.size () / 2).toArray (new String[0]),slaveScripts.subList ((slaveScripts.size () / 2) + 1,slaveScripts.size ()).toArray (new String[0])};
 				for (int index = 0; index < threadWork.length; index++) {
 					WorkerThread workerThread = new WorkerThread (index + 1,convertToFiles (threadWork[index]));
 					workerThread.start ();
 				}
-			} else {
+			} else
 				for (String script : slaveScripts)
-					wurmScript.process (new File (saveLocation + File.separator + script));
-			}
-		}
+					try {
+						List <String> slaveScriptLines = Files.readAllLines (new File (saveLocation + File.separator + script).toPath ());
+						if (slaveScriptLines.size () > 0) {
+							String[] withCommentsRemoved = WurmScript.removeComments (slaveScriptLines.toArray (new String[0]));
+							wurmScript.process (withCommentsRemoved);
+						}
+					} catch (IOException e) {
+						LogHandler.info ("Unable to read " + script + " I/O Exception");
+					}
+
 	}
 
 	private File[] convertToFiles (String[] scriptNames) {
