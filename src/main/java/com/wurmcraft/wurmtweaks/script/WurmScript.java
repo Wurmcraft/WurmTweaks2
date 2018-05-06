@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.script.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,16 +26,25 @@ import java.util.List;
 public class WurmScript extends WurmTweaks2API {
 
 	public static final char SPACER = '_';
-	public static final File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 	private static final ScriptEngine engine = new ScriptEngineManager (null).getEngineByName ("nashorn");
+	public static File wurmScriptLocation = new File (Loader.instance ().getConfigDir () + File.separator + Global.NAME.replaceAll (" ",""));
 	public static Bindings scriptFunctions = null;
+	public static File currentScript = null;
+	public static int lineNo = 0;
 	public static boolean reload = false;
-	public File currentScript = null;
-	public int lineNo = 0;
 	protected LinkedRegistry linkRegistry = new LinkedRegistry ();
 
-	public static void info (String msg,Void empty) {
-		LogHandler.script ("Thread",0,msg);
+	public static void setCurrentScript (File currentScript) {
+		WurmScript.currentScript = currentScript;
+		lineNo = 1;
+	}
+
+	public static void info (String msg) {
+		LogHandler.script (getScriptName (),lineNo,msg);
+	}
+
+	public static String getScriptName () {
+		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 
 	public static String[] removeComments (String[] withComments) {
@@ -53,19 +63,6 @@ public class WurmScript extends WurmTweaks2API {
 
 	public static List <IModSupport> getActiveControllers () {
 		return activeControllers;
-	}
-
-	public void setCurrentScript (File currentScript) {
-		this.currentScript = currentScript;
-		lineNo = 1;
-	}
-
-	public void info (String msg) {
-		LogHandler.script (getScriptName (),lineNo,msg);
-	}
-
-	public String getScriptName () {
-		return currentScript != null ? currentScript.getName () : "Code.ws";
 	}
 
 	public void init () {
@@ -131,7 +128,8 @@ public class WurmScript extends WurmTweaks2API {
 
 	public void process (File file) {
 		try {
-			engine.eval (new FileReader (file),scriptFunctions);
+
+			engine.eval (new BufferedReader (new FileReader (file)),scriptFunctions);
 		} catch (FileNotFoundException | ScriptException e) {
 			e.printStackTrace ();
 		}

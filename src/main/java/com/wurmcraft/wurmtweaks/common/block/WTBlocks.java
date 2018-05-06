@@ -13,7 +13,7 @@ public class WTBlocks {
 	public static void register () {
 		register (transparentAluminum = new BlockTransparentAluminum (Material.GLASS),"transparentAluminum");
 		register (stoneMagic = new BlockBasic (Material.ROCK),"stoneMagic");
-		register (logMagic = new BlockBasic (Material.WOOD),"logMagic");
+		register (logMagic = new BlockBasic (Material.WOOD), "logMagic");
 	}
 
 	private static Block register (Block block,String name) {

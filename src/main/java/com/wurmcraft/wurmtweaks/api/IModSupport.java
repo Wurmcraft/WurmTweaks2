@@ -8,8 +8,8 @@ public interface IModSupport {
 	String getModID ();
 
 	/**
-	 Called Once The Support Has Been Loaded
+	  Called Once The Support Has Been Loaded
 	 */
-	void init ();
+	void init();
 
 }

@@ -112,7 +112,7 @@ public class TechReborn extends ModSupport {
 		RecipeHandler.addRecipe (new BlastFurnaceRecipe (convertS (input[2]),convertS (input[3]),convertS (input[0]),convertS (input[1]),convertNI (input[4]),convertNI (input[5]),convertNI (input[6])));
 	}
 
-	@ScriptFunction (link = "centerfuge", linkSize = {8})
+	@ScriptFunction(link = "centerfuge", linkSize = {8})
 	public void addTRCenterfuge (String line) {
 		String[] input = verify (line,line.split (" ").length == 8,"addCenterfuge('<output> <output2> <output3> <input> <input2> <time> <euTick> <output4>')");
 		isValid (input[0],input[1],input[2],input[3],input[4],input[7]);

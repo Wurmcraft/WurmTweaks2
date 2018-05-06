@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingOreRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class RecipeUtils {
 	public static List <IRecipe> activeRecipes = new ArrayList <> ();
 	public static HashMap <ItemStack, ItemStack> activeFurnace = new HashMap <> ();
 
-	public static synchronized void addShapeless (ItemStack output,Ingredient... inputItems) {
+	public static void addShapeless (ItemStack output,Ingredient... inputItems) {
 		for (Ingredient input : inputItems)
 			if (input == Ingredient.EMPTY)
 				return;
@@ -31,7 +32,7 @@ public class RecipeUtils {
 		activeRecipes.add (recipe);
 	}
 
-	public static synchronized void addShaped (ItemStack output,Object... recipe) {
+	public static void addShaped (ItemStack output,Object... recipe) {
 		if (!isValid (recipe))
 			return;
 		DynamicShapedOreRecipe shapedRecipe = new DynamicShapedOreRecipe (RECIPE_GROUP,output,recipe);
@@ -45,18 +46,25 @@ public class RecipeUtils {
 			if (obj instanceof ItemStack) {
 				if (obj == ItemStack.EMPTY)
 					return false;
-			} else if (obj instanceof Ingredient)
+			} else if (obj instanceof Ingredient) {
 				if (obj == Ingredient.EMPTY)
+					return false;
+			} else if (obj instanceof String)
+				if (((String) obj).length () > 3 && !OreDictionary.doesOreNameExist (((String) obj)))
 					return false;
 		return true;
 	}
 
-	public static synchronized void addFurnace (ItemStack output,ItemStack input,float exp) {
+	public static int countRecipeStyle (String style) {
+		return (int) style.chars ().distinct ().count ();
+	}
+
+	public static void addFurnace (ItemStack output,ItemStack input,float exp) {
 		FurnaceRecipes.instance ().addSmeltingRecipe (input,output,exp);
 		activeFurnace.put (input,output);
 	}
 
-	public static synchronized void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
+	public static void addBrewing (ItemStack output,ItemStack input,ItemStack bottom) {
 		BrewingRecipeRegistry.addRecipe (new BrewingOreRecipe (input,Collections.singletonList (bottom),output));
 	}
 
@@ -142,8 +150,10 @@ public class RecipeUtils {
 			}
 		boolean valid = true;
 		for (Character ch : recipeFormat.keySet ())
-			if (recipeFormat.get (ch) == Ingredient.EMPTY)
+			if (recipeFormat.get (ch) == Ingredient.EMPTY) {
+				WurmScript.info ("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault (ch,""));
 				valid = false;
+			}
 		if (valid) {
 			List <Object> temp = new ArrayList <> ();
 			for (Character ch : recipeFormat.keySet ()) {

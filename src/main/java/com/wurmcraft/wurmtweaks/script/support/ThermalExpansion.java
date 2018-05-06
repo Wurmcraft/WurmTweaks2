@@ -1,5 +1,6 @@
 package com.wurmcraft.wurmtweaks.script.support;
 
+
 import cofh.thermalexpansion.util.managers.machine.*;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.EnumInputType;
@@ -46,10 +47,10 @@ public class ThermalExpansion extends ModSupport {
 
 	@ScriptFunction (link = "crushing", linkSize = {3,5})
 	public void addPulverizer (String line) {
-		String[] input = verify (line,line.split (" ").length >= 3,"addPulverizer('<output> <input> <energy> | <secOutput> <secOutput%>')");
+		String[] input = verify (line,line.split (" ").length == 3 || line.split (" ").length == 5,"addPulverizer('<output> <input> <energy> | <secOutput> <secOutput%>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2]);
-		if (input.length == 3)
+		if (line.split (" ").length == 3)
 			PulverizerManager.addRecipe (convertNI (input[2]),convertS (input[1]),convertS (input[0]));
 		else {
 			isValid (input[3]);
@@ -102,14 +103,14 @@ public class ThermalExpansion extends ModSupport {
 	}
 
 	private CompactorManager.Mode getMode (String mode) {
-		if (mode.matches ("[gG]ear"))
-			return CompactorManager.Mode.GEAR;
-		else if (mode.matches ("[aA]ll"))
-			return CompactorManager.Mode.ALL;
+		if (mode.matches ("[pP]late"))
+			return CompactorManager.Mode.PLATE;
 		else if (mode.matches ("[cC]oin"))
 			return CompactorManager.Mode.COIN;
-		else if (mode.matches ("[pP]late"))
-			return CompactorManager.Mode.PLATE;
+		else if (mode.matches ("[aA]ll"))
+			return CompactorManager.Mode.ALL;
+		else if (mode.matches ("[gG]ear"))
+			return CompactorManager.Mode.GEAR;
 		return null;
 	}
 }

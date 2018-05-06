@@ -17,7 +17,7 @@ public class LootDestroyer {
 	@SubscribeEvent (priority = EventPriority.HIGHEST)
 	public void addLoot (LootTableLoadEvent e) {
 		LootTable table = e.getTable ();
-		if (table.isFrozen ())
+		if (table.isFrozen ()) {
 			try {
 				Field field = getField (table.getClass (),"isFrozen","isFrozen");
 				field.setAccessible (true);
@@ -25,6 +25,7 @@ public class LootDestroyer {
 			} catch (Exception e1) {
 				e1.printStackTrace ();
 			}
+		}
 		List <LootPool> pools = new ArrayList <> ();
 		try {
 			pools = (List <LootPool>) getField (table.getClass (),"pools","field_186466_c").get (table);

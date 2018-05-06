@@ -82,7 +82,7 @@ public class ImmersiveEngineering extends ModSupport {
 
 	@ScriptFunction (link = "crushing", linkSize = {3,5})
 	public void addCrusher (String line) {
-		String[] input = verify (line,line.split (" ").length == 3 || line.split (" ").length == 5,"addCrusher('<output> <input> <energy> | <secOutput> <secOutput%>)");
+		String[] input = verify (line,line.split (" ").length == 3 || line.split (" ").length == 5,"addCrusher('<output> <input> <energy> | <secOutput> <secOutput%>");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.INTEGER,input[2]);
 		if (line.split (" ").length == 3)

@@ -27,43 +27,43 @@ public class ModSupport implements IModSupport {
 					try {
 						Preconditions.checkArgument (StackHelper.convert (input) != ItemStack.EMPTY || input.equalsIgnoreCase ("<empty>"),"Invalid Item '%s'",input);
 					} catch (IllegalArgumentException e) {
-						WurmScript.info (e.getMessage (),null);
+						WurmScript.info (e.getMessage ());
 					}
 					break;
 				case FLUID:
 					try {
 						Preconditions.checkArgument (StackHelper.convertToFluid (input) != null,"Invalid Fluid '%s'",input);
 					} catch (IllegalArgumentException e) {
-						WurmScript.info (e.getMessage (),null);
+						WurmScript.info (e.getMessage ());
 					}
 					break;
 				case INTEGER:
 					try {
 						Integer.parseInt (input);
 					} catch (NumberFormatException f) {
-						WurmScript.info ("Invalid Number '" + input + "'",null);
+						WurmScript.info ("Invalid Number '" + input + "'");
 					}
 					break;
 				case FLOATNG:
 					try {
 						Float.parseFloat (input);
 					} catch (NumberFormatException f) {
-						WurmScript.info ("Invalid Number '" + input + "'",null);
+						WurmScript.info ("Invalid Number '" + input + "'");
 					}
 					break;
 				case BOOLEAN:
 					try {
 						Boolean.parseBoolean (input);
 					} catch (NumberFormatException f) {
-						WurmScript.info ("Invalid Boolean (True/False) '" + input + "'",null);
+						WurmScript.info ("Invalid Boolean (True/False) '" + input + "'");
 					}
 					break;
 				case STRING:
 				default:
 					try {
-						Preconditions.checkNotNull (input,"Invalid String '%s'",input,null);
+						Preconditions.checkNotNull (input,"Invalid String '%s'",input);
 					} catch (IllegalArgumentException e) {
-						WurmScript.info (e.getMessage (),null);
+						WurmScript.info (e.getMessage ());
 						break;
 					}
 			}
@@ -77,7 +77,7 @@ public class ModSupport implements IModSupport {
 		try {
 			Preconditions.checkArgument (test,msg);
 		} catch (IllegalArgumentException e) {
-			WurmScript.info (e.getMessage (),null);
+			WurmScript.info (e.getMessage ());
 		}
 		return line.split (" ");
 	}
@@ -90,7 +90,7 @@ public class ModSupport implements IModSupport {
 		try {
 			return Float.parseFloat (num);
 		} catch (NumberFormatException e) {
-			WurmScript.info ("Invalid Number '" + num + "'",null);
+			WurmScript.info ("Invalid Number '" + num + "'");
 		}
 		return -1;
 	}
@@ -99,7 +99,7 @@ public class ModSupport implements IModSupport {
 		try {
 			return Boolean.parseBoolean (bol);
 		} catch (NumberFormatException e) {
-			WurmScript.info ("Invalid Boolean '" + bol + "'",null);
+			WurmScript.info ("Invalid Boolean '" + bol + "'");
 		}
 		return null;
 	}
@@ -116,7 +116,7 @@ public class ModSupport implements IModSupport {
 		try {
 			return Integer.parseInt (num);
 		} catch (NumberFormatException e) {
-			WurmScript.info ("Invalid Number '" + num + "'",null);
+			WurmScript.info ("Invalid Number '" + num + "'");
 		}
 		return -1;
 	}

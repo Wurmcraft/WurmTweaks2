@@ -49,7 +49,6 @@ public class ConfigHandler {
 	public static boolean linkedMachines = true;
 
 	@Config.LangKey (Local.CONFIG_CACHE)
-	@Config.Comment (value = "Cache ItemStack's within WurmScript (Improves Preformance, Increases Ram Usage)")
 	public static boolean cache = true;
 
 	@Config.LangKey (Local.CONFIG_EMPTY_STACK)
@@ -79,8 +78,8 @@ public class ConfigHandler {
 	@Config.LangKey (Local.CONFIG_GAS_CHAR)
 	public static String gasChar = "%";
 
-	@Config.LangKey (Local.CONFIG_ASPECT_CHAR)
-	public static String aspectChar = "~";
+	@Config.LangKey (Local.CONFIG_GAS_CHAR)
+	public static String aspectChar = "$";
 
 	@Config.LangKey (Local.CONFIG_DAMAGE_MOD)
 	public static double damageMod = 1.0;
@@ -93,12 +92,6 @@ public class ConfigHandler {
 
 	@Config.LangKey (Local.CONFIG_REMOVAL_WHITELIST)
 	public static boolean healOnJoin = true;
-
-	@Config.LangKey (Local.CONFIG_MULTITHREAD)
-	public static boolean multithread = false;
-
-	@Config.LangKey (Local.CONFIG_INIT_SCRIPT)
-	public static String initScript = "";
 
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {

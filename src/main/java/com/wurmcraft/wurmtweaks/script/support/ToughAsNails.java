@@ -25,6 +25,6 @@ public class ToughAsNails extends ModSupport {
 		isValid (input[0]);
 		isValid (EnumInputType.INTEGER,input[1]);
 		ArmorTemp.setArmorTemp (convertS (input[0]),convertNI (input[1]));
-		ScriptEvents.addToolTipEntry (convertS (input[0]),new String[] {"&c+" + input[1] + " Heat Resistance"});
+		ScriptEvents.addToolTipEntry (convertS (input[0]), new String[] {"&c+" + input[1] + " Heat Resistance"});
 	}
 }

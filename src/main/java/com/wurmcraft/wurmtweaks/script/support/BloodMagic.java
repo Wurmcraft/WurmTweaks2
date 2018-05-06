@@ -73,6 +73,6 @@ public class BloodMagic extends ModSupport {
 			isValid (input[index]);
 			inputs.add (convertI (input[index]));
 		}
-		BloodMagicAPI.INSTANCE.getRecipeRegistrar ().addAlchemyTable (convertS (input[0]),convertNI (input[1]),convertNI (input[2]),convertNI (input[3]),inputs.toArray ());
+		BloodMagicAPI.INSTANCE.getRecipeRegistrar ().addAlchemyTable (convertS (input[0]),convertNI (input[1]),convertNI (input[2]), convertNI (input[3]),inputs.toArray ());
 	}
 }
