@@ -15,11 +15,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.script.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,9 +126,12 @@ public class WurmScript extends WurmTweaks2API {
 
 	public void process (File file) {
 		try {
-
-			engine.eval (new BufferedReader (new FileReader (file)),scriptFunctions);
+			LogHandler.info ("Loading Script: " + file.getName ());
+			for(String line : Files.readAllLines (file.toPath ()))
+			engine.eval (line,scriptFunctions);
 		} catch (FileNotFoundException | ScriptException e) {
+			e.printStackTrace ();
+		} catch (IOException e) {
 			e.printStackTrace ();
 		}
 	}

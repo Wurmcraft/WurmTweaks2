@@ -2,6 +2,7 @@ package com.wurmcraft.wurmtweaks.script.support;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
+import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
 import com.wurmcraft.wurmtweaks.script.RecipeUtils;
@@ -27,8 +28,10 @@ public class Avaritia extends ModSupport {
 
 	@Override
 	public void init () {
-		AvaritiaRecipeManager.EXTREME_RECIPES.clear ();
-		AvaritiaRecipeManager.COMPRESSOR_RECIPES.clear ();
+		if(ConfigHandler.removeAllMachineRecipes) {
+			AvaritiaRecipeManager.EXTREME_RECIPES.clear ();
+			AvaritiaRecipeManager.COMPRESSOR_RECIPES.clear ();
+		}
 	}
 
 	@ScriptFunction

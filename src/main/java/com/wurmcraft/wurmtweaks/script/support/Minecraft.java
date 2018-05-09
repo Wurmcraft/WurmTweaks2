@@ -75,10 +75,8 @@ public class Minecraft extends ModSupport {
 	@ScriptFunction
 	public void addOreEntry (String line) {
 		String[] input = verify (line,line.split (" ").length >= 2,"addOreEntry('<stack> entry')");
-		LogHandler.info ("OreDICT "  + line +  " " + convertS (input[0]));
 		isValid (input[0]);
 		for (int index = 1; index < input.length; index++) {
-			LogHandler.info ("OreDict: " + input[index]);
 			isValid (EnumInputType.STRING,input[index]);
 			OreDictionary.registerOre (input[index].replaceAll ("[<>]",""),convertS (input[0]));
 		}

@@ -20,6 +20,7 @@ public class ModSupport implements IModSupport {
 
 	}
 
+	// TODO If Statment
 	protected void isValid (EnumInputType type,String... i) {
 		for (String input : i)
 			switch (type) {
