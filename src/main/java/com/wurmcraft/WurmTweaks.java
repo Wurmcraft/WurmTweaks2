@@ -86,7 +86,7 @@ public class WurmTweaks {
 	public void onPostInit (FMLPostInitializationEvent e) {
 		proxy.postInit ();
 		FunctionsRegistry.init ();
-		if (script.getHelper ().doneLoading (scriptFutures,true))
+		if (script.getHelper ().doneLoading (scriptFutures,false))
 			FunctionsRegistry.finishSupport ();
 	}
 

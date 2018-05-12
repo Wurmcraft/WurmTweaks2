@@ -28,7 +28,6 @@ public class WurmScript {
 	// Helper Instances
 	private ScriptHelper helper = new ScriptHelper ();
 
-
 	/**
 	 Loads all the Scripts
 
