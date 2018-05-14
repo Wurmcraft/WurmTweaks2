@@ -3,7 +3,7 @@ package com.wurmcraft.script.support;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_botanic.VMBotanic;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_ore.VMOre;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_res.VMRes;
-import com.valkyrieofnight.valkyrielib.lib.stack.WeightedItemStack;
+import com.valkyrieofnight.vlib.lib.stack.WeightedItemStack;
 import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.Types;
 import com.wurmcraft.common.ConfigHandler;

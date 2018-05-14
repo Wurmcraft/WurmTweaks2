@@ -2,6 +2,7 @@ package com.wurmcraft.script.support;
 
 import betterwithmods.common.registry.HopperInteractions;
 import betterwithmods.common.registry.anvil.ShapedAnvilRecipe;
+import betterwithmods.common.registry.block.recipe.BlockIngredient;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.Types;
@@ -47,7 +48,7 @@ public class BetterWithMods extends SupportHelper {
   for (Object[] recipe : mill) MILLSTONE.addMillRecipe((List<Ingredient>) recipe[0], (List<ItemStack>) recipe[1]);
   for (Object[] recipe : saw) WOOD_SAW.addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1]);
   for (Object[] recipe : anvil) ANVIL_CRAFTING.add((ShapedAnvilRecipe) recipe[0]);
-  for (Object[] recipe : heat) addHeatSource((Block) recipe[0], (int) recipe[1]);
+  for (Object[] recipe : heat) addHeatSource((BlockIngredient) recipe[0], (int) recipe[1]);
  }
 
  @Override
@@ -70,7 +71,6 @@ public class BetterWithMods extends SupportHelper {
    HopperInteractions.RECIPES.clear();
    //AnvilCraftingManager
    ANVIL_CRAFTING.clear();
-   RECIPE_CACHE.clear();
   }
  }
 
@@ -166,7 +166,7 @@ public class BetterWithMods extends SupportHelper {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addBlockHeat(<block> <heat>')");
   isValid(helper, input[0]);
   isValid(Types.INTEGER, helper, input[1]);
-  Block heatBlock = Block.getBlockFromItem(convertStack(helper, input[0]).getItem());
+  BlockIngredient heatBlock = new BlockIngredient(convertStack(helper, input[0]));
   heat.add(new Object[]{heatBlock, convertInteger(input[1])});
  }
 
