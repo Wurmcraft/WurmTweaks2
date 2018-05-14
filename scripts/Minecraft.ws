@@ -26,3 +26,4 @@ addBrewing('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:blaze_ro
 // addFurnace('<output> <input> | [float]')
 addFurnace('<1xminecraft:blaze_rod> <1xminecraft:cooked_porkchop> 4')
 addFurnace('<1xminecraft:golden_apple> <1xminecraft:apple>')
+
