@@ -15,9 +15,11 @@ out
 *intellij.xml
 
 # gradle
-build
-.gradle
+build/
+.gradle/
+gradle/
+libs/
 
 # other
-eclipse
-run
+eclipse/
+run/

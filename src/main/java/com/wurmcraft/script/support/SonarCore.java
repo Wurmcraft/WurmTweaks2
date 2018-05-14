@@ -18,68 +18,68 @@ import java.util.Random;
 
 public class SonarCore extends SupportHelper {
 
-	private List<CustomFertilizer> fertilizer = Collections.synchronizedList (new ArrayList<> ());
+ private List<CustomFertilizer> fertilizer = Collections.synchronizedList(new ArrayList<>());
 
-	public SonarCore () {
-		super ("sonarcore");
-	}
+ public SonarCore() {
+  super("sonarcore");
+ }
 
-	@Override
-	public void init () {
-		fertilizer.clear ();
-		if (ConfigHandler.Script.removeAllMachineRecipes)
-			sonar.core.SonarCore.fertilisers.getObjects ().clear ();
-	}
+ @Override
+ public void init() {
+  fertilizer.clear();
+  if (ConfigHandler.Script.removeAllMachineRecipes)
+   sonar.core.SonarCore.fertilisers.getObjects().clear();
+ }
 
-	@Override
-	public void finishSupport () {
-		for (CustomFertilizer fert : fertilizer)
-			sonar.core.SonarCore.fertilisers.registerObject (fert);
-	}
+ @Override
+ public void finishSupport() {
+  for (CustomFertilizer fert : fertilizer)
+   sonar.core.SonarCore.fertilisers.registerObject(fert);
+ }
 
-	@ScriptFunction
-	public void addFertilizer (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 1,"addFertilizer('<stack>')");
-		isValid (helper,input[0]);
-		fertilizer.add (new CustomFertilizer (convertStack (helper,input[0])));
-	}
+ @ScriptFunction
+ public void addFertilizer(StackHelper helper, String line) {
+  String[] input = validateFormat(line, line.split(" ").length == 1, "addFertilizer('<stack>')");
+  isValid(helper, input[0]);
+  fertilizer.add(new CustomFertilizer(convertStack(helper, input[0])));
+ }
 
-	public class CustomFertilizer implements IFertiliser {
+ public class CustomFertilizer implements IFertiliser {
 
-		private final ItemStack fertiliser;
+  private final ItemStack fertiliser;
 
-		public CustomFertilizer (ItemStack stack) {
-			this.fertiliser = stack;
-		}
+  public CustomFertilizer(ItemStack stack) {
+   this.fertiliser = stack;
+  }
 
-		@Override
-		public boolean isLoadable () {
-			return true;
-		}
+  @Override
+  public boolean isLoadable() {
+   return true;
+  }
 
-		@Override
-		public String getName () {
-			return fertiliser.getDisplayName ();
-		}
+  @Override
+  public String getName() {
+   return fertiliser.getDisplayName();
+  }
 
-		@Override
-		public boolean canFertilise (World world,BlockPos pos,IBlockState state) {
-			return state.getBlock () instanceof IGrowable;
-		}
+  @Override
+  public boolean canFertilise(World world, BlockPos pos, IBlockState state) {
+   return state.getBlock() instanceof IGrowable;
+  }
 
-		@Override
-		public boolean canGrow (World world,BlockPos pos,IBlockState state,boolean isClient) {
-			return ((IGrowable) state.getBlock ()).canGrow (world,pos,state,isClient);
-		}
+  @Override
+  public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
+   return ((IGrowable) state.getBlock()).canGrow(world, pos, state, isClient);
+  }
 
-		@Override
-		public boolean canUseFertiliser (ItemStack stack,World world,Random rand,BlockPos pos,IBlockState state) {
-			return stack.getItem () == fertiliser.getItem () && stack.getItemDamage () == fertiliser.getItemDamage () && ((IGrowable) state.getBlock ()).canUseBonemeal (world,rand,pos,state);
-		}
+  @Override
+  public boolean canUseFertiliser(ItemStack stack, World world, Random rand, BlockPos pos, IBlockState state) {
+   return stack.getItem() == fertiliser.getItem() && stack.getItemDamage() == fertiliser.getItemDamage() && ((IGrowable) state.getBlock()).canUseBonemeal(world, rand, pos, state);
+  }
 
-		@Override
-		public void grow (World world,Random rand,BlockPos pos,IBlockState state) {
-			((IGrowable) state.getBlock ()).grow (world,rand,pos,state);
-		}
-	}
+  @Override
+  public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+   ((IGrowable) state.getBlock()).grow(world, rand, pos, state);
+  }
+ }
 }

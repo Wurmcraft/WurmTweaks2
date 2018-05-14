@@ -10,7 +10,7 @@ import java.security.InvalidParameterException;
  @see com.wurmcraft.script.utils.SupportHelper#checkNotNull(Types,Object,String) */
 public class InvalidStackException extends InvalidParameterException {
 
-	public InvalidStackException (String msg) {
-		super (msg);
-	}
+    public InvalidStackException (String msg) {
+        super (msg);
+    }
 }

@@ -12,28 +12,29 @@ import java.util.List;
 
 public class CharcoalPit extends SupportHelper {
 
-	private List<OreSmeltingRecipes.AlloyRecipe> bloomery = Collections.synchronizedList (new ArrayList<> ());
+ private List<OreSmeltingRecipes.AlloyRecipe> bloomery = Collections.synchronizedList(new ArrayList<>());
 
-	public CharcoalPit () {
-		super ("charcoal_pit");
-	}
+ public CharcoalPit() {
+  super("charcoal_pit");
+ }
 
-	@Override
-	public void init () {
-		if (ConfigHandler.Script.removeAllMachineRecipes)
-			OreSmeltingRecipes.alloyRecipes.clear ();
-	}
+ @Override
+ public void init() {
+  bloomery.clear();
+  if (ConfigHandler.Script.removeAllMachineRecipes)
+   OreSmeltingRecipes.alloyRecipes.clear();
+ }
 
-	@ScriptFunction
-	public void addBloomery (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 2,"addBloomery('<output> <input')");
-		isValid (helper,input[0],input[1]);
-		bloomery.add (new OreSmeltingRecipes.AlloyRecipe (convertStack (helper,input[0]),convertStack (helper,input[0]).getCount (),true,true,convertStack (helper,input[1])));
-	}
+ @ScriptFunction
+ public void addBloomery(StackHelper helper, String line) {
+  String[] input = validateFormat(line, line.split(" ").length == 2, "addBloomery('<output> <input')");
+  isValid(helper, input[0], input[1]);
+  bloomery.add(new OreSmeltingRecipes.AlloyRecipe(convertStack(helper, input[0]), convertStack(helper, input[0]).getCount(), true, true, convertStack(helper, input[1])));
+ }
 
-	@Override
-	public void finishSupport () {
-		for (OreSmeltingRecipes.AlloyRecipe recipe : bloomery)
-			OreSmeltingRecipes.addAlloyRecipe (recipe);
-	}
+ @Override
+ public void finishSupport() {
+  for (OreSmeltingRecipes.AlloyRecipe recipe : bloomery)
+   OreSmeltingRecipes.addAlloyRecipe(recipe);
+ }
 }

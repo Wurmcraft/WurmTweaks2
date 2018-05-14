@@ -9,25 +9,25 @@ import toughasnails.api.temperature.TemperatureHelper;
 
 public class ToughAsNails extends SupportHelper {
 
-	public ToughAsNails () {
-		super ("toughasnails");
-	}
+ public ToughAsNails() {
+  super("toughasnails");
+ }
 
-	@Override
-	public void init () {
-		TemperatureHelper.registerTemperatureModifier (new ArmorTemp ().new ArmorModifier ());
-	}
+ @Override
+ public void init() {
+  TemperatureHelper.registerTemperatureModifier(new ArmorTemp().new ArmorModifier());
+ }
 
-	@ScriptFunction
-	public void addArmorTemp (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 2,"addArmorTemp('<armor> <amount>')");
-		isValid (helper,input[0]);
-		isValid (Types.INTEGER,helper,input[1]);
-		ArmorTemp.setArmorTemp (convertStack (helper,input[0]),convertInteger (input[1]));
-	}
+ @ScriptFunction
+ public void addArmorTemp(StackHelper helper, String line) {
+  String[] input = validateFormat(line, line.split(" ").length == 2, "addArmorTemp('<armor> <amount>')");
+  isValid(helper, input[0]);
+  isValid(Types.INTEGER, helper, input[1]);
+  ArmorTemp.setArmorTemp(convertStack(helper, input[0]), convertInteger(input[1]));
+ }
 
-	@Override
-	public void finishSupport () {
+ @Override
+ public void finishSupport() {
 
-	}
+ }
 }

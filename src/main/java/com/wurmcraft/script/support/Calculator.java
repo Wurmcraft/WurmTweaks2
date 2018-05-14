@@ -100,28 +100,28 @@ public class Calculator extends SupportHelper {
 
 	@ScriptFunction
 	public void addAlgorithmSeparator (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addCalculator('<output> <output2>  <input2>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addCalculator('<output> <output2>  <input2>')");
 		isValid (helper,input[0],input[1],input[2]);
 		seperator.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2])});
 	}
 
 	@ScriptFunction
 	public void addAtomicCalculator (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 4,"addCalculator('<output> <input>  <input2> <input3>')");
+		String[] input = validateFormat (line,line.split (" ").length == 4,"addCalculator('<output> <input>  <input2> <input3>')");
 		isValid (helper,input[0],input[1],input[2]);
 		atomic.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2]),convertStack (helper,input[3])});
 	}
 
 	@ScriptFunction
 	public void addCalculator (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addCalculator('<output> <input>  <input2>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addCalculator('<output> <input>  <input2>')");
 		isValid (helper,input[0],input[1],input[2]);
 		calc.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2])});
 	}
 
 	@ScriptFunction
 	public void addConductorMass (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addConductorMass('<output> <input> <energy>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addConductorMass('<output> <input> <energy>')");
 		isValid (helper,input[0],input[1]);
 		isValid (Types.INTEGER,helper,input[2]);
 		conductor.add (new Object[] {convertStack (helper,input[1]),convertStack (helper,input[0]),convertInteger (input[2])});
@@ -129,14 +129,14 @@ public class Calculator extends SupportHelper {
 
 	@ScriptFunction
 	public void addExtractionChamber (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addStoneSeperator('<output> <input>  <input2>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addStoneSeperator('<output> <input>  <input2>')");
 		isValid (helper,input[0],input[1],input[2]);
 		extraction.add (new Object[] {convertStack (helper,input[1]),convertStack (helper,input[2]),new ExtractionChamberRecipes.ExtractionChamberOutput (convertStack (helper,input[0]))});
 	}
 
 	@ScriptFunction
 	public void addFabrication (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length >= 2,"addFabrication('<output> <input>...')");
+		String[] input = validateFormat (line,line.split (" ").length >= 2,"addFabrication('<output> <input>...')");
 		isValid (helper,input[0]);
 		List <ItemStack> inputItems = new ArrayList <> ();
 		for (int index = 1; index < input.length; index++) {
@@ -148,14 +148,14 @@ public class Calculator extends SupportHelper {
 
 	@ScriptFunction
 	public void addFlawlessCalculator (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 6,"addPrecisionChamber('<output> <input>  <input2> <input3> <input4>')");
+		String[] input = validateFormat (line,line.split (" ").length == 6,"addPrecisionChamber('<output> <input>  <input2> <input3> <input4>')");
 		isValid (helper,input[0],input[1],input[2],input[3],input[4],input[5]);
 		flawless.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2]),convertStack (helper,input[3]),convertStack (helper,input[4]),convertStack (helper,input[5])});
 	}
 
 	@ScriptFunction
 	public void addHealthProccessor (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 2,"addHealthProccessor('<stack> <amount>')");
+		String[] input = validateFormat (line,line.split (" ").length == 2,"addHealthProccessor('<stack> <amount>')");
 		isValid (helper,input[0]);
 		isValid (Types.INTEGER,helper,input[1]);
 		heath.add (new Object[] {convertStack (helper,input[0]),convertInteger (input[1])});
@@ -163,28 +163,28 @@ public class Calculator extends SupportHelper {
 
 	@ScriptFunction
 	public void addPrecisionChamber (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addPrecisionChamber('<output> <input>  <input2>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addPrecisionChamber('<output> <input>  <input2>')");
 		isValid (helper,input[0],input[1],input[2]);
 		precision.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2])});
 	}
 
 	@ScriptFunction
 	public void addScientific (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addScientific('<output> <input>  <input2>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addScientific('<output> <input>  <input2>')");
 		isValid (helper,input[0],input[1],input[2]);
 		scientific.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2])});
 	}
 
 	@ScriptFunction
 	public void addStoneSeperator (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addStoneSeperator('<output> <input>  <input2>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addStoneSeperator('<output> <input>  <input2>')");
 		isValid (helper,input[0],input[1],input[2]);
 		stone.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1]),convertStack (helper,input[2])});
 	}
 
 	@ScriptFunction
 	public void addProcessingChamber (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 3,"addProcessingChamber('<output> <input>')");
+		String[] input = validateFormat (line,line.split (" ").length == 3,"addProcessingChamber('<output> <input>')");
 		isValid (helper,input[0],input[1]);
 		processing.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1])});
 	}
@@ -192,14 +192,14 @@ public class Calculator extends SupportHelper {
 
 	@ScriptFunction
 	public void addRestorationChamber (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 2,"addRestorationChamber('<output> <input>')");
+		String[] input = validateFormat (line,line.split (" ").length == 2,"addRestorationChamber('<output> <input>')");
 		isValid (helper,input[0],input[1]);
 		restoration.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1])});
 	}
 
 	@ScriptFunction
 	public void addReassemblyChamber (StackHelper helper,String line) {
-		String[] input = validate (line,line.split (" ").length == 2,"addReassemblyChamber('<output> <input>')");
+		String[] input = validateFormat (line,line.split (" ").length == 2,"addReassemblyChamber('<output> <input>')");
 		isValid (helper,input[0],input[1]);
 		reassembly.add (new Object[] {convertStack (helper,input[0]),convertStack (helper,input[1])});
 	}

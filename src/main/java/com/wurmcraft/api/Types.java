@@ -1,17 +1,15 @@
 package com.wurmcraft.api;
 
-import com.wurmcraft.api.IModSupport;
-import com.wurmcraft.api.ScriptFunction;
 
 /**
-  Used for varification within the script functions
-
- @see IModSupport
- @see ScriptFunction
+ * Used for varification within the script functions
+ *
+ * @see com.wurmcraft.api.IModSupport
+ * @see com.wurmcraft.api.ScriptFunction
  */
 public enum Types {
 
-	ITEMSTACK,INGREDENT,FLUIDSTACK,ORE,
-	STRING, INTEGER, FLOAT, DOUBLE;
+    ITEMSTACK,INGREDENT,FLUIDSTACK,ORE,
+    STRING, INTEGER, FLOAT, DOUBLE;
 
 }

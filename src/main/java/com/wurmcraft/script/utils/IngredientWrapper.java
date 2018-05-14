@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.Ingredient;
  */
 public class IngredientWrapper extends Ingredient {
 
-	public IngredientWrapper (ItemStack... stacks) {
-		super (stacks);
-	}
+    public IngredientWrapper (ItemStack... stacks) {
+        super (stacks);
+    }
 }
