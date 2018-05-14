@@ -4,12 +4,16 @@ import com.wurmcraft.wurmtweaks.reference.Global;
 import com.wurmcraft.wurmtweaks.reference.Local;
 import com.wurmcraft.wurmtweaks.utils.InvalidRecipe;
 import com.wurmcraft.wurmtweaks.utils.LogHandler;
+import crafttweaker.api.recipes.ICraftingRecipe;
+import crafttweaker.api.recipes.IMTRecipe;
+import crafttweaker.mc1120.recipes.MCRecipeBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -104,10 +108,14 @@ public class ConfigHandler {
 	public static void handleLateConfigSettings () {
 		if (removeAllCraftingRecipes)
 			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues ())
-				if (canRemoveRecipe (recipe.getRecipeOutput ()))
+				if (canRemoveRecipe (recipe.getRecipeOutput ()) && Loader.isModLoaded ("crafttweaker") && !ignoreType (recipe))
 					ForgeRegistries.RECIPES.register (new InvalidRecipe (recipe));
 		if (removeAllFurnaceRecipes)
 			FurnaceRecipes.instance ().getSmeltingList ().clear ();
+	}
+
+	private static boolean ignoreType (IRecipe recipe) {
+		return recipe instanceof ICraftingRecipe;
 	}
 
 	private static boolean canRemoveRecipe (ItemStack stack) {

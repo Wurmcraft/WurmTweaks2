@@ -3,6 +3,7 @@ package com.wurmcraft.wurmtweaks.script;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.IModSupport;
+import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import com.wurmcraft.wurmtweaks.utils.StackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -75,6 +76,7 @@ public class ModSupport implements IModSupport {
 	}
 
 	protected String[] verify (String line,boolean test,String msg) {
+		LogHandler.info ("Verify: "+ line + " Test: " + test);
 		try {
 			Preconditions.checkArgument (test,msg);
 		} catch (IllegalArgumentException e) {

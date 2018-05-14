@@ -1,1 +1,9 @@
-addFusion('<1xdraconicevolution:mob_soul@0> <1xdraconicevolution:chaotic_core@0> 10000000 0 <1xdraconicevolution:dragon_heart@0> <1xdraconicevolution:dragon_heart@0> <1xdraconicevolution:draconium_ingot@0> <1xdraconicevolution:draconium_ingot@0> <1xdraconicevolution:draconium_ingot@0> <1xdraconicevolution:draconium_ingot@0> <1xminecraft:nether_star@0> <1xminecraft:nether_star@0>');
+/*
+    Name: Draconic Evolution
+    Curse: https://minecraft.curseforge.com/projects/draconic-evolution
+    Author: brandon3055, coverts1624, GreateOrator
+*/
+
+// Fusion
+// addFusion('<output> <catalyst> <tier> <energy> <input>...')
+addFusion('<1xminecraft:apple> <1xminecraft:golden_apple> 1 400000 <1xminecraft:blaze_rod> <1xminecraft:golden_apple> <1xminecraft:blaze_rod> <1xminecraft:golden_apple>')

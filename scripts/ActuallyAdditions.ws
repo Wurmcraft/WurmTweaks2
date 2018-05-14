@@ -1,10 +1,26 @@
-// Machines
-addAACrusher('<1xminecraft:cooked_mutton@0> <1xminecraft:mutton@0> <1xminecraft:bone@0> 10');
-addReconstructor('<1xminecraft:cobblestone@0> <1xminecraft:gravel@0> 100');
-addEmpowerer('<1xminecraft:clay_ball@0> <1xminecraft:brick@0> <1xminecraft:dye@0> <1xminecraft:dye@1> <1xminecraft:dye@11> <1xminecraft:dye@4> 1000000 100');
+/*
+    Name: ActuallyAdditions
+    Curse: https://minecraft.curseforge.com/projects/actually-additions
+    Author: Ellpeck, canitzp, Shadows_Of_Fire
+*/
 
-// Utils
-addComposter('<1xminecraft:gravel@0> <1xminecraft:cobblestone@0>');
-addComposter('<1xminecraft:iron_ingot@0> <1xminecraft:gold_ingot@0> <1xminecraft:iron_ore@0> <1xminecraft:gold_ore@0>');
-addMiningLensNether('packFood 1');
-addMiningLensStone('packFruit 1');
+// Empowerer
+// addEmpowerer('<output> <inputCenter> <input> <input2> <input3> <input4> <energyPerStand> <time>')
+addEmpowerer('<1xminecraft:apple> <1xminecraft:blaze_powder> <1xminecraft:magma_cream> <1xminecraft:magma_cream> <1xminecraft:magma_cream> <1xminecraft:magma_cream> 800 200')
+
+// Reconstructor
+// addReconstructor('<output> <input> <energy>')
+addReconstructor('<1xminecraft:apple> <1xminecraft:magma_cream> 8000')
+
+// Crusher
+// addAACrusher('<output> <input> <secOutput> <secOutput%>')
+addAACrusher('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple@1> 20')
+
+// Mining Lens (Stone version)
+// addMiningLensStone('<oreDict> <weight>')
+addMiningLensStone('<oreIron> 2')
+
+// Composter
+// addComposter('<output> <input> | <outputDisplay> <inputDisplay>')
+addComposter('<1xminecraft:grass> <1xminecraft:dirt@1>)
+addComposter('<1xminecraft:apple> <1xminecraft:brown_mushroom> <1xminecraft:bread> <<1xminecraft:baked_potato>')

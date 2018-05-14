@@ -5,6 +5,7 @@ import com.wurmcraft.wurmtweaks.api.EnumInputType;
 import com.wurmcraft.wurmtweaks.api.ScriptFunction;
 import com.wurmcraft.wurmtweaks.common.ConfigHandler;
 import com.wurmcraft.wurmtweaks.script.ModSupport;
+import com.wurmcraft.wurmtweaks.utils.LogHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -65,6 +66,7 @@ public class TConstruct extends ModSupport {
 
 	@ScriptFunction
 	public void addCasting (String line) {
+		LogHandler.info ("Casting: " + line + " " + line.length ());
 		String[] input = verify (line,line.split (" ").length == 3,"addCasting('<output> <cast> <*fluid>')");
 		isValid (input[0],input[1]);
 		isValid (EnumInputType.FLUID,input[2]);
@@ -112,6 +114,7 @@ public class TConstruct extends ModSupport {
 	@ScriptFunction
 	public void addMelting (String line) {
 		String[] input = verify (line,line.split (" ").length == 3,"addMelting('<*output> <input> <temp>')");
+		System.out.println ("Melting: " + input.length);
 		isValid (EnumInputType.FLUID,input[0]);
 		isValid (input[1]);
 		isValid (EnumInputType.INTEGER,input[2]);
@@ -137,18 +140,15 @@ public class TConstruct extends ModSupport {
 		isValid (EnumInputType.FLUID,input[0]);
 		isValid (input[1],input[2]);
 		Fluid fluid = convertF (input[0]).getFluid ();
-		if (convertS (input[2]) != ItemStack.EMPTY) {
-			TinkerRegistry.registerMelting (convertS (input[2]),fluid,BLOCK);
-			TinkerRegistry.registerBasinCasting (convertS (input[2]),null,fluid,BLOCK);
-		}
-		if (convertS (input[1]) != ItemStack.EMPTY) {
-			TinkerRegistry.registerMelting (convertS (input[1]),fluid,INGOT);
-			TinkerRegistry.registerTableCasting (convertS (input[1]),convertS ("<1xtconstruct:cast_custom@0>"),fluid,INGOT);
-		}
+		TinkerRegistry.registerMelting (convertS (input[2]),fluid,BLOCK);
+		TinkerRegistry.registerBasinCasting (convertS (input[2]),null,fluid,BLOCK);
+		TinkerRegistry.registerMelting (convertS (input[1]),fluid,INGOT);
+		TinkerRegistry.registerTableCasting (convertS (input[1]),convertS ("<1xtconstruct:cast_custom@0>"),fluid,INGOT);
 	}
 
 	@ScriptFunction
 	public void handleMaterialParts (String line) {
+		LogHandler.info ("Casting: " + line + " " + line.length ());
 		String[] input = verify (line,line.split (" ").length == 2,"handleMaterialParts('<materialName> <*fluid>')");
 		isValid (EnumInputType.FLUID,input[1]);
 		Fluid fluid = convertF (input[1]).getFluid ();

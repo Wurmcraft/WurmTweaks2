@@ -83,8 +83,11 @@ public class ScriptDownloader {
 	}
 
 	private void processSlaveScripts () {
+		ForgeRegistry <IRecipe> recipeRegistry = (ForgeRegistry <IRecipe>) ForgeRegistries.RECIPES;
+		recipeRegistry.unfreeze ();
 		if (slaveScript.length () > 0)
 			for (String script : slaveScripts)
 				wurmScript.process (new File (saveLocation + File.separator + script));
+		recipeRegistry.freeze ();
 	}
 }
