@@ -30,12 +30,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// TODO Add Material Support
 public class TConstruct extends SupportHelper {
 
- // TODO Config
- private static int INGOT = 1000;
- private static int BLOCK = INGOT * 32;
+ private static int INGOT = ConfigHandler.tinkersConstructIngotAmount;
+ private static int BLOCK = ConfigHandler.tinkersConstructBlockMultiplier * INGOT;
 
  private List<Object[]> casting = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> basin = Collections.synchronizedList(new ArrayList<>());

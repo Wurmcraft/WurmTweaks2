@@ -1,6 +1,5 @@
 package com.wurmcraft.common.command;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.FunctionsRegistry;

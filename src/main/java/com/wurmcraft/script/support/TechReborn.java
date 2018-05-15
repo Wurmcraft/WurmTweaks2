@@ -180,13 +180,15 @@ public class TechReborn extends SupportHelper {
   isValid(Types.INTEGER, helper, input[2], input[3]);
   machine.add(new CompressorRecipe(convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2]), convertInteger(input[3])));
  }
- //TODO out of bounds ln187
+
  @ScriptFunction
  public void addDistillationTower(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 7, "addDistillationTower('<output> <output2> <output3> <input> <input2> <time> <euTick>'");
-  isValid(helper, input[0], input[1], input[2], input[3], input[4], input[5]);
-  isValid(Types.INTEGER, helper, input[6], input[7]);
-  machine.add(new DistillationTowerRecipe(convertStack(helper, input[4]), convertStack(helper, input[5]), convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertInteger(input[6]), convertInteger(input[7])));
+  isValid(helper, input[0], input[1], input[2], input[3], input[4]);
+  isValid(Types.INTEGER, helper, input[5], input[6]);
+  machine.add(new DistillationTowerRecipe(convertStack(helper, input[3]), convertStack(helper, input[4]),
+    convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack
+    (helper, input[3]), convertInteger(input[5]), convertInteger(input[6])));
  }
 
  @ScriptFunction

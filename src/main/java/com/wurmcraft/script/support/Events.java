@@ -7,6 +7,7 @@ import com.wurmcraft.script.utils.StackSettings;
 import com.wurmcraft.script.utils.SupportHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -71,25 +72,20 @@ public class Events extends SupportHelper {
  }
 
  @ScriptFunction
- public void disableDrop(StackHelper helper, String line) {
+ public void disablePickup (StackHelper helper,String line) {
   String[] input = validateFormat(line, line.split(" ").length == 1, "disableDrop('<item>')");
   isValid(helper, input[0]);
   drops.add(convertStack(helper, input[0]));
  }
 
- // TODO Add a Message
- @SubscribeEvent
+	@SubscribeEvent
  public void disableDrop(ItemTossEvent e) {
   if (e.getEntityItem().getItem() != ItemStack.EMPTY)
    for (ItemStack items : drops)
-    if (isSameIgnoreSize(items, e.getEntityItem().getItem()))
-     e.setCanceled(true);
- }
-
- //TODO Implement
- @ScriptFunction
- public void disablePickup(StackHelper helper, String line) {
-
+	   if (isSameIgnoreSize (items,e.getEntityItem ().getItem ())) {
+		   e.getPlayer ().sendMessage (new TextComponentTranslation ("chat.denyToss.name"));
+		   e.setCanceled (true);
+	   }
  }
 
  @ScriptFunction

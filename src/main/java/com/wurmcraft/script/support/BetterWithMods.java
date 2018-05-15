@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static betterwithmods.common.BWRegistry.*;
-import static betterwithmods.common.registry.heat.BWMHeatRegistry.*;
-import static betterwithmods.common.registry.anvil.AnvilCraftingManager.*;
+import static betterwithmods.common.registry.anvil.AnvilCraftingManager.ANVIL_CRAFTING;
+import static betterwithmods.common.registry.heat.BWMHeatRegistry.addHeatSource;
 
 public class BetterWithMods extends SupportHelper {
  private List<Object[]> cauldron = Collections.synchronizedList(new ArrayList<>());
@@ -32,7 +32,7 @@ public class BetterWithMods extends SupportHelper {
  private List<Object[]> saw = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> anvil = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> heat = Collections.synchronizedList(new ArrayList<>());
- private List<Object[]> hopper = Collections.synchronizedList(new ArrayList<>());
+ private List <HopperInteractions.HopperRecipe> hopper = Collections.synchronizedList (new ArrayList <> ());
 
  public BetterWithMods() {
   super("betterwithmods");
@@ -48,6 +48,8 @@ public class BetterWithMods extends SupportHelper {
   for (Object[] recipe : saw) WOOD_SAW.addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1]);
   for (Object[] recipe : anvil) ANVIL_CRAFTING.add((ShapedAnvilRecipe) recipe[0]);
   for (Object[] recipe : heat) addHeatSource((BlockIngredient) recipe[0], (int) recipe[1]);
+  for (HopperInteractions.HopperRecipe recipe : hopper)
+   HopperInteractions.addHopperRecipe (recipe);
  }
 
  @Override
@@ -142,9 +144,8 @@ public class BetterWithMods extends SupportHelper {
   mill.add(new Object[]{inputStacks, outputStacks});
  }
 
- //TODO change to addSaw
  @ScriptFunction
- public void addWoodSaw(StackHelper helper, String line) {
+ public void addSaw (StackHelper helper,String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addSaw('<output> <input>')");
   isValid(helper, input[0], input[1]);
   saw.add(new Object[]{convertStack(helper, (input[0])), convertStack(helper, (input[1]))});
@@ -169,9 +170,16 @@ public class BetterWithMods extends SupportHelper {
   heat.add(new Object[]{heatBlock, convertInteger(input[1])});
  }
 
- //TODO Implement
  @ScriptFunction
  public void addFilteredHopper(StackHelper helper, String line) {
-
+  String[] input = validateFormat (line,line.split (" ").length >= 3,"addFilteredHopper('<output> <input> <name> <secOutput>...')");
+  isValid (helper,input[0],input[1]);
+  isValid (Types.STRING,helper,input[1]);
+  List <ItemStack> secOutput = new ArrayList <> ();
+  for (int index = 3; index < input.length; index++) {
+   isValid (helper,input[index]);
+   secOutput.add (convertStack (helper,input[index]));
+  }
+  hopper.add (new HopperInteractions.HopperRecipe (input[2],convertIngredient (helper,input[1]),convertStack (helper,input[0]),secOutput.toArray (new ItemStack[0])));
  }
 }

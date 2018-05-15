@@ -33,7 +33,9 @@ public class FunctionsRegistry {
     loadedSupport.forEach(controller -> {
      if (Loader.isModLoaded(controller.modid()) || controller.modid().equals("minecraft") || controller.modid().equals("events")) {
       for (Method method : controller.getClass().getDeclaredMethods()) {
-       if (method.getAnnotation(ScriptFunction.class) != null) {
+       if (method.getAnnotation (ScriptFunction.class) != null) {
+        if (method.getAnnotation (ScriptFunction.class).modid ().length () > 0 && Loader.isModLoaded (method.getAnnotation (ScriptFunction.class).modid ()) ||
+          method.getAnnotation (ScriptFunction.class).modid ().length () == 0)
         bindings.put(
          method.getName().toLowerCase(),
          new ScriptFunctionWrapper(controller, new StackHelper(true), method)

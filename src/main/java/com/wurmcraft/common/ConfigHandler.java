@@ -43,6 +43,12 @@ public class ConfigHandler {
     @Config.Comment ("Check for Script Updates")
     public static boolean checkForUpdates = false;
 
+    @Config.Comment ("Default TConstruct Ingot Fluid Amount")
+    public static int tinkersConstructIngotAmount = 144;
+
+    @Config.Comment ("Default TConstruct Block Fluid Multiplier (ingot * x) = total fluid for a block")
+    public static int tinkersConstructBlockMultiplier = 9;
+
     @SubscribeEvent
     public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID ().equals (Global.MODID))

@@ -17,9 +17,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface ScriptFunction {
- /**
-  TODO
-  - ModID Override
-  - Linked Machines
-  */
+
+    /**
+     Aditional modid to check before this method is valid
+     */
+    String modid () default "";
+
+    // TODO Implement LinkedRegistry
+    String[] link () default "";
 }

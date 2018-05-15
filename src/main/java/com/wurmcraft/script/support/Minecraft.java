@@ -159,7 +159,6 @@ public class Minecraft extends SupportHelper {
    input = convertStack(helper, script[0]),
    output = convertStack(helper, script[1]);
   if (script.length == 2) {
-   // TODO Default furnace EXP
    furnaceRecipes.add(
     new FurnaceRecipe(input, output, 1f)
    );
