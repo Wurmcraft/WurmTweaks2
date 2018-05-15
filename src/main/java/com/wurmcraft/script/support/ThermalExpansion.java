@@ -43,7 +43,7 @@ public class ThermalExpansion extends SupportHelper {
   compactor.clear();
   crucible.clear();
   centerfuge.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    for (FurnaceManager.FurnaceRecipe recipe : FurnaceManager.getRecipeList(false))
     FurnaceManager.removeRecipe(recipe.getInput());
    for (PulverizerManager.PulverizerRecipe recipe : PulverizerManager.getRecipeList())

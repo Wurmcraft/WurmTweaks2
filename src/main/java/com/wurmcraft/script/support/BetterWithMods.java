@@ -11,7 +11,6 @@ import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
 import com.wurmcraft.script.utils.recipe.RecipeUtils;
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -62,7 +61,7 @@ public class BetterWithMods extends SupportHelper {
   anvil.clear();
   heat.clear();
   hopper.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    //BWRegistry
    WOOD_SAW.getRecipes().clear();
    CAULDRON.getRecipes().clear();

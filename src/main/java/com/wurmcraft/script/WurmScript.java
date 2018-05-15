@@ -13,13 +13,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class WurmScript {
  // Location Scripts are stored
  public static final File SCRIPT_DIR = new File("config/WurmTweaks");
  // @ConfigHandler
- public static final String DEFAULT_URL = ConfigHandler.General.masterScript.substring(0, ConfigHandler.General.masterScript.lastIndexOf("/"));
+ public static final String DEFAULT_URL = ConfigHandler.masterScript.substring(0, ConfigHandler.masterScript
+   .lastIndexOf("/"));
 
  public static String removeAllComments(String str) {
   return str.replaceAll("//.*|/\\*[\\s\\S]*?\\*/|(\"(\\\\.|[^\"])*\")", "");
@@ -72,7 +72,7 @@ public class WurmScript {
   File[] files = SCRIPT_DIR.listFiles();
   if (files != null) {
    for (File file : files) {
-    if (file.equals(ConfigHandler.General.masterScript)) continue;
+    if (file.equals(ConfigHandler.masterScript)) continue;
     boolean valid = false;
     try {
      for (String f : getScriptNamesFromMaster()) {
@@ -84,7 +84,7 @@ public class WurmScript {
      e.printStackTrace();
     }
     if (!valid) {
-     if (ConfigHandler.General.deleteOld) {
+     if (ConfigHandler.deleteOld) {
       file.delete();
      } else {
       if (!file.getName().toLowerCase().contains("disabled")) {
@@ -130,12 +130,12 @@ public class WurmScript {
 
  //TODO Dynamic single and multi line comments
  private static String[] getScriptNamesFromMaster() throws IOException {
-  File localMaster = getFileFromName(ConfigHandler.General.masterScript);
+  File localMaster = getFileFromName(ConfigHandler.masterScript);
   String data;
   if (localMaster.exists()) {
    data = new String(Files.readAllBytes(localMaster.toPath()));
   } else {
-   try (InputStream is = new URL(ConfigHandler.General.masterScript).openStream()) {
+   try (InputStream is = new URL(ConfigHandler.masterScript).openStream()) {
     data = new String(IOUtils.toByteArray(is));
    }
   }
@@ -153,7 +153,7 @@ public class WurmScript {
  }
 
  public static List<File> getRunnableScripts() {
-  File masterFile = getFileFromName(ConfigHandler.General.masterScript);
+  File masterFile = getFileFromName(ConfigHandler.masterScript);
 //  if (masterFile.exists()) {
    List<File>
     runnableScripts = new ArrayList<>(Arrays.asList(masterFile.getParentFile().listFiles())),

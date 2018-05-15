@@ -27,7 +27,7 @@ public class ExtraUtils2 extends SupportHelper {
  public void init() {
   resonator.clear();
   crusher.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    TileResonator.resonatorRecipes.clear();
    while (XUMachineCrusher.INSTANCE.recipes_registry.iterator().hasNext())
     XUMachineCrusher.INSTANCE.recipes_registry.removeRecipe(XUMachineCrusher.INSTANCE.recipes_registry.iterator().next());

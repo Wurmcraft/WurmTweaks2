@@ -34,7 +34,7 @@ public class PneumaticCraft extends SupportHelper {
   pressure.clear();
   amadron.clear();
   defaultAmadron.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    AssemblyRecipe.drillRecipes.clear();
    AssemblyRecipe.laserRecipes.clear();
    PressureChamberRecipe.chamberRecipes.clear();

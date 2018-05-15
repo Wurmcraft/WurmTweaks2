@@ -40,7 +40,7 @@ public class Avaritia extends SupportHelper {
   shaped.clear();
   shapeless.clear();
   compressor.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    AvaritiaRecipeManager.EXTREME_RECIPES.clear();
    AvaritiaRecipeManager.COMPRESSOR_RECIPES.clear();
   }

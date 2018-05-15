@@ -30,7 +30,7 @@ public class AbyssalCraft extends SupportHelper {
   crystallizerRecipes.clear();
   transmutatorRecipes.clear();
   materializerRecipes.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    CrystallizerRecipes.instance().getCrystallizationList().clear();
    TransmutatorRecipes.instance().getTransmutationList().clear();
    MaterializerRecipes.instance().getMaterializationList().clear();

@@ -1,5 +1,6 @@
 package com.wurmcraft.common.command;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.FunctionsRegistry;
@@ -46,13 +47,12 @@ public class WTCommand extends CommandBase {
     Thread scriptManager = new Thread(() -> {
      Thread.currentThread().setName("WurmTweaks Reload Recipes");
      FunctionsRegistry.init();
-     //TODO Uncomment once ConfigHandler is fixed
-//     if (ConfigHandler.Script.checkForUpdates) {
-//      WurmScript.downloadScripts();
-//      if (player != null) {
-//       player.sendMessage(new TextComponentString(TextFormatting.GREEN + "Downloaded Scripts!"));
-//      }
-//     }
+     if (ConfigHandler.checkForUpdates) {
+      WurmScript.downloadScripts ();
+      if (player != null) {
+       player.sendMessage (new TextComponentString (TextFormatting.GREEN + "Downloaded Scripts!"));
+      }
+     }
      WurmTweaks.SCRIPT_MANAGER.run();
      FunctionsRegistry.finishSupport();
      if (player != null) {

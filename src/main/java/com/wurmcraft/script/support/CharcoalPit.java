@@ -21,7 +21,7 @@ public class CharcoalPit extends SupportHelper {
  @Override
  public void init() {
   bloomery.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes)
+  if (ConfigHandler.removeAllMachineRecipes)
    OreSmeltingRecipes.alloyRecipes.clear();
  }
 

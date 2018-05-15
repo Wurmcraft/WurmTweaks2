@@ -43,7 +43,7 @@ public class ImmersiveEngineering extends SupportHelper {
   press.clear();
   refinery.clear();
   squeezer.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    AlloyRecipe.recipeList.clear();
    ArcFurnaceRecipe.recipeList.clear();
    BlastFurnaceRecipe.recipeList.clear();

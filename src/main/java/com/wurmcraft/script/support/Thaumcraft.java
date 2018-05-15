@@ -56,7 +56,7 @@ public class Thaumcraft extends SupportHelper {
   infusion.clear();
   shapedArcane.clear();
   shapelessArcane.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    WeightedRandomLoot.lootBagCommon.clear();
    WeightedRandomLoot.lootBagUncommon.clear();
    WeightedRandomLoot.lootBagRare.clear();

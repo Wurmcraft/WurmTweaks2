@@ -26,7 +26,7 @@ public class EnvironmentalTech extends SupportHelper {
 
  @Override
  public void init() {
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    VMBotanic.getInstance().T1.getList().clear();
    VMBotanic.getInstance().T1.getTargeters().clear();
    VMBotanic.getInstance().T2.getList().clear();

@@ -35,7 +35,7 @@ public class BloodMagic extends SupportHelper {
   array.clear();
   forge.clear();
   table.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    for (RecipeAlchemyArray array : BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes())
     for (ItemStack input : array.getInput().getMatchingStacks())
      for (ItemStack cat : array.getCatalyst().getMatchingStacks())

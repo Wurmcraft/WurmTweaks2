@@ -33,7 +33,7 @@ public class IndustrialForegoing extends SupportHelper {
   sludge.clear();
   protein.clear();
   laser.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    BioReactorEntry.BIO_REACTOR_ENTRIES.clear();
    SludgeEntry.SLUDGE_RECIPES.clear();
    ProteinReactorEntry.PROTEIN_REACTOR_ENTRIES.clear();

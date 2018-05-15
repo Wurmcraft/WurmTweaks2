@@ -35,6 +35,10 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
     ivy {
         artifactPattern "https://ci.micdoodle8.com/job/Galacticraft-1.12/lastSuccessfulBuild/artifact/Forge/build/libs/[module]-${mc_version}-[revision].[ext]"
     }
@@ -84,6 +88,7 @@ dependencies {
     compile name: 'Galacticraft-Planets', version: "${galacticraft_version}", ext: 'jar'
     compile name: 'GalacticraftCore', version: "${galacticraft_version}", ext: 'jar'
     compile name: 'MicdoodleCore', version: "${galacticraft_version}", ext: 'jar'
+    compile group: "net.industrial-craft", name: "industrialcraft-2", version: "2.8.75-ex112", classifier: "dev"
 }
 
 processResources {

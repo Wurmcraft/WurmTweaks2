@@ -51,7 +51,7 @@ public class TechReborn extends SupportHelper {
   fluidGenerator.clear();
   fusion.clear();
   machine.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    RollingMachineRecipe.instance.getRecipeList().clear();
    ScrapboxList.stacks.clear();
    FusionReactorRecipeHelper.reactorRecipes.clear();

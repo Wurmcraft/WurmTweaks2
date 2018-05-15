@@ -51,7 +51,6 @@ public class WurmTweaks {
   FunctionsRegistry.register(new GalacticCraft());
   FunctionsRegistry.register(new ImmersiveEngineering());
   FunctionsRegistry.register(new IndustrialForegoing());
-  // TODO
   //		FunctionsRegistry.register (new Mekanism ());
   FunctionsRegistry.register (new NuclearCraft ());
   //		FunctionsRegistry.register (new OreStages ());
@@ -63,7 +62,8 @@ public class WurmTweaks {
   FunctionsRegistry.register(new ThermalExpansion());
   FunctionsRegistry.register(new ToughAsNails());
   script = new WurmScript();
-  if (ConfigHandler.Script.checkForUpdates) WurmScript.downloadScripts();
+  if (ConfigHandler.checkForUpdates)
+   WurmScript.downloadScripts ();
  }
 
  @Mod.EventHandler

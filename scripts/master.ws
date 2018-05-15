@@ -19,7 +19,7 @@ Mekanism.ws
 Minecraft.ws
 NuclearCraft.ws
 OreStages.ws
-Pnumaticcraft.ws
+PnumaticCraft.ws
 SonarCore.ws
 TConstruct.ws
 TechReborn.ws

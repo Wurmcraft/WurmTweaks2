@@ -34,7 +34,7 @@ public class ActuallyAdditions extends SupportHelper {
   miningLensStone.clear();
   miningLensNether.clear();
   composter.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    ActuallyAdditionsAPI.CRUSHER_RECIPES.clear();
    ActuallyAdditionsAPI.TREASURE_CHEST_LOOT.clear();
    ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES.clear();

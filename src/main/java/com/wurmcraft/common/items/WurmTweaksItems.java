@@ -10,7 +10,7 @@ public class WurmTweaksItems {
 
 
     public static void register () {
-        register (itemMeta = new ItemMeta (ConfigHandler.General.metaItems.replaceAll (" ","").split (",")),"itemMeta");
+        register (itemMeta = new ItemMeta (ConfigHandler.metaItems.replaceAll (" ","").split (",")),"itemMeta");
     }
 
     private static Item register (Item item,String name) {

@@ -25,7 +25,7 @@ public class DraconicEvolution extends SupportHelper {
  @Override
  public void init() {
   fusion.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes)
+  if (ConfigHandler.removeAllMachineRecipes)
    RecipeManager.FUSION_REGISTRY.getRecipes().clear();
  }
 

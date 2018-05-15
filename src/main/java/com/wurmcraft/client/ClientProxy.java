@@ -56,7 +56,7 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public void loadModel (ModelRegistryEvent e) {
-        String[] metaItems = ConfigHandler.General.metaItems.replaceAll (" ","").split (",");
+        String[] metaItems = ConfigHandler.metaItems.replaceAll (" ","").split (",");
         for (int index = 0; index < metaItems.length; index++)
             createModel (WurmTweaksItems.itemMeta,index,metaItems[index]);
         createModel (Item.getItemFromBlock (WurmTweaksBlocks.transparentAluminum),0,"transparentAluminum");

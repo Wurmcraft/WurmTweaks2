@@ -118,7 +118,7 @@ public class Mekanism extends SupportHelper {
   thermal.clear();
   solar.clear();
   box.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    RecipeHandler.Recipe.CHEMICAL_CRYSTALLIZER.get().clear();
    RecipeHandler.Recipe.CHEMICAL_DISSOLUTION_CHAMBER.get().clear();
    RecipeHandler.Recipe.CHEMICAL_INFUSER.get().clear();

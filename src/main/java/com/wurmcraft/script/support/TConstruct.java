@@ -58,7 +58,7 @@ public class TConstruct extends SupportHelper {
   fuel.clear();
   melting.clear();
   entityMelting.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    try {
     Field tableCasting = TinkerRegistry.class.getDeclaredField("tableCastRegistry");
     tableCasting.setAccessible(true);

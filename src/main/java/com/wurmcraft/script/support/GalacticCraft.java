@@ -33,7 +33,7 @@ public class GalacticCraft extends SupportHelper {
   shapelessCompressor.clear();
   circuitFab.clear();
   station.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    CompressorRecipes.getRecipeList().clear();
    CircuitFabricatorRecipes.getRecipes().clear();
   }

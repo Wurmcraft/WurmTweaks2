@@ -85,9 +85,9 @@ public class Minecraft extends SupportHelper {
   brewingRecipes.clear();
   oreEntries.clear();
   recipeLock(false);
-//		if (ConfigHandler.Script.removeAllCraftingRecipes)
+  if (ConfigHandler.removeAllCraftingRecipes)
   removeRecipes();
-//		if (ConfigHandler.Script.removeAllFurnaceRecipes)
+  if (ConfigHandler.removeAllFurnaceRecipes)
   FurnaceRecipes.instance().getSmeltingList().clear();
  }
 
@@ -119,7 +119,7 @@ public class Minecraft extends SupportHelper {
  }
 
  private boolean canRemove(String modid) {
-  for (String mod : ConfigHandler.Script.recipeWhitelist) {
+  for (String mod : ConfigHandler.recipeWhitelist) {
    if (mod.equalsIgnoreCase(modid)) return false;
   }
   return true;

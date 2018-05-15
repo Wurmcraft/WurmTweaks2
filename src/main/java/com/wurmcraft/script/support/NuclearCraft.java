@@ -29,7 +29,7 @@ public class NuclearCraft extends SupportHelper {
   manufactory.clear();
   separator.clear();
   pressurizer.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    NCRecipes.Type.PRESSURIZER.getRecipeHandler().recipes.clear();
    NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler().recipes.clear();
    NCRecipes.Type.MANUFACTORY.getRecipeHandler().recipes.clear();

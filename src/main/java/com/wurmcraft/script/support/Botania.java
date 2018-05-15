@@ -40,7 +40,7 @@ public class Botania extends SupportHelper {
   pureDaisy.clear();
   apohecary.clear();
   alchemy.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes) {
+  if (ConfigHandler.removeAllMachineRecipes) {
    BotaniaAPI.manaInfusionRecipes.clear();
    BotaniaAPI.elvenTradeRecipes.clear();
    BotaniaAPI.pureDaisyRecipes.clear();

@@ -27,7 +27,7 @@ public class SonarCore extends SupportHelper {
  @Override
  public void init() {
   fertilizer.clear();
-  if (ConfigHandler.Script.removeAllMachineRecipes)
+  if (ConfigHandler.removeAllMachineRecipes)
    sonar.core.SonarCore.fertilisers.getObjects().clear();
  }
 
