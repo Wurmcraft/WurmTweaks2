@@ -52,18 +52,17 @@ public class WurmTweaks {
   FunctionsRegistry.register(new ImmersiveEngineering());
   FunctionsRegistry.register(new IndustrialForegoing());
   //		FunctionsRegistry.register (new Mekanism ());
-  FunctionsRegistry.register (new NuclearCraft ());
+  FunctionsRegistry.register(new NuclearCraft());
   //		FunctionsRegistry.register (new OreStages ());
   //		FunctionsRegistry.register (new PneumaticCraft ());
-  FunctionsRegistry.register (new SonarCore ());
+  FunctionsRegistry.register(new SonarCore());
   FunctionsRegistry.register(new TConstruct());
-  FunctionsRegistry.register (new TechReborn ());
+  FunctionsRegistry.register(new TechReborn());
   //		FunctionsRegistry.register (new Thaumcraft ());
   FunctionsRegistry.register(new ThermalExpansion());
   FunctionsRegistry.register(new ToughAsNails());
   script = new WurmScript();
-  if (ConfigHandler.checkForUpdates)
-   WurmScript.downloadScripts ();
+  if (ConfigHandler.checkForUpdates) WurmScript.downloadScripts();
  }
 
  @Mod.EventHandler
@@ -94,7 +93,8 @@ public class WurmTweaks {
     //.1s delay between state checks
     try {
      Thread.currentThread().sleep(100l);
-    } catch (InterruptedException e1) {}
+    } catch (InterruptedException e1) {
+    }
    } while (!allFinished);
   } catch (Exception e1) {
    System.err.println("EXCEPTION ENCOUNTERED IN SCRIPT MANAGER THREAD!");
@@ -119,7 +119,8 @@ public class WurmTweaks {
   synchronized (scriptManager) {
    try {
     scriptManager.wait();
-   } catch (InterruptedException e1) {}
+   } catch (InterruptedException e1) {
+   }
   }
   //Finish loading support
   FunctionsRegistry.finishSupport();

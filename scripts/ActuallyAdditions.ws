@@ -23,4 +23,4 @@ addMiningLensStone('<oreIron> 2')
 // Composter
 // addComposter('<output> <input> | <outputDisplay> <inputDisplay>')
 addComposter('<1xminecraft:grass> <1xminecraft:dirt@1>)
-addComposter('<1xminecraft:apple> <1xminecraft:brown_mushroom> <1xminecraft:bread> <<1xminecraft:baked_potato>')
+addComposter('<1xminecraft:apple> <1xminecraft:brown_mushroom> <1xminecraft:bread> <1xminecraft:baked_potato>')

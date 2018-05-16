@@ -41,10 +41,11 @@ public class GalacticCraft extends SupportHelper {
 
  @Override
  public void finishSupport() {
-  for (Object[] recipe : shapedCompressor)
-   CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]);
-  for (Object[] recipe : shapelessCompressor)
-   CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]);
+  //TODO FIX
+//  for (Object[] recipe : shapedCompressor)
+//   CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]);
+//  for (Object[] recipe : shapelessCompressor)
+//   CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]);
   for (Object[] recipe : circuitFab)
    CircuitFabricatorRecipes.addRecipe((ItemStack) recipe[0], (List<Object>) recipe[1]);
   for (Object[] recipe : station)

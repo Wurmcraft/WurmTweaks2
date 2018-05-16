@@ -1,4 +1,4 @@
-package com.wurmcraft.helper.support;
+package com.wurmcraft.script.support;
 
 
 import com.google.common.base.Preconditions;

@@ -63,14 +63,19 @@ public class ThermalExpansion extends SupportHelper {
   for (Object[] recipe : furnace)
    FurnaceManager.addRecipe((int)recipe[0], (ItemStack)recipe[1], (ItemStack)recipe[2]);
   for (Object[] r : pulverizer)
-   if (r.length == 5)
+   if (r.length == 5) {
     PulverizerManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2], (ItemStack)r[3], (int)r[4]);
-   else
+   } else {
     PulverizerManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2]);
-  for (Object[] r : sawmill)
-   SawmillManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2]);
-  for (Object[] r : sawmill)
-   SmelterManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2], (ItemStack)r[3]);
+   }
+  for (Object[] r : sawmill) {
+   if (r.length == 2) {
+    SmelterManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2], (ItemStack)r[3]);
+   } else {
+    SawmillManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2]);
+   }
+  }
+//  for (Object[] r : sawmill)
   for (Object[] r : compactor)
    CompactorManager.addRecipe((int)r[0], (ItemStack)r[1], (ItemStack)r[2], (CompactorManager.Mode)r[3]);
   for (Object[] r : crucible)

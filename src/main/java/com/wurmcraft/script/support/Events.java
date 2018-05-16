@@ -78,14 +78,14 @@ public class Events extends SupportHelper {
   drops.add(convertStack(helper, input[0]));
  }
 
-	@SubscribeEvent
+    @SubscribeEvent
  public void disableDrop(ItemTossEvent e) {
   if (e.getEntityItem().getItem() != ItemStack.EMPTY)
    for (ItemStack items : drops)
-	   if (isSameIgnoreSize (items,e.getEntityItem ().getItem ())) {
-		   e.getPlayer ().sendMessage (new TextComponentTranslation ("chat.denyToss.name"));
-		   e.setCanceled (true);
-	   }
+       if (isSameIgnoreSize (items,e.getEntityItem ().getItem ())) {
+           e.getPlayer ().sendMessage (new TextComponentTranslation ("chat.denyToss.name"));
+           e.setCanceled (true);
+       }
  }
 
  @ScriptFunction

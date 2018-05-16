@@ -174,7 +174,7 @@ public class TConstruct extends SupportHelper {
   Fluid fluid = convertFluidStack(helper, input[0]).getFluid();
   if (convertStack(helper, input[2]) != ItemStack.EMPTY) {
    melting.add(new MeltingRecipe(RecipeMatch.of(convertStack(helper, input[2])), fluid, BLOCK));
-   basin.add(new Object[]{convertStack(helper, input[2]), null, fluid, BLOCK});
+   basin.add(new Object[]{convertStack(helper, input[2]), ItemStack.EMPTY, fluid, BLOCK});
   }
   if (convertStack(helper, input[1]) != ItemStack.EMPTY) {
    melting.add(new MeltingRecipe(RecipeMatch.of(convertStack(helper, input[1])), fluid, INGOT));

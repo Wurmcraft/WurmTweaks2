@@ -9,6 +9,8 @@ buildscript {
 }
 plugins {
     id 'com.diffplug.gradle.spotless' version '3.4.0'
+    id "com.github.johnrengelman.shadow" version "2.0.4"
+    id 'java'
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
@@ -110,4 +112,24 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+}
+
+shadowJar {
+    dependencies {
+        exclude('CharcoalPit*.jar')
+        exclude('NuclearCraft*.jar')
+        exclude('Botania*.jar')
+        exclude('Forgelin*.jar')
+        exclude('dummy*')
+        include(dependency('com.github.stephenc.high-scale-lib:high-scale-lib:1.1.4'))
+    }
+}
+
+task buildAndPackage {
+    dependsOn 'clean'
+    dependsOn 'spotlessApply'
+    dependsOn 'build'
+    dependsOn 'shadowJar'
+    tasks.findByName('shadowJar').mustRunAfter 'build'
+    tasks.findByName('build').mustRunAfter 'clean'
 }

@@ -22,8 +22,13 @@ public class WurmScript {
    .lastIndexOf("/"));
 
  public static String removeAllComments(String str) {
-  return str.replaceAll("//.*|/\\*[\\s\\S]*?\\*/|(\"(\\\\.|[^\"])*\")", "");
+  //Remove single and multi-line comments
+  str = str.replaceAll("//.*|/\\*[\\s\\S]*?\\*/|(\"(\\\\.|[^\"])*\")", "");
+  //Remove trailing whitespace and newlines
+  str = str.replaceAll("\\h*(\r?\n|\r)(?:\\h*\\1)+", "\n");
+  return str;
  }
+
 
  private static boolean compareFileToURL(File file, URL url) throws IOException {
   if (!file.exists()) return false;
@@ -175,19 +180,10 @@ public class WurmScript {
     ScriptEngine engine = new ScriptEngineManager(null).getEngineByName("nashorn");
     //TODO Log
     System.out.println("Loading '" + file.getName() + "'");
-    List<String> lines = new LinkedList<>();
-    try {
-     Files.readAllLines(file.toPath()).forEach(line -> {
-      line = removeAllComments(line);
-      if (!line.isEmpty()) {
-       lines.add(line);
-      }
-     });
-    } catch (IOException e) {
-     System.err.println("Encountered error reading file: '" + file.getName() + "'!");
-     e.printStackTrace();
-    }
-    for (String line : lines) {
+    String script = new String(Files.readAllBytes(file.toPath()));
+    script = removeAllComments(script);
+    for (String line : script.split("\n")) {
+     if (line.equals("")) continue;
      String originalName = line.substring(0, line.lastIndexOf("("));
      try {
       engine.eval(line.replace(originalName, originalName.toLowerCase()), functions);
@@ -197,12 +193,11 @@ public class WurmScript {
      }
     }
    } catch(Exception e) {
-    System.err.println("EXCEPTION ENCOUNTERED PROCESSING FILE: " + file.getName());
+    System.err.println("Encountered error reading file: '" + file.getName() + "'!");
     e.printStackTrace();
    } finally {
     Thread.currentThread().interrupt();
    }
-   //engine.eval (new BufferedReader (new FileReader (file)),functions);
   };
  }
 }

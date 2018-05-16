@@ -56,20 +56,20 @@ addExtractor('<1xminecraft:apple> <1xminecraft:blaze_rod> 120 32')
 addGrinder('<1xminecraft:apple> <1xminecraft:blaze_rod> 120 32')
 
 // Implosion Compressor
-// addImplosionCompressor('<output> <output2> <input> <input2> <time> <euTick>')
+// addImplosionCompressor('<input> <input2> <output> <output2> <time> <euTick>')
 addImplosionCompressor('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
 
 // Industrial Electrolyzer
-// addIndustrialElectrolyzer('<output> <output2> <output3> <input> <input2> <time> <euTick>')
-addIndustrialElectrolyzer('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
+// addIndustrialElectrolyzer('<input> <input2> <output> <output2> <output3> <output4> <time> <euTick>')
+addIndustrialElectrolyzer('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
 
 // Industrial Grinder
-// addIndustrialGrinder('<output> <output2> <output3> <input> <input2> <time> <euTick>')
-addIndustrialGrinder('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
+// addIndustrialGrinder('<input> <*input2> <output> <output2> <output3> <output4> <time> <euTick>')
+addIndustrialGrinder('<1xminecraft:apple> <*100xwater> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
 
 // Industrial SawMill
-// addIndustrialSawmill('<output> <output2> <output3> <input> <input2> <time> <euTick>')
-addIndustrialSawmill('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
+// addIndustrialSawmill('<input> <*input2> <output> <output2> <output3> <time> <euTick>')
+addIndustrialSawmill('<1xminecraft:apple> <*100xwater> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
 
 // Vacuum Freezer
 // addVacuumFreezer('<output> <input> <time> <euTick')

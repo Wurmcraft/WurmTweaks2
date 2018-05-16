@@ -62,8 +62,9 @@ public class BloodMagic extends SupportHelper {
    BloodMagicAPI.INSTANCE.getRecipeRegistrar().addAlchemyArray((Ingredient) recipe[0], (Ingredient) recipe[1], (ItemStack) recipe[2], null);
   for (Object[] recipe : forge)
    BloodMagicAPI.INSTANCE.getRecipeRegistrar().addTartaricForge((ItemStack) recipe[0], (float) recipe[1], (float) recipe[2], (ItemStack[]) recipe[3]);
-  for (Object[] recipe : table)
-   BloodMagicAPI.INSTANCE.getRecipeRegistrar().addAlchemyTable((ItemStack) recipe[0], (int) recipe[1], (int) recipe[2], (int) recipe[3], (Ingredient[]) recipe[4]);
+  for (Object[] recipe : table) {
+   BloodMagicAPI.INSTANCE.getRecipeRegistrar().addAlchemyTable((ItemStack)recipe[0], (int)recipe[1], (int)recipe[2], (int)recipe[3], (Ingredient[])recipe[4]);
+  }
  }
 
  @ScriptFunction
@@ -103,6 +104,6 @@ public class BloodMagic extends SupportHelper {
    isValid(helper, input[index]);
    inputs.add(convertIngredient(helper, input[index]));
   }
-  table.add(new Object[]{convertStack(helper, input[0]), convertInteger(input[1]), convertInteger(input[2]), convertInteger(input[3]), inputs.toArray()});
+  table.add(new Object[]{convertStack(helper, input[0]), convertInteger(input[1]), convertInteger(input[2]), convertInteger(input[3]), inputs.toArray(new Ingredient[0])});
  }
 }
