@@ -40,7 +40,7 @@ addMetalPress('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:blaze
 
 // Refinery
 // addRefinery('<*output> <*input> <*input> <energy>')
-addRefinery('<*1xoil> <*1xwater> <*1xlava> 500')
+addRefinery('<*1xlava> <*1xwater> <*1xlava> 500')
 
 // Squeezer
 // addSqueezer('<output> <*output> <input> <energy>')

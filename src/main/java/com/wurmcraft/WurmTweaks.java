@@ -17,13 +17,13 @@ import javax.script.Bindings;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod(modid = Global.MODID, name = Global.NAME, version = Global.VERSION, dependencies = Global.DEPENDENCIES)
+@Mod (modid = Global.MODID, name = Global.NAME, version = Global.VERSION, dependencies = Global.DEPENDENCIES)
 public class WurmTweaks {
 
  @Mod.Instance(Global.MODID)
  public static WurmTweaks instance;
 
- @SidedProxy(serverSide = Global.PROXY_SERVER, clientSide = Global.PROXY_CLIENT)
+ @SidedProxy (serverSide = Global.PROXY_SERVER, clientSide = Global.PROXY_CLIENT)
  public static CommonProxy proxy;
 
  public static WurmScript script;
@@ -34,31 +34,32 @@ public class WurmTweaks {
   WurmTweaksBlocks.register();
   proxy.preInit();
   FunctionsRegistry.register(new Minecraft());
-//  FunctionsRegistry.register(new AbyssalCraft());
+  FunctionsRegistry.register(new AbyssalCraft());
   FunctionsRegistry.register(new ActuallyAdditions());
   FunctionsRegistry.register(new AE2());
   FunctionsRegistry.register(new AstralSorcery());
   FunctionsRegistry.register(new Avaritia());
-  FunctionsRegistry.register(new BetterWithMods());
+  FunctionsRegistry.register(new BetterWithMods ());
   FunctionsRegistry.register(new BloodMagic());
-//  FunctionsRegistry.register(new Botania());
-//		FunctionsRegistry.register (new Calculator ());
+  FunctionsRegistry.register (new Botania ());
+  FunctionsRegistry.register (new Calculator ());
   FunctionsRegistry.register(new CharcoalPit());
   FunctionsRegistry.register(new DraconicEvolution());
-  FunctionsRegistry.register(new EnvironmentalTech());
-  FunctionsRegistry.register(new Events());
+  FunctionsRegistry.register(new EnvironmentalTech ());
+  FunctionsRegistry.register(new Events ());
   FunctionsRegistry.register(new ExtraUtils2());
-  FunctionsRegistry.register(new GalacticCraft());
+  FunctionsRegistry.register(new GalacticCraft ());
   FunctionsRegistry.register(new ImmersiveEngineering());
   FunctionsRegistry.register(new IndustrialForegoing());
-  //		FunctionsRegistry.register (new Mekanism ());
+  // TODO "Recipes should be registered before PostInit. Try net.minecraftforge.event.RegistryEvent.Register<IRecipe>'
+//  FunctionsRegistry.register (new Mekanism ());
   FunctionsRegistry.register(new NuclearCraft());
-  //		FunctionsRegistry.register (new OreStages ());
-  //		FunctionsRegistry.register (new PneumaticCraft ());
+  FunctionsRegistry.register (new OreStages ());
+  FunctionsRegistry.register (new PneumaticCraft ());
   FunctionsRegistry.register(new SonarCore());
   FunctionsRegistry.register(new TConstruct());
   FunctionsRegistry.register(new TechReborn());
-  //		FunctionsRegistry.register (new Thaumcraft ());
+  FunctionsRegistry.register (new Thaumcraft ());
   FunctionsRegistry.register(new ThermalExpansion());
   FunctionsRegistry.register(new ToughAsNails());
   script = new WurmScript();
@@ -74,7 +75,7 @@ public class WurmTweaks {
  public static final Runnable SCRIPT_MANAGER = () -> {
   Thread.currentThread().setName("Script Manager Thread");
   try {
-   final List<Thread> scriptWorkers = new ArrayList<>();
+   final List<Thread> scriptWorkers = new ArrayList<> ();
    final Bindings bindings = FunctionsRegistry.createBindings();
    WurmScript.getRunnableScripts().forEach(file -> {
     Thread script = new Thread(WurmScript.scriptToRunnable(file, bindings));
@@ -133,7 +134,7 @@ public class WurmTweaks {
 
  @Mod.EventHandler
  public void onServerStarting(FMLServerStartingEvent e) {
-  e.registerServerCommand(new WTCommand());
+  e.registerServerCommand(new WTCommand ());
  }
 
  @Mod.EventHandler

@@ -2,11 +2,12 @@ package com.wurmcraft.script.support;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -27,6 +28,7 @@ import slimeknights.tconstruct.tools.TinkerMaterials;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -102,7 +104,7 @@ public class TConstruct extends SupportHelper {
  public void addCasting(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addCasting('<output> <cast> <*fluid>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.FLUIDSTACK, helper, input[2]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[2]);
   FluidStack fluidStack = convertFluidStack(helper, input[2]);
   casting.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[1]), fluidStack.getFluid(), fluidStack.amount});
  }
@@ -111,7 +113,7 @@ public class TConstruct extends SupportHelper {
  public void addBasin(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addBasin('<output> <cast> <*fluid>')");
   isValid(helper, input[0]);
-  isValid(Types.FLUIDSTACK, helper, input[2]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[2]);
   FluidStack fluidStack = convertFluidStack(helper, input[2]);
   basin.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[1]), fluidStack.getFluid(), fluidStack.amount});
  }
@@ -119,10 +121,10 @@ public class TConstruct extends SupportHelper {
  @ScriptFunction
  public void addAlloy(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 2, "addAlloy('<*output> <*input>...')");
-  isValid(Types.FLUIDSTACK, helper, input[0]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[0]);
   List<FluidStack> inputFluids = new ArrayList<>();
   for (int index = 1; index < input.length; index++) {
-   isValid(Types.FLUIDSTACK, helper, input[index]);
+   isValid (EnumInputType.FLUIDSTACK,helper,input[index]);
    inputFluids.add(convertFluidStack(helper, input[index]));
   }
   alloy.add(new Object[]{convertFluidStack(helper, input[0]), inputFluids.toArray(new FluidStack[0])});
@@ -132,24 +134,24 @@ public class TConstruct extends SupportHelper {
  public void addDrying(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addDrying('<output> <input> <time>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid (EnumInputType.INTEGER,helper,input[2]);
   drying.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[1]), convertInteger(input[2])});
  }
 
  @ScriptFunction
  public void addFuel(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addFuel(<*fluid> <time>')");
-  isValid(Types.FLUIDSTACK, helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[0]);
+  isValid (EnumInputType.INTEGER,helper,input[1]);
   fuel.add(new Object[]{convertFluidStack(helper, input[0]), convertInteger(input[1])});
  }
 
  @ScriptFunction
  public void addMelting(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addMelting('<*output> <input> <temp>')");
-  isValid(Types.FLUIDSTACK, helper, input[0]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[0]);
   isValid(helper, input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid (EnumInputType.INTEGER,helper,input[2]);
   FluidStack fluidStack = convertFluidStack(helper, input[0]);
   melting.add(new MeltingRecipe(RecipeMatch.of(convertStack(helper, input[1]), fluidStack.amount), fluidStack, convertInteger(input[2])));
  }
@@ -158,7 +160,7 @@ public class TConstruct extends SupportHelper {
  public void addEntityMelting(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addEntityMelting('<*output> entityName')");
   EntityEntry entity = null;
-  for (EntityEntry ent : ForgeRegistries.ENTITIES.getValues())
+  for (EntityEntry ent : ForgeRegistries.ENTITIES.getValues ())
    if (ent.getName().equalsIgnoreCase(input[0]))
     entity = ent;
   Preconditions.checkNotNull(entity);
@@ -169,7 +171,7 @@ public class TConstruct extends SupportHelper {
  @ScriptFunction
  public void handleMelting(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "handleMelting('<*fluid> <ingot> <block>')");
-  isValid(Types.FLUIDSTACK, helper, input[0]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[0]);
   isValid(helper, input[1], input[2]);
   Fluid fluid = convertFluidStack(helper, input[0]).getFluid();
   if (convertStack(helper, input[2]) != ItemStack.EMPTY) {
@@ -185,7 +187,7 @@ public class TConstruct extends SupportHelper {
  @ScriptFunction
  public void handleMaterialParts(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "handleMaterialParts('<materialName> <*fluid>')");
-  isValid(Types.FLUIDSTACK, helper, input[1]);
+  isValid (EnumInputType.FLUIDSTACK,helper,input[1]);
   Fluid fluid = convertFluidStack(helper, input[1]).getFluid();
   Material material = null;
   for (Material mat : TinkerMaterials.materials)

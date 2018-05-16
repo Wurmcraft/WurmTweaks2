@@ -2,7 +2,7 @@ package com.wurmcraft.script.support;
 
 
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -56,7 +56,7 @@ public class NuclearCraft extends SupportHelper {
  public void addManufactory(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addManufactory('<output> <input> <time>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   manufactory.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2])});
  }
 
@@ -64,7 +64,7 @@ public class NuclearCraft extends SupportHelper {
  public void addIsotopeSeparator(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addIsotopeSeparator('<output> <output2> <input> <time')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   separator.add(new Object[]{convertStack(helper, input[2]), convertStack(helper, input[0]), convertStack(helper, input[1]), convertInteger(input[3])});
  }
 
@@ -73,7 +73,7 @@ public class NuclearCraft extends SupportHelper {
  public void addPressurizer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addPressurizer('<output> <input> <time>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   pressurizer.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2])});
  }
 }

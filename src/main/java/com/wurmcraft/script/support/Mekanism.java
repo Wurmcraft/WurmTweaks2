@@ -3,7 +3,7 @@ package com.wurmcraft.script.support;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.StackSettings;
@@ -181,7 +181,7 @@ public class Mekanism extends SupportHelper {
   isValid(helper, input[0], input[1]);
   InfuseType type = InfuseRegistry.get(input[2]);
   Preconditions.checkNotNull(type);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   metaInfuser.add(new Object[]{type, convertInteger(input[3]), convertStack(helper, input[1]), convertStack(helper, input[0])});
  }
 
@@ -222,8 +222,8 @@ public class Mekanism extends SupportHelper {
   Preconditions.checkNotNull(leftOutput);
   GasStack rightOutput = getGasStack(input[1]);
   Preconditions.checkNotNull(rightOutput);
-  isValid(Types.FLUIDSTACK, helper, input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   electroSeperator.add(new Object[]{convertFluidStack(helper, input[2]), convertFloat(input[3]), leftOutput, rightOutput});
 
  }
@@ -236,7 +236,7 @@ public class Mekanism extends SupportHelper {
    sawmill.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0])});
   } else {
    isValid(helper, input[2]);
-   isValid(Types.FLOAT, helper, input[3]);
+   isValid(EnumInputType.FLOAT, helper, input[3]);
    sawmill.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, input[2]), convertFloat(input[3])});
   }
  }
@@ -270,16 +270,16 @@ public class Mekanism extends SupportHelper {
  }
 
  @ScriptFunction()
- public void addPressureChamber(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 7, "addPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')");
+ public void addMekPressureChamber(StackHelper helper, String line) {
+  String[] input = validateFormat(line, line.split(" ").length == 7, "addMekPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')");
   isValid(helper, input[0], input[4]);
-  isValid(Types.FLOAT, helper, input[5]);
-  isValid(Types.INTEGER, helper, input[6]);
+  isValid(EnumInputType.FLOAT, helper, input[5]);
+  isValid(EnumInputType.INTEGER, helper, input[6]);
   GasStack outputStack = getGasStack(input[1]);
   Preconditions.checkNotNull(outputStack);
   GasStack inputStack = getGasStack(input[2]);
   Preconditions.checkNotNull(inputStack);
-  isValid(Types.FLUIDSTACK, helper, input[3]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[3]);
   pressure.add(new Object[]{convertStack(helper, input[4]), convertFluidStack(helper, input[3]), inputStack, convertStack(helper, input[0]), outputStack, (double) convertFloat(input[5]), convertInteger(input[6])});
  }
 

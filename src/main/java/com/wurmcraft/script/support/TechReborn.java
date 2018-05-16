@@ -3,7 +3,7 @@ package com.wurmcraft.script.support;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.exception.InvalidStackException;
@@ -30,7 +30,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-//TODO all methods are backwards, input then output
 public class TechReborn extends SupportHelper {
 
  private List<Object[]> shapeless = Collections.synchronizedList(new ArrayList<>());
@@ -117,8 +116,8 @@ public class TechReborn extends SupportHelper {
  public void addGeneratorFluid(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addGeneratorFluid('<type> <*fluid> <energy>')");
   Preconditions.checkNotNull(getGeneratorType(input[0]));
-  isValid(Types.FLUIDSTACK, helper, input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   fluidGenerator.add(new Object[]{getGeneratorType(input[0]), convertFluidStack(helper, input[1]).getFluid(), convertInteger(input[2])});
  }
 
@@ -130,7 +129,7 @@ public class TechReborn extends SupportHelper {
  public void addTechFusion(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 6, "addTechFusion('<output> <topInput> <bottomInput> <startEU> <euTick> <time>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3], input[4], input[5]);
+  isValid(EnumInputType.INTEGER, helper, input[3], input[4], input[5]);
   fusion.add(new FusionReactorRecipe(convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[0]), convertInteger(input[3]), convertInteger(input[4]), convertInteger(input[5])));
  }
 
@@ -138,7 +137,7 @@ public class TechReborn extends SupportHelper {
  public void addAlloySmelter(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 5, "addAlloySmelter('<output> <input> <input2> <time> <euTick>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3], input[4]);
+  isValid(EnumInputType.INTEGER, helper, input[3], input[4]);
   machine.add(new AlloySmelterRecipe(convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[0]), convertInteger(input[3]), convertInteger(input[4])));
  }
 
@@ -146,7 +145,7 @@ public class TechReborn extends SupportHelper {
  public void addAssemblingMachine(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 5, "addAssemblingMachine('<output> <input> <input2> <time> <euTick>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3], input[4]);
+  isValid(EnumInputType.INTEGER, helper, input[3], input[4]);
   machine.add(new AssemblingMachineRecipe(convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[0]), convertInteger(input[3]), convertInteger(input[4])));
  }
 
@@ -154,31 +153,32 @@ public class TechReborn extends SupportHelper {
  public void addIndustrialBlastFurnace(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 7, "addIndustrialBlastFurnace('<output> <output2> <input> <input2> <time> <euTick> <heat>')");
   isValid(helper, input[0], input[1], input[2], input[3]);
-  isValid(Types.INTEGER, helper, input[4], input[5], input[6]);
+  isValid(EnumInputType.INTEGER, helper, input[4], input[5], input[6]);
   machine.add(new BlastFurnaceRecipe(convertStack(helper, input[2]), convertStack(helper, input[3]), convertStack(helper, input[0]), convertStack(helper, input[1]), convertInteger(input[4]), convertInteger(input[5]), convertInteger(input[6])));
  }
 
  @ScriptFunction
  public void addTRCenterfuge(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 8, "addCenterfuge('<output> <output2> <output3> <input> <input2> <time> <euTick> <output4>')");
+  String[] input = validateFormat(line, line.split(" ").length == 8, "addTRCenterfuge('<output> <output2> <output3> <input> <input2> <time> <euTick> <output4>')");
   isValid(helper, input[0], input[1], input[2], input[3], input[4], input[7]);
-  isValid(Types.INTEGER, helper, input[5], input[6]);
+  isValid(EnumInputType.INTEGER, helper, input[5], input[6]);
   machine.add(new CentrifugeRecipe(convertStack(helper, input[4]), convertStack(helper, input[7]), convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertInteger(input[5]), convertInteger(input[6])));
  }
 
  @ScriptFunction
  public void addChemicalReactor(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 5, "addChemicalReactor('<output> <input> <time> <euTick>')");
+  String[] input = validateFormat(line, line.split(" ").length == 5, "addChemicalReactor('<output> <input> " +
+    "<input2> <time> <euTick>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3], input[4]);
+  isValid(EnumInputType.INTEGER, helper, input[3], input[4]);
   machine.add(new ChemicalReactorRecipe(convertStack(helper, input[2]), convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[3]), convertInteger(input[4])));
  }
 
  @ScriptFunction
  public void addCompressor(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 4, "addGrinder('<output> <input> <time> <euTick>')");
+  String[] input = validateFormat(line, line.split(" ").length == 4, "addCompressor('<output> <input> <time> <euTick>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3]);
   machine.add(new CompressorRecipe(convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2]), convertInteger(input[3])));
  }
 
@@ -186,7 +186,7 @@ public class TechReborn extends SupportHelper {
  public void addDistillationTower(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 7, "addDistillationTower('<output> <output2> <output3> <input> <input2> <time> <euTick>'");
   isValid(helper, input[0], input[1], input[2], input[3], input[4]);
-  isValid(Types.INTEGER, helper, input[5], input[6]);
+  isValid(EnumInputType.INTEGER, helper, input[5], input[6]);
   machine.add(new DistillationTowerRecipe(convertStack(helper, input[3]), convertStack(helper, input[4]),
     convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack
     (helper, input[3]), convertInteger(input[5]), convertInteger(input[6])));
@@ -196,7 +196,7 @@ public class TechReborn extends SupportHelper {
  public void addExtractor(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addExtractor('<output> <input> <time> <euTick>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3]);
   machine.add(new ExtractorRecipe(convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2]), convertInteger(input[3])));
  }
 
@@ -204,7 +204,7 @@ public class TechReborn extends SupportHelper {
  public void addGrinder(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addGrinder('<output> <input> <time> <euTick>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3]);
   machine.add(new GrinderRecipe(convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2]), convertInteger(input[3]) * 10));
  }
 
@@ -212,24 +212,26 @@ public class TechReborn extends SupportHelper {
  public void addImplosionCompressor(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 6, "addImplosionCompressor('<input> <input2> <output> <output2> <time> <euTick>')");
   isValid(helper, input[0], input[1], input[2], input[3]);
-  isValid(Types.INTEGER, helper, input[4], input[5]);
+  isValid(EnumInputType.INTEGER, helper, input[4], input[5]);
   machine.add(new ImplosionCompressorRecipe(convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertInteger(input[4]), convertInteger(input[5])));
  }
 
  @ScriptFunction
  public void addIndustrialElectrolyzer(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 7, "addIndustrialElectrolyzer('<input> <input2> <output> <output2> <output3> <output4> <time> <euTick>')");
+  String[] input = validateFormat(line, line.split(" ").length == 8, "addIndustrialElectrolyzer('<input> <input2> " +
+    "<output> <output2> <output3> <output4> <time> <euTick>')");
   isValid(helper, input[0], input[1], input[2], input[3], input[4], input[5]);
-  isValid(Types.INTEGER, helper, input[6], input[7]);
+  isValid(EnumInputType.INTEGER, helper, input[6], input[7]);
   machine.add(new IndustrialElectrolyzerRecipe(convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertStack(helper, input[4]), convertStack(helper, input[5]), convertInteger(input[6]), convertInteger(input[7])));
  }
 
  @ScriptFunction
  public void addIndustrialGrinder(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 7, "addIndustrialGrinder('<input> <*input2> <output> <output2> <output3> <output4> <time> <euTick>')");
+  String[] input = validateFormat(line, line.split(" ").length == 8, "addIndustrialGrinder('<input> <*input2> " +
+    "<output> <output2> <output3> <output4> <time> <euTick>')");
   isValid(helper, input[0], input[2], input[3], input[4], input[5]);
-  isValid(Types.INTEGER, helper, input[6], input[7]);
-  isValid(Types.FLUIDSTACK, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[6], input[7]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[1]);
   machine.add(new IndustrialGrinderRecipe(convertStack(helper, input[0]), convertFluidStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertStack(helper, input[4]), convertStack(helper, input[5]), convertInteger(input[6]), convertInteger(input[7])));
  }
 
@@ -237,16 +239,23 @@ public class TechReborn extends SupportHelper {
  public void addIndustrialSawmill(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 7, "addIndustrialSawmill('<input> <*input2> <output> <output2> <output3> <time> <euTick>')");
   isValid(helper, input[0], input[2], input[3], input[4]);
-  isValid(Types.INTEGER, helper, input[5], input[6]);
-  isValid(Types.FLUIDSTACK, helper, input[1]);
-  machine.add(new IndustrialSawmillRecipe(convertStack(helper, input[0]), convertFluidStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertStack(helper, input[4]), convertInteger(input[5]), convertInteger(input[6])));
+  isValid(EnumInputType.INTEGER, helper, input[5], input[6]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[1]);
+  machine.add(new IndustrialSawmillRecipe(
+    convertStack(helper, input[0]),
+    convertFluidStack(helper, input[1]),
+    convertStack(helper, input[2]),
+    convertStack(helper, input[3]),
+    convertStack(helper, input[4]),
+    convertInteger(input[5]),
+    convertInteger(input[6])));
  }
 
  @ScriptFunction
  public void addVacuumFreezer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addVacuumFreezer('<output> <input> <time> <euTick')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3]);
   machine.add(new VacuumFreezerRecipe(convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2]), convertInteger(input[3]) * 10));
  }
 }

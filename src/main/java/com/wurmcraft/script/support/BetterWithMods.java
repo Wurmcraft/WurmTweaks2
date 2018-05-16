@@ -5,7 +5,7 @@ import betterwithmods.common.registry.anvil.ShapedAnvilRecipe;
 import betterwithmods.common.registry.block.recipe.BlockIngredient;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
@@ -165,7 +165,7 @@ public class BetterWithMods extends SupportHelper {
  public void addBlockHeat(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addBlockHeat(<block> <heat>')");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[1]);
   BlockIngredient heatBlock = new BlockIngredient(convertStack(helper, input[0]));
   heat.add(new Object[]{heatBlock, convertInteger(input[1])});
  }
@@ -174,7 +174,7 @@ public class BetterWithMods extends SupportHelper {
  public void addFilteredHopper(StackHelper helper, String line) {
   String[] input = validateFormat (line,line.split (" ").length >= 3,"addFilteredHopper('<output> <input> <name> <secOutput>...')");
   isValid (helper,input[0],input[1]);
-  isValid (Types.STRING,helper,input[1]);
+  isValid (EnumInputType.STRING,helper,input[1]);
   List <ItemStack> secOutput = new ArrayList <> ();
   for (int index = 3; index < input.length; index++) {
    isValid (helper,input[index]);

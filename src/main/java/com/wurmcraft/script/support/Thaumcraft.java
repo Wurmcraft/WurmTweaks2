@@ -2,7 +2,7 @@ package com.wurmcraft.script.support;
 
 
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
@@ -77,7 +77,7 @@ public class Thaumcraft extends SupportHelper {
  public void addLootBagItem(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addLootBagItem('<output> <bag>')");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[1]);
   ThaumcraftApi.addLootBagItem(convertStack(helper, input[0]), convertInteger(input[1]));
  }
 
@@ -92,9 +92,10 @@ public class Thaumcraft extends SupportHelper {
 
  @ScriptFunction
  public void addInfusion(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length >= 7, "addInfusion(<output> <research> <centerStack> <instability> <items>... <aspects...'");
+  String[] input = validateFormat(line, line.split(" ").length >= 6, "addInfusion(<output> <research> <centerStack> " +
+    "<instability> <items>... <aspects...)'");
   isValid(helper, input[0], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   List<ItemStack> items = new ArrayList<>();
   for (int index = 4; index < input.length; index++)
    if (!input[index].startsWith(StackSettings.FRONT.getFormatting() + StackSettings.ASPECT.getFormatting())) {

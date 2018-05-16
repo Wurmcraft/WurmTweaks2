@@ -22,7 +22,7 @@ addDrying('<1xminecraft:cooked_porkchop> <1xminecraft:blaze_rod> 240')
 
 // Smeltery Fuel
 // addFuel(<*fluid> <time>')
-addFuel(<*1xiron> 400')
+addFuel('<*1xiron> 400')
 
 // Melting
 // addMelting('<*output> <input> <temp>')

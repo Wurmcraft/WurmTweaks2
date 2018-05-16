@@ -5,7 +5,7 @@ import com.shinoow.abyssalcraft.api.recipe.CrystallizerRecipes;
 import com.shinoow.abyssalcraft.api.recipe.MaterializerRecipes;
 import com.shinoow.abyssalcraft.api.recipe.TransmutatorRecipes;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -41,7 +41,7 @@ public class AbyssalCraft extends SupportHelper {
  public void addCrystallizer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addCrystallizer('<output> <output2> <input> <exp>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   crystallizerRecipes.add(new Object[]{convertStack(helper, input[2]), convertStack(helper, input[0]), convertStack(helper, input[1]), convertFloat(input[3])});
  }
 
@@ -49,7 +49,7 @@ public class AbyssalCraft extends SupportHelper {
  public void addTransmutator(StackHelper helper, String line) {
   String input[] = validateFormat(line, line.split(" ").length == 3, "addTransmutator('<output> <input> <energy>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   transmutatorRecipes.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertFloat(input[2])});
  }
 

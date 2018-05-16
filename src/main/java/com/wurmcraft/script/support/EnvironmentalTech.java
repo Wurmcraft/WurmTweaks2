@@ -5,7 +5,7 @@ import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_ore.VMOre;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_res.VMRes;
 import com.valkyrieofnight.vlib.lib.stack.WeightedItemStack;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -141,7 +141,7 @@ public class EnvironmentalTech extends SupportHelper {
  public void addBotanicMiner(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addBotanicMiner('<stack> <weight> <tier> <color>'");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1], input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[1], input[2]);
   botanic.add(new Object[]{
    convertInteger(input[2]),
    new WeightedItemStack(convertStack(helper, input[0]), convertInteger(input[1])),
@@ -153,7 +153,7 @@ public class EnvironmentalTech extends SupportHelper {
  public void addResourceMiner(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addBotanicMiner('<stack> <weight> <tier> <color>'");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1], input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[1], input[2]);
   res.add(new Object[]{
    convertInteger(input[2]),
    new WeightedItemStack(convertStack(helper, input[0]), convertInteger(input[1])),
@@ -165,7 +165,7 @@ public class EnvironmentalTech extends SupportHelper {
  public void addOreMiner(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addBotanicMiner('<stack> <weight> <tier> <color>'");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1], input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[1], input[2]);
   ore.add(new Object[]{
    convertInteger(input[2]),
    new WeightedItemStack(convertStack(helper, input[0]), convertInteger(input[1])),

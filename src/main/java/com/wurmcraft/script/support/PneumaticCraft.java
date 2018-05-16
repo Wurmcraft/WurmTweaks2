@@ -1,7 +1,7 @@
 package com.wurmcraft.script.support;
 
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -76,7 +76,7 @@ public class PneumaticCraft extends SupportHelper {
  public void addPressureChamber(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 3, "addPressureChamber('<output> <pressure> <input>...')");
   isValid(helper, input[0]);
-  isValid(Types.FLOAT, helper, input[1]);
+  isValid(EnumInputType.FLOAT, helper, input[1]);
   List<ItemStack> inputs = new ArrayList<>();
   for (int index = 2; index < input.length; index++) {
    isValid(helper, input[index]);

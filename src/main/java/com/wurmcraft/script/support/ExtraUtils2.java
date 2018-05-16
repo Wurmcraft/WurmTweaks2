@@ -4,7 +4,7 @@ package com.wurmcraft.script.support;
 import com.rwtema.extrautils2.api.machine.XUMachineCrusher;
 import com.rwtema.extrautils2.tile.TileResonator;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -49,7 +49,7 @@ public class ExtraUtils2 extends SupportHelper {
  public void addResonator(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addResonator('<output> <input> <energy>'");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   resonator.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2])});
  }
 
@@ -61,7 +61,7 @@ public class ExtraUtils2 extends SupportHelper {
    crusher.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0])});
   else {
    isValid(helper, input[2]);
-   isValid(Types.FLOAT, helper, input[3]);
+   isValid(EnumInputType.FLOAT, helper, input[3]);
    crusher.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, (input[2])), convertFloat(input[3])});
   }
  }

@@ -2,7 +2,7 @@ package com.wurmcraft.script.utils;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.IModSupport;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.script.exception.InvalidStackException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -120,25 +120,25 @@ public abstract class SupportHelper implements IModSupport {
   * @param helper StackHelper Object from thread
   * @param item   possible script Item
   */
- protected void isValid(Types type, StackHelper helper, String... item) {
+ protected void isValid(EnumInputType type,StackHelper helper,String... item) {
   for (String i : item)
-   if (type.equals(Types.ITEMSTACK))
+   if (type.equals(EnumInputType.ITEMSTACK))
     checkNotNull(type, convertStack(helper, i), "Invalid ItemStack '" + i + "'");
-   else if (type.equals(Types.INGREDENT))
+   else if (type.equals(EnumInputType.INGREDENT))
     checkNotNull(type, convertIngredient(helper, i), "Invalid Ingredient '" + i + "'");
-   else if (type.equals(Types.FLUIDSTACK))
+   else if (type.equals(EnumInputType.FLUIDSTACK))
     checkNotNull(type, convertFluidStack(helper, i), "Invalid FluidStack '" + i + "'");
-   else if (type.equals(Types.ORE))
+   else if (type.equals(EnumInputType.ORE))
     Preconditions.checkArgument(isOre(helper, i), "Invalid Ore Entry '" + i + "'");
-   else if (type.equals(Types.STRING))
+   else if (type.equals(EnumInputType.STRING))
     Preconditions.checkArgument(i.length() >= 3, "Invalid String '" + i + "'");
-   else if (type.equals(Types.INTEGER))
+   else if (type.equals(EnumInputType.INTEGER))
     try {
      Integer.parseInt(i);
     } catch (NumberFormatException e) {
      System.out.println("Invalid Integer '" + i + "'");
     }
-   else if (type.equals(Types.FLOAT))
+   else if (type.equals(EnumInputType.FLOAT))
     try {
      Float.parseFloat(i);
     } catch (NumberFormatException e) {
@@ -153,16 +153,16 @@ public abstract class SupportHelper implements IModSupport {
   *
   * @param helper StackHelper Object from thread
   * @param item   ItemStack Script Object
-  * @see SupportHelper#isValid(Types, StackHelper, String...)
+  * @see SupportHelper#isValid(EnumInputType, StackHelper, String...)
   */
  protected void isValid(StackHelper helper, String... item) {
-  isValid(Types.ITEMSTACK, helper, item);
+  isValid(EnumInputType.ITEMSTACK, helper, item);
  }
 
  /**
   * Checks if the Script Object is null and if so throw an exception
   */
- private void checkNotNull(Types type, Object object, String errorMessage) throws InvalidStackException {
+ private void checkNotNull(EnumInputType type,Object object,String errorMessage) throws InvalidStackException {
   if (object == null)
    throw new InvalidStackException(errorMessage);
  }

@@ -85,7 +85,7 @@ public class OreStages extends SupportHelper {
 
  @ScriptFunction
  public void addOreStage(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 3, "addOreStage('<stage> <block> <replacment>')");
+  String[] input = validateFormat(line, line.split(" ").length == 3, "addOreStage('<stage> <block> <replacement>')");
   String stage = input[0];
   isValid(helper, input[1], input[2]);
   ItemStack block = convertStack(helper, input[1]);
@@ -95,7 +95,7 @@ public class OreStages extends SupportHelper {
 
  @ScriptFunction
  public void addUnlockCraft(StackHelper helper, String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 1, "addUnlockCraft('<item> <stageName>')");
+  String[] input = validateFormat(line, line.split(" ").length == 2, "addUnlockCraft('<item> <stageName>')");
   isValid(helper, input[0]);
   stagesToUnlock.add(new Object[]{convertStack(helper, input[0]), input[1]});
  }

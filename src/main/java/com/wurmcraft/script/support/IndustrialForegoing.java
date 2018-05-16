@@ -5,7 +5,7 @@ import com.buuz135.industrial.api.recipe.LaserDrillEntry;
 import com.buuz135.industrial.api.recipe.ProteinReactorEntry;
 import com.buuz135.industrial.api.recipe.SludgeEntry;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -60,7 +60,7 @@ public class IndustrialForegoing extends SupportHelper {
  public void addSludgeRefiner(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addSludgeRefiner('<stack> <weight>')");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[1]);
   sludge.add(new SludgeEntry(convertStack(helper, input[0]), convertInteger(input[1])));
  }
 
@@ -74,8 +74,8 @@ public class IndustrialForegoing extends SupportHelper {
  @ScriptFunction
  public void addLaser(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addLaser('<stack> <color> <weight>')");
-  isValid(helper, input[1]);
-  isValid(Types.INTEGER, helper, input[0], input[2]);
-  laser.add(new LaserDrillEntry(convertInteger(input[0]), convertStack(helper, input[1]), convertInteger(input[2])));
+  isValid(helper, input[0]);
+  isValid(EnumInputType.INTEGER, helper, input[1], input[2]);
+  laser.add(new LaserDrillEntry(convertInteger(input[1]), convertStack(helper, input[0]), convertInteger(input[2])));
  }
 }

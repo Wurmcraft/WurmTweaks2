@@ -7,7 +7,7 @@ package com.wurmcraft.api;
  * @see com.wurmcraft.api.IModSupport
  * @see com.wurmcraft.api.ScriptFunction
  */
-public enum Types {
+public enum EnumInputType {
 
     ITEMSTACK,INGREDENT,FLUIDSTACK,ORE,
     STRING, INTEGER, FLOAT, DOUBLE;

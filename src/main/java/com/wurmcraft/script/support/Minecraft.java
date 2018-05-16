@@ -1,7 +1,7 @@
 package com.wurmcraft.script.support;
 
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
@@ -163,7 +163,7 @@ public class Minecraft extends SupportHelper {
     new FurnaceRecipe(input, output, 1f)
    );
   } else {
-   isValid(Types.FLOAT, helper, script[2]);
+   isValid(EnumInputType.FLOAT, helper, script[2]);
    furnaceRecipes.add(
     new FurnaceRecipe(input, output, parseFloat(script[2]))
    );
@@ -186,7 +186,7 @@ public class Minecraft extends SupportHelper {
   String[] script = validateFormat(line, line.split(" ").length >= 2, "addOreEntry('<stack> <entry>')");
   isValid(helper, script[0]);
   for (int index = 1; index < script.length; index++) {
-   isValid(Types.STRING, helper, script[index]);
+   isValid(EnumInputType.STRING, helper, script[index]);
    oreEntries.add(new OreEntry(script[index], convertStack(helper, script[0])));
   }
  }

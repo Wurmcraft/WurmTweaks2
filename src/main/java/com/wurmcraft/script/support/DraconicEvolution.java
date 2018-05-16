@@ -4,7 +4,7 @@ import com.brandon3055.draconicevolution.api.fusioncrafting.FusionRecipeAPI;
 import com.brandon3055.draconicevolution.api.fusioncrafting.SimpleFusionRecipe;
 import com.brandon3055.draconicevolution.lib.RecipeManager;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -33,7 +33,7 @@ public class DraconicEvolution extends SupportHelper {
  public void addFusion(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 5, "addFusion('<output> <catalyst> <tier> <energy> <input>...')");
   isValid(helper, input[0], input[1], input[4]);
-  isValid(Types.INTEGER, helper, input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3]);
   List<ItemStack> inputs = new ArrayList<>();
   for (int index = 4; index < input.length; index++) {
    isValid(helper, input[index]);

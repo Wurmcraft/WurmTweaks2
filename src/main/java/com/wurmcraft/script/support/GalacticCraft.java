@@ -2,7 +2,7 @@ package com.wurmcraft.script.support;
 
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.exception.InvalidStackException;
 import com.wurmcraft.script.utils.StackHelper;
@@ -100,7 +100,7 @@ public class GalacticCraft extends SupportHelper {
  @ScriptFunction
  public void addSpaceStationRecipe(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.length() >= 2, "addSpaceStationRecipe('<stationID> <items>...')");
-  isValid(Types.INTEGER, helper, input[0]);
+  isValid(EnumInputType.INTEGER, helper, input[0]);
   List<ItemStack> validItems = new ArrayList<>();
   boolean validRecipe = true;
   for (String item : Arrays.copyOfRange(input, 1, input.length))

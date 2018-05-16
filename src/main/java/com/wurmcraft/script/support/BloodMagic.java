@@ -7,7 +7,7 @@ import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeTartaricForge;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -71,7 +71,7 @@ public class BloodMagic extends SupportHelper {
  public void addAltar(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 6, "addAltar('<output> <input> <tier> <syphon> <consume> <drain>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2], input[3], input[4], input[5]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3], input[4], input[5]);
   altar.add(new Object[]{convertIngredient(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2]), convertInteger(input[3]), convertInteger(input[4]), convertInteger(input[5])});
  }
 
@@ -85,20 +85,21 @@ public class BloodMagic extends SupportHelper {
  public void addSoulForge(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 4, "addSoulForge('<output> <souls> <drain> <input>...')");
   isValid(helper, input[0]);
-  isValid(Types.FLOAT, helper, input[2]);
+  isValid(EnumInputType.FLOAT, helper, input[1], input[2]);
   List<ItemStack> inputs = new ArrayList<>();
   for (int index = 3; index < input.length; index++) {
    isValid(helper, input[index]);
    inputs.add(convertStack(helper, input[index]));
   }
-  forge.add(new Object[]{convertStack(helper, input[0]), convertFloat(input[0]), convertFloat(input[1]), inputs.toArray(new ItemStack[0])});
+  forge.add(new Object[]{convertStack(helper, input[0]), convertFloat(input[2]), convertFloat(input[1]), inputs
+    .toArray(new ItemStack[0])});
  }
 
  @ScriptFunction
  public void addTable(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 5, "addTable('<output> <syphon> <ticks> <tier> <input>...')");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1], input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[1], input[2], input[3]);
   List<Ingredient> inputs = new ArrayList<>();
   for (int index = 4; index < input.length; index++) {
    isValid(helper, input[index]);

@@ -62,8 +62,8 @@ addChemicalWasher('<%1xliquidoxygen> <%1xwater>')
 addChemicalCrystallizer('<1xminecraft:apple> <%1xwater>')
 
 // Pressure Chamber
-// addPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')
-addPressureChamber('<1xminecraft:apple> <%1x1xliquidoxygen> <%1xwater> <*100xwater> <1xminecraft:golden_apple> 500 240')
+// addMekPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')
+addMekPressureChamber('<1xminecraft:apple> <%1x1xliquidoxygen> <%1xwater> <*100xwater> <1xminecraft:golden_apple> 500 240')
 
 // Thermal Evaporation
 // addThermalEvaporation('<*output> <*input>')

@@ -1,7 +1,7 @@
 package com.wurmcraft.script.support;
 
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -49,7 +49,7 @@ public class ActuallyAdditions extends SupportHelper {
  public void addEmpowerer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 8, "addEmpowerer('<output> <inputCenter> <input> <input2> <input3> <input4> <energyPerStand> <time>')");
   isValid(helper, input[0], input[1], input[2], input[3], input[4], input[5]);
-  isValid(Types.INTEGER, helper, input[6], input[7]);
+  isValid(EnumInputType.INTEGER, helper, input[6], input[7]);
   empowerer.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertStack(helper, input[4]), convertStack(helper, input[5]), convertInteger(input[6]), convertInteger(input[7])});
  }
 
@@ -57,7 +57,7 @@ public class ActuallyAdditions extends SupportHelper {
  public void addReconstructor(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addReconstructor('<output> <input> <energy>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   reconstructor.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertInteger(input[2])});
  }
 
@@ -65,7 +65,7 @@ public class ActuallyAdditions extends SupportHelper {
  public void addAACrusher(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addAACrusher('<output> <input> <secOutput> <secOutput%>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   crusher.add(new Object[]{convertStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, input[2]), convertInteger(input[3])});
  }
 
@@ -73,16 +73,16 @@ public class ActuallyAdditions extends SupportHelper {
  @ScriptFunction
  public void addMiningLensStone(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addMiningLensStone('<oreDict> <weight>')");
-  isValid(Types.STRING, helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid(EnumInputType.STRING, helper, input[0]);
+  isValid(EnumInputType.INTEGER, helper, input[1]);
   miningLensStone.add(new Object[]{input[0], convertInteger(input[1])});
  }
 
  @ScriptFunction
  public void addMiningLensNether(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addMiningLensNether('<oreDict> <weight>')");
-  isValid(Types.STRING, helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid(EnumInputType.STRING, helper, input[0]);
+  isValid(EnumInputType.INTEGER, helper, input[1]);
   miningLensNether.add(new Object[]{input[0], convertInteger(input[1])});
  }
 

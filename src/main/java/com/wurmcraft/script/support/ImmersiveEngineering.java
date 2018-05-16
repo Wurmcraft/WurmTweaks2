@@ -3,7 +3,7 @@ package com.wurmcraft.script.support;
 
 import blusunrize.immersiveengineering.api.crafting.*;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -86,7 +86,7 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addAlloyRecipe(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addAlloyRecipe('<output> <input> <input2> <time>");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   alloy.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertInteger(input[3])});
  }
 
@@ -94,7 +94,7 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addArcFurnace(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 4, "addArcFurnace('<output> <slag> <input> <time> <energy> | <additives'");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3], input[4]);
+  isValid(EnumInputType.INTEGER, helper, input[3], input[4]);
   List<ItemStack> additives = new ArrayList<>();
   if (input.length > 5) {
    for (int index = 5; index < input.length; index++) {
@@ -110,7 +110,7 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addBlastFurnace(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addBlastFurnace(<output> <slag> <input> <time>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   blast.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[2]), convertInteger(input[3]), convertStack(helper, input[1])});
  }
 
@@ -118,7 +118,7 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addBlastFuel(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 2, "addBlastFuel('<stack> <time>')");
   isValid(helper, input[0]);
-  isValid(Types.INTEGER, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[1]);
   fuel.add(new Object[]{convertStack(helper, input[0]), convertInteger(input[1])});
  }
 
@@ -126,7 +126,7 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addCokeOven(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addCokeOven('<output> <input> <creosote> <time>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2], input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[2], input[3]);
   coke.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[1]), convertInteger(input[3]), convertInteger(input[2])});
  }
 
@@ -134,12 +134,12 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addCrusher(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3 || line.split(" ").length == 5, "addCrusher('<output> <input> <energy> | <secOutput> <secOutput%>)");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   if (line.split(" ").length == 3)
    CrusherRecipe.addRecipe(convertStack(helper, input[0]), convertStack(helper, input[1]), convertInteger(input[2]));
   else if (line.split(" ").length == 5) {
    isValid(helper, input[3]);
-   isValid(Types.FLOAT, helper, input[4]);
+   isValid(EnumInputType.FLOAT, helper, input[4]);
    CrusherRecipe recipe = new CrusherRecipe(convertStack(helper, input[0]), convertStack(helper, input[1]), convertInteger(input[2]));
    recipe.addToSecondaryOutput(convertStack(helper, input[3]), convertFloat(input[4]));
    crusher.add(recipe);
@@ -150,8 +150,8 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addFermenter(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addFermenter('<output> <*output> <input> <energy')");
   isValid(helper, input[0], input[2]);
-  isValid(Types.FLUIDSTACK, helper, input[1]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   fermenter.add(new Object[]{convertFluidStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, input[2]), convertInteger(input[3])});
  }
 
@@ -159,7 +159,7 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addMetalPress(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addMetalPress(<output> <input> <mold> <time>')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
 //  press.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[2]), convertStack(helper, input[3]), convertInteger(input[1])});
   press.add(new Object[]{convertStack(helper, input[0]), convertStack(helper, input[2]), convertStack(helper, input[1]), convertInteger(input[3])});
  }
@@ -167,8 +167,8 @@ public class ImmersiveEngineering extends SupportHelper {
  @ScriptFunction
  public void addRefinery(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addRefinery('<*output> <*input> <*input> <energy>')");
-  isValid(Types.FLUIDSTACK, helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[0], input[1], input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   refinery.add(new Object[]{convertFluidStack(helper, input[0]), convertFluidStack(helper, input[1]), convertFluidStack(helper, input[2]), convertInteger(input[3])});
  }
 
@@ -176,8 +176,9 @@ public class ImmersiveEngineering extends SupportHelper {
  public void addSqueezer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addSqueezer('<output> <*output> <input> <energy>')");
   isValid(helper, input[0], input[2]);
-  isValid(Types.FLUIDSTACK, helper, input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
-  squeezer.add(new Object[]{convertFluidStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, input[2]), convertInteger(input[2])});
+  isValid(EnumInputType.FLUIDSTACK, helper, input[1]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
+  squeezer.add(new Object[]{convertFluidStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper,
+    input[2]), convertInteger(input[3])});
  }
 }

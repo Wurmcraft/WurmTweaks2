@@ -38,13 +38,17 @@ addAssemblingMachine('<1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:b
 addIndustrialBlastFurnace('<1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> <1xminecraft:golden_apple> 100 32 1200')
 
 // Centerfuge
-// addCenterfuge('<output> <output2> <output3> <input> <input2> <time> <euTick> <output4>')
-addCenterfuge('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32 <1xminecraft:apple>')
+// addTRCenterfuge('<output> <output2> <output3> <input> <input2> <time> <euTick> <output4>')
+addTRCenterfuge('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32 <1xminecraft:apple>')
 
 // Chemical Reactor
 //addChemicalReactor('<output> <input> <time> <euTick>')
-addChemicalReactor('<1xminecraft:apple> <1xminecraft:blaze_rod> 120 32')
+addChemicalReactor('<1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
+
+// Grinder
 addGrinder('<1xminecraft:apple> <1xminecraft:blaze_rod> 120 32')
+
+// Distillation Tower
 addDistillationTower('<1xminecraft:apple> <1xminecraft:apple> <1xminecraft:apple> <1xminecraft:blaze_rod> <1xminecraft:blaze_rod> 120 32')
 
 // Extractor
@@ -74,3 +78,7 @@ addIndustrialSawmill('<1xminecraft:apple> <*100xwater> <1xminecraft:apple> <1xmi
 // Vacuum Freezer
 // addVacuumFreezer('<output> <input> <time> <euTick')
 addVacuumFreezer('<1xminecraft:apple> <1xminecraft:blaze_rod> 120 32')
+
+// Compressor
+// addCompressor('<output> <input> <time> <euTick>')
+addCompressor('<1xminecraft:apple> <1xminecraft:blaze_rod> 20 32')

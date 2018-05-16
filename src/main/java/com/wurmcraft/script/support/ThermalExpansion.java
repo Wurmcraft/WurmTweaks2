@@ -3,7 +3,7 @@ package com.wurmcraft.script.support;
 import cofh.thermalexpansion.util.managers.machine.*;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
-import com.wurmcraft.api.Types;
+import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
@@ -93,7 +93,7 @@ public class ThermalExpansion extends SupportHelper {
   String[] input = validateFormat(line, line.split(" ").length >= 2, "addRedstoneFurnace('<output> <input> <energy>')");
   isValid(helper, input[0], input[1]);
   if (line.split(" ").length == 3) {
-   isValid(Types.INTEGER, helper, input[2]);
+   isValid(EnumInputType.INTEGER, helper, input[2]);
    furnace.add(new Object[]{convertInteger(input[2]), convertStack(helper, input[1]), convertStack(helper, input[0])});
   } else
    furnace.add(new Object[]{8000, convertStack(helper, input[1]), convertStack(helper, input[0])});
@@ -103,12 +103,12 @@ public class ThermalExpansion extends SupportHelper {
  public void addPulverizer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 3, "addPulverizer('<output> <input> <energy> | <secOutput> <secOutput%>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   if (input.length == 3)
    pulverizer.add(new Object[]{convertInteger(input[2]), convertStack(helper, input[1]), convertStack(helper, input[0])});
   else {
    isValid(helper, input[3]);
-   isValid(Types.INTEGER, helper, input[4]);
+   isValid(EnumInputType.INTEGER, helper, input[4]);
    pulverizer.add(new Object[]{convertInteger(input[2]), convertStack(helper, input[1]), convertStack(helper, input[0]), convertStack(helper, input[3]), convertInteger(input[4])});
   }
  }
@@ -117,7 +117,7 @@ public class ThermalExpansion extends SupportHelper {
  public void addTESawmill(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addTESawmill('<output> <input> <energy>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   sawmill.add(new Object[]{convertInteger(input[2]), convertStack(helper, input[1]), convertStack(helper, input[0])});
  }
 
@@ -125,7 +125,7 @@ public class ThermalExpansion extends SupportHelper {
  public void addSmelter(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addSmelter('<output> <inputA> <inputB> <energy')");
   isValid(helper, input[0], input[1], input[2]);
-  isValid(Types.INTEGER, helper, input[3]);
+  isValid(EnumInputType.INTEGER, helper, input[3]);
   smelter.add(new Object[]{convertInteger(input[3]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[0])});
  }
 
@@ -133,7 +133,7 @@ public class ThermalExpansion extends SupportHelper {
  public void addCompactor(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 4, "addCompactor('<output> <input> <energy> <mode>')");
   isValid(helper, input[0], input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   CompactorManager.Mode mode = getMode(input[3]);
   Preconditions.checkArgument(mode != null, "Invalid Mode %s", input[3]);
   compactor.add(new Object[]{convertInteger(input[2]), convertStack(helper, input[1]), convertStack(helper, input[0]), mode});
@@ -142,9 +142,9 @@ public class ThermalExpansion extends SupportHelper {
  @ScriptFunction
  public void addMagmaCrucible(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 3, "addMagmaCrucible('<*output> <input> <energy>')");
-  isValid(Types.FLUIDSTACK, helper, input[0]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[0]);
   isValid(helper, input[1]);
-  isValid(Types.INTEGER, helper, input[2]);
+  isValid(EnumInputType.INTEGER, helper, input[2]);
   crucible.add(new Object[]{convertInteger(input[2]), convertStack(helper, input[1]), convertFluidStack(helper, input[0])});
  }
 
@@ -152,7 +152,7 @@ public class ThermalExpansion extends SupportHelper {
  public void addTECenterfuge(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length == 7, "addCenterfuge('<output> <output2> <output3> <output4> <input> <energy> <*output5>')");
   isValid(helper, input[0], input[1], input[2], input[3], input[4]);
-  isValid(Types.INTEGER, helper, input[5]);
+  isValid(EnumInputType.INTEGER, helper, input[5]);
   centerfuge.add(new Object[]{convertInteger(input[5]), convertStack(helper, input[4]), Arrays.asList(convertStack(helper, input[0]), convertStack(helper, input[1]), convertStack(helper, input[2]), convertStack(helper, input[3])), convertFluidStack(helper, input[6])});
  }
 
@@ -160,9 +160,9 @@ public class ThermalExpansion extends SupportHelper {
  public void addFluidTransposer(StackHelper helper, String line) {
   String[] input = validateFormat(line, line.split(" ").length >= 5, "addFluidTransposer('<output> <input> <fluid> <energy> " + "<mode> | <chance>");
   isValid(helper, input[0], input[1]);
-  isValid(Types.FLUIDSTACK, helper, input[2]);
+  isValid(EnumInputType.FLUIDSTACK, helper, input[2]);
   if (line.split(" ").length == 6)
-   isValid(Types.INTEGER, helper, input[5]);
+   isValid(EnumInputType.INTEGER, helper, input[5]);
   TransposerManager.TransposerRecipe recipe = new TransposerManager.TransposerRecipe(convertStack(helper, input[1]),
    convertStack(helper, input[0]), convertFluidStack(helper, input[2]), convertInteger(input[3]),
    line.split(" ").length == 6 ? convertInteger(input[5]) : 0);
