@@ -7,7 +7,6 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -28,7 +27,6 @@ import slimeknights.tconstruct.tools.TinkerMaterials;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

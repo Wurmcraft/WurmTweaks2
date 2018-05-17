@@ -10,7 +10,6 @@ buildscript {
 plugins {
     id 'com.diffplug.gradle.spotless' version '3.4.0'
     id "com.github.johnrengelman.shadow" version "2.0.4"
-    id 'java'
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
@@ -27,7 +26,7 @@ minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
     mappings = "${mcp_map}"
-	replace "@VERSION@", project.version
+	replace "@version@", project.version
     replaceIn "Global.java"
     clientRunArgs += "--username=${username}"
 }
@@ -125,11 +124,13 @@ shadowJar {
     }
 }
 
+reobf {
+    shadowJar {}
+}
+
 task buildAndPackage {
     dependsOn 'clean'
     dependsOn 'spotlessApply'
     dependsOn 'build'
-    dependsOn 'shadowJar'
-    tasks.findByName('shadowJar').mustRunAfter 'build'
     tasks.findByName('build').mustRunAfter 'clean'
 }
