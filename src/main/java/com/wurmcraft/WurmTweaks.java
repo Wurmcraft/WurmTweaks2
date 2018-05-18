@@ -14,6 +14,10 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 
 import javax.script.Bindings;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +34,8 @@ public class WurmTweaks {
 
  @Mod.EventHandler
  public void onPreInit(FMLPreInitializationEvent e) {
+  File logDir = new File(ConfigHandler.logDirectory);
+  if (!logDir.exists()) logDir.mkdirs();
   WurmTweaksItems.register();
   WurmTweaksBlocks.register();
   proxy.preInit();
@@ -41,7 +47,7 @@ public class WurmTweaks {
   FunctionsRegistry.register(new Avaritia());
   FunctionsRegistry.register(new BetterWithMods());
   FunctionsRegistry.register(new BloodMagic());
-  FunctionsRegistry.register(new Botania());
+//  FunctionsRegistry.register(new Botania());
   FunctionsRegistry.register(new Calculator());
   FunctionsRegistry.register(new CharcoalPit());
   FunctionsRegistry.register(new DraconicEvolution());
@@ -73,16 +79,30 @@ public class WurmTweaks {
  }
 
  public static final Runnable SCRIPT_MANAGER = () -> {
+  final File logFile = new File(ConfigHandler.logDirectory + File.separator + "ScriptManager.log");
+  if (!logFile.exists()) {
+   try {
+    logFile.createNewFile();
+   } catch (IOException e) {
+    e.printStackTrace();
+   }
+  }
   Thread.currentThread().setName("Script Manager Thread");
-  try {
-   final List<Thread> scriptWorkers = new ArrayList<>();
+  try (final PrintStream log = new PrintStream(new FileOutputStream(logFile, false))) {
    final Bindings bindings = FunctionsRegistry.createBindings();
-   WurmScript.getRunnableScripts().forEach(file -> {
-    Thread script = new Thread(WurmScript.scriptToRunnable(file, bindings));
-    script.setName(file.getName());
-    scriptWorkers.add(script);
-    script.start();
-   });
+   final List<Thread> scriptWorkers = new ArrayList<>();
+   for (File file : WurmScript.getRunnableScripts()) {
+    try {
+     Thread script = new Thread(WurmScript.scriptToRunnable(file, bindings));
+     script.setName(file.getName());
+     scriptWorkers.add(script);
+     script.start();
+    } catch (Throwable t) {
+     log.println("Script Manager thread encountered unexpected exception!");
+     t.printStackTrace(log);
+     log.println("Continuing!");
+    }
+   }
    //Monitor script workers until they've all finished
    boolean allFinished;
    do {
@@ -95,11 +115,13 @@ public class WurmTweaks {
     try {
      Thread.currentThread().sleep(100l);
     } catch (InterruptedException e1) {
+     log.println("Script Manager thread unexpectedly interrupted!");
+     e1.printStackTrace(log);
+     log.println("Continuing!");
     }
    } while (!allFinished);
-  } catch (Exception e1) {
-   System.err.println("EXCEPTION ENCOUNTERED IN SCRIPT MANAGER THREAD!");
-   e1.printStackTrace();
+  } catch (IOException e1) {
+   System.err.println("Failed to open log for script manager at: '" + logFile.getAbsolutePath() + "'!");
   } finally {
    //Stop thread
    Thread.currentThread().interrupt();

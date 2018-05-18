@@ -15,11 +15,8 @@ import java.nio.file.Files;
 import java.util.*;
 
 public class WurmScript {
- // Location Scripts are stored
- public static final File SCRIPT_DIR = new File("config/WurmTweaks");
- // @ConfigHandler
- public static final String DEFAULT_URL = ConfigHandler.masterScript.substring(0, ConfigHandler.masterScript
-   .lastIndexOf("/"));
+ public static final String DEFAULT_URL =
+  ConfigHandler.masterScript.substring(0, ConfigHandler.masterScript.lastIndexOf("/"));
 
  public static String removeAllComments(String str) {
   //Remove single and multi-line comments
@@ -28,7 +25,6 @@ public class WurmScript {
   str = str.replaceAll("\\h*(\r?\n|\r)(?:\\h*\\1)+", "\n");
   return str;
  }
-
 
  private static boolean compareFileToURL(File file, URL url) throws IOException {
   if (!file.exists()) return false;
@@ -46,9 +42,9 @@ public class WurmScript {
   */
  public static File getFileFromName(String name) {
   if (name.contains("http://") || name.contains("https://")) {
-   return new File(SCRIPT_DIR + File.separator + name.substring(name.lastIndexOf("/") + 1));
+   return new File(ConfigHandler.scriptDir + File.separator + name.substring(name.lastIndexOf(File.separator) + 1));
   }
-  return new File(SCRIPT_DIR + File.separator + name);
+  return new File(ConfigHandler.scriptDir + File.separator + name);
  }
 
  /**
@@ -74,7 +70,7 @@ public class WurmScript {
  }
 
  private static void removeUnused() {
-  File[] files = SCRIPT_DIR.listFiles();
+  File[] files = new File(ConfigHandler.scriptDir).listFiles();
   if (files != null) {
    for (File file : files) {
     if (file.equals(ConfigHandler.masterScript)) continue;
@@ -92,7 +88,7 @@ public class WurmScript {
      if (ConfigHandler.deleteOld) {
       file.delete();
      } else {
-      if (!file.getName().toLowerCase().contains("disabled")) {
+      if (!file.getName().toLowerCase().contains("disabled") && !file.isDirectory()) {
        String newFileName =
         file.getParent() +
          File.separator +
@@ -108,13 +104,16 @@ public class WurmScript {
  }
 
  public static void downloadScripts() {
-  if (SCRIPT_DIR.exists() || SCRIPT_DIR.mkdirs()) {
+  File scriptsLocation = new File(ConfigHandler.scriptDir);
+  if (scriptsLocation.exists() || scriptsLocation.mkdirs()) {
    List<URL> scripts = new LinkedList<>();
    try {
     for (String fileName : getScriptNamesFromMaster()) {
      scripts.add(getURLFromName(fileName));
     }
-   } catch (IOException e) { e.printStackTrace(); }
+   } catch (IOException e) {
+    e.printStackTrace();
+   }
    removeUnused();
    for (URL url : scripts) {
     try {
@@ -129,7 +128,7 @@ public class WurmScript {
     }
    }
   } else {
-   System.out.println("Failed to create / load '" + SCRIPT_DIR.getAbsolutePath() + "' unable to download scripts");
+   System.out.println("Failed to create / load '" + scriptsLocation.getAbsolutePath() + "' unable to download scripts");
   }
  }
 
@@ -160,41 +159,52 @@ public class WurmScript {
  public static List<File> getRunnableScripts() {
   File masterFile = getFileFromName(ConfigHandler.masterScript);
 //  if (masterFile.exists()) {
-   List<File>
-    runnableScripts = new ArrayList<>(Arrays.asList(masterFile.getParentFile().listFiles())),
-    toRemove = new ArrayList<>();
-   runnableScripts.remove(masterFile);
-   for (File file : runnableScripts) {
-    if (!file.getName().endsWith(".ws")) {
-     toRemove.add(file);
-    }
+  List<File>
+   runnableScripts = new ArrayList<>(Arrays.asList(masterFile.getParentFile().listFiles())),
+   toRemove = new ArrayList<>();
+  runnableScripts.remove(masterFile);
+  for (File file : runnableScripts) {
+   if (!file.getName().endsWith(".ws")) {
+    toRemove.add(file);
    }
-   runnableScripts.removeAll(toRemove);
-   return runnableScripts;
+  }
+  runnableScripts.removeAll(toRemove);
+  return runnableScripts;
 //  }
  }
 
  public static Runnable scriptToRunnable(File file, Bindings functions) {
   return () -> {
-   try {
-    ScriptEngine engine = new ScriptEngineManager(null).getEngineByName("nashorn");
-    //TODO Log
-    System.out.println("Loading '" + file.getName() + "'");
-    String script = new String(Files.readAllBytes(file.toPath()));
-    script = removeAllComments(script);
-    for (String line : script.split("\n")) {
+   final ScriptEngine engine = new ScriptEngineManager(null).getEngineByName("nashorn");
+   String logName = file.getName().substring(0, file.getName().indexOf(".")) + ".log";
+   final File logFile = new File(ConfigHandler.logDirectory + File.separator + logName);
+   if (!logFile.exists()) {
+    try {
+     logFile.createNewFile();
+    } catch (IOException e) {
+     e.printStackTrace();
+    }
+   }
+   try (PrintStream log = new PrintStream(new FileOutputStream(logFile, false))) {
+    final String script = removeAllComments(new String(Files.readAllBytes(file.toPath())));
+    //TODO might cause issues
+    for (String line : script.split(System.lineSeparator())) {
      if (line.equals("")) continue;
      String originalName = line.substring(0, line.lastIndexOf("("));
      try {
       engine.eval(line.replace(originalName, originalName.toLowerCase()), functions);
-     } catch (ScriptException e) {
-      System.err.println("Script error while reading line: '" + line + "' in file '" + file.getName() + "'");
-      System.out.println(formatScriptError(e.getFileName(), e.getLineNumber(), e.getMessage()));
+     } catch (Exception e) {
+      if (ConfigHandler.debug) {
+       log.println(("Script error while reading line: '" + line + "' in file '" + file.getName() + "'"));
+       if (e instanceof ScriptException) {
+        ScriptException se = (ScriptException)e;
+        log.println(formatScriptError(se.getFileName(), se.getLineNumber(), se.getMessage()));
+       }
+      }
      }
     }
-   } catch(Exception e) {
-    System.err.println("Encountered error reading file: '" + file.getName() + "'!");
-    e.printStackTrace();
+   } catch (IOException e) {
+    System.err.println("Failed to open log for script '" + file.getName() + "' at '" + logFile + "'!");
    } finally {
     Thread.currentThread().interrupt();
    }
