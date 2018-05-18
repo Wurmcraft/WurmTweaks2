@@ -57,8 +57,10 @@ public class StackHelper {
     String resourcePath;
     if (item.contains(META.getFormatting())) {
      resourcePath = item.substring(item.indexOf(":") + 1, item.indexOf(META.getFormatting()));
+    } else if(item.contains (NBT.getFormatting ())){
+     resourcePath = item.substring(item.indexOf(":") + 1, item.indexOf(NBT.getFormatting()));
     } else {
-     resourcePath = item.substring(item.indexOf(":") + 1, item.indexOf(BACK.getFormatting()));
+     resourcePath = item.substring (item.indexOf (":") + 1,item.indexOf (BACK.getFormatting ()));
     }
     ResourceLocation itemLookup =
      new ResourceLocation(item.substring(item.indexOf(STACK_SIZE.getFormatting()) + 1, item.indexOf(":")), resourcePath);
@@ -148,19 +150,23 @@ public class StackHelper {
   * @return String version of the ItemStack
   */
  private String convertToString(ItemStack stack) {
-  String temp =
-   FRONT.getFormatting() +
-    stack.getCount() +
-    STACK_SIZE.getFormatting() +
-    stack.getItem().getRegistryName().getResourceDomain() +
-    ":" +
-    stack.getItem().getRegistryName().getResourcePath();
-
-  if (stack.getItemDamage() > 0) temp = temp + META + stack.getItemDamage();
-  if (stack.hasTagCompound()) {
-   return temp.replaceAll(" ", SPACE.getFormatting()) + NBT.getFormatting() + stack.getTagCompound() + BACK.getFormatting();
+  StringBuilder builder = new StringBuilder ();
+  builder.append (FRONT.getFormatting ());
+  builder.append (stack.getCount ());
+  builder.append (STACK_SIZE.getFormatting ());
+  builder.append (stack.getItem ().getRegistryName ().getResourceDomain ());
+  builder.append (":");
+  builder.append (stack.getItem ().getRegistryName ().getResourcePath ());
+  if (stack.getItemDamage () > 0) {
+   builder.append (META.getFormatting ());
+   builder.append (stack.getItemDamage ());
   }
-  return temp.replaceAll(" ", SPACE.getFormatting()) + BACK.getFormatting();
+  if(stack.hasTagCompound ()) {
+    builder.append (NBT.getFormatting ());
+    builder.append (stack.getTagCompound ());
+  }
+  builder.append (BACK.getFormatting ());
+  return builder.toString ().replaceAll (" ", SPACE.getFormatting ());
  }
 
 
