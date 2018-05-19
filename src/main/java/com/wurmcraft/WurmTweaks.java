@@ -5,6 +5,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.blocks.WurmTweaksBlocks;
 import com.wurmcraft.common.command.WTCommand;
 import com.wurmcraft.common.items.WurmTweaksItems;
+import com.wurmcraft.common.network.NetworkHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.FunctionsRegistry;
 import com.wurmcraft.script.WurmScript;
@@ -12,6 +13,8 @@ import com.wurmcraft.script.support.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,9 +33,11 @@ public class WurmTweaks {
  public static CommonProxy proxy;
 
  public static WurmScript script;
+ public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Global.MODID);
 
  @Mod.EventHandler
  public void onPreInit(FMLPreInitializationEvent e) {
+  NetworkHandler.registerPackets ();
   File
    logDir = new File(ConfigHandler.logDirectory),
    scriptDir = WurmScript.getFileFromName(ConfigHandler.masterScript).getParentFile();
