@@ -47,7 +47,7 @@ public class FunctionsRegistry {
          controller.init();
          bindings.put(
           method.getName().toLowerCase(),
-          new ScriptFunctionWrapper(controller, new StackHelper(true), method, log)
+          new ScriptFunctionWrapper(controller, new StackHelper(true, log), method, log)
          );
          loadedSupport.add(controller);
         }

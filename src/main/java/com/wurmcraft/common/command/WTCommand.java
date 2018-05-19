@@ -36,7 +36,7 @@ public class WTCommand extends CommandBase {
    if (args[0].equalsIgnoreCase("hand")) {
     if (player != null) {
      if (player.getHeldItemMainhand() != ItemStack.EMPTY) {
-      String stack = new StackHelper(true).convert(player.getHeldItemMainhand());
+      String stack = new StackHelper(true, System.out).convert(player.getHeldItemMainhand());
       player.sendMessage(new TextComponentString(TextFormatting.RED + stack));
      } else {
       player.sendMessage(new TextComponentString(TextFormatting.RED + "Empty Hand"));
@@ -64,7 +64,7 @@ public class WTCommand extends CommandBase {
   } else if (args.length == 2 && args[0].equalsIgnoreCase("load")) {
    if (player != null) {
     String item = args[1];
-    ItemStack itemStack = new StackHelper(true).convert(item);
+    ItemStack itemStack = new StackHelper(true, System.out).convert(item);
     player.inventory.addItemStackToInventory(itemStack);
     player.sendMessage(new TextComponentString(TextFormatting.RED + "Added / Loaded!"));
    }

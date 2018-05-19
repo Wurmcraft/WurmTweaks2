@@ -13,6 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +30,15 @@ public class StackHelper {
  private final Thread mainThread;
  public HashMap<String, ItemStack> cacheItems = new HashMap<>();
  private boolean cache;
+ private PrintStream ps;
 
  /**
   * @param useCache Create a cache to improve preformance
   */
- public StackHelper(boolean useCache) {
+ public StackHelper(boolean useCache, PrintStream ps) {
   this.mainThread = Thread.currentThread();
   this.cache = useCache;
+  this.ps = ps;
  }
 
  /**
@@ -50,7 +53,7 @@ public class StackHelper {
   if (!item.isEmpty() && item.startsWith(FRONT.getFormatting()) && item.endsWith(BACK.getFormatting())) {
    if (isOreEntry(item)) {
     //TODO Log
-    System.out.println("[Debug]: OreDictionary was converted to ItemStack, this may cause issues with the recipe!");
+    ps.println("[Debug]: OreDictionary was converted to ItemStack, this may cause issues with the recipe!");
     return getOreItems(item).get(0); // Use an Ingredient instead of an ItemStack to allow for full OreDict Support
    } else if (item.contains(":") && item.contains(STACK_SIZE.getFormatting()) && item.length() >= 9) {
     item = item.replaceAll(SPACE.getFormatting(), " ");
@@ -82,7 +85,7 @@ public class StackHelper {
       try {
        stack.setTagCompound(JsonToNBT.getTagFromJson(item.substring(item.indexOf(NBT.getFormatting()) + 1, item.length() - 1)));
       } catch (NBTException e) {
-       System.out.println("Invalid NBT '" + item.substring(item.indexOf(NBT.getFormatting()) + 1, item.length() - 1));
+       ps.println("Invalid NBT '" + item.substring(item.indexOf(NBT.getFormatting()) + 1, item.length() - 1));
       }
       if (cache) cacheItems.put(item, stack);
       return stack;
@@ -91,7 +94,7 @@ public class StackHelper {
     }
    }
   }
-  System.err.println("ERROR GETTING ITEMSTACK!");
+  ps.println("ERROR GETTING ITEMSTACK!");
   return null;
  }
 
