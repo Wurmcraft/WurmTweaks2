@@ -30,7 +30,7 @@ public class ConfigHandler {
  public static String logDirectory = "wurmscript_log";
 
  @Config.Comment("Interval, in milliseconds, to check for script updates")
- public static long updateInterval = 1800000l;
+ public static int updateInterval = 1800000;
 
  @Config.Comment("List of Meta Items")
  public static String metaItems =

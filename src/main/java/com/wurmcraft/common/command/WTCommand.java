@@ -47,12 +47,12 @@ public class WTCommand extends CommandBase {
      Thread.currentThread().setName("WurmTweaks Reload Recipes");
      if (ConfigHandler.checkForUpdates) {
       if (WurmScript.downloadScripts()) {
-       FunctionsRegistry.loadedSupport.clear();
        if (player != null) {
         player.sendMessage(new TextComponentString(TextFormatting.GREEN + "Downloaded Scripts!"));
        }
       }
      }
+     FunctionsRegistry.loadedSupport.clear();
      WurmTweaks.SCRIPT_MANAGER.run();
      FunctionsRegistry.finishSupport();
      if (player != null) {

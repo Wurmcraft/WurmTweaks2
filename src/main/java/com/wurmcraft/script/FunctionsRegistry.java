@@ -18,7 +18,7 @@ import java.util.List;
 public class FunctionsRegistry {
  public static final List<Class<? extends SupportBase>> supportClasses = Collections.synchronizedList(new ArrayList<>());
  public static final NonBlockingHashSet<? super SupportBase> loadedSupport = new NonBlockingHashSet<>();
- private static SimpleBindings bindings;
+// private static SimpleBindings bindings;
 
  public static void register(Class<? extends SupportBase> support) {
   if (support != null && !supportClasses.contains(support))
@@ -26,8 +26,7 @@ public class FunctionsRegistry {
  }
 
  public static Bindings createBindings(PrintStream log) {
-  if (bindings == null) {
-   bindings = new SimpleBindings();
+   SimpleBindings bindings = new SimpleBindings();
    if (supportClasses.size() > 0) {
     supportClasses.forEach(clazz -> {
      SupportBase controller = null;
@@ -56,12 +55,10 @@ public class FunctionsRegistry {
      }
     });
    }
-  }
   return bindings;
  }
 
  public static void finishSupport() {
-//  bindings = null;
   loadedSupport.forEach(support -> {
    SupportBase sb = (SupportBase)support;
    if (Loader.isModLoaded(sb.modid()))

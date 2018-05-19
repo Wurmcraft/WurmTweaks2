@@ -193,7 +193,7 @@ public class WurmScript {
     final Bindings functions = FunctionsRegistry.createBindings(log);
     final String script = removeAllComments(new String(Files.readAllBytes(file.toPath())));
     //TODO might cause issues
-    for (String line : script.split(System.lineSeparator())) {
+    for (String line : script.split("\n")) {
      if (line.equals("")) continue;
      String originalName = line.substring(0, line.lastIndexOf("("));
      try {

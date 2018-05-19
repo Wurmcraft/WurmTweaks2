@@ -12,27 +12,27 @@ import java.io.IOException;
 // TODO Add to command
 public class ReloadMessage extends CustomMessage.CustomClientMessage <ReloadMessage> {
 
-	private boolean reload;
+    private boolean reload;
 
-	public ReloadMessage () {
-	}
+    public ReloadMessage () {
+    }
 
-	public ReloadMessage (boolean reload) {
-		this.reload = reload;
-	}
+    public ReloadMessage (boolean reload) {
+        this.reload = reload;
+    }
 
-	@Override
-	protected void read (PacketBuffer buff) throws IOException {
-		reload = buff.readBoolean ();
-	}
+    @Override
+    protected void read (PacketBuffer buff) throws IOException {
+        reload = buff.readBoolean ();
+    }
 
-	@Override
-	protected void write (PacketBuffer buff) {
-		buff.writeBoolean (reload);
-	}
+    @Override
+    protected void write (PacketBuffer buff) {
+        buff.writeBoolean (reload);
+    }
 
-	@Override
-	public void process (EntityPlayer player,Side side) {
-		// TODO Reload the Scripts
-	}
+    @Override
+    public void process (EntityPlayer player,Side side) {
+        // TODO Reload the Scripts
+    }
 }

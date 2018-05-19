@@ -13,8 +13,6 @@ import com.wurmcraft.script.support.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +30,6 @@ public class WurmTweaks {
  public static CommonProxy proxy;
 
  public static WurmScript script;
- public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Global.MODID);
 
  public static final Runnable
   SCRIPT_MANAGER = () -> {
@@ -91,8 +88,9 @@ public class WurmTweaks {
    Thread.currentThread().setName("Script Update Thread");
    while (ConfigHandler.checkForUpdates && ConfigHandler.updateInterval > 0l) {
     try {
-     Thread.currentThread().sleep(ConfigHandler.updateInterval);
-    } catch (InterruptedException e) {}
+     Thread.currentThread().sleep((long)ConfigHandler.updateInterval);
+    } catch (InterruptedException e) {
+    }
     if (WurmScript.downloadScripts()) {
      FunctionsRegistry.loadedSupport.clear();
      SCRIPT_MANAGER.run();
@@ -107,7 +105,7 @@ public class WurmTweaks {
 
  @Mod.EventHandler
  public void onPreInit(FMLPreInitializationEvent e) {
-  NetworkHandler.registerPackets ();
+  NetworkHandler.registerPackets();
   updateThread.setDaemon(true);
   File
    logDir = new File(ConfigHandler.logDirectory),
