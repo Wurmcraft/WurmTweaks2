@@ -42,7 +42,7 @@ public class WurmScript {
   */
  public static File getFileFromName(String name) {
   if (name.contains("http://") || name.contains("https://")) {
-   return new File(ConfigHandler.scriptDir + File.separator + name.substring(name.lastIndexOf(File.separator) + 1));
+   return new File(ConfigHandler.scriptDir + File.separator + name.substring(name.lastIndexOf("/") + 1));
   }
   return new File(ConfigHandler.scriptDir + File.separator + name);
  }
