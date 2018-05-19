@@ -103,7 +103,8 @@ public class WurmScript {
   }
  }
 
- public static void downloadScripts() {
+ public static boolean downloadScripts() {
+  boolean scriptsUpdated = false;
   File scriptsLocation = new File(ConfigHandler.scriptDir);
   if (scriptsLocation.exists() || scriptsLocation.mkdirs()) {
    List<URL> scripts = new LinkedList<>();
@@ -119,10 +120,12 @@ public class WurmScript {
     try {
      File saveLocation = getFileFromName(url.toString());
      if (!compareFileToURL(saveLocation, url)) {
+      scriptsUpdated = true;
       System.out.println("Downloading '" + url + "' to '" + saveLocation.getAbsolutePath() + "'");
       FileUtils.copyURLToFile(url, saveLocation);
      }
     } catch (IOException e) {
+     scriptsUpdated = false;
      System.out.println("Failed to download '" + url + "' " + e.getLocalizedMessage());
      e.printStackTrace();
     }
@@ -130,6 +133,7 @@ public class WurmScript {
   } else {
    System.out.println("Failed to create / load '" + scriptsLocation.getAbsolutePath() + "' unable to download scripts");
   }
+  return scriptsUpdated;
  }
 
  //TODO Dynamic single and multi line comments
@@ -192,7 +196,6 @@ public class WurmScript {
     for (String line : script.split(System.lineSeparator())) {
      if (line.equals("")) continue;
      String originalName = line.substring(0, line.lastIndexOf("("));
-
      try {
       engine.eval(line.replace(originalName, originalName.toLowerCase()), functions);
      } catch (Exception e) {

@@ -25,7 +25,6 @@ import java.util.List;
 
 @Mod(modid = Global.MODID, name = Global.NAME, version = Global.VERSION, dependencies = Global.DEPENDENCIES)
 public class WurmTweaks {
-
  @Mod.Instance(Global.MODID)
  public static WurmTweaks instance;
 
@@ -35,57 +34,8 @@ public class WurmTweaks {
  public static WurmScript script;
  public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Global.MODID);
 
- @Mod.EventHandler
- public void onPreInit(FMLPreInitializationEvent e) {
-  NetworkHandler.registerPackets ();
-  File
-   logDir = new File(ConfigHandler.logDirectory),
-   scriptDir = WurmScript.getFileFromName(ConfigHandler.masterScript).getParentFile();
-  if (!logDir.exists()) logDir.mkdirs();
-  if (!scriptDir.exists()) scriptDir.mkdirs();
-  WurmTweaksItems.register();
-  WurmTweaksBlocks.register();
-  proxy.preInit();
-  FunctionsRegistry.register(Minecraft.class);
-  FunctionsRegistry.register(AbyssalCraft.class);
-  FunctionsRegistry.register(ActuallyAdditions.class);
-  FunctionsRegistry.register(AE2.class);
-  FunctionsRegistry.register(AstralSorcery.class);
-  FunctionsRegistry.register(Avaritia.class);
-  FunctionsRegistry.register(BetterWithMods.class);
-//  FunctionsRegistry.register(BloodMagic.class); //
-//  FunctionsRegistry.register(Botania.class); //
-  FunctionsRegistry.register(Calculator.class);
-  FunctionsRegistry.register(CharcoalPit.class);
-  FunctionsRegistry.register(DraconicEvolution.class);
-//  FunctionsRegistry.register(EnvironmentalTech.class); //
-  FunctionsRegistry.register(Events.class);
-  FunctionsRegistry.register(ExtraUtils2.class);
-  FunctionsRegistry.register(GalacticCraft.class);
-  FunctionsRegistry.register(ImmersiveEngineering.class);
-  FunctionsRegistry.register(IndustrialForegoing.class);
-  // TODO "Recipes should be registered before PostInit. Try net.minecraftforge.event.RegistryEvent.Register<IRecipe>'
-//  FunctionsRegistry.register(Mekanism.class); //
-  FunctionsRegistry.register(NuclearCraft.class);
-  FunctionsRegistry.register(OreStages.class);
-  FunctionsRegistry.register(PneumaticCraft.class);
-  FunctionsRegistry.register(SonarCore.class);
-  FunctionsRegistry.register(TConstruct.class);
-  FunctionsRegistry.register(TechReborn.class);
-  FunctionsRegistry.register(Thaumcraft.class);
-  FunctionsRegistry.register(ThermalExpansion.class);
-  FunctionsRegistry.register(ToughAsNails.class);
-  script = new WurmScript();
-  if (ConfigHandler.checkForUpdates) WurmScript.downloadScripts();
- }
-
- @Mod.EventHandler
- public void onInit(FMLInitializationEvent e) {
-  proxy.init();
-  FunctionsRegistry.init();
- }
-
- public static final Runnable SCRIPT_MANAGER = () -> {
+ public static final Runnable
+  SCRIPT_MANAGER = () -> {
   final File logFile = new File(ConfigHandler.logDirectory + File.separator + "ScriptManager.log");
   if (!logFile.exists()) {
    try {
@@ -136,7 +86,74 @@ public class WurmTweaks {
     Thread.currentThread().notify();
    }
   }
- };
+ },
+  UPDATE_THREAD = () -> {
+   Thread.currentThread().setName("Script Update Thread");
+   while (ConfigHandler.checkForUpdates && ConfigHandler.updateInterval > 0l) {
+    try {
+     Thread.currentThread().sleep(ConfigHandler.updateInterval);
+    } catch (InterruptedException e) {}
+    if (WurmScript.downloadScripts()) {
+     FunctionsRegistry.loadedSupport.clear();
+     SCRIPT_MANAGER.run();
+     FunctionsRegistry.finishSupport();
+     System.out.println("Updated local WurmTweaks scripts");
+    }
+   }
+   Thread.currentThread().interrupt();
+  };
+
+ private static final Thread updateThread = new Thread(UPDATE_THREAD);
+
+ @Mod.EventHandler
+ public void onPreInit(FMLPreInitializationEvent e) {
+  NetworkHandler.registerPackets ();
+  updateThread.setDaemon(true);
+  File
+   logDir = new File(ConfigHandler.logDirectory),
+   scriptDir = WurmScript.getFileFromName(ConfigHandler.masterScript).getParentFile();
+  if (!logDir.exists()) logDir.mkdirs();
+  if (!scriptDir.exists()) scriptDir.mkdirs();
+  WurmTweaksItems.register();
+  WurmTweaksBlocks.register();
+  proxy.preInit();
+  FunctionsRegistry.register(Minecraft.class);
+  FunctionsRegistry.register(AbyssalCraft.class);
+  FunctionsRegistry.register(ActuallyAdditions.class);
+  FunctionsRegistry.register(AE2.class);
+  FunctionsRegistry.register(AstralSorcery.class);
+  FunctionsRegistry.register(Avaritia.class);
+  FunctionsRegistry.register(BetterWithMods.class);
+//  FunctionsRegistry.register(BloodMagic.class); //
+//  FunctionsRegistry.register(Botania.class); //
+  FunctionsRegistry.register(Calculator.class);
+  FunctionsRegistry.register(CharcoalPit.class);
+  FunctionsRegistry.register(DraconicEvolution.class);
+//  FunctionsRegistry.register(EnvironmentalTech.class); //
+  FunctionsRegistry.register(Events.class);
+  FunctionsRegistry.register(ExtraUtils2.class);
+  FunctionsRegistry.register(GalacticCraft.class);
+  FunctionsRegistry.register(ImmersiveEngineering.class);
+  FunctionsRegistry.register(IndustrialForegoing.class);
+  // TODO "Recipes should be registered before PostInit. Try net.minecraftforge.event.RegistryEvent.Register<IRecipe>'
+//  FunctionsRegistry.register(Mekanism.class); //
+  FunctionsRegistry.register(NuclearCraft.class);
+  FunctionsRegistry.register(OreStages.class);
+  FunctionsRegistry.register(PneumaticCraft.class);
+  FunctionsRegistry.register(SonarCore.class);
+  FunctionsRegistry.register(TConstruct.class);
+  FunctionsRegistry.register(TechReborn.class);
+  FunctionsRegistry.register(Thaumcraft.class);
+  FunctionsRegistry.register(ThermalExpansion.class);
+  FunctionsRegistry.register(ToughAsNails.class);
+  script = new WurmScript();
+  if (ConfigHandler.checkForUpdates) WurmScript.downloadScripts();
+ }
+
+ @Mod.EventHandler
+ public void onInit(FMLInitializationEvent e) {
+  proxy.init();
+ }
 
  @Mod.EventHandler
  public void onPostInit(FMLPostInitializationEvent e) {
@@ -153,6 +170,7 @@ public class WurmTweaks {
   }
   //Finish loading support
   FunctionsRegistry.finishSupport();
+  updateThread.start();
  }
 
  @Mod.EventHandler

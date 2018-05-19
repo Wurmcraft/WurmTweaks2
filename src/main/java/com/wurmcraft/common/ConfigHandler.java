@@ -29,6 +29,9 @@ public class ConfigHandler {
  @Config.Comment("Debug Log Directory")
  public static String logDirectory = "wurmscript_log";
 
+ @Config.Comment("Interval, in milliseconds, to check for script updates")
+ public static long updateInterval = 1800000l;
+
  @Config.Comment("List of Meta Items")
  public static String metaItems =
   "battery, cardboard, flippers, goggles, jetpackParts, largeReactor, reactor, mindControl, mechanicalComponent, " +
