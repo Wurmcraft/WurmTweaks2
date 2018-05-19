@@ -3,11 +3,11 @@ package com.wurmcraft.script.support;
 import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.tan.ArmorTemp;
 import toughasnails.api.temperature.TemperatureHelper;
 
-public class ToughAsNails extends SupportHelper {
+public class ToughAsNails extends SupportBase {
 
  public ToughAsNails() {
   super("toughasnails");

@@ -173,7 +173,7 @@ public class WurmScript {
 //  }
  }
 
- public static Runnable scriptToRunnable(File file, Bindings functions) {
+ public static Runnable scriptToRunnable(File file) {
   return () -> {
    final ScriptEngine engine = new ScriptEngineManager(null).getEngineByName("nashorn");
    String logName = file.getName().substring(0, file.getName().indexOf(".")) + ".log";
@@ -186,11 +186,13 @@ public class WurmScript {
     }
    }
    try (PrintStream log = new PrintStream(new FileOutputStream(logFile, false))) {
+    final Bindings functions = FunctionsRegistry.createBindings(log);
     final String script = removeAllComments(new String(Files.readAllBytes(file.toPath())));
     //TODO might cause issues
     for (String line : script.split(System.lineSeparator())) {
      if (line.equals("")) continue;
      String originalName = line.substring(0, line.lastIndexOf("("));
+
      try {
       engine.eval(line.replace(originalName, originalName.toLowerCase()), functions);
      } catch (Exception e) {

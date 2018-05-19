@@ -7,14 +7,14 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DraconicEvolution extends SupportHelper {
+public class DraconicEvolution extends SupportBase {
 
  private List<SimpleFusionRecipe> fusion = Collections.synchronizedList(new ArrayList<>());
 

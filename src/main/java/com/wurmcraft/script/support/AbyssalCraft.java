@@ -8,14 +8,14 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AbyssalCraft extends SupportHelper {
+public class AbyssalCraft extends SupportBase {
 
  private List<Object[]> crystallizerRecipes = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> transmutatorRecipes = Collections.synchronizedList(new ArrayList<>());
@@ -66,10 +66,10 @@ public class AbyssalCraft extends SupportHelper {
  @Override
  public void finishSupport() {
   for (Object[] recipe : crystallizerRecipes)
-   CrystallizerRecipes.instance().crystallize((ItemStack) recipe[0], (ItemStack) recipe[1], (ItemStack) recipe[2], (float) recipe[3]);
+   CrystallizerRecipes.instance().crystallize((ItemStack)recipe[0], (ItemStack)recipe[1], (ItemStack)recipe[2], (float)recipe[3]);
   for (Object[] recipe : transmutatorRecipes)
-   TransmutatorRecipes.instance().transmute((ItemStack) recipe[0], (ItemStack) recipe[1], (float) recipe[2]);
+   TransmutatorRecipes.instance().transmute((ItemStack)recipe[0], (ItemStack)recipe[1], (float)recipe[2]);
   for (Object[] recipe : materializerRecipes)
-   MaterializerRecipes.instance().materialize((ItemStack[]) recipe[0], (ItemStack) recipe[1]);
+   MaterializerRecipes.instance().materialize((ItemStack[])recipe[0], (ItemStack)recipe[1]);
  }
 }

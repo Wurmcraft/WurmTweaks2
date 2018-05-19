@@ -8,7 +8,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.buuz135.industrial.api.IndustrialForegoingHelper.*;
 
-public class IndustrialForegoing extends SupportHelper {
+public class IndustrialForegoing extends SupportBase {
 
  private List<BioReactorEntry> bioReactor = Collections.synchronizedList(new ArrayList<>());
  private List<SludgeEntry> sludge = Collections.synchronizedList(new ArrayList<>());

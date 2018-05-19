@@ -3,7 +3,7 @@ package com.wurmcraft.script.support;
 import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class SonarCore extends SupportHelper {
+public class SonarCore extends SupportBase {
 
  private List<CustomFertilizer> fertilizer = Collections.synchronizedList(new ArrayList<>());
 

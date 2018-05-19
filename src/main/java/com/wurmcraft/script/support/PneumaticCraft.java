@@ -4,7 +4,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.common.recipes.AmadronOfferManager;
 import me.desht.pneumaticcraft.common.recipes.AssemblyRecipe;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PneumaticCraft extends SupportHelper {
+public class PneumaticCraft extends SupportBase {
 
  private List<Object[]> drill = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> laser = Collections.synchronizedList(new ArrayList<>());

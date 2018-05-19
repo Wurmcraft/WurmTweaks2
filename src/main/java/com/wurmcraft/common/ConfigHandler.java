@@ -27,7 +27,7 @@ public class ConfigHandler {
  public static boolean debug = true;
 
  @Config.Comment("Debug Log Directory")
- public static String logDirectory = scriptDir + File.separator + "log";
+ public static String logDirectory = "wurmscript_log";
 
  @Config.Comment("List of Meta Items")
  public static String metaItems =

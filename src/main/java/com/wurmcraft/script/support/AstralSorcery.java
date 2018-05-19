@@ -2,7 +2,7 @@ package com.wurmcraft.script.support;
 
 import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import hellfirepvp.astralsorcery.common.crafting.infusion.InfusionRecipeRegistry;
 import net.minecraft.item.ItemStack;
 
@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 // TODO Missing Support
-public class AstralSorcery extends SupportHelper {
+public class AstralSorcery extends SupportBase {
 
  private List<Object[]> basic = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> slow = Collections.synchronizedList(new ArrayList<>());

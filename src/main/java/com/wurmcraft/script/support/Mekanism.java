@@ -7,7 +7,7 @@ import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.StackSettings;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import mekanism.api.MekanismAPI;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Mekanism extends SupportHelper {
+public class Mekanism extends SupportBase {
 
  private List<Object[]> enricher = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> osmiumCompressor = Collections.synchronizedList(new ArrayList<>());

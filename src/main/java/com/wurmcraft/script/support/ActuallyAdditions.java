@@ -4,7 +4,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ActuallyAdditions extends SupportHelper {
+public class ActuallyAdditions extends SupportBase {
 
  private List<Object[]> empowerer = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> reconstructor = Collections.synchronizedList(new ArrayList<>());

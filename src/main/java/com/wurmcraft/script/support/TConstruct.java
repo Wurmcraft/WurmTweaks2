@@ -5,7 +5,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TConstruct extends SupportHelper {
+public class TConstruct extends SupportBase {
 
  private static int INGOT = ConfigHandler.tinkersConstructIngotAmount;
  private static int BLOCK = ConfigHandler.tinkersConstructBlockMultiplier * INGOT;
@@ -74,7 +74,7 @@ public class TConstruct extends SupportHelper {
     drying.setAccessible(true);
     ((List<DryingRecipe>) drying.get(TinkerRegistry.getAllDryingRecipes())).clear();
    } catch (IllegalAccessException | NoSuchFieldException e) {
-    e.printStackTrace();
+    e.printStackTrace(ps);
    }
   }
  }

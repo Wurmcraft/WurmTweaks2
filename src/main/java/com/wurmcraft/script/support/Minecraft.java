@@ -5,7 +5,7 @@ import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.recipe.DynamicShapedOreRecipe;
 import com.wurmcraft.script.utils.recipe.DynamicShapelessOreRecipe;
 import com.wurmcraft.script.utils.recipe.InvalidRecipe;
@@ -29,7 +29,7 @@ import static java.lang.Float.parseFloat;
 /**
  * Adds support for Vanilla
  */
-public class Minecraft extends SupportHelper {
+public class Minecraft extends SupportBase {
  public static class FurnaceRecipe {
   public final ItemStack input, output;
   public final float experience;

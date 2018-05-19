@@ -4,7 +4,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.StackSettings;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.*;
 
 @Mod.EventBusSubscriber(modid = Global.MODID)
-public class Events extends SupportHelper {
+public class Events extends SupportBase {
 
  // Tooltip
  public static List<Item> tooltipQuick = Collections.synchronizedList(new ArrayList<>());

@@ -8,21 +8,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.io.PrintStream;
+
 //TODO a lot of methods in here can be static
 /**
  * Simplify creation of IModSupport
  *
  * @see IModSupport
  */
-public abstract class SupportHelper implements IModSupport {
+public abstract class SupportBase implements IModSupport {
 
  protected String modid;
+ protected PrintStream ps;
+
+ public void setPrintStream(PrintStream ps) {
+  this.ps = ps;
+ }
 
  /**
   * @param modid ID used by the mod and forge
   */
- public SupportHelper(String modid) {
+ public SupportBase(String modid) {
   this.modid = modid;
+  this.ps = System.out;
  }
 
  /**
@@ -44,7 +52,7 @@ public abstract class SupportHelper implements IModSupport {
  protected String[] validateFormat(String line, boolean condition, String errorMessage) {
   if (condition) return line.split(" ");
   //TODO Log
-  System.out.println(errorMessage);
+  ps.println(errorMessage);
   return new String[0];
  }
 
@@ -136,13 +144,13 @@ public abstract class SupportHelper implements IModSupport {
     try {
      Integer.parseInt(i);
     } catch (NumberFormatException e) {
-     System.out.println("Invalid Integer '" + i + "'");
+     ps.println("Invalid Integer '" + i + "'");
     }
    else if (type.equals(EnumInputType.FLOAT))
     try {
      Float.parseFloat(i);
     } catch (NumberFormatException e) {
-     System.out.println("Invalid Float '" + i + "'");
+     ps.println("Invalid Float '" + i + "'");
     }
  }
 
@@ -153,7 +161,7 @@ public abstract class SupportHelper implements IModSupport {
   *
   * @param helper StackHelper Object from thread
   * @param item   ItemStack Script Object
-  * @see SupportHelper#isValid(EnumInputType, StackHelper, String...)
+  * @see SupportBase#isValid(EnumInputType, StackHelper, String...)
   */
  protected void isValid(StackHelper helper, String... item) {
   isValid(EnumInputType.ITEMSTACK, helper, item);

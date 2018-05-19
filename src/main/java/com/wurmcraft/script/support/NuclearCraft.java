@@ -5,7 +5,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import nc.recipe.NCRecipes;
 import net.minecraft.item.ItemStack;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NuclearCraft extends SupportHelper {
+public class NuclearCraft extends SupportBase {
 
  private List<Object[]> manufactory = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> separator = Collections.synchronizedList(new ArrayList<>());

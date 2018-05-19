@@ -7,7 +7,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.StackSettings;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.ThaumcraftApi;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Thaumcraft extends SupportHelper {
+public class Thaumcraft extends SupportBase {
 
  private List<Object[]> lootBag = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> crucible = Collections.synchronizedList(new ArrayList<>());

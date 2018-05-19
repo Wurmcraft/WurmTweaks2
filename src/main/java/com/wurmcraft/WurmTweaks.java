@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 
-import javax.script.Bindings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,40 +33,43 @@ public class WurmTweaks {
 
  @Mod.EventHandler
  public void onPreInit(FMLPreInitializationEvent e) {
-  File logDir = new File(ConfigHandler.logDirectory);
+  File
+   logDir = new File(ConfigHandler.logDirectory),
+   scriptDir = WurmScript.getFileFromName(ConfigHandler.masterScript).getParentFile();
   if (!logDir.exists()) logDir.mkdirs();
+  if (!scriptDir.exists()) scriptDir.mkdirs();
   WurmTweaksItems.register();
   WurmTweaksBlocks.register();
   proxy.preInit();
-  FunctionsRegistry.register(new Minecraft());
-  FunctionsRegistry.register(new AbyssalCraft());
-  FunctionsRegistry.register(new ActuallyAdditions());
-  FunctionsRegistry.register(new AE2());
-  FunctionsRegistry.register(new AstralSorcery());
-  FunctionsRegistry.register(new Avaritia());
-  FunctionsRegistry.register(new BetterWithMods());
-  FunctionsRegistry.register(new BloodMagic());
-//  FunctionsRegistry.register(new Botania());
-  FunctionsRegistry.register(new Calculator());
-  FunctionsRegistry.register(new CharcoalPit());
-  FunctionsRegistry.register(new DraconicEvolution());
-  FunctionsRegistry.register(new EnvironmentalTech());
-  FunctionsRegistry.register(new Events());
-  FunctionsRegistry.register(new ExtraUtils2());
-  FunctionsRegistry.register(new GalacticCraft());
-  FunctionsRegistry.register(new ImmersiveEngineering());
-  FunctionsRegistry.register(new IndustrialForegoing());
+  FunctionsRegistry.register(Minecraft.class);
+  FunctionsRegistry.register(AbyssalCraft.class);
+  FunctionsRegistry.register(ActuallyAdditions.class);
+  FunctionsRegistry.register(AE2.class);
+  FunctionsRegistry.register(AstralSorcery.class);
+  FunctionsRegistry.register(Avaritia.class);
+  FunctionsRegistry.register(BetterWithMods.class);
+//  FunctionsRegistry.register(BloodMagic.class); //
+//  FunctionsRegistry.register(Botania.class); //
+  FunctionsRegistry.register(Calculator.class);
+  FunctionsRegistry.register(CharcoalPit.class);
+  FunctionsRegistry.register(DraconicEvolution.class);
+//  FunctionsRegistry.register(EnvironmentalTech.class); //
+  FunctionsRegistry.register(Events.class);
+  FunctionsRegistry.register(ExtraUtils2.class);
+  FunctionsRegistry.register(GalacticCraft.class);
+  FunctionsRegistry.register(ImmersiveEngineering.class);
+  FunctionsRegistry.register(IndustrialForegoing.class);
   // TODO "Recipes should be registered before PostInit. Try net.minecraftforge.event.RegistryEvent.Register<IRecipe>'
-//  FunctionsRegistry.register (new Mekanism ());
-  FunctionsRegistry.register(new NuclearCraft());
-  FunctionsRegistry.register(new OreStages());
-  FunctionsRegistry.register(new PneumaticCraft());
-  FunctionsRegistry.register(new SonarCore());
-  FunctionsRegistry.register(new TConstruct());
-  FunctionsRegistry.register(new TechReborn());
-  FunctionsRegistry.register(new Thaumcraft());
-  FunctionsRegistry.register(new ThermalExpansion());
-  FunctionsRegistry.register(new ToughAsNails());
+//  FunctionsRegistry.register(Mekanism.class); //
+  FunctionsRegistry.register(NuclearCraft.class);
+  FunctionsRegistry.register(OreStages.class);
+  FunctionsRegistry.register(PneumaticCraft.class);
+  FunctionsRegistry.register(SonarCore.class);
+  FunctionsRegistry.register(TConstruct.class);
+  FunctionsRegistry.register(TechReborn.class);
+  FunctionsRegistry.register(Thaumcraft.class);
+  FunctionsRegistry.register(ThermalExpansion.class);
+  FunctionsRegistry.register(ToughAsNails.class);
   script = new WurmScript();
   if (ConfigHandler.checkForUpdates) WurmScript.downloadScripts();
  }
@@ -89,11 +91,10 @@ public class WurmTweaks {
   }
   Thread.currentThread().setName("Script Manager Thread");
   try (final PrintStream log = new PrintStream(new FileOutputStream(logFile, false))) {
-   final Bindings bindings = FunctionsRegistry.createBindings();
    final List<Thread> scriptWorkers = new ArrayList<>();
    for (File file : WurmScript.getRunnableScripts()) {
     try {
-     Thread script = new Thread(WurmScript.scriptToRunnable(file, bindings));
+     Thread script = new Thread(WurmScript.scriptToRunnable(file));
      script.setName(file.getName());
      scriptWorkers.add(script);
      script.start();

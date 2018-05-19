@@ -7,7 +7,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.exception.InvalidStackException;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.recipe.RecipeUtils;
 import morph.avaritia.recipe.AvaritiaRecipeManager;
 import morph.avaritia.recipe.compressor.CompressorRecipe;
@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Avaritia extends SupportHelper {
+public class Avaritia extends SupportBase {
 
  private List<ExtremeShapedRecipe> shaped = Collections.synchronizedList(new ArrayList<>());
  private List<ExtremeShapelessRecipe> shapeless = Collections.synchronizedList(new ArrayList<>());

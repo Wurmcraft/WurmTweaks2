@@ -2,7 +2,7 @@ package com.wurmcraft.script.support;
 
 import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.darkhax.gamestages.GameStageHelper;
 import net.darkhax.orestages.api.OreTiersAPI;
 import net.minecraft.block.Block;
@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class OreStages extends SupportHelper {
+public class OreStages extends SupportBase {
 
  public static HashMap<ItemStack, String> stagesCache = new HashMap<>();
  private List<Object[]> stagesToUnlock = Collections.synchronizedList(new ArrayList<>());

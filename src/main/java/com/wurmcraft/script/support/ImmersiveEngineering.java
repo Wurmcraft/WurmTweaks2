@@ -6,7 +6,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ImmersiveEngineering extends SupportHelper {
+public class ImmersiveEngineering extends SupportBase {
 
  private List<Object[]> alloy = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> arc = Collections.synchronizedList(new ArrayList<>());

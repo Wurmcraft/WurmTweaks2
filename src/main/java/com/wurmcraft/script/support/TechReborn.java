@@ -8,7 +8,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.exception.InvalidStackException;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.recipe.RecipeUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class TechReborn extends SupportHelper {
+public class TechReborn extends SupportBase {
 
  private List<Object[]> shapeless = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> shaped = Collections.synchronizedList(new ArrayList<>());

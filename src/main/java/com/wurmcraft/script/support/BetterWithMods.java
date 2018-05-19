@@ -9,7 +9,7 @@ import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.recipe.RecipeUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -23,7 +23,7 @@ import static betterwithmods.common.BWRegistry.*;
 import static betterwithmods.common.registry.anvil.AnvilCraftingManager.ANVIL_CRAFTING;
 import static betterwithmods.common.registry.heat.BWMHeatRegistry.addHeatSource;
 
-public class BetterWithMods extends SupportHelper {
+public class BetterWithMods extends SupportBase {
  private List<Object[]> cauldron = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> crucible = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> sCauldron = Collections.synchronizedList(new ArrayList<>());

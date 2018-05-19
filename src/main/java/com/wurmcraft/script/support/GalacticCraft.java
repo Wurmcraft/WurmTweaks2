@@ -6,7 +6,7 @@ import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.script.exception.InvalidStackException;
 import com.wurmcraft.script.utils.StackHelper;
-import com.wurmcraft.script.utils.SupportHelper;
+import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.recipe.RecipeUtils;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.api.recipe.CircuitFabricatorRecipes;
@@ -16,7 +16,7 @@ import net.minecraft.item.crafting.Ingredient;
 
 import java.util.*;
 
-public class GalacticCraft extends SupportHelper {
+public class GalacticCraft extends SupportBase {
 
  private List<Object[]> shapedCompressor = Collections.synchronizedList(new ArrayList<>());
  private List<Object[]> shapelessCompressor = Collections.synchronizedList(new ArrayList<>());
