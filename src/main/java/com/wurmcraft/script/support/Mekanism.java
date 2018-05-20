@@ -60,40 +60,40 @@ public class Mekanism extends SupportBase {
  @Override
  public void finishSupport() {
   for (Object[] r : enricher)
-   MekanismAPI.recipeHelper().addEnrichmentChamberRecipe((ItemStack) r[0], (ItemStack) r[1]);
+   RecipeHandler.addEnrichmentChamberRecipe((ItemStack) r[0], (ItemStack) r[1]);
   for (Object[] r : osmiumCompressor)
-   MekanismAPI.recipeHelper().addOsmiumCompressorRecipe((ItemStack) r[0], (ItemStack) r[1]);
+   RecipeHandler.addOsmiumCompressorRecipe((ItemStack) r[0], (ItemStack) r[1]);
   for (Object[] r : combiner)
-   MekanismAPI.recipeHelper().addCombinerRecipe((ItemStack) r[0], (ItemStack) r[1]);
+   RecipeHandler.addCombinerRecipe((ItemStack) r[0], (ItemStack) r[1]);
   for (Object[] r : crusher)
-   MekanismAPI.recipeHelper().addCrusherRecipe((ItemStack) r[0], (ItemStack) r[1]);
+   RecipeHandler.addCrusherRecipe((ItemStack) r[0], (ItemStack) r[1]);
   for (Object[] r : metaInfuser)
-   MekanismAPI.recipeHelper().addMetallurgicInfuserRecipe((InfuseType) r[0], (int) r[1], (ItemStack) r[2], (ItemStack) r[3]);
+   RecipeHandler.addMetallurgicInfuserRecipe((InfuseType) r[0], (int) r[1], (ItemStack) r[2], (ItemStack) r[3]);
   for (Object[] r : chemInfuser)
-   MekanismAPI.recipeHelper().addChemicalInfuserRecipe((GasStack) r[0], (GasStack) r[1], (GasStack) r[2]);
+   RecipeHandler.addChemicalInfuserRecipe((GasStack) r[0], (GasStack) r[1], (GasStack) r[2]);
   for (Object[] r : oxidiser)
-   MekanismAPI.recipeHelper().addChemicalOxidizerRecipe((ItemStack) r[0], (GasStack) r[1]);
+   RecipeHandler.addChemicalOxidizerRecipe((ItemStack) r[0], (GasStack) r[1]);
   for (Object[] r : chemInjection)
-   MekanismAPI.recipeHelper().addChemicalInjectionChamberRecipe((ItemStack) r[0], (Gas) r[1], (ItemStack) r[2]);
+   RecipeHandler.addChemicalInjectionChamberRecipe((ItemStack) r[0], (Gas) r[1], (ItemStack) r[2]);
   for (Object[] r : electroSeperator)
-   MekanismAPI.recipeHelper().addElectrolyticSeparatorRecipe((FluidStack) r[0], (double) r[1], (GasStack) r[2], (GasStack) r[3]);
+   RecipeHandler.addElectrolyticSeparatorRecipe((FluidStack) r[0], (double) r[1], (GasStack) r[2], (GasStack) r[3]);
   for (Object[] r : sawmill)
    if (r.length == 4)
-    MekanismAPI.recipeHelper().addPrecisionSawmillRecipe((ItemStack) r[0], (ItemStack) r[1], (ItemStack) r[2], (double) r[3]);
+    RecipeHandler.addPrecisionSawmillRecipe((ItemStack) r[0], (ItemStack) r[1], (ItemStack) r[2], (float) r[3]);
    else
-    MekanismAPI.recipeHelper().addPrecisionSawmillRecipe((ItemStack) r[0], (ItemStack) r[1]);
+    RecipeHandler.addPrecisionSawmillRecipe((ItemStack) r[0], (ItemStack) r[1]);
   for (Object[] r : chemicalDissolution)
-   MekanismAPI.recipeHelper().addChemicalDissolutionChamberRecipe((ItemStack) r[0], (GasStack) r[1]);
+   RecipeHandler.addChemicalDissolutionChamberRecipe((ItemStack) r[0], (GasStack) r[1]);
   for (Object[] r : washer)
-   MekanismAPI.recipeHelper().addChemicalWasherRecipe((GasStack) r[0], (GasStack) r[1]);
+   RecipeHandler.addChemicalWasherRecipe((GasStack) r[0], (GasStack) r[1]);
   for (Object[] r : crystallizer)
-   MekanismAPI.recipeHelper().addChemicalCrystallizerRecipe((GasStack) r[0], (ItemStack) r[1]);
+   RecipeHandler.addChemicalCrystallizerRecipe((GasStack) r[0], (ItemStack) r[1]);
   for (Object[] r : pressure)
-   MekanismAPI.recipeHelper().addPRCRecipe((ItemStack) r[0], (FluidStack) r[1], (GasStack) r[2], (ItemStack) r[3], (GasStack) r[4], (double) r[5], (int) r[6]);
+   RecipeHandler.addPRCRecipe((ItemStack) r[0], (FluidStack) r[1], (GasStack) r[2], (ItemStack) r[3], (GasStack) r[4], (double) r[5], (int) r[6]);
   for (Object[] r : thermal)
-   MekanismAPI.recipeHelper().addThermalEvaporationRecipe((FluidStack) r[0], (FluidStack) r[1]);
+   RecipeHandler.addThermalEvaporationRecipe((FluidStack) r[0], (FluidStack) r[1]);
   for (Object[] r : solar)
-   MekanismAPI.recipeHelper().addSolarNeutronRecipe((GasStack) r[0], (GasStack) r[1]);
+   RecipeHandler.addSolarNeutronRecipe((GasStack) r[0], (GasStack) r[1]);
   for (Object[] r : box)
    MekanismAPI.addBoxBlacklist((Block) r[0], (int) r[1]);
  }
