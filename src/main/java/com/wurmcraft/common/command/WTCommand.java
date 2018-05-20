@@ -2,6 +2,9 @@ package com.wurmcraft.common.command;
 
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.common.ConfigHandler;
+import com.wurmcraft.common.network.NetworkHandler;
+import com.wurmcraft.common.network.msg.CopyMessage;
+import com.wurmcraft.common.network.msg.ReloadMessage;
 import com.wurmcraft.script.FunctionsRegistry;
 import com.wurmcraft.script.WurmScript;
 import com.wurmcraft.script.utils.StackHelper;
@@ -10,6 +13,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
@@ -38,6 +42,7 @@ public class WTCommand extends CommandBase {
      if (player.getHeldItemMainhand() != ItemStack.EMPTY) {
       String stack = new StackHelper(true, System.out).convert(player.getHeldItemMainhand());
       player.sendMessage(new TextComponentString(TextFormatting.RED + stack));
+      NetworkHandler.sendTo (new CopyMessage (stack), (EntityPlayerMP) player);
      } else {
       player.sendMessage(new TextComponentString(TextFormatting.RED + "Empty Hand"));
      }
@@ -47,12 +52,13 @@ public class WTCommand extends CommandBase {
      Thread.currentThread().setName("WurmTweaks Reload Recipes");
      if (ConfigHandler.checkForUpdates) {
       if (WurmScript.downloadScripts()) {
+       FunctionsRegistry.loadedSupport.clear();
        if (player != null) {
         player.sendMessage(new TextComponentString(TextFormatting.GREEN + "Downloaded Scripts!"));
        }
       }
      }
-     FunctionsRegistry.loadedSupport.clear();
+     NetworkHandler.sendTo (new ReloadMessage (true), (EntityPlayerMP) player);
      WurmTweaks.SCRIPT_MANAGER.run();
      FunctionsRegistry.finishSupport();
      if (player != null) {
@@ -66,8 +72,12 @@ public class WTCommand extends CommandBase {
    if (player != null) {
     String item = args[1];
     ItemStack itemStack = new StackHelper(true, System.out).convert(item);
-    player.inventory.addItemStackToInventory(itemStack);
-    player.sendMessage(new TextComponentString(TextFormatting.RED + "Added / Loaded!"));
+    if(itemStack != ItemStack.EMPTY ){
+     player.inventory.addItemStackToInventory (itemStack);
+     player.sendMessage (new TextComponentString (TextFormatting.RED + "Added / Loaded!"));
+    } else{
+     player.sendMessage (new TextComponentString (TextFormatting.RED + "Invalid Item"));
+    }
    }
   }
  }
