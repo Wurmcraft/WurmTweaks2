@@ -4,4 +4,7 @@
     Author: AlgorithmX2, akarso, Cisien, fireball1725, thatsIch
 */
 
-// TODO
+// Inscriber
+// addInscriber('<output> <input> <top> <bottom> <type>')
+// inscribe, press
+addInscriber('<1xminecraft:apple> <1xminecraft:glass@0> <1xminecraft:golden_apple> <1xminecraft:glass@0> inscribe')
