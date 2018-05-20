@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 
 public class WTCommand extends CommandBase {
@@ -48,6 +49,8 @@ public class WTCommand extends CommandBase {
      }
     }
    } else if (args[0].equalsIgnoreCase("reload")) {
+    WurmScript.reloading = true;
+    sender.sendMessage (new TextComponentString ("Starting Script Reloads"));
     Thread scriptManager = new Thread(() -> {
      Thread.currentThread().setName("WurmTweaks Reload Recipes");
      if (ConfigHandler.checkForUpdates) {

@@ -4,6 +4,7 @@ import com.wurmcraft.api.ScriptFunction;
 import com.wurmcraft.api.EnumInputType;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
+import com.wurmcraft.script.WurmScript;
 import com.wurmcraft.script.utils.StackHelper;
 import com.wurmcraft.script.utils.SupportBase;
 import com.wurmcraft.script.utils.recipe.DynamicShapedOreRecipe;
@@ -66,7 +67,7 @@ public class Minecraft extends SupportBase {
   }
  }
 
- private static Set<OreEntry> oreEntries = new NonBlockingHashSet<>();
+ public static Set <OreEntry> oreEntries = new NonBlockingHashSet <> ();
  private static Set<IRecipe> scriptRecipes = new NonBlockingHashSet<>();
  private static Set<FurnaceRecipe> furnaceRecipes = new NonBlockingHashSet<>();
  private static Set<BrewingRecipe> brewingRecipes = new NonBlockingHashSet<>();
@@ -80,10 +81,14 @@ public class Minecraft extends SupportBase {
 
  @Override
  public void init() {
-  scriptRecipes.clear();
-  furnaceRecipes.clear();
-  brewingRecipes.clear();
-  oreEntries.clear();
+  // TODO temp till find out how this is called just before finishSupport() causing them to get cleared
+  if (WurmScript.reloading) {
+   scriptRecipes.clear ();
+   furnaceRecipes.clear ();
+   brewingRecipes.clear ();
+   oreEntries.clear ();
+   WurmScript.reloading = false;
+  }
   recipeLock(false);
   if (ConfigHandler.removeAllCraftingRecipes)
   removeRecipes();

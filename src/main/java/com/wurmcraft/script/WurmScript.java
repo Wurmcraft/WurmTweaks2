@@ -18,6 +18,8 @@ public class WurmScript {
  public static final String DEFAULT_URL =
   ConfigHandler.masterScript.substring(0, ConfigHandler.masterScript.lastIndexOf("/"));
 
+ public static volatile boolean reloading = false;
+
  public static String removeAllComments(String str) {
   //Remove single and multi-line comments
   str = str.replaceAll("//.*|/\\*[\\s\\S]*?\\*/|(\"(\\\\.|[^\"])*\")", "");

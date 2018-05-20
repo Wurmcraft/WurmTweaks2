@@ -3,12 +3,10 @@ package com.wurmcraft.common.network.msg;
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.network.CustomMessage;
-import com.wurmcraft.common.network.NetworkHandler;
 import com.wurmcraft.script.FunctionsRegistry;
 import com.wurmcraft.script.WurmScript;
 import net.minecraft.entity.player.EntityPlayer;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -41,6 +39,7 @@ public class ReloadMessage extends CustomMessage.CustomClientMessage <ReloadMess
 
     @Override
     public void process (EntityPlayer player,Side side) {
+	    WurmScript.reloading = true;
         Thread scriptManager = new Thread(() -> {
             Thread.currentThread().setName("WurmTweaks Reload Recipes");
             if (ConfigHandler.checkForUpdates) {
@@ -51,7 +50,6 @@ public class ReloadMessage extends CustomMessage.CustomClientMessage <ReloadMess
                     }
                 }
             }
-            NetworkHandler.sendTo (new ReloadMessage (true), (EntityPlayerMP) player);
             WurmTweaks.SCRIPT_MANAGER.run();
             FunctionsRegistry.finishSupport();
             if (player != null) {

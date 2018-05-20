@@ -1,5 +1,6 @@
 package com.wurmcraft.script.support;
 
+import cofh.thermalexpansion.util.managers.device.FactorizerManager;
 import cofh.thermalexpansion.util.managers.machine.*;
 import com.google.common.base.Preconditions;
 import com.wurmcraft.api.ScriptFunction;
@@ -55,6 +56,8 @@ public class ThermalExpansion extends SupportBase {
      CompactorManager.removeRecipe(recipe.getInput(), mode);
    for (CentrifugeManager.CentrifugeRecipe recipe : CentrifugeManager.getRecipeList())
     CentrifugeManager.removeRecipe(recipe.getInput());
+	  for (FactorizerManager.FactorizerRecipe recipe : FactorizerManager.getRecipeList (false))
+		  FactorizerManager.removeRecipe (recipe.getInput (),false);
   }
  }
 

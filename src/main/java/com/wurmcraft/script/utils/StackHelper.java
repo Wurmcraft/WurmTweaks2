@@ -1,5 +1,6 @@
 package com.wurmcraft.script.utils;
 
+import com.wurmcraft.script.support.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -196,8 +197,19 @@ public class StackHelper {
   */
  private NonNullList<ItemStack> getOreItems(String entry) {
   synchronized (mainThread) {
-   return OreDictionary.getOres(entry.substring(1, entry.length() - 1));
+   NonNullList <ItemStack> oreEntries = OreDictionary.getOres (entry.substring (1,entry.length () - 1));
+   if (oreEntries.size () > 0)
+    return oreEntries;
+   else if (oreExists (entry)) {
+    NonNullList <ItemStack> items = NonNullList.create ();
+    String test = entry.substring (1,entry.length () - 1);
+    for (Minecraft.OreEntry ore : Minecraft.oreEntries)
+     if (ore.ore.equalsIgnoreCase (test))
+      items.add (ore.stack);
+    return items;
+   }
   }
+  return NonNullList.create ();
  }
 
  /**
@@ -224,6 +236,9 @@ public class StackHelper {
   */
  private boolean oreExists(String entry) {
   synchronized (mainThread) {
+   for (Minecraft.OreEntry e : Minecraft.oreEntries)
+    if (e.ore.equalsIgnoreCase (entry.substring (1,entry.length () - 1)))
+     return true;
    return OreDictionary.doesOreNameExist(entry.substring(1, entry.length() - 1));
   }
  }

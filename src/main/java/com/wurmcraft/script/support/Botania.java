@@ -72,8 +72,8 @@ public class Botania extends SupportBase {
   for (String l : Arrays.copyOfRange(input, 1, input.length)) {
    ItemStack inputStack = convertStack(helper, l);
    if (inputStack != ItemStack.EMPTY)
-    inputItems.add(inputItems);
-   else if (l.startsWith("<") && l.endsWith(">") && OreDictionary.doesOreNameExist(l.substring(1, l.length() - 1)))
+    inputItems.add(inputStack);
+   else if (helper.isOreEntry (l))
     inputItems.add(l.substring(1, l.length() - 1));
   }
   apohecary.add(new Object[]{convertStack(helper, input[0]), inputItems.toArray(new Object[0])});

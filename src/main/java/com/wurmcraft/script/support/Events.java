@@ -46,7 +46,6 @@ public class Events extends SupportBase {
 
  @Override
  public void init() {
-  MinecraftForge.EVENT_BUS.register(this);
   tooltipQuick.clear();
   tooltips.clear();
  }
@@ -73,12 +72,12 @@ public class Events extends SupportBase {
 
  @ScriptFunction
  public void disablePickup (StackHelper helper,String line) {
-  String[] input = validateFormat(line, line.split(" ").length == 1, "disableDrop('<item>')");
+  String[] input = validateFormat(line, line.split(" ").length == 1, "disablePickup('<item>')");
   isValid(helper, input[0]);
   drops.add(convertStack(helper, input[0]));
  }
 
-    @SubscribeEvent
+ @SubscribeEvent
  public void disableDrop(ItemTossEvent e) {
   if (e.getEntityItem().getItem() != ItemStack.EMPTY)
    for (ItemStack items : drops)

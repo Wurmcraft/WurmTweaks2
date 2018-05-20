@@ -10,6 +10,7 @@ import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.script.FunctionsRegistry;
 import com.wurmcraft.script.WurmScript;
 import com.wurmcraft.script.support.*;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -92,6 +93,7 @@ public class WurmTweaks {
     } catch (InterruptedException e) {
     }
     if (WurmScript.downloadScripts()) {
+     WurmScript.reloading = true;
      FunctionsRegistry.loadedSupport.clear();
      SCRIPT_MANAGER.run();
      FunctionsRegistry.finishSupport();
@@ -122,19 +124,19 @@ public class WurmTweaks {
   FunctionsRegistry.register(AstralSorcery.class);
   FunctionsRegistry.register(Avaritia.class);
   FunctionsRegistry.register(BetterWithMods.class);
-//  FunctionsRegistry.register(BloodMagic.class); //
-//  FunctionsRegistry.register(Botania.class); //
+  FunctionsRegistry.register (BloodMagic.class);
+  FunctionsRegistry.register (Botania.class);
   FunctionsRegistry.register(Calculator.class);
   FunctionsRegistry.register(CharcoalPit.class);
   FunctionsRegistry.register(DraconicEvolution.class);
-//  FunctionsRegistry.register(EnvironmentalTech.class); //
+  FunctionsRegistry.register (EnvironmentalTech.class);
   FunctionsRegistry.register(Events.class);
   FunctionsRegistry.register(ExtraUtils2.class);
   FunctionsRegistry.register(GalacticCraft.class);
   FunctionsRegistry.register(ImmersiveEngineering.class);
   FunctionsRegistry.register(IndustrialForegoing.class);
   // TODO "Recipes should be registered before PostInit. Try net.minecraftforge.event.RegistryEvent.Register<IRecipe>'
-//  FunctionsRegistry.register(Mekanism.class); //
+  //  FunctionsRegistry.register(Mekanism.class);
   FunctionsRegistry.register(NuclearCraft.class);
   FunctionsRegistry.register(OreStages.class);
   FunctionsRegistry.register(PneumaticCraft.class);
@@ -146,6 +148,7 @@ public class WurmTweaks {
   FunctionsRegistry.register(ToughAsNails.class);
   script = new WurmScript();
   if (ConfigHandler.checkForUpdates) WurmScript.downloadScripts();
+  MinecraftForge.EVENT_BUS.register (new Events ());
  }
 
  @Mod.EventHandler
@@ -172,17 +175,7 @@ public class WurmTweaks {
  }
 
  @Mod.EventHandler
- public void onLoadComplete(FMLLoadCompleteEvent e) {
-
- }
-
- @Mod.EventHandler
  public void onServerStarting(FMLServerStartingEvent e) {
   e.registerServerCommand(new WTCommand());
- }
-
- @Mod.EventHandler
- public void onServerStopping(FMLServerStoppingEvent e) {
-
  }
 }
