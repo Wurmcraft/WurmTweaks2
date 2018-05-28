@@ -41,7 +41,7 @@ repositories {
         url = "http://maven.ic2.player.to/"
     }
     ivy {
-        artifactPattern "https://ci.micdoodle8.com/job/Galacticraft-1.12/lastSuccessfulBuild/artifact/Forge/build/libs/[module]-${mc_version}-[revision].[ext]"
+        artifactPattern "https://ci.micdoodle8.com/job/Galacticraft-1.12/176/artifact/Forge/build/libs/[module]-${mc_version}-[revision].[ext]"
     }
 }
 
