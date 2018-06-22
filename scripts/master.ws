@@ -1,27 +1,20 @@
-AbyssalCraft.ws
-ActuallyAdditions.ws
-AE2.ws
-AstralSorcery.ws
-Avaritia.ws
-BetterWithMods.ws
-BloodMagic.ws
-Botania.ws
-Calculator.ws
-CharcoalPit.ws
+/*
+  This is a basic test script for WurmTweaks2 WurmScript
+  Feel Free to use as this Example were it may help you
+  Note: The Recipes in the Test Script are meant for Testing Only and Most of them will be complete non-sense
+*/
+Minecraft.ws
+TConstruct.ws
+ImmersiveEngineering.ws
+ExtraUtils2.ws
 DraconicEvolution.ws
 EnvironmentalTech.ws
-Events.ws
-ExtraUtils2.ws
-GalacticCraft.ws
-ImmersiveEngineering.ws
-IndustrialForegoing.ws
 Mekanism.ws
-Minecraft.ws
-NuclearCraft.ws
-OreStages.ws
-PnumaticCraft.ws
-SonarCore.ws
-TConstruct.ws
 TechReborn.ws
-Thaumcraft.ws
-ThermalExpansion.ws
+SonarCore.ws
+Calculator.ws
+ActuallyAdditions.ws
+IndustrialForegoing.ws
+NuclearCraft.ws
+BetterWithMods.ws
+AbyssalCraft.ws

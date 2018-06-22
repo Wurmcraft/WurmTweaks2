@@ -1,61 +1,16 @@
-/*
-   Name: Calculator
-   Curse: https://minecraft.curseforge.com/projects/calculator
-   Author: Ollie_Landell
-*/
+// Machines
+addAlgorithmSeparator('<1xminecraft:apple@1> <1xminecraft:apple@0> <1xminecraft:rabbit_stew@0>');
+addConductorMass('<1xminecraft:poisonous_potato@0> <1xminecraft:potato@0> 1000');
+addExtractionChamber('<1xminecraft:apple@1> <1xminecraft:apple@0> <1xminecraft:rabbit_stew@0>');
+addFabracation('<1xminecraft:apple@1> <1xminecraft:apple@0> <1xminecraft:rabbit_stew@0> <1xminecraft:poisonous_potato@0> <16xminecraft:cooked_mutton@0>');
+addPrecisionChamber('<1xminecraft:apple@1> <1xminecraft:apple@0> <1xminecraft:rabbit_stew@0>');
+addStoneSeperator('<1xminecraft:apple@1> <1xminecraft:apple@0> <1xminecraft:poisonous_potato@0>');
 
-// Algorithm Separator
-// addAlgorithmSeparator('<output> <output2> <input2>')
-addAlgorithmSeparator('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
+// Calculators
+addCalculator('<1xminecraft:apple@0> <1xminecraft:stone@0> <1xminecraft:apple@1>');
+addAtomicCalculator('<1xminecraft:apple@0> <1xminecraft:golden_apple@0> <1xminecraft:golden_apple@1> <1xminecraft:apple@1>');
+addFlawlessCalculator('<1xminecraft:apple@0> <1xminecraft:golden_apple@0> <1xminecraft:golden_apple@1> <1xminecraft:apple@1> <1xminecraft:cooked_mutton@0>');
+addScientific('<1xminecraft:apple@0> <1xminecraft:stone@0> <1xminecraft:apple@1>');
 
-// Atomic Calculator
-// addAtomicCalculator('<ou<output2>tput> <input> <input2> <input3>')
-addAtomicCalculator('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Calculator
-// addCalculator('<output> <input> <input2>')
-addCalculator('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Conductor Mass
-// addConductorMass('<output> <input> <energy>')
-addConductorMass('<1xminecraft:apple> <1xminecraft:golden_apple> 500')
-
-// Extraction Chamber
-// addExtractionChamber('<output> <input> <input2>')
-addExtractionChamber('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Fabracator
-// addFabrication('<output> <input>...')
-addFabrication('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Flawless Calculator
-//addFlawlessCalculator('<output> <input> <input2> <input3> <input4>')
-addFlawlessCalculator('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Health Proccessor
-// addHealthProccessor('<stack> <amount>')
-addHealthProccessor('<1xminecraft:apple> 50')
-
-// Precision Chamber
-// addPrecisionChamber('<output> <input> <input2>')
-addPrecisionChamber('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Scientific Calculator
-// addScientific('<output> <input> <input2>')
-addScientific('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Stone Seperator
-// addStoneSeperator('<output> <input> <input2>')
-addStoneSeperator('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:golden_apple>')
-
-// Processing Chamber
-// addProcessingChamber('<output> <input>')
-addProcessingChamber('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Restoration Chamber
-// addRestorationChamber('<output> <input>')
-addRestorationChamber('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Reassembly Chamber
-// addReassemblyChamber('<output> <input>')
-addReassemblyChamber('<1xminecraft:apple> <1xminecraft:golden_apple>')
+// Utils
+addHealthProccessor('<1xminecraft:diamond@0> 100');

@@ -1,74 +1,26 @@
-/*
-    Name: Mekanism
-    Curse: https://minecraft.curseforge.com/projects/mekanism
-    Author: aidancbrady, CyanideX
-*/
+// Machines
+addEnrichmentChamber('<1xmekanism:energyupgrade@0> <1xmekanism:energytablet@0^{mekData:{}}>');
+addOsmiumCompressor('<1xmekanism:anchorupgrade@0> <1xmekanism:jetpack@0^{mekData:{}}>');
+addCombiner('<1xminecraft:apple@0> <1xminecraft:gold_ore@0>');
+addMCruser('<1xminecraft:apple@0> <1xmekanism:energyupgrade@0>');
+addPurification('<1xminecraft:planks@1> <1xminecraft:planks@0>');
+addMetallurgicInfuser('<1xminecraft:log@0> CARBON 10 <1xminecraft:cobblestone@0>');
+addMetallurgicInfuser('<1xminecraft:log@1> OBSIDIAN 10 <1xminecraft:cobblestone@0>');
+addMetallurgicInfuser('<1xminecraft:log@2> TIN 10 <1xminecraft:cobblestone@0>');
+addMetallurgicInfuser('<1xminecraft:log@3> REDSTONE 10 <1xminecraft:cobblestone@0>');
+addMetallurgicInfuser('<1xminecraft:wool@0> DIAMOND 10 <1xminecraft:cobblestone@0>');
+addChemicalInfuser('<%1000xchlorine> <%1000xwater> <%1000xhydrogenchloride>');
+addChemicalOxidizer('<%1000xwater> <1xminecraft:milk_bucket@0>');
+addChemicalInjection('<1xminecraft:milk_bucket@0> <%1000xwater> <1xminecraft:dye@15>');
+addElectrolyticSeparator('<%10xchlorine> <%10xwater> 1000 <*20xlava>');
+addSawmill('<1xminecraft:cobblestone@0> <1xminecraft:planks@0>');
+addSawmill('<1xminecraft:cobblestone@0> <1xminecraft:planks@0> <1xminecraft:stone@0> 0.5');
+addChemicalDissolution('<%1000xwater> <1xminecraft:lapis_block@0>');
+addChemicalWasher('<%1000xwater> <%1000xchlorine>');
+addChemicalCrystallizer('<1xminecraft:lapis_block@0> <%1000xchlorine>');
+addPressureChamber('<1xminecraft:sapling@3> <%1000xwater> <%1000xchlorine> <*1000xlava> <1xminecraft:bone_block@0> 100000 100');
+addThermalEvaporation('<*1000xlava> <*1000xwater>');
+addSolarNeutron('<%1000xchlorine> <%1000xwater>');
 
-// Enrichment Chamber
-// addEnrichmentChamber('<output> <input>')
-addEnrichmentChamber('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Osmium Compressor
-// addOsmiumCompressor('<output> <input>')
-addOsmiumCompressor('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Combiner
-// addCombiner('<output> <input>')
-addCombiner('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Crusher
-// addMCrusher('<output> <input>')
-addMCrusher('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Purification
-// addPurification('<output> <input>')
-addPurification('<1xminecraft:apple> <1xminecraft:golden_apple>')
-
-// Metallurgic Infuser
-// addMetallurgicInfuser('<output> <input>')
-// CARBON, REDSTONE, BIO, DIAMOND, OBSIDIAN, FUNGI
-addMetallurgicInfuser('<1xminecraft:apple> <1xminecraft:golden_apple> FUNGI 200')
-
-// Chemical Infuser
-// addChemicalInfuser('<%output> <%input> <%input2>')
-addChemicalInfuser('<%1xliquidhydrogen> <%1xwater> <%1xliquidchlorine>')
-
-// Chemical Oxidizer
-addChemicalOxidizer('<%1xliquidhydrogen <1xminecraft:golden_apple>')
-
-// Chemical Injection
-// addChemicalOxidizer('<%output> <input>')
-addChemicalInjection('<1xminecraft:apple> <1xminecraft:golden_apple> <%1xliquidhydrogen>')
-
-// Electrolytic Separator
-// addElectrolyticSeparator('<%leftOutput> <%rightOutput> <*input> <energy>')
-addElectrolyticSeparator('<%1xliquidoxygen> <%1xliquidhydrogen> <*100xwater> 800')
-
-// Sawmill
-// addSawmill('<output> <input> | <secOutput> <secOutput%>')
-addSawmill('<1xminecraft:apple> <1xminecraft:golden_apple>')
-addSawmill('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:apple> 25')
-
-// Chemical Dissolution
-// addChemicalDissolution('<%output> <input>')
-addChemicalDissolution('<%1xwater> <1xminecraft:golden_apple>')
-
-// Chemical Washer
-// addChemicalWasher('<%output> <%input>')
-addChemicalWasher('<%1xliquidoxygen> <%1xwater>')
-
-// Chemical Crystallizer
-// addChemicalCrystallizer('<output> <%input>')
-addChemicalCrystallizer('<1xminecraft:apple> <%1xwater>')
-
-// Pressure Chamber
-// addMekPressureChamber('<output> <%outputGas> <%inputGas> <*inputFluid> <input> <extraEnergy> <time>')
-addMekPressureChamber('<1xminecraft:apple> <%1x1xliquidoxygen> <%1xwater> <*100xwater> <1xminecraft:golden_apple> 500 240')
-
-// Thermal Evaporation
-// addThermalEvaporation('<*output> <*input>')
-addThermalEvaporation('<*100xwater> <*100xlava>')
-
-// Solar Neutron
-// addSolarNeutron('<%output> <%input>')
-addSolarNeutron('<%1xwater> <%1xliquidethene>')
+// Utils
+addBoxBlacklist('<1xminecraft:crafting_table@0>');

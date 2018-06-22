@@ -56,8 +56,8 @@ public class ThermalExpansion extends SupportBase {
      CompactorManager.removeRecipe(recipe.getInput(), mode);
    for (CentrifugeManager.CentrifugeRecipe recipe : CentrifugeManager.getRecipeList())
     CentrifugeManager.removeRecipe(recipe.getInput());
-	  for (FactorizerManager.FactorizerRecipe recipe : FactorizerManager.getRecipeList (false))
-		  FactorizerManager.removeRecipe (recipe.getInput (),false);
+      for (FactorizerManager.FactorizerRecipe recipe : FactorizerManager.getRecipeList (false))
+          FactorizerManager.removeRecipe (recipe.getInput (),false);
   }
  }
 

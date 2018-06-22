@@ -1,29 +1,11 @@
-/*
-    Name: Minecraft (Java Edition)
-    Curse: https://minecraft.net/
-    Author: Mojang
-*/
+// Basic Recipes
+addShapeless('<1xminecraft:diamond@1> <gemDiamond> <1xminecraft:dirt@0>');
+addShaped('<1xminecraft:wool@3> XAX XXX XAX X <1xminecraft:arrow@0> A <1xminecraft:apple@0>');
+addFurnace('<1xminecraft:diamond@1> <1xminecraft:apple@0> 10');
+addBrewing('<1xminecraft:potion@0^{Potion:"minecraft:water"}> <1xminecraft:ender_pearl@0> <1xminecraft:beef@0>');
 
-// Ore Entry
-// addOreEntry('<stack> <entry>')
-addOreEntry('<1xminecraft:apple> fruitApple')
-
-// Shapeless
-// addShapeless('<output> [input]...')
-addShapeless('<1xminecraft:blaze_rod> <1xminecraft:apple> <1xminecraft:golden_apple>')
-addShapeless('<3xminecraft:blaze_rod> <fruitApple> <1xminecraft:golden_apple>')
-
-// Shaped
-// addShaped('<output> (style)...')
-addShaped('<2xminecraft:apple> R_R RAR _RR R <1xminecraft:blaze_rod> A <1xminecraft:golden_apple>')
-addShaped('<4xminecraft:apple> _AR O_A ARA R <1xminecraft:blaze_rod> A <1xminecraft:golden_apple> O <fruitApple>')
-
-// Brewing
-// addBrewing('<output> <input> <bottom>')
-addBrewing('<1xminecraft:apple> <1xminecraft:golden_apple> <1xminecraft:blaze_rod>')
-
-// Smelting / Furnace
-// addFurnace('<output> <input> | [float]')
-addFurnace('<1xminecraft:blaze_rod> <1xminecraft:cooked_porkchop> 4')
-addFurnace('<1xminecraft:golden_apple> <1xminecraft:apple>')
-
+// Utils
+addOreEntry('<1xminecraft:apple@0> packFood packFruit');
+disablePickup('<1xminecraft:apple@0>');
+convertPickup('<1xminecraft:stone@0> <1xminecraft:stone@2>');
+addTooltip('<1xminecraft:stone@0> Converts_to_Andesite_Upon_Droped');

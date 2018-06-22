@@ -1,41 +1,10 @@
-/*
-    Name: Tinker's Construct
-    Curse: https://minecraft.curseforge.com/projects/tinkers-construct
-    Author: mDiyo, bino,, jadedcat, KnightMiner
-*/
+// Smeltery
+addCasting('<1xminecraft:apple@0> <1xminecraft:stone@0> <*1000xiron>');
+addBasin('<1xminecraft:pumpkin@0> <1xminecraft:stone@0> <*1000xiron>');
+addAlloy('<*1000xiron> <*250xlava> <*500xgold> <*50xemerald> <*100xknightslime> <*100xmanyullyn>');
+addFuel('<*1000xiron> 1000000');
+addMelting('<1xminecraft:pumpkin@0> <*50xgold> 1000');
+addEntityMelting('Zombie <*1xknightslime>');
 
-// Casting
-// addCasting('<output> <cast> <*fluid>')
-addCasting('<1xminecraft:blaze_rod> <empty> <*100xlava>')
-
-// Basin
-// addBasin('<output> <cast> <*fluid>')
-addBasin('<1xminecraft:blaze_rod> <empty> <*1000xwater>')
-
-// Alloy
-// addAlloy('<*output> <*input>...')
-addAlloy('<*100xiron> <*1000xwater> <*1000xlava>')
-
-// Drying Rack
-// addDrying('<output> <input> <time>')
-addDrying('<1xminecraft:cooked_porkchop> <1xminecraft:blaze_rod> 240')
-
-// Smeltery Fuel
-// addFuel(<*fluid> <time>')
-addFuel('<*1xiron> 400')
-
-// Melting
-// addMelting('<*output> <input> <temp>')
-addMelting('<*100xiron> <1xminecraft:cooked_porkchop> 400')
-
-// Entity Melting
-// addEntityMelting('<*output> entityName')
-addEntityMelting('<*100xwater> zombie')
-
-// Creates Melting for block, ingot
-// handleMelting('<*fluid> <ingot> <block>')
-handleMelting('<*100xlava> <1xminecraft:blaze_rod> <1xminecraft:cooked_porkchop>')
-
-// Create Parts and casting recipes
-// handleMaterialParts('<materialName> <*fluid>')
-handleMaterialParts('iron <*100xlava>')
+// Other
+addDrying('<1xminecraft:cooked_fish@0> <1xminecraft:fish@0> 100');

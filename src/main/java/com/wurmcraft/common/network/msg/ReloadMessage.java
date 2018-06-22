@@ -39,7 +39,7 @@ public class ReloadMessage extends CustomMessage.CustomClientMessage <ReloadMess
 
     @Override
     public void process (EntityPlayer player,Side side) {
-	    WurmScript.reloading = true;
+        WurmScript.reloading = true;
         Thread scriptManager = new Thread(() -> {
             Thread.currentThread().setName("WurmTweaks Reload Recipes");
             if (ConfigHandler.checkForUpdates) {

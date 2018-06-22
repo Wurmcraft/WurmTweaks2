@@ -135,8 +135,7 @@ public class WurmTweaks {
   FunctionsRegistry.register(GalacticCraft.class);
   FunctionsRegistry.register(ImmersiveEngineering.class);
   FunctionsRegistry.register(IndustrialForegoing.class);
-  // TODO "Recipes should be registered before PostInit. Try net.minecraftforge.event.RegistryEvent.Register<IRecipe>'
-  //  FunctionsRegistry.register(Mekanism.class);
+//  FunctionsRegistry.register(Mekanism.class);
   FunctionsRegistry.register(NuclearCraft.class);
   FunctionsRegistry.register(OreStages.class);
   FunctionsRegistry.register(PneumaticCraft.class);
