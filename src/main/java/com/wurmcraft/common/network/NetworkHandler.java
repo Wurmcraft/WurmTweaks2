@@ -1,7 +1,5 @@
 package com.wurmcraft.common.network;
 
-import com.wurmcraft.common.network.msg.CopyMessage;
-import com.wurmcraft.common.network.msg.ReloadMessage;
 import com.wurmcraft.common.reference.Global;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,9 +14,8 @@ public class NetworkHandler {
  private static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(Global.MODID);
  private static byte packetID = 0;
 
+ // TODO Create packets
  public static void registerPackets() {
-  registerMessage(CopyMessage.class);
-  registerMessage(ReloadMessage.class);
  }
 
  private static final <T extends CustomMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(Class<T> clazz) {

@@ -6,15 +6,15 @@ import net.minecraft.item.Item;
 
 public class WurmTweaksItems {
 
-    public static Item itemMeta;
+  public static Item itemMeta;
 
+  public static void register() {
+    register(itemMeta = new ItemMeta(ConfigHandler.metaItems.replaceAll(" ", "").split(",")),
+        "itemMeta");
+  }
 
-    public static void register () {
-        register (itemMeta = new ItemMeta (ConfigHandler.metaItems.replaceAll (" ","").split (",")),"itemMeta");
-    }
-
-    private static Item register (Item item,String name) {
-        Registry.registerItem (item,name);
-        return item;
-    }
+  private static Item register(Item item, String name) {
+    Registry.registerItem(item, name);
+    return item;
+  }
 }

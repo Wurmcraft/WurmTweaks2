@@ -1,1 +1,0 @@
-addFertilizer('<1xminecraft:fish@0>');
