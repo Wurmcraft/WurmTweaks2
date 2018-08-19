@@ -37,7 +37,7 @@ public class WurmTweaks {
     WurmTweaksItems.register();
     WurmTweaksBlocks.register();
     proxy.preInit();
-    ScriptExecutor.functions = FunctionBuilder.searchForFunctions(e.getAsmData());
+    ScriptExecutor.functions = FunctionBuilder.init(e.getAsmData());
     ScriptChecker.downloadScripts(ScriptChecker.getLoadedScriptsFromMaster());
     FunctionBuilder.preInitSupport();
   }

@@ -40,6 +40,12 @@ public class ConfigHandler {
   @Config.Comment("Check for Script Updates")
   public static boolean checkForUpdates = false;
 
+  @Config.Comment("Recipes not removed when removing all recipes")
+  public static String[] recipeWhitelist = new String[]{};
+
+  @Config.Comment("Remove all recipes (Except for whitelist)")
+  public static boolean removeAllRecipes = true;
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

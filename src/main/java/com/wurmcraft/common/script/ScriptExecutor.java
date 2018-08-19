@@ -9,6 +9,7 @@ public class ScriptExecutor {
 
   public static NonBlockingHashMap<String, FunctionWrapper> functions = new NonBlockingHashMap<>();
   private static NonBlockingHashSet<NonBlockingHashMap<String, FunctionWrapper>> sortedFunctions = new NonBlockingHashSet<>();
+  public static volatile boolean reload = false;
 
   public static void sortFunctions(NonBlockingHashMap<String, FunctionWrapper> toBeSorted) {
     NonBlockingHashMap<String, FunctionWrapper> pre = new NonBlockingHashMap<>();
