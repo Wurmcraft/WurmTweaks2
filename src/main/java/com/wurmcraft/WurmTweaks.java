@@ -41,7 +41,7 @@ public class WurmTweaks {
     proxy.preInit();
     ScriptExecutor.functions = FunctionBuilder.init(e.getAsmData());
     ScriptChecker.downloadScripts(ScriptChecker.getLoadedScriptsFromMaster());
-    WurmTweak2API.dataConverters.add(new StackConverter(true));
+    WurmTweak2API.dataConverters.add( new StackConverter(true));
     WurmTweak2API.dataConverters.add(new OreDictConverter(true));
     FunctionBuilder.preInitSupport();
   }

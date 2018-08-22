@@ -4,33 +4,33 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 // TODO NBT Support
-public class DynamicShapelessOreRecipe extends ShapelessOreRecipe {
+public class DynamicShapedOreRecipe extends ShapedOreRecipe {
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
+
+  public DynamicShapedOreRecipe(ResourceLocation group,
       Block result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
+  public DynamicShapedOreRecipe(ResourceLocation group,
       Item result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
-      NonNullList<Ingredient> input,
-      @Nonnull ItemStack result) {
-    super(group, input, result);
-  }
-
-  public DynamicShapelessOreRecipe(ResourceLocation group,
+  public DynamicShapedOreRecipe(ResourceLocation group,
       @Nonnull ItemStack result, Object... recipe) {
     super(group, result, recipe);
+  }
+
+  public DynamicShapedOreRecipe(ResourceLocation group,
+      @Nonnull ItemStack result,
+      ShapedPrimer primer) {
+    super(group, result, primer);
   }
 
   @Override

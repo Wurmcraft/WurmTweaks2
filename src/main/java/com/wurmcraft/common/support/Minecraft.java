@@ -1,6 +1,7 @@
 package com.wurmcraft.common.support;
 
 
+import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -12,6 +13,7 @@ import com.wurmcraft.common.support.utils.InvalidRecipe;
 import com.wurmcraft.common.support.utils.RecipeUtils;
 import java.util.Arrays;
 import java.util.Objects;
+import joptsimple.internal.Strings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -73,13 +75,23 @@ public class Minecraft {
     }
   }
 
-  @ScriptFunction(modid = "minecraft", inputFormat = "ITEMSTACK ITEMSTACK ...")
+  @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack/OreDictionary ...")
   public void addShapeless(Converter converter, String[] line) {
     Object[] shapelessInputs = RecipeUtils
         .getShapelessItems(Arrays.copyOfRange(line, 1, line.length), converter);
     scriptRecipes.add(RecipeUtils
         .createShapelessRecipe((ItemStack) converter.convert(line[0], 1), shapelessInputs));
   }
+
+  @ScriptFunction(modid = "minecraft")
+  public void addShaped(Converter converter, String[] line) {
+    if (line.length >= 2) {
+      scriptRecipes.add(RecipeUtils.createShapedRecipe((ItemStack) converter.convert(line[0], 1),RecipeUtils.getShapedRecipe(Arrays.copyOfRange(line,1,line.length)).toArray()));
+    } else {
+      WurmTweaks.logger.error("Invalid Shaped Format '" + Strings.join(line, " ") + "'");
+    }
+  }
+
 
   public class FurnaceRecipe {
 
