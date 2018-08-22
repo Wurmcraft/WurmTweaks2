@@ -3,6 +3,7 @@ package com.wurmcraft.common.script;
 
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.FunctionWrapper;
+import com.wurmcraft.common.support.utils.Converter;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -93,14 +94,15 @@ public class ScriptExecutor {
     return new Thread(() -> {
       final ScriptEngine engine = new ScriptEngineManager(null).getEngineByName("nashorn");
       Bindings bindings = null;
+      Converter converter = new Converter();
       if (sortedFunctions[1] == null || sortedFunctions[1].isEmpty()) {
         sortFunctions(functions);
       }
       if (pre) {
-        bindings = FunctionBuilder.createFunctionBindings(sortedFunctions[0]);
+        bindings = FunctionBuilder.createFunctionBindings(sortedFunctions[0], converter);
       }
       if (bindings == null || bindings.size() == 0) {
-        bindings = FunctionBuilder.createFunctionBindings(sortedFunctions[1]);
+        bindings = FunctionBuilder.createFunctionBindings(sortedFunctions[1], converter);
       }
       if (bindings.size() == 0) {
         WurmTweaks.logger

@@ -6,23 +6,25 @@ import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.ConfigHandler;
-import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.common.script.ScriptExecutor;
+import com.wurmcraft.common.support.utils.Converter;
 import com.wurmcraft.common.support.utils.InvalidRecipe;
+import com.wurmcraft.common.support.utils.RecipeUtils;
+import java.util.Arrays;
 import java.util.Objects;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
+
 @Support(modid = "minecraft", threaded = true)
-public class MinecraftSupport {
+public class Minecraft {
 
   public static NonBlockingHashSet<IRecipe> scriptRecipes = new NonBlockingHashSet<>();
+  public static NonBlockingHashSet<FurnaceRecipe> scriptFurnace = new NonBlockingHashSet<>();
+  public static NonBlockingHashSet<OreEntry> scriptOreEntry = new NonBlockingHashSet<>();
 
   @InitSupport
   public void init() {
@@ -36,7 +38,7 @@ public class MinecraftSupport {
     ForgeRegistry<IRecipe> recipes = (ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES;
     for (IRecipe recipe : recipes.getValues()) {
       if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
-          .getResourceDomain())) {
+          .getResourceDomain()) && scriptRecipes.contains(recipe)) {
         recipes.remove(recipe.getRegistryName());
         recipes.register(new InvalidRecipe(recipe));
       }
@@ -71,11 +73,42 @@ public class MinecraftSupport {
     }
   }
 
-  @ScriptFunction(modid = "minecraft")
-  public void addShapeless(String line) {
-    ShapedOreRecipe recipe = new ShapedOreRecipe(new ResourceLocation(Global.MODID, "diamonds"),Items.DIAMOND, "ABA", 'A', new ItemStack(Blocks.DIRT), 'B', Items.ARROW);
-    recipe.setRegistryName(new ResourceLocation(Global.MODID, "diamond"));
-    scriptRecipes.add(recipe);
+  @ScriptFunction(modid = "minecraft", inputFormat = "ITEMSTACK ITEMSTACK ...")
+  public void addShapeless(Converter converter, String[] line) {
+    Object[] shapelessInputs = RecipeUtils
+        .getShapelessItems(Arrays.copyOfRange(line, 1, line.length), converter);
+    scriptRecipes.add(RecipeUtils
+        .createShapelessRecipe((ItemStack) converter.convert(line[0], 1), shapelessInputs));
+  }
+
+  public class FurnaceRecipe {
+
+    ItemStack output;
+    Ingredient input;
+    float exp;
+
+    FurnaceRecipe(ItemStack output, Ingredient input, float exp) {
+      this.output = output;
+      this.input = input;
+      this.exp = exp;
+    }
+
+    FurnaceRecipe(ItemStack output, Ingredient input) {
+      this.output = output;
+      this.input = input;
+      this.exp = 1;
+    }
+  }
+
+  public class OreEntry {
+
+    public ItemStack entry;
+    public String values;
+
+    public OreEntry(ItemStack entry, String values) {
+      this.entry = entry;
+      this.values = values;
+    }
   }
 
 }

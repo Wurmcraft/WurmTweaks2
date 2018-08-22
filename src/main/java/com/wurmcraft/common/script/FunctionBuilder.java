@@ -6,6 +6,7 @@ import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.InitSupport.EnumInitType;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
+import com.wurmcraft.common.support.utils.Converter;
 import com.wurmcraft.common.support.utils.ScriptFunctionWrapper;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -225,12 +226,12 @@ public class FunctionBuilder {
   }
 
   public static Bindings createFunctionBindings(
-      NonBlockingHashMap<String, FunctionWrapper> functions) {
+      NonBlockingHashMap<String, FunctionWrapper> functions, Converter converter) {
     SimpleBindings bindings = new SimpleBindings();
     for (String key : functions.keySet()) {
       FunctionWrapper wrapper = functions.get(key);
       bindings
-          .put(key, new ScriptFunctionWrapper((Method) wrapper.getFunction()));
+          .put(key, new ScriptFunctionWrapper((Method) wrapper.getFunction(), converter));
     }
     // TODO Linking Support
     return bindings;
