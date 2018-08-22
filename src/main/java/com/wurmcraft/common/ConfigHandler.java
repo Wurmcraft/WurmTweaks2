@@ -38,7 +38,7 @@ public class ConfigHandler {
           "neuralS, neuralN, superComputer, antiMatter, rocketEngine, electroShielding, lithium";
 
   @Config.Comment("Check for Script Updates")
-  public static boolean checkForUpdates = false;
+  public static boolean checkForUpdates = true;
 
   @Config.Comment("Recipes not removed when removing all recipes")
   public static String[] recipeWhitelist = new String[]{};

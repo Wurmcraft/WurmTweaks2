@@ -15,11 +15,12 @@ public class FunctionWrapper {
   private String inputFormat;
   private String[] guiVar;
   private Object function;
+  private Object clazz;
 
   public FunctionWrapper(String modid, String supportDependencies, boolean threaded,
       byte supportCode,
       FunctionType type, boolean precedence, String name, String typeData,
-      String inputFormat, String[] guiVar, Object function) {
+      String inputFormat, String[] guiVar, Object function, Object clazz) {
     this.modid = modid;
     this.supportDependencies = supportDependencies;
     this.threaded = threaded;
@@ -31,6 +32,7 @@ public class FunctionWrapper {
     this.inputFormat = inputFormat;
     this.guiVar = guiVar;
     this.function = function;
+    this.clazz = clazz;
   }
 
   @Override
@@ -87,5 +89,9 @@ public class FunctionWrapper {
 
   public Object getFunction() {
     return function;
+  }
+
+  public Object getClazz() {
+    return clazz;
   }
 }

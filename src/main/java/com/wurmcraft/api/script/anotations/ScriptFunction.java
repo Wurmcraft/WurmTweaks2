@@ -27,6 +27,6 @@ public @interface ScriptFunction {
   String[] guiVar() default {"wurmtweaks2", "-1"};
 
   enum FunctionType {
-    Standard, Custom, Linked, Wrapper
+    Standard, Custom, Linked
   }
 }

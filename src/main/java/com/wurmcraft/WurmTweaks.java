@@ -10,7 +10,6 @@ import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.common.script.FunctionBuilder;
 import com.wurmcraft.common.script.ScriptChecker;
 import com.wurmcraft.common.script.ScriptExecutor;
-import jdk.nashorn.internal.ir.FunctionCall;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -46,11 +45,13 @@ public class WurmTweaks {
   public void onInit(FMLInitializationEvent e) {
     proxy.init();
     FunctionBuilder.initSupport();
+    ScriptExecutor.runScripts();
   }
 
   @Mod.EventHandler
   public void onPostInit(FMLPostInitializationEvent e) {
     proxy.postInit();
+    ScriptExecutor.waitTillScriptsFinish();
     FunctionBuilder.postInitFinalizeSupport();
   }
 

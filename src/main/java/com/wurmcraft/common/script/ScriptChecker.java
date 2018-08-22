@@ -5,8 +5,6 @@ import static com.wurmcraft.common.ConfigHandler.checkForUpdates;
 import static com.wurmcraft.common.ConfigHandler.masterScript;
 
 import com.wurmcraft.WurmTweaks;
-import com.wurmcraft.common.ConfigHandler;
-import com.wurmcraft.common.reference.Global;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -14,6 +12,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import joptsimple.internal.Strings;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -62,12 +62,13 @@ public class ScriptChecker {
   public static void downloadScripts(String... scriptName) {
     if (checkForUpdates) {
       for (String script : scriptName) {
-        if (script.isEmpty()) {
-          return;
-        }
-        if (script.endsWith(".ws")) {
+        if (!script.isEmpty() && script.endsWith(".ws")) {
           File saveLocation = new File(
               Loader.instance().getConfigDir().getParent() + File.separator + scriptDir);
+          if (!saveLocation.exists()) {
+            saveLocation.mkdirs();
+          }
+          saveLocation = new File(saveLocation + File.separator + script);
           try {
             if (hasUpdated(script)) {
               FileUtils.copyURLToFile(new URL(BASE_URL + "/" + script), saveLocation, 10000, 1000);
@@ -84,9 +85,7 @@ public class ScriptChecker {
                 "Unable to save '"
                     + script
                     + "' to "
-                    + Loader.instance().getConfigDir().getAbsolutePath()
-                    + File.separator
-                    + Global.MODID
+                    + Loader.instance().getConfigDir().getParent() + File.separator + scriptDir
                     + File.separator
                     + script);
           }
@@ -112,16 +111,29 @@ public class ScriptChecker {
           .toString(new URI(BASE_URL + "/" + scriptName), Charset.defaultCharset()));
       File saveLocation =
           new File(
-              Loader.instance().getConfigDir().getAbsolutePath()
-                  + File.separator
-                  + Global.MODID
+              Loader.instance().getConfigDir().getParent() + File.separator + scriptDir
                   + File.separator
                   + scriptName);
+      if (!saveLocation.exists()) {
+        return true;
+      }
       String fileHash = Strings.join(Files.readAllLines(saveLocation.toPath()), "");
       return urlHash.equals(fileHash);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return false;
+  }
+
+  public static File[] getScriptsToRun() {
+    List<File> scripts = new ArrayList<>();
+    for (String script : getLoadedScriptsFromMaster()) {
+      if (script.length() > 0) {
+        scripts.add(new File(
+            Loader.instance().getConfigDir().getParent() + File.separator + scriptDir
+                + File.separator + script));
+      }
+    }
+    return scripts.toArray(new File[0]);
   }
 }

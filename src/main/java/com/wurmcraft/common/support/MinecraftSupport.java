@@ -1,19 +1,25 @@
 package com.wurmcraft.common.support;
 
+
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
+import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.ConfigHandler;
+import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.InvalidRecipe;
 import java.util.Objects;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
-
-@Support(modid = "Minecraft", threaded = true)
+@Support(modid = "minecraft", threaded = true)
 public class MinecraftSupport {
 
   public static NonBlockingHashSet<IRecipe> scriptRecipes = new NonBlockingHashSet<>();
@@ -46,7 +52,7 @@ public class MinecraftSupport {
     return true;
   }
 
-  @FinalizeSupport
+  @FinalizeSupport()
   public void finalizeSupport() {
     recipeLock(false);
     if (ConfigHandler.removeAllRecipes) {
@@ -63,6 +69,13 @@ public class MinecraftSupport {
     } else {
       recipes.unfreeze();
     }
+  }
+
+  @ScriptFunction(modid = "minecraft")
+  public void addShapeless(String line) {
+    ShapedOreRecipe recipe = new ShapedOreRecipe(new ResourceLocation(Global.MODID, "diamonds"),Items.DIAMOND, "ABA", 'A', new ItemStack(Blocks.DIRT), 'B', Items.ARROW);
+    recipe.setRegistryName(new ResourceLocation(Global.MODID, "diamond"));
+    scriptRecipes.add(recipe);
   }
 
 }

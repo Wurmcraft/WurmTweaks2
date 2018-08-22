@@ -6,11 +6,16 @@ import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.InitSupport.EnumInitType;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
+import com.wurmcraft.common.support.utils.ScriptFunctionWrapper;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.script.Bindings;
+import javax.script.SimpleBindings;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
@@ -18,7 +23,7 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 public class FunctionBuilder {
 
-  public static NonBlockingHashMap<String, NonBlockingHashSet<Object[]>> initData = new NonBlockingHashMap<>();
+  private static NonBlockingHashMap<String, NonBlockingHashSet<Object[]>> initData = new NonBlockingHashMap<>();
 
   public static NonBlockingHashMap<String, FunctionWrapper> init(ASMDataTable table) {
     NonBlockingHashMap<String, FunctionWrapper> returnData = searchForFunctions(table);
@@ -35,8 +40,13 @@ public class FunctionBuilder {
         Method[] supportFunctions = searchForAnnotations(asmClass, Support.class);
         for (Method method : supportFunctions) {
           String name = getFunctionName(method);
-          functions.put(name, createFunction(asmClass.getAnnotation(Support.class),
-              method.getAnnotation(ScriptFunction.class), method));
+          if (method.getAnnotation(ScriptFunction.class).modid().length() == 0 && isModLoaded(
+              asmClass.getAnnotation(Support.class).modid()) || isModLoaded(
+              method.getAnnotation(ScriptFunction.class).modid())) {
+            functions.put(name,
+                Objects.requireNonNull(createFunction(asmClass.getAnnotation(Support.class),
+                    method.getAnnotation(ScriptFunction.class), method, autoCast(asmClass))));
+          }
         }
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
@@ -57,14 +67,22 @@ public class FunctionBuilder {
         Class<?> asmClass = Class.forName(data.getClassName());
         Method[] scriptFunctions = searchForAnnotations(asmClass, ScriptFunction.class);
         for (Method method : scriptFunctions) {
-          functions.putIfAbsent(getFunctionName(method),
-              createFunction(null, method.getAnnotation(ScriptFunction.class), method));
+          if (method.getAnnotation(ScriptFunction.class).modid().length() == 0 || isModLoaded(
+              method.getAnnotation(ScriptFunction.class).modid())) {
+            functions.putIfAbsent(getFunctionName(method),
+                createFunction(null, method.getAnnotation(ScriptFunction.class), method,
+                    autoCast(asmClass)));
+          }
         }
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       }
     }
     return functions;
+  }
+
+  public static <T> T autoCast(Class<T> type) {
+    return (T) type;
   }
 
   private static <T extends Annotation> Method[] searchForAnnotations(Class clazz,
@@ -84,7 +102,7 @@ public class FunctionBuilder {
   }
 
   private static FunctionWrapper createFunction(Support support, ScriptFunction function,
-      Method method) {
+      Method method, Object clazz) {
     if (validFunction(method)) {
       if (support != null) {
         return new FunctionWrapper(
@@ -92,12 +110,12 @@ public class FunctionBuilder {
             support.supportDependencies(),
             function.threadSafe() || (support.threaded()), support.suppotCode(), function.type(),
             function.precedence(), getFunctionName(method), function.typeData(),
-            function.inputFormat(), function.guiVar(), method);
+            function.inputFormat(), function.guiVar(), method, clazz);
       } else {
         return new FunctionWrapper(function.modid(), "", function.threadSafe(), (byte) 0,
             function.type(),
             function.precedence(), function.name(), function.typeData(), function.inputFormat(),
-            function.guiVar(), method);
+            function.guiVar(), method, clazz);
       }
     }
     return null;
@@ -107,7 +125,7 @@ public class FunctionBuilder {
     return true;
   }
 
-  public static void sortInitData(ASMDataTable dataTable) {
+  private static void sortInitData(ASMDataTable dataTable) {
     NonBlockingHashSet<Object[]> preInit = new NonBlockingHashSet<>();
     NonBlockingHashSet<Object[]> init = new NonBlockingHashSet<>();
     NonBlockingHashSet<Object[]> postInit = new NonBlockingHashSet<>();
@@ -157,7 +175,7 @@ public class FunctionBuilder {
       Method method = (Method) obj[0];
       method.setAccessible(true);
       try {
-        method.invoke(((Class<?>) obj[1]).newInstance(), new Object[] {});
+        method.invoke(((Class<?>) obj[1]).newInstance(), new Object[]{});
       } catch (InstantiationException e) {
         e.printStackTrace();
       }
@@ -179,8 +197,19 @@ public class FunctionBuilder {
   }
 
   public static void postInitFinalizeSupport() {
-    for (Object[] obj : initData.get("post")) {
-      invokeMethod(obj);
+    if (ScriptExecutor.finished) {
+      for (Object[] obj : initData.get("post")) {
+        invokeMethod(obj);
+      }
+    } else {
+      while (!ScriptExecutor.finished) {
+        try {
+          Thread.currentThread().sleep(200);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+      postInitFinalizeSupport();
     }
   }
 
@@ -188,5 +217,22 @@ public class FunctionBuilder {
     for (Object[] obj : initData.get("starting")) {
       invokeMethod(obj);
     }
+  }
+
+  public static boolean isModLoaded(String modid) {
+    return Loader.isModLoaded(modid) || modid.equalsIgnoreCase("minecraft") || modid
+        .equalsIgnoreCase("events");
+  }
+
+  public static Bindings createFunctionBindings(
+      NonBlockingHashMap<String, FunctionWrapper> functions) {
+    SimpleBindings bindings = new SimpleBindings();
+    for (String key : functions.keySet()) {
+      FunctionWrapper wrapper = functions.get(key);
+      bindings
+          .put(key, new ScriptFunctionWrapper((Method) wrapper.getFunction()));
+    }
+    // TODO Linking Support
+    return bindings;
   }
 }
