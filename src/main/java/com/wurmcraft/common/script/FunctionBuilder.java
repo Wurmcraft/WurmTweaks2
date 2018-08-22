@@ -233,6 +233,13 @@ public class FunctionBuilder {
       bindings
           .put(key, new ScriptFunctionWrapper((Method) wrapper.getFunction(), converter));
     }
+    if (bindings.size() < ScriptExecutor.functions.size()) {
+      for (String key : ScriptExecutor.functions.keySet()) {
+        if (!bindings.containsKey(key)) {
+          bindings.put(key, new ScriptFunctionWrapper(null, null));
+        }
+      }
+    }
     // TODO Linking Support
     return bindings;
   }

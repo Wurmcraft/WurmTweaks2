@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
@@ -33,6 +34,10 @@ public class Minecraft {
     if (ScriptExecutor.reload) {
       removeRecipes();
       scriptRecipes.clear();
+      scriptOreEntry.clear();
+      WurmTweaks.logger
+          .warn("OreDictionary entries have not been reloaded. (Old ones will still exist)");
+      scriptFurnace.clear();
     }
   }
 
@@ -63,6 +68,7 @@ public class Minecraft {
       removeRecipes();
     }
     ForgeRegistries.RECIPES.registerAll(scriptRecipes.toArray(new IRecipe[0]));
+    scriptOreEntry.forEach(entry -> OreDictionary.registerOre(entry.values, entry.entry));
     recipeLock(true);
   }
 
@@ -86,9 +92,17 @@ public class Minecraft {
   @ScriptFunction(modid = "minecraft")
   public void addShaped(Converter converter, String[] line) {
     if (line.length >= 2) {
-      scriptRecipes.add(RecipeUtils.createShapedRecipe((ItemStack) converter.convert(line[0], 1),RecipeUtils.getShapedRecipe(Arrays.copyOfRange(line,1,line.length)).toArray()));
+      scriptRecipes.add(RecipeUtils.createShapedRecipe((ItemStack) converter.convert(line[0], 1),
+          RecipeUtils.getShapedRecipe(Arrays.copyOfRange(line, 1, line.length)).toArray()));
     } else {
       WurmTweaks.logger.error("Invalid Shaped Format '" + Strings.join(line, " ") + "'");
+    }
+  }
+
+  @ScriptFunction(modid = "minecraft", precedence = true)
+  public void addOreEntry(Converter converter, String[] input) {
+    for (int index = 1; index < input.length; index++) {
+      scriptOreEntry.add(new OreEntry((ItemStack) converter.convert(input[0], 0), input[index]));
     }
   }
 

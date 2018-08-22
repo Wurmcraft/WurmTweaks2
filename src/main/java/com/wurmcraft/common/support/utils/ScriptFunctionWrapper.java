@@ -11,10 +11,12 @@ public class ScriptFunctionWrapper implements Function<String, Void> {
 
   public ScriptFunctionWrapper(Method method, Converter converter) {
     this.method = method;
-    try {
-      this.clazz = method.getDeclaringClass().newInstance();
-    } catch (Throwable e) {
-      e.printStackTrace();
+    if(method != null) {
+      try {
+        this.clazz = method.getDeclaringClass().newInstance();
+      } catch (Throwable e) {
+        e.printStackTrace();
+      }
     }
     this.converter = converter;
   }
