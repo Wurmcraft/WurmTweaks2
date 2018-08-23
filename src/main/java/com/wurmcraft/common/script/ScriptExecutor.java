@@ -133,4 +133,21 @@ public class ScriptExecutor {
       }
     }
   }
+
+  public static void reload(boolean wait) {
+    finished = false;
+    reload = true;
+    ScriptChecker.downloadScripts(ScriptChecker.getLoadedScriptsFromMaster());
+    FunctionBuilder.preInitSupport();
+    FunctionBuilder.initSupport();
+    ScriptExecutor.runScripts();
+    if (wait) {
+      ScriptExecutor.waitTillScriptsFinish();
+    } else {
+      // TODO Script Reload Manager
+    }
+    FunctionBuilder.postInitFinalizeSupport();
+    FunctionBuilder.serverStartingFinalizeSupport();
+    reload = false;
+  }
 }

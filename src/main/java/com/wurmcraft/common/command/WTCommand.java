@@ -1,5 +1,6 @@
 package com.wurmcraft.common.command;
 
+import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -31,14 +32,16 @@ public class WTCommand extends CommandBase {
       sender.sendMessage(new TextComponentString(TextFormatting.RED + getUsage(sender)));
     } else if (args.length == 1 && args[0].equalsIgnoreCase("hand")) {
       hand(args, sender);
+    } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+      reload(args, sender);
     }
   }
 
   private void hand(String[] args, ICommandSender sender) {
     if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
       EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
-      if (player.getHeldItemMainhand()!= ItemStack.EMPTY) {
-        String hand =  Converter.getFromName("ItemStack").toString(player.getHeldItemMainhand());
+      if (player.getHeldItemMainhand() != ItemStack.EMPTY) {
+        String hand = Converter.getFromName("ItemStack").toString(player.getHeldItemMainhand());
         sender.sendMessage(new TextComponentString(TextFormatting.AQUA + "Item: " + hand));
       } else {
         sender.sendMessage(new TextComponentString(TextFormatting.RED + "Empty Hand!"));
@@ -46,5 +49,10 @@ public class WTCommand extends CommandBase {
     } else {
       sender.sendMessage(new TextComponentString(TextFormatting.RED + "Players Only"));
     }
+  }
+
+  private void reload(String[] args, ICommandSender sender) {
+    // TODO Reload JEI Recipes
+    ScriptExecutor.reload(true);
   }
 }

@@ -56,10 +56,10 @@ public class Minecraft {
 
   @FinalizeSupport()
   public void finalizeSupport() {
-    recipeLock(false);
-    if (ConfigHandler.removeAllRecipes) {
+    if (ConfigHandler.removeAllRecipes || ScriptExecutor.reload) {
       removeRecipes();
     }
+    recipeLock(false);
     ForgeRegistries.RECIPES.registerAll(scriptRecipes.toArray(new IRecipe[0]));
     scriptOreEntry.forEach(entry -> OreDictionary.registerOre(entry.values, entry.entry));
     for (FurnaceRecipe recipe : scriptFurnace) {
@@ -127,14 +127,26 @@ public class Minecraft {
   }
 
   private void removeRecipes() {
+    recipeLock(false);
     ForgeRegistry<IRecipe> recipes = (ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES;
-    for (IRecipe recipe : recipes.getValues()) {
-      if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
-          .getResourceDomain()) && scriptRecipes.contains(recipe)) {
-        recipes.remove(recipe.getRegistryName());
-        recipes.register(new InvalidRecipe(recipe));
+    if (ConfigHandler.removeAllRecipes) {
+      for (IRecipe recipe : recipes.getValues()) {
+        if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
+            .getResourceDomain())) {
+          recipes.remove(recipe.getRegistryName());
+          recipes.register(new InvalidRecipe(recipe));
+        }
+      }
+    } else {
+      for (IRecipe recipe : recipes.getValues()) {
+        if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
+            .getResourceDomain()) && scriptRecipes.contains(recipe)) {
+          recipes.remove(recipe.getRegistryName());
+          recipes.register(new InvalidRecipe(recipe));
+        }
       }
     }
+    recipeLock(true);
   }
 
   private boolean canRemove(String modid) {
