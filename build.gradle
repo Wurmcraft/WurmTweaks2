@@ -34,6 +34,7 @@ minecraft {
 repositories {
     maven { url 'https://maven.mcmoddev.com' }
     maven { url 'http://maven.blamejared.com'}
+	maven { url 'https://modmaven.k-4u.nl'}
 }
 
 dependencies {
@@ -42,6 +43,9 @@ dependencies {
     compile "net.darkhax.orestages:OreStages-${mc_version}:${orestages_version}"
 	compile "net.darkhax.bookshelf:Bookshelf-1.12.2:${bookshelf_version}"
     compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${crafttweaker2_version}"
+    deobfCompile("de.ellpeck.actuallyadditions:ActuallyAdditions:${mc_version}-${actuallyadditions_version}") {
+        exclude group: 'mezz.jei'
+    }
 }
 
 processResources {
