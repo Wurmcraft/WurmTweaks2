@@ -2,6 +2,8 @@ package com.wurmcraft.common.support.utils;
 
 import com.wurmcraft.api.WurmTweak2API;
 import com.wurmcraft.api.script.converter.IDataConverter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Converter {
 
@@ -35,4 +37,11 @@ public class Converter {
     return null;
   }
 
+
+  public Object[] getBulkItems(String[] lines) {
+    List<Object> list = new ArrayList<>();
+    for(String line : lines)
+      list.add(convert(line));
+    return list.toArray();
+  }
 }

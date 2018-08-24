@@ -46,6 +46,7 @@ dependencies {
     deobfCompile("de.ellpeck.actuallyadditions:ActuallyAdditions:${mc_version}-${actuallyadditions_version}") {
         exclude group: 'mezz.jei'
     }
+    deobfCompile "blusunrize:ImmersiveEngineering:0.12-79-+"
 }
 
 processResources {
