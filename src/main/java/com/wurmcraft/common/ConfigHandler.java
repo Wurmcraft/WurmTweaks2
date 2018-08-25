@@ -46,6 +46,9 @@ public class ConfigHandler {
   @Config.Comment("Remove all recipes (Except for whitelist)")
   public static boolean removeAllRecipes = true;
 
+  @Config.Comment("Remove all machine recipes")
+  public static boolean removeAllMachineRecipes = true;
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

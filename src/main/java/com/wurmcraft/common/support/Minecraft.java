@@ -70,7 +70,6 @@ public class Minecraft {
     for (BrewingOreRecipe brewingOreRecipe : scriptBrewing) {
       BrewingRecipeRegistry.addRecipe(brewingOreRecipe);
     }
-    recipeLock(true);
   }
 
   private void recipeLock(boolean lock) {
