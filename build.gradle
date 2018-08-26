@@ -67,7 +67,6 @@ dependencies {
     compile "blood-magic:BloodMagic-${mc_version}:${bloodmagic_version}"
     compile "baubles:Baubles:1.12:${baubles_version}"
     compile "sonar-core:sonarcore:${mc_version}:${sonarcore_version}"
-    compile "calculator:calculator:${mc_version}:${calculator_version}"
     compile "brandons-core:BrandonsCore-1.12.2:${brandonscore_version}:universal"
     compile "draconic-evolution:Draconic-Evolution-1.12.2:${draconicevolution_version}:universal"
     compile "valkyrielib:valkyrielib:${mc_version}:${valkyrielib_version}"
