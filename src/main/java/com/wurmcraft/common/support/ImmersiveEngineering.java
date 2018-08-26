@@ -21,7 +21,6 @@ import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import java.util.Arrays;
-import java.util.Iterator;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;

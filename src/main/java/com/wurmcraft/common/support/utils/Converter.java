@@ -4,6 +4,7 @@ import com.wurmcraft.api.WurmTweak2API;
 import com.wurmcraft.api.script.converter.IDataConverter;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.item.ItemStack;
 
 public class Converter {
 
@@ -40,8 +41,20 @@ public class Converter {
 
   public Object[] getBulkItems(String[] lines) {
     List<Object> list = new ArrayList<>();
-    for(String line : lines)
+    for (String line : lines) {
       list.add(convert(line));
+    }
     return list.toArray();
+  }
+
+  public List<ItemStack> getBulkItemsAsList(String[] lines) {
+    List<ItemStack> list = new ArrayList<>();
+    for (String line : lines) {
+      Object data = convert(line);
+      if (data instanceof ItemStack) {
+        list.add((ItemStack) convert(line));
+      }
+    }
+    return list;
   }
 }
