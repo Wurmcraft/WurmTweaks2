@@ -4,45 +4,46 @@ import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
+import com.wurmcraft.common.ConfigHandler;
+import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
+import hellfirepvp.astralsorcery.common.crafting.infusion.InfusionRecipeRegistry;
+import net.minecraft.item.ItemStack;
+import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
-// TODO (5) https://github.com/HellFirePvP/AstralSorcery/blob/master/src/main/java/hellfirepvp/astralsorcery/common/registry/RegistryRecipes.java
 @Support(modid = "astralsorcery")
 public class AstralSorcery {
 
+  private NonBlockingHashSet<Object[]> basic;
+  private NonBlockingHashSet<Object[]> slow;
+
   @InitSupport
   public void init() {
+    basic = new NonBlockingHashSet<>();
+    slow = new NonBlockingHashSet<>();
+    if (ConfigHandler.removeAllRecipes) {
+      InfusionRecipeRegistry.recipes.clear();
+      InfusionRecipeRegistry.mtRecipes.clear();
+    } else if (ScriptExecutor.reload) {
+      // TODO Reload Recipes
+    }
+  }
 
+  @ScriptFunction(modid = "astralsorcery", inputFormat = "ItemStack ItemStack")
+  public void addBasicInfusion(Converter converter, String[] line) {
+    basic.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
+  }
+
+  @ScriptFunction(modid = "astralsorcery", inputFormat = "ItemStack ItemStack")
+  public void addSlowInfusion(Converter converter, String[] line) {
+    slow.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
   }
 
   @FinalizeSupport
-  public void finalize() {
-
+  public void finishSupport() {
+    basic.forEach(recipe -> InfusionRecipeRegistry
+        .registerBasicInfusion((ItemStack) recipe[0], (ItemStack) recipe[1]));
+    slow.forEach(recipe -> InfusionRecipeRegistry
+        .registerLowConsumptionInfusion((ItemStack) recipe[0], (ItemStack) recipe[1]));
   }
-
-  @ScriptFunction(modid = "astralsorcery")
-  public void addGrindStone(Converter converter, String[] line) {
-
-  }
-
-  @ScriptFunction(modid = "astralsorcery")
-  public void addRitual(Converter converter, String[] line) {
-
-  }
-
-  @ScriptFunction(modid = "astralsorcery")
-  public void addAttunment(Converter converter, String[] line) {
-
-  }
-
-  @ScriptFunction(modid = "astralsorcery")
-  public void addInfusion(Converter converter, String[] line) {
-
-  }
-
-  @ScriptFunction(modid = "astralsorcery")
-  public void addWeakInfusion(Converter converter, String[] line) {
-
-  }
-
 }

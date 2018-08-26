@@ -12,6 +12,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 
@@ -57,6 +58,14 @@ public class RecipeUtils {
       recipeInput.add(getIngredient(in));
     }
     return recipeInput.toArray(new Object[0]);
+  }
+
+  public static NonNullList<Ingredient> getShapelessIngredient(String[] input) {
+    NonNullList<Ingredient> recipeInput = NonNullList.create();
+    for (String in : input) {
+      recipeInput.add(getIngredient(in));
+    }
+    return recipeInput;
   }
 
   public static ResourceLocation generateRecipeName(ItemStack output, int inputHash) {
