@@ -49,6 +49,12 @@ public class ConfigHandler {
   @Config.Comment("Remove all machine recipes")
   public static boolean removeAllMachineRecipes = true;
 
+  @Config.Comment("MB per ingot with TConstruct")
+  public static int tinkersConstructIngotAmount = 1000;
+
+  @Config.Comment("Amount of Ingots per block")
+  public static int tinkersConstructBlockMultiplier = 32;
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {
