@@ -28,6 +28,15 @@ public class Botania {
 
   @InitSupport
   public void init() {
+    if (conjuration == null) {
+      conjuration = new NonBlockingHashSet<>();
+      alchemy = new NonBlockingHashSet<>();
+      infusion = new NonBlockingHashSet<>();
+      elven = new NonBlockingHashSet<>();
+      rune = new NonBlockingHashSet<>();
+      pureDaisy = new NonBlockingHashSet<>();
+      apohecary = new NonBlockingHashSet<>();
+    }
     if (ConfigHandler.removeAllMachineRecipes) {
       BotaniaAPI.manaInfusionRecipes.clear();
       BotaniaAPI.elvenTradeRecipes.clear();

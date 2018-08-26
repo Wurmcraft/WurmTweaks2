@@ -23,10 +23,10 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "bloodmagic")
 public class BloodMagic {
 
-  private NonBlockingHashSet<Object[]> altar;
-  private NonBlockingHashSet<Object[]> array;
-  private NonBlockingHashSet<Object[]> forge;
-  private NonBlockingHashSet<Object[]> table;
+  private static NonBlockingHashSet<Object[]> altar;
+  private static NonBlockingHashSet<Object[]> array;
+  private static NonBlockingHashSet<Object[]> forge;
+  private static NonBlockingHashSet<Object[]> table;
 
   @InitSupport
   public void init() {

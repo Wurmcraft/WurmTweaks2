@@ -9,7 +9,6 @@ import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.support.utils.Converter;
 import com.wurmcraft.common.support.utils.ScriptFunctionWrapper;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,15 +171,11 @@ public class FunctionBuilder {
   }
 
   private static void invokeMethod(Object[] obj) {
+    Method method = (Method) obj[0];
+    method.setAccessible(true);
     try {
-      Method method = (Method) obj[0];
-      method.setAccessible(true);
-      try {
-        method.invoke(((Class<?>) obj[1]).newInstance(), new Object[]{});
-      } catch (InstantiationException e) {
-        e.printStackTrace();
-      }
-    } catch (IllegalAccessException | InvocationTargetException e) {
+      method.invoke(((Class<?>) obj[1]).newInstance(), new Object[]{});
+    } catch (Throwable e) {
       e.printStackTrace();
     }
   }

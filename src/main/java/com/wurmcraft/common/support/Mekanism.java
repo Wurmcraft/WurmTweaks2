@@ -1,7 +1,6 @@
 package com.wurmcraft.common.support;
 
 import com.google.common.base.Preconditions;
-import com.wurmcraft.api.script.StackSettings;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -11,7 +10,6 @@ import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import mekanism.api.MekanismAPI;
 import mekanism.api.gas.Gas;
-import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
 import mekanism.api.infuse.InfuseRegistry;
 import mekanism.api.infuse.InfuseType;

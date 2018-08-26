@@ -35,13 +35,13 @@ public class TConstruct {
   private static int INGOT = ConfigHandler.tinkersConstructIngotAmount;
   private static int BLOCK = ConfigHandler.tinkersConstructBlockMultiplier * INGOT;
 
-  private NonBlockingHashSet<Object[]> casting;
-  private NonBlockingHashSet<Object[]> basin;
-  private NonBlockingHashSet<Object[]> alloy;
-  private NonBlockingHashSet<Object[]> drying;
-  private NonBlockingHashSet<Object[]> fuel;
-  private NonBlockingHashSet<MeltingRecipe> melting;
-  private NonBlockingHashSet<Object[]> entityMelting;
+  private static NonBlockingHashSet<Object[]> casting;
+  private static NonBlockingHashSet<Object[]> basin;
+  private static NonBlockingHashSet<Object[]> alloy;
+  private static NonBlockingHashSet<Object[]> drying;
+  private static NonBlockingHashSet<Object[]> fuel;
+  private static NonBlockingHashSet<MeltingRecipe> melting;
+  private static NonBlockingHashSet<Object[]> entityMelting;
 
   @InitSupport
   public void init() {

@@ -24,9 +24,9 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "avaritia")
 public class Avaritia {
 
-  private NonBlockingHashSet<ExtremeShapedRecipe> shaped;
-  private NonBlockingHashSet<ExtremeShapelessRecipe> shapeless;
-  private NonBlockingHashSet<ICompressorRecipe> compressor;
+  private static NonBlockingHashSet<ExtremeShapedRecipe> shaped;
+  private static NonBlockingHashSet<ExtremeShapelessRecipe> shapeless;
+  private static NonBlockingHashSet<ICompressorRecipe> compressor;
 
 
   @InitSupport

@@ -43,12 +43,12 @@ import techreborn.api.recipe.machines.VacuumFreezerRecipe;
 @Support(modid = "techreborn")
 public class TechReborn {
 
-  private NonBlockingHashSet<Object[]> shapeless;
-  private NonBlockingHashSet<Object[]> shaped;
-  private NonBlockingHashSet<Object[]> scrap;
-  private NonBlockingHashSet<Object[]> fluidGenerator;
-  private NonBlockingHashSet<FusionReactorRecipe> fusion;
-  private NonBlockingHashSet<BaseRecipe> machine;
+  private static NonBlockingHashSet<Object[]> shapeless;
+  private static NonBlockingHashSet<Object[]> shaped;
+  private static NonBlockingHashSet<Object[]> scrap;
+  private static NonBlockingHashSet<Object[]> fluidGenerator;
+  private static NonBlockingHashSet<FusionReactorRecipe> fusion;
+  private static NonBlockingHashSet<BaseRecipe> machine;
 
   @InitSupport
   public void init() {
@@ -125,7 +125,7 @@ public class TechReborn {
   public void addGeneratorFluid(Converter converter, String[] line) {
 
     fluidGenerator.add(
-        new Object[]{getGeneratorType(line[0]), convertFluidStack(line[1]).getFluid(),
+        new Object[]{getGeneratorType(line[0]), ((FluidStack) converter.convert(line[1])).getFluid(),
             Integer.parseInt(line[2])});
   }
 

@@ -17,7 +17,7 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "draconicevolution")
 public class DraconicEvolution {
 
-  private NonBlockingHashSet<SimpleFusionRecipe> fusion;
+  private static NonBlockingHashSet<SimpleFusionRecipe> fusion;
 
   @InitSupport
   public void init() {

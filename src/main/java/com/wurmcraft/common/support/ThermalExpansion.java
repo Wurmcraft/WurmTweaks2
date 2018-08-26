@@ -26,15 +26,15 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "thermalexpansion")
 public class ThermalExpansion {
 
-  private NonBlockingHashSet<Object[]> furnace;
-  private NonBlockingHashSet<Object[]> pulverizer;
-  private NonBlockingHashSet<Object[]> sawmill;
-  private NonBlockingHashSet<Object[]> smelter;
-  private NonBlockingHashSet<Object[]> compactor;
-  private NonBlockingHashSet<Object[]> crucible;
-  private NonBlockingHashSet<Object[]> centerfuge;
-  private NonBlockingHashSet<TransposerManager.TransposerRecipe> extractTransposer;
-  private NonBlockingHashSet<TransposerManager.TransposerRecipe> fillTransposer;
+  private static NonBlockingHashSet<Object[]> furnace;
+  private static NonBlockingHashSet<Object[]> pulverizer;
+  private static NonBlockingHashSet<Object[]> sawmill;
+  private static NonBlockingHashSet<Object[]> smelter;
+  private static NonBlockingHashSet<Object[]> compactor;
+  private  static NonBlockingHashSet<Object[]> crucible;
+  private static NonBlockingHashSet<Object[]> centerfuge;
+  private static NonBlockingHashSet<TransposerManager.TransposerRecipe> extractTransposer;
+  private static NonBlockingHashSet<TransposerManager.TransposerRecipe> fillTransposer;
 
   @InitSupport
   public void init() {

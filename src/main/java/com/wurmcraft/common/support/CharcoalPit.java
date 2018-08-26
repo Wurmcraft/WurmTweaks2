@@ -1,7 +1,6 @@
 package com.wurmcraft.common.support;
 
 import charcoalPit.crafting.OreSmeltingRecipes;
-import charcoalPit.crafting.OreSmeltingRecipes.AlloyRecipe;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -15,13 +14,13 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "charcoal_pit")
 public class CharcoalPit {
 
-  private NonBlockingHashSet<OreSmeltingRecipes.AlloyRecipe> bloomery;
+  private static NonBlockingHashSet<OreSmeltingRecipes.AlloyRecipe> bloomery;
 
 
   @InitSupport
   public void init() {
     if (bloomery == null) {
-      bloomery = new NonBlockingHashSet<AlloyRecipe>();
+      bloomery = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllMachineRecipes) {
       OreSmeltingRecipes.alloyRecipes.clear();
@@ -40,7 +39,7 @@ public class CharcoalPit {
 
   @FinalizeSupport
   public void finishSupport() {
-    bloomery.forEach(recipe -> OreSmeltingRecipes.addAlloyRecipe(recipe));
+    bloomery.forEach(OreSmeltingRecipes::addAlloyRecipe);
   }
 
 }

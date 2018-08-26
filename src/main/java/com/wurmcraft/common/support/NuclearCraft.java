@@ -14,9 +14,9 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "nuclearcraft")
 public class NuclearCraft {
 
-  private NonBlockingHashSet<Object[]> manufactory;
-  private NonBlockingHashSet<Object[]> separator;
-  private NonBlockingHashSet<Object[]> pressurizer;
+  private static NonBlockingHashSet<Object[]> manufactory;
+  private static NonBlockingHashSet<Object[]> separator;
+  private static NonBlockingHashSet<Object[]> pressurizer;
 
 
   @InitSupport
@@ -27,15 +27,15 @@ public class NuclearCraft {
       pressurizer = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllMachineRecipes) {
-      NCRecipes.Type.PRESSURIZER.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.MANUFACTORY.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.ALLOY_FURNACE.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.CHEMICAL_REACTOR.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.SUPERCOOLER.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.INFUSER.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.INGOT_FORMER.getRecipeHandler().recipes.clear();
-      NCRecipes.Type.MELTER.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.PRESSURIZER.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.MANUFACTORY.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.ALLOY_FURNACE.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.CHEMICAL_REACTOR.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.SUPERCOOLER.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.INFUSER.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.INGOT_FORMER.getRecipeHandler().recipes.clear();
+//      NCRecipes.Type.MELTER.getRecipeHandler().recipes.clear();
     } else if (ScriptExecutor.reload) {
       manufactory.clear();
       separator.clear();

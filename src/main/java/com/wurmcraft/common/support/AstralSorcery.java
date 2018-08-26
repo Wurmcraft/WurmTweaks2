@@ -14,8 +14,8 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "astralsorcery")
 public class AstralSorcery {
 
-  private NonBlockingHashSet<Object[]> basic;
-  private NonBlockingHashSet<Object[]> slow;
+  private static NonBlockingHashSet<Object[]> basic;
+  private static NonBlockingHashSet<Object[]> slow;
 
   @InitSupport
   public void init() {

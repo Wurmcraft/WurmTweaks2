@@ -23,10 +23,10 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "industrialforegoing")
 public class IndustrialForgoing {
 
-  private NonBlockingHashSet<BioReactorEntry> bioReactor;
-  private NonBlockingHashSet<SludgeEntry> sludge;
-  private NonBlockingHashSet<ProteinReactorEntry> protein;
-  private NonBlockingHashSet<LaserDrillEntry> laser;
+  private static NonBlockingHashSet<BioReactorEntry> bioReactor;
+  private static NonBlockingHashSet<SludgeEntry> sludge;
+  private static NonBlockingHashSet<ProteinReactorEntry> protein;
+  private static NonBlockingHashSet<LaserDrillEntry> laser;
 
   @InitSupport
   public void init() {

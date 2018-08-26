@@ -18,11 +18,11 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "pneumaticcraft")
 public class PnumaticCraft {
 
-  private NonBlockingHashSet<Object[]> drill;
-  private NonBlockingHashSet<Object[]> laser;
-  private NonBlockingHashSet<Object[]> pressure;
-  private NonBlockingHashSet<Object[]> amadron;
-  private NonBlockingHashSet<Object[]> defaultAmadron;
+  private static NonBlockingHashSet<Object[]> drill;
+  private static NonBlockingHashSet<Object[]> laser;
+  private static NonBlockingHashSet<Object[]> pressure;
+  private static NonBlockingHashSet<Object[]> amadron;
+  private static NonBlockingHashSet<Object[]> defaultAmadron;
 
 
   @InitSupport

@@ -20,9 +20,9 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "environmentaltech")
 public class EnvironmentalTech {
 
-  private NonBlockingHashSet<Object[]> botanic;
-  private NonBlockingHashSet<Object[]> res;
-  private NonBlockingHashSet<Object[]> ore;
+  private static NonBlockingHashSet<Object[]> botanic;
+  private static NonBlockingHashSet<Object[]> res;
+  private static NonBlockingHashSet<Object[]> ore;
 
 
   @InitSupport

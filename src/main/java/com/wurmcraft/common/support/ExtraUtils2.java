@@ -15,8 +15,8 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "extrautils2")
 public class ExtraUtils2 {
 
-  private NonBlockingHashSet<Object[]> resonator;
-  private NonBlockingHashSet<Object[]> crusher;
+  private static NonBlockingHashSet<Object[]> resonator;
+  private static NonBlockingHashSet<Object[]> crusher;
 
   @InitSupport
   public void init() {

@@ -15,7 +15,6 @@ import exnihilocreatio.texturing.Color;
 import exnihilocreatio.util.BlockInfo;
 import exnihilocreatio.util.ItemInfo;
 import exnihilocreatio.util.StackInfo;
-import java.util.Map;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
@@ -37,10 +36,7 @@ public class ExNihilo {
       scriptSieve = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllRecipes) {
-      ((Map) ExNihiloRegistryManager.CROOK_REGISTRY).clear();
-      ((Map) ExNihiloRegistryManager.COMPOST_DEFAULT_REGISTRY_PROVIDERS).clear();
-      ((Map) ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY).clear();
-      ((Map) ExNihiloRegistryManager.SIEVE_REGISTRY).clear();
+      ExNihiloRegistryManager.CROOK_REGISTRY.getRecipeList().clear();
     } else if (ScriptExecutor.reload) {
       // TODO Setup Recipe Reloads
     }

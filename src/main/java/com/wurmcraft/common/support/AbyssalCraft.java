@@ -17,9 +17,9 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "abyssalcraft")
 public class AbyssalCraft {
 
-  private NonBlockingHashSet<Object[]> crystallizerRecipes;
-  private NonBlockingHashSet<Object[]> transmutatorRecipes;
-  private NonBlockingHashSet<Object[]> materializerRecipes;
+  private static NonBlockingHashSet<Object[]> crystallizerRecipes;
+  private static NonBlockingHashSet<Object[]> transmutatorRecipes;
+  private static NonBlockingHashSet<Object[]> materializerRecipes;
 
   @InitSupport
   public void init() {

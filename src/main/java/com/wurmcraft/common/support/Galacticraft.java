@@ -21,10 +21,10 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "galacticraftcore")
 public class Galacticraft {
 
-  private NonBlockingHashSet<Object[]> shapedCompressor;
-  private NonBlockingHashSet<Object[]> shapelessCompressor;
-  private NonBlockingHashSet<Object[]> circuitFab;
-  private NonBlockingHashSet<Object[]> station;
+  private static NonBlockingHashSet<Object[]> shapedCompressor;
+  private static NonBlockingHashSet<Object[]> shapelessCompressor;
+  private static NonBlockingHashSet<Object[]> circuitFab;
+  private static NonBlockingHashSet<Object[]> station;
 
   @InitSupport
   public void init() {
