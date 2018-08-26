@@ -75,6 +75,7 @@ public class BetterWithMods {
                 .toArray(new ItemStack[0])));
   }
 
+
   @ScriptFunction(modid = "betterwithmods")
   public void addShapedAnvil(Converter converter, String[] line) {
     scriptShapedAnvil.add(new ShapedAnvilRecipe(
@@ -82,6 +83,7 @@ public class BetterWithMods {
         (ItemStack) converter.convert(line[0]),
         RecipeUtils.getShapedRecipe(line).toArray(new Object[0])));
   }
+
 
   @ScriptFunction(modid = "betterwithmods")
   public void addShapelessAnvil(Converter converter, String[] line) {

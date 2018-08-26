@@ -6,7 +6,6 @@ import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
-
 import net.darkhax.gamestages.GameStageHelper;
 import net.darkhax.orestages.api.OreTiersAPI;
 import net.minecraft.block.Block;
