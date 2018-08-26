@@ -66,7 +66,6 @@ dependencies {
     compile "guide-api:Guide-API-1.12:${guideapi_version}"
     compile "blood-magic:BloodMagic-${mc_version}:${bloodmagic_version}"
     compile "baubles:Baubles:1.12:${baubles_version}"
-    compile "sonar-core:sonarcore:${mc_version}:${sonarcore_version}"
     compile "brandons-core:BrandonsCore-1.12.2:${brandonscore_version}:universal"
     compile "draconic-evolution:Draconic-Evolution-1.12.2:${draconicevolution_version}:universal"
     compile "valkyrielib:valkyrielib:${mc_version}:${valkyrielib_version}"
@@ -74,7 +73,6 @@ dependencies {
     compile "extra-utilities:extrautils2:1.12:${extrautils2_version}"
     compile "immersive-engineering:ImmersiveEngineering:${immersiveengineering_version}"
     compile "shadowfacts-forgelin:Forgelin:${forgelin_version}"
-    compile "tesla-core-lib:tesla-core-lib:${mc_version}:${teslacorelib_version}"
     compile "industrial-foregoing:industrialforegoing-${mc_version}:${industrialforegoing_version}"
     compile "mekanism:Mekanism:${mc_version}:${mekanism_version}"
     compile "pneumaticcraft-repressurized:pneumaticcraft-repressurized-${mc_version}:${pneumaticcraft_version}"
@@ -117,9 +115,14 @@ spotless {
     }
 }
 
+shadowJar.archiveName = "${archivesBaseName}-${version}.jar"
 shadowJar {
     dependencies {
         exclude('dummy*')
+        exclude('Botania*')
+        exclude('CharcoalPit*')
+        exclude('NuclearCraft*')
+        exclude('tesla-core-lib*')
         include(dependency('com.github.stephenc.high-scale-lib:high-scale-lib:1.1.4'))
     }
 }
