@@ -2,6 +2,7 @@ package com.wurmcraft.common.script.converters;
 
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.DataWrapper;
+import com.wurmcraft.api.script.anotations.DataConverter;
 import com.wurmcraft.api.script.converter.IDataConverter;
 import com.wurmcraft.api.script.StackSettings;
 import com.wurmcraft.api.script.exceptions.InvalidItemStack;
@@ -18,6 +19,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
+@DataConverter
 public class StackConverter implements IDataConverter<ItemStack> {
 
   private static final Thread mainThread = Thread.currentThread();
@@ -28,6 +30,11 @@ public class StackConverter implements IDataConverter<ItemStack> {
   @Override
   public String getName() {
     return "ItemStack";
+  }
+
+  public StackConverter() {
+    cachedData = new NonBlockingHashMap<>();
+    this.log = WurmTweaks.logger;
   }
 
   public StackConverter(boolean cacheData) {

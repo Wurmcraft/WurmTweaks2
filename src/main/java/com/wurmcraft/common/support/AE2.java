@@ -33,12 +33,8 @@ public class AE2 {
       scriptInscriber = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllRecipes) {
-      for (IGrinderRecipe recipe : AEApi.instance().registries().grinder().getRecipes()) {
-        AEApi.instance().registries().grinder().removeRecipe(recipe);
-      }
-      for (IInscriberRecipe recipe : AEApi.instance().registries().inscriber().getRecipes()) {
-        AEApi.instance().registries().inscriber().removeRecipe(recipe);
-      }
+      AEApi.instance().registries().grinder().getRecipes().clear();
+      AEApi.instance().registries().inscriber().getRecipes().clear();
     } else if (ScriptExecutor.reload) {
       for (IGrinderRecipe recipe : scriptGrinder) {
         AEApi.instance().registries().grinder().removeRecipe(recipe);

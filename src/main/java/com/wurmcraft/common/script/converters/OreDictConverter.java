@@ -3,6 +3,7 @@ package com.wurmcraft.common.script.converters;
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.DataWrapper;
 import com.wurmcraft.api.script.StackSettings;
+import com.wurmcraft.api.script.anotations.DataConverter;
 import com.wurmcraft.api.script.converter.IDataConverter;
 import com.wurmcraft.api.script.exceptions.InvalidItemStack;
 import com.wurmcraft.common.script.utils.IngredientWrapper;
@@ -20,7 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
-
+@DataConverter
 public class OreDictConverter implements IDataConverter<Ingredient> {
 
   private static final Thread mainThread = Thread.currentThread();
@@ -30,6 +31,11 @@ public class OreDictConverter implements IDataConverter<Ingredient> {
   @Override
   public String getName() {
     return "OreDictionary";
+  }
+
+  public OreDictConverter() {
+    cachedData = new NonBlockingHashMap<>();
+    this.log = WurmTweaks.logger;
   }
 
   public OreDictConverter(boolean cacheData) {

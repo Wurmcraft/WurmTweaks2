@@ -155,7 +155,7 @@ public class ImmersiveEngineering {
 
   @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary FluidStack")
   public void addBottling(Converter converter, String[] line) {
-    // TODO FluidStack Converter
+    // TODO FluidStack DataConverter
     scriptBottling.add(new BottlingMachineRecipe((ItemStack) converter.convert(line[0]),
         converter.convert(line[1]), (FluidStack) converter.convert(line[2])));
   }

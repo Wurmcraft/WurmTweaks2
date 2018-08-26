@@ -1,6 +1,8 @@
 package com.wurmcraft;
 
 import com.wurmcraft.api.WurmTweak2API;
+import com.wurmcraft.api.script.anotations.DataConverter;
+import com.wurmcraft.api.script.converter.IDataConverter;
 import com.wurmcraft.common.CommonProxy;
 import com.wurmcraft.common.blocks.WurmTweaksBlocks;
 import com.wurmcraft.common.command.WTCommand;
@@ -11,10 +13,10 @@ import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.common.script.FunctionBuilder;
 import com.wurmcraft.common.script.ScriptChecker;
 import com.wurmcraft.common.script.ScriptExecutor;
-import com.wurmcraft.common.script.converters.OreDictConverter;
-import com.wurmcraft.common.script.converters.StackConverter;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -41,8 +43,7 @@ public class WurmTweaks {
     proxy.preInit();
     ScriptExecutor.functions = FunctionBuilder.init(e.getAsmData());
     ScriptChecker.downloadScripts(ScriptChecker.getLoadedScriptsFromMaster());
-    WurmTweak2API.dataConverters.add( new StackConverter(true));
-    WurmTweak2API.dataConverters.add(new OreDictConverter(true));
+    registerConverters(e.getAsmData());
     FunctionBuilder.preInitSupport();
   }
 
@@ -66,5 +67,15 @@ public class WurmTweaks {
     FunctionBuilder.serverStartingFinalizeSupport();
   }
 
-
+  private void registerConverters(ASMDataTable table) {
+    for (ASMData data : table.getAll(DataConverter.class.getName())) {
+      try {
+        Object instance =  Class.forName(data.getClassName()).newInstance();
+        if(instance instanceof IDataConverter)
+          WurmTweak2API.dataConverters.add((IDataConverter) instance);
+      } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 }
