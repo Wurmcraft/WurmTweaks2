@@ -93,7 +93,7 @@ public class Minecraft {
   public void addShaped(Converter converter, String[] line) {
     if (line.length >= 2) {
       scriptRecipes.add(RecipeUtils.createShapedRecipe((ItemStack) converter.convert(line[0], 1),
-          RecipeUtils.getShapedRecipe(Arrays.copyOfRange(line, 1, line.length)).toArray()));
+          RecipeUtils.getShapedRecipe(line).toArray()));
     } else {
       WurmTweaks.logger.error("Invalid Shaped Format '" + Strings.join(line, " ") + "'");
     }
