@@ -117,7 +117,8 @@ public class ScriptExecutor {
                 + "' which is located in the master script");
           }
         } catch (Throwable e) {
-          e.printStackTrace();
+          FunctionBuilder.print
+              .println(Thread.currentThread().getName() + ": " + e.getLocalizedMessage());
         }
       }
       Thread.currentThread().interrupt();

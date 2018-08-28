@@ -8,6 +8,9 @@ import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.support.utils.Converter;
 import com.wurmcraft.common.support.utils.ScriptFunctionWrapper;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -24,6 +27,15 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 public class FunctionBuilder {
 
   private static NonBlockingHashMap<String, NonBlockingHashSet<Object[]>> initData = new NonBlockingHashMap<>();
+  public static PrintStream print;
+
+  static {
+    try {
+      print = new PrintStream(new File("WurmTweaks.log"));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
 
   public static NonBlockingHashMap<String, FunctionWrapper> init(ASMDataTable table) {
     NonBlockingHashMap<String, FunctionWrapper> returnData = searchForFunctions(table);
@@ -176,7 +188,7 @@ public class FunctionBuilder {
     try {
       method.invoke(((Class<?>) obj[1]).newInstance(), new Object[]{});
     } catch (Throwable e) {
-      e.printStackTrace();
+      e.printStackTrace(print);
     }
   }
 
@@ -202,7 +214,8 @@ public class FunctionBuilder {
         try {
           Thread.currentThread().sleep(200);
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          FunctionBuilder.print
+              .println(Thread.currentThread().getName() + ": " + e.getLocalizedMessage());
         }
       }
       postInitFinalizeSupport();

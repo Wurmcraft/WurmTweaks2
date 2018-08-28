@@ -37,9 +37,12 @@ public class BetterWithMods {
     scriptShapelessAnvil = new NonBlockingHashSet<>();
     scriptHeat = new NonBlockingHashSet<>();
     if (ConfigHandler.removeAllRecipes) {
-      HopperInteractions.RECIPES
-          .forEach(recipe -> Arrays.stream(recipe.getInputs().getMatchingStacks())
-              .forEach(HopperInteractions::removeByInput));
+      HopperInteractions.RECIPES.clear();
+//      for (HopperRecipe recipe : HopperInteractions.RECIPES) {
+//        for (ItemStack itemStack : recipe.getInputs().getMatchingStacks()) {
+//          HopperInteractions.removeByInput(itemStack);
+//        }
+//      }
       AnvilCraftingManager.ANVIL_CRAFTING.clear();
 
 
