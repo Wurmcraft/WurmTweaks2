@@ -12,7 +12,8 @@ public enum StackSettings {
   // Special Types
   FLUID("*", "type.fluid"),
   ENTITY("#", "type.entity"),
-  EMPTY_STACK("empty", "type.empty");
+  EMPTY_STACK("empty", "type.empty"),
+  SPACE("_", "type.space");
 
   private final String data;
   private final String langKey;

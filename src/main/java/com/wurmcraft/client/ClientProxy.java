@@ -15,52 +15,61 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import org.lwjgl.opengl.Display;
 
 
 public class ClientProxy extends CommonProxy {
 
-    private static void createModel (Item item,int meta,String name) {
-        ModelLoader.setCustomModelResourceLocation (item,meta,new ModelResourceLocation (Global.MODID + ":" + name,"inventory"));
-    }
+  private static void createModel(Item item, int meta, String name) {
+    ModelLoader.setCustomModelResourceLocation(item, meta,
+        new ModelResourceLocation(Global.MODID + ":" + name, "inventory"));
+  }
 
-    @Override
-    public void init () {
-        super.init ();
-    }
+  @Override
+  public void init() {
+    super.init();
+  }
 
-    @Override
-    public void postInit () {
-        super.postInit ();
-    }
+  @Override
+  public void postInit() {
+    super.postInit();
+  }
 
-    @Override
-    public IThreadListener getThreadListener (MessageContext ctx) {
-        if (ctx.side.isClient ())
-            return Minecraft.getMinecraft ();
-        return null;
+  @Override
+  public IThreadListener getThreadListener(MessageContext ctx) {
+    if (ctx.side.isClient()) {
+      return Minecraft.getMinecraft();
     }
+    return null;
+  }
 
-    @Override
-    public EntityPlayer getPlayer (MessageContext ctx) {
-        if (ctx.side.isClient ())
-            return Minecraft.getMinecraft ().player;
-        else
-            return null;
+  @Override
+  public EntityPlayer getPlayer(MessageContext ctx) {
+    if (ctx.side.isClient()) {
+      return Minecraft.getMinecraft().player;
+    } else {
+      return null;
     }
+  }
 
-    @Override
-    public void preInit () {
-        super.preInit ();
-        MinecraftForge.EVENT_BUS.register (this);
+  @Override
+  public void preInit() {
+    super.preInit();
+    MinecraftForge.EVENT_BUS.register(this);
+    if (!ConfigHandler.title.isEmpty()) {
+      Display.setTitle(ConfigHandler.title);
     }
+  }
 
-    @SubscribeEvent
-    public void loadModel (ModelRegistryEvent e) {
-        String[] metaItems = ConfigHandler.metaItems.replaceAll (" ","").split (",");
-        for (int index = 0; index < metaItems.length; index++)
-            createModel (WurmTweaksItems.itemMeta,index,metaItems[index]);
-        createModel (Item.getItemFromBlock (WurmTweaksBlocks.transparentAluminum),0,"transparentAluminum");
-        createModel (Item.getItemFromBlock (WurmTweaksBlocks.stoneMagic),0,"stoneMagic");
-        createModel (Item.getItemFromBlock (WurmTweaksBlocks.logMagic),0,"logMagic");
+  @SubscribeEvent
+  public void loadModel(ModelRegistryEvent e) {
+    String[] metaItems = ConfigHandler.metaItems.replaceAll(" ", "").split(",");
+    for (int index = 0; index < metaItems.length; index++) {
+      createModel(WurmTweaksItems.itemMeta, index, metaItems[index]);
     }
+    createModel(Item.getItemFromBlock(WurmTweaksBlocks.transparentAluminum), 0,
+        "transparentAluminum");
+    createModel(Item.getItemFromBlock(WurmTweaksBlocks.stoneMagic), 0, "stoneMagic");
+    createModel(Item.getItemFromBlock(WurmTweaksBlocks.logMagic), 0, "logMagic");
+  }
 }

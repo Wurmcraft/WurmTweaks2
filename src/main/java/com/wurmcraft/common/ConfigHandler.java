@@ -55,6 +55,9 @@ public class ConfigHandler {
   @Config.Comment("Amount of Ingots per block")
   public static int tinkersConstructBlockMultiplier = 32;
 
+  @Config.Comment("Minecraft window title name")
+  public static String title = "";
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

@@ -1,11 +1,14 @@
 package com.wurmcraft.common.support;
 
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.registry.HopperInteractions;
 import betterwithmods.common.registry.HopperInteractions.HopperRecipe;
 import betterwithmods.common.registry.anvil.AnvilCraftingManager;
 import betterwithmods.common.registry.anvil.ShapedAnvilRecipe;
 import betterwithmods.common.registry.anvil.ShapelessAnvilRecipe;
 import betterwithmods.common.registry.block.recipe.BlockIngredient;
+import betterwithmods.common.registry.bulk.recipes.CookingPotRecipe;
+import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
@@ -29,6 +32,11 @@ public class BetterWithMods {
   private static NonBlockingHashSet<ShapedAnvilRecipe> scriptShapedAnvil;
   private static NonBlockingHashSet<ShapelessAnvilRecipe> scriptShapelessAnvil;
   private static NonBlockingHashSet<Heat> scriptHeat;
+  private static NonBlockingHashSet<CookingPotRecipe> scriptCauldron;
+  private static NonBlockingHashSet<CookingPotRecipe> scriptStokedCauldron;
+  private static NonBlockingHashSet<MillRecipe> scriptMill;
+  private static NonBlockingHashSet<CookingPotRecipe> scriptCrucible;
+  private static NonBlockingHashSet<CookingPotRecipe> scriptStokedCrucible;
 
   @InitSupport
   public void init() {
@@ -36,6 +44,11 @@ public class BetterWithMods {
     scriptShapedAnvil = new NonBlockingHashSet<>();
     scriptShapelessAnvil = new NonBlockingHashSet<>();
     scriptHeat = new NonBlockingHashSet<>();
+    scriptCauldron = new NonBlockingHashSet<>();
+    scriptStokedCauldron = new NonBlockingHashSet<>();
+    scriptMill = new NonBlockingHashSet<>();
+    scriptCrucible = new NonBlockingHashSet<>();
+    scriptStokedCrucible = new NonBlockingHashSet<>();
     if (ConfigHandler.removeAllRecipes) {
       HopperInteractions.RECIPES.clear();
 //      for (HopperRecipe recipe : HopperInteractions.RECIPES) {
@@ -44,8 +57,10 @@ public class BetterWithMods {
 //        }
 //      }
       AnvilCraftingManager.ANVIL_CRAFTING.clear();
-
-
+//      for (CookingPotRecipe recipe : BWRegistry.CAULDRON.getRecipes()) {
+//        BWRegistry.CAULDRON.remove(recipe.);
+//      }
+      // TODO Remove All Recipes
     } else if (ScriptExecutor.reload) {
       scriptHopper.forEach(
           recipe -> HopperInteractions.remove(recipe.getOutputs(), recipe.getSecondaryOutputs()));
@@ -58,6 +73,21 @@ public class BetterWithMods {
       }
       scriptShapelessAnvil.clear();
       // TODO Remove Block Heat on Reload
+      for (CookingPotRecipe recipe : scriptCauldron) {
+        BWRegistry.CAULDRON.remove(recipe);
+      }
+      for (CookingPotRecipe recipe : scriptStokedCauldron) {
+        BWRegistry.CAULDRON.remove(recipe);
+      }
+      for (MillRecipe recipe : scriptMill) {
+        BWRegistry.MILLSTONE.remove(recipe);
+      }
+      for (CookingPotRecipe recipe : scriptCrucible) {
+        BWRegistry.CRUCIBLE.remove(recipe);
+      }
+      for (CookingPotRecipe recipe : scriptStokedCrucible) {
+        BWRegistry.CRUCIBLE.remove(recipe);
+      }
     }
   }
 
@@ -67,6 +97,15 @@ public class BetterWithMods {
     AnvilCraftingManager.ANVIL_CRAFTING.addAll(scriptShapedAnvil);
     AnvilCraftingManager.ANVIL_CRAFTING.addAll(scriptShapelessAnvil);
     scriptHeat.forEach(heat -> BWMHeatRegistry.addHeatSource(heat.block, heat.heat));
+    scriptCauldron.forEach(
+        recipe -> BWRegistry.CAULDRON.addUnstokedRecipe(recipe.getInputs(), recipe.getOutputs()));
+    scriptStokedCauldron.forEach(
+        recipe -> BWRegistry.CAULDRON.addStokedRecipe(recipe.getInputs(), recipe.getOutputs()));
+    scriptMill.forEach(BWRegistry.MILLSTONE::addRecipe);
+    scriptCrucible.forEach(
+        recipe -> BWRegistry.CRUCIBLE.addUnstokedRecipe(recipe.getInputs(), recipe.getOutputs()));
+    scriptStokedCrucible.forEach(
+        recipe -> BWRegistry.CRUCIBLE.addStokedRecipe(recipe.getInputs(), recipe.getOutputs()));
   }
 
   @ScriptFunction(modid = "betterwithmods", inputFormat = "String ItemStack ItemStack ItemStack ...")
@@ -102,6 +141,46 @@ public class BetterWithMods {
     scriptHeat.add(new Heat(new BlockIngredient(
         converter.getBulkItemsAsList(Arrays.copyOfRange(line, 1, line.length))
             .toArray(new ItemStack[0])), Integer.parseInt(line[0])));
+  }
+
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack ...")
+  public void addCauldron(Converter converter, String[] line) {
+    scriptCauldron.add(new CookingPotRecipe(
+        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
+        Arrays.asList((ItemStack) converter.convert(line[0])),
+        0));
+  }
+
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack ...")
+  public void addStokedCauldron(Converter converter, String[] line) {
+    scriptStokedCauldron.add(new CookingPotRecipe(
+        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
+        Arrays.asList((ItemStack) converter.convert(line[0])),
+        0));
+  }
+
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack ...")
+  public void addCrucible(Converter converter, String[] line) {
+    scriptCrucible.add(new CookingPotRecipe(
+        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
+        Arrays.asList((ItemStack) converter.convert(line[0])),
+        0));
+  }
+
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack ...")
+  public void addStokedCrucible(Converter converter, String[] line) {
+    scriptStokedCrucible.add(new CookingPotRecipe(
+        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
+        Arrays.asList((ItemStack) converter.convert(line[0])),
+        0));
+  }
+
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack ...")
+  public void addMill(Converter converter, String[] line) {
+    scriptMill.add(new MillRecipe(
+        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
+        Arrays.asList((ItemStack) converter.convert(line[0])),
+        120));
   }
 
   public class Heat {
