@@ -58,6 +58,12 @@ public class ConfigHandler {
   @Config.Comment("Minecraft window title name")
   public static String title = "";
 
+  @Config.Comment("Remove all Loot")
+  public static boolean removeAllLoot = true;
+
+  @Config.Comment("Change how damage is calculated")
+  public static double damageMod = 1.0;
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

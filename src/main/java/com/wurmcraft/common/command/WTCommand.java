@@ -37,6 +37,7 @@ public class WTCommand extends CommandBase {
     }
   }
 
+  // TODO Copy
   private void hand(String[] args, ICommandSender sender) {
     if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
       EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
@@ -53,6 +54,7 @@ public class WTCommand extends CommandBase {
 
   private void reload(String[] args, ICommandSender sender) {
     // TODO Reload JEI Recipes
+    // TODO Client Reload
     ScriptExecutor.reload(true);
   }
 }

@@ -59,15 +59,17 @@ public class OreStages {
   @ScriptFunction(modid = "orestages", inputFormat = "String Block Block")
   public void addOreStage(Converter converter, String[] line) {
     oreStages.add(new OreStage(
-        Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem())
-            .getDefaultState(),
         Block.getBlockFromItem(((ItemStack) converter.convert(line[2], 1)).getItem())
+            .getDefaultState(),
+        Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem())
             .getDefaultState(), getStageFromString(line[0])));
   }
 
   @ScriptFunction(modid = "orestages", inputFormat = "ItemStack String")
   public void addUnlock(Converter converter, String[] line) {
-    unlockStages.add(new Unlock(line[1], (ItemStack) converter.convert(line[0], 1)));
+    unlockStages.add(new Unlock(line[1],
+        (ItemStack) converter.convert(line[0],
+            1)));
   }
 
   private String getStageFromString(String stage) {

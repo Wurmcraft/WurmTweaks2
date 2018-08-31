@@ -129,6 +129,7 @@ public class Minecraft {
     recipeLock(false);
     ForgeRegistry<IRecipe> recipes = (ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES;
     if (ConfigHandler.removeAllRecipes) {
+      FurnaceRecipes.instance().getSmeltingList().clear();
       for (IRecipe recipe : recipes.getValues()) {
         if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
             .getResourceDomain())) {

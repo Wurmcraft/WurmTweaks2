@@ -1,5 +1,6 @@
 package com.wurmcraft.common.script.utils;
 
+import com.wurmcraft.common.support.utils.Converter;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -8,9 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-// TODO NBT Support
 public class DynamicShapedOreRecipe extends ShapedOreRecipe {
 
+  private static Converter converter = new Converter();
 
   public DynamicShapedOreRecipe(ResourceLocation group,
       Block result, Object... recipe) {
@@ -37,4 +38,5 @@ public class DynamicShapedOreRecipe extends ShapedOreRecipe {
   public boolean isDynamic() {
     return true;
   }
+
 }

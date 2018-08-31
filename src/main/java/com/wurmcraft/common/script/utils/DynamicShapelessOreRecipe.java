@@ -37,4 +37,5 @@ public class DynamicShapelessOreRecipe extends ShapelessOreRecipe {
   public boolean isDynamic() {
     return true;
   }
+
 }

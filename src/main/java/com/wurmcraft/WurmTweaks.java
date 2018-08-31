@@ -4,8 +4,11 @@ import com.wurmcraft.api.WurmTweak2API;
 import com.wurmcraft.api.script.anotations.DataConverter;
 import com.wurmcraft.api.script.converter.IDataConverter;
 import com.wurmcraft.common.CommonProxy;
+import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.blocks.WurmTweaksBlocks;
 import com.wurmcraft.common.command.WTCommand;
+import com.wurmcraft.common.events.DamageHealEvents;
+import com.wurmcraft.common.events.LootDestroyer;
 import com.wurmcraft.common.items.WurmTweaksItems;
 import com.wurmcraft.common.network.NetworkHandler;
 import com.wurmcraft.common.reference.Global;
@@ -13,6 +16,7 @@ import com.wurmcraft.common.reference.Global;
 import com.wurmcraft.common.script.FunctionBuilder;
 import com.wurmcraft.common.script.ScriptChecker;
 import com.wurmcraft.common.script.ScriptExecutor;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -45,6 +49,10 @@ public class WurmTweaks {
     ScriptChecker.downloadScripts(ScriptChecker.getLoadedScriptsFromMaster());
     registerConverters(e.getAsmData());
     FunctionBuilder.preInitSupport();
+    if (ConfigHandler.removeAllLoot) {
+      MinecraftForge.EVENT_BUS.register(new LootDestroyer());
+    }
+    MinecraftForge.EVENT_BUS.register(new DamageHealEvents());
   }
 
   @Mod.EventHandler
@@ -70,9 +78,10 @@ public class WurmTweaks {
   private void registerConverters(ASMDataTable table) {
     for (ASMData data : table.getAll(DataConverter.class.getName())) {
       try {
-        Object instance =  Class.forName(data.getClassName()).newInstance();
-        if(instance instanceof IDataConverter)
+        Object instance = Class.forName(data.getClassName()).newInstance();
+        if (instance instanceof IDataConverter) {
           WurmTweak2API.dataConverters.add((IDataConverter) instance);
+        }
       } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
         e.printStackTrace();
       }
