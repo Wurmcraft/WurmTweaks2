@@ -66,8 +66,8 @@ public class Avaritia {
   public void addCompression(Converter converter, String[] line) {
     compressor.add(
         new CompressorRecipe(((ItemStack) converter.convert(line[0])),
-            ((ItemStack) converter.convert(line[0])).getCount(), false,
-            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 0, line.length))));
+            ((ItemStack) converter.convert(line[1])).getCount(), false,
+            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, 1))));
   }
 
   @FinalizeSupport

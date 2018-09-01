@@ -48,7 +48,34 @@ public class RecipeUtils {
   public static IRecipe createShapedRecipe(ItemStack output, Object[] input) {
     DynamicShapedOreRecipe recipe = new DynamicShapedOreRecipe(RECIPE_GROUP, output, input);
     recipe.setRegistryName(Global.MODID, output.toString() + Arrays.hashCode(input));
+    if (validShapedRecipe(output, input)) {
+      return new InvalidRecipe(recipe);
+    }
     return recipe;
+  }
+
+  private static boolean validShapedRecipe(ItemStack item, Object[] input) {
+    if (item == ItemStack.EMPTY || input.length == 0) {
+      return false;
+    }
+    for (Object data : input) {
+      if (data instanceof Ingredient) {
+        Ingredient stack = (Ingredient) data;
+        if (stack == Ingredient.EMPTY && validIngredient(stack)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private static boolean validIngredient(Ingredient ingredient) {
+    for (ItemStack stack : ingredient.getMatchingStacks()) {
+      if (stack == ItemStack.EMPTY || stack == null) {
+        return false;
+      }
+    }
+    return true;
   }
 
 

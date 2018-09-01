@@ -106,11 +106,10 @@ public class ActuallyAdditions {
   }
 
   @ScriptFunction(modid = "actuallyadditions", inputFormat = "ItemStack ItemStack Integer")
-  public void addConversionLens(Converter converter, String[] line) {
+  public void addReconstructor(Converter converter, String[] line) {
     scriptLensConversion.add(new LensConversionRecipe((ItemStack) converter.convert(line[1]),
         (ItemStack) converter.convert(line[0]), Integer.parseInt(line[2]), ActuallyAdditionsAPI.lensDefaultConversion));
   }
-
 
 
   @ScriptFunction(modid = "actuallyadditions", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer")

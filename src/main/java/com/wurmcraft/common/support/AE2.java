@@ -70,10 +70,10 @@ public class AE2 {
         Float.parseFloat(line[3]), Integer.parseInt(line[4])));
   }
 
-  @ScriptFunction(modid = "appliedenergistics")
+  @ScriptFunction(modid = "appliedenergistics", inputFormat = "ItemStack ItemStack ItemStack String ItemStack")
   public void addInscriber(Converter converter, String[] line) {
     scriptInscriber.add(new AE2Inscriber(
-        (List<ItemStack>) converter.getBulkItemsAsList(Arrays.copyOfRange(line, 5, line.length)),
+        (List<ItemStack>) converter.getBulkItemsAsList(Arrays.copyOfRange(line, 4, line.length)),
         (ItemStack) converter.convert(line[0]), (ItemStack) converter.convert(line[1]),
         (ItemStack) converter.convert(line[2]), Objects.requireNonNull(getType(line[3]))));
   }
