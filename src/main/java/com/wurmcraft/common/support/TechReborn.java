@@ -165,7 +165,7 @@ public class TechReborn {
   }
 
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer ItemStack")
-  public void addTRCenterfuge(Converter converter, String[] line) {
+  public void addTRCentrifuge(Converter converter, String[] line) {
     machine.add(new CentrifugeRecipe(converter.convert(line[4]), converter.convert(line[7]),
         (ItemStack) converter.convert(line[0]), (ItemStack) converter.convert(line[1]),
         (ItemStack) converter.convert(line[2]),
