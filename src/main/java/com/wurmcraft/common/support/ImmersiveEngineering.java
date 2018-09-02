@@ -18,6 +18,7 @@ import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.ScriptFunction.FunctionType;
 import com.wurmcraft.api.script.anotations.Support;
+import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import java.util.Arrays;
@@ -55,7 +56,16 @@ public class ImmersiveEngineering {
     scriptMixer = new NonBlockingHashSet<>();
     scriptRefinery = new NonBlockingHashSet<>();
     scriptSqueezer = new NonBlockingHashSet<>();
-    if (ScriptExecutor.reload) {
+    if (ConfigHandler.removeAllRecipes) {
+      AlloyRecipe.recipeList.clear();
+      ArcFurnaceRecipe.recipeList.clear();
+      BlastFurnaceRecipe.recipeList.clear();
+      BottlingMachineRecipe.recipeList.clear();
+      FermenterRecipe.recipeList.clear();
+      MixerRecipe.recipeList.clear();
+      RefineryRecipe.recipeList.clear();
+      SqueezerRecipe.recipeList.clear();
+    } else if (ScriptExecutor.reload) {
       scriptAlloy.stream().map(alloy -> alloy.output).forEach(AlloyRecipe::removeRecipes);
       scriptAlloy.clear();
       scriptArcFurnace.stream().map(smelting -> smelting.output)
@@ -98,7 +108,7 @@ public class ImmersiveEngineering {
         blast -> BlastFurnaceRecipe.addRecipe(blast.output, blast.input, blast.time, blast.slag));
     scriptBlueprint.forEach(print -> BlueprintCraftingRecipe
         .addRecipe(print.blueprintCategory, print.output, print.inputs));
-    for (BottlingMachineRecipe bottling :scriptBottling) {
+    for (BottlingMachineRecipe bottling : scriptBottling) {
       BottlingMachineRecipe.addRecipe(bottling.output, bottling.input, bottling.fluidInput);
     }
     for (CokeOvenRecipe oven : scriptCoke) {
@@ -129,17 +139,18 @@ public class ImmersiveEngineering {
     }
   }
 
-
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary"
-      + " ItemStack/OreDictionary Integer", typeData = "Alloy", type = FunctionType.Linked)
+  @ScriptFunction(modid = "immersiveengineering", inputFormat =
+      "ItemStack ItemStack/OreDictionary"
+          + " ItemStack/OreDictionary Integer", typeData = "Alloy", type = FunctionType.Linked)
   public void addIEAlloy(Converter converter, String[] line) {
     scriptAlloy.add(
         new AlloyRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),
             converter.convert(line[2]), Integer.parseInt(line[3])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary"
-      + " ItemStack Integer", typeData = "Blast", type = FunctionType.Linked)
+  @ScriptFunction(modid = "immersiveengineering", inputFormat =
+      "ItemStack ItemStack/OreDictionary"
+          + " ItemStack Integer", typeData = "Blast", type = FunctionType.Linked)
   public void addIEBlastFurnace(Converter converter, String[] line) {
     scriptBlastFurnace.add(
         new BlastFurnaceRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),

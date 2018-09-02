@@ -25,7 +25,11 @@ public class RecipeUtils {
     for (String line : list) {
       Object convert = converter.convert(line);
       if (convert != null) {
-        items.add(convert);
+        if (convert instanceof ItemStack) {
+          items.add(new IngredientWrapper((ItemStack) convert));
+        } else {
+          items.add(convert);
+        }
       } else {
         invalidItemStack(line);
         return new Object[0];
@@ -48,26 +52,9 @@ public class RecipeUtils {
   public static IRecipe createShapedRecipe(ItemStack output, Object[] input) {
     DynamicShapedOreRecipe recipe = new DynamicShapedOreRecipe(RECIPE_GROUP, output, input);
     recipe.setRegistryName(Global.MODID, output.toString() + Arrays.hashCode(input));
-    if (validShapedRecipe(output, input)) {
-      return new InvalidRecipe(recipe);
-    }
     return recipe;
   }
 
-  private static boolean validShapedRecipe(ItemStack item, Object[] input) {
-    if (item == ItemStack.EMPTY || input.length == 0) {
-      return false;
-    }
-    for (Object data : input) {
-      if (data instanceof Ingredient) {
-        Ingredient stack = (Ingredient) data;
-        if (stack == Ingredient.EMPTY && validIngredient(stack)) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
 
   private static boolean validIngredient(Ingredient ingredient) {
     for (ItemStack stack : ingredient.getMatchingStacks()) {
@@ -77,7 +64,6 @@ public class RecipeUtils {
     }
     return true;
   }
-
 
   public static Object[] getShapelessRecipeInput(String[] input) {
     List<Object> recipeInput = new ArrayList<>();
@@ -179,7 +165,7 @@ public class RecipeUtils {
     boolean valid = true;
     for (Character ch : recipeFormat.keySet()) {
       if (recipeFormat.get(ch) == Ingredient.EMPTY) {
-        System.out.println("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault(ch, ""));
+        WurmTweaks.logger.warn("Invalid Stack '" + ch + "' " + invalidFormat.getOrDefault(ch, ""));
         valid = false;
       }
     }

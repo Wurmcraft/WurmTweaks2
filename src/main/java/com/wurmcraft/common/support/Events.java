@@ -52,6 +52,9 @@ public class Events {
     if (ScriptExecutor.reload) {
       tooltipQuick.clear();
       tooltips.clear();
+      drops.clear();
+      dropPickupEvent.clear();
+      pickupQuick.clear();
     }
   }
 

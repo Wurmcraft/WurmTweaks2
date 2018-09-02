@@ -3,11 +3,9 @@ package com.wurmcraft.common.script.utils;
 import com.wurmcraft.common.support.utils.Converter;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 

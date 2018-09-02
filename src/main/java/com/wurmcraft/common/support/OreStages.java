@@ -10,12 +10,13 @@ import net.darkhax.gamestages.GameStageHelper;
 import net.darkhax.orestages.api.OreTiersAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
@@ -59,9 +60,9 @@ public class OreStages {
   @ScriptFunction(modid = "orestages", inputFormat = "String Block Block")
   public void addOreStage(Converter converter, String[] line) {
     oreStages.add(new OreStage(
-        Block.getBlockFromItem(((ItemStack) converter.convert(line[2], 1)).getItem())
-            .getDefaultState(),
         Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem())
+            .getDefaultState(),
+        Block.getBlockFromItem(((ItemStack) converter.convert(line[2], 1)).getItem())
             .getDefaultState(), getStageFromString(line[0])));
   }
 
@@ -107,15 +108,19 @@ public class OreStages {
       this.stage = stage;
       this.item = item;
     }
+  }
 
-    @SubscribeEvent
-    public void onPlayerCraft(ItemCraftedEvent e) {
-      String possibleStage = getStage(e.crafting);
-      if (!possibleStage.isEmpty()) {
-        GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
+  @SubscribeEvent
+  public void onPlayerCraft(PlayerEvent.ItemCraftedEvent e) {
+    String possibleStage = getStage(e.crafting);
+    if (possibleStage.length() > 0) {
+      GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
+      if (e.player.world.isRemote) {
         e.player.sendMessage(new TextComponentString(
             TextFormatting.AQUA + "You have just unlocked the %STAGE% stage!"
                 .replaceAll("%STAGE%", possibleStage)));
+      }
+      if (e.player instanceof EntityPlayerMP) {
         GameStageHelper.syncPlayer(e.player);
       }
     }

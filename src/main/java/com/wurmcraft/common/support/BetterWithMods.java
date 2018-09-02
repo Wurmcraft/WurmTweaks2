@@ -10,6 +10,7 @@ import betterwithmods.common.registry.block.recipe.BlockIngredient;
 import betterwithmods.common.registry.bulk.recipes.CookingPotRecipe;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.heat.BWMHeatRegistry;
+import com.google.common.collect.Lists;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -101,7 +102,9 @@ public class BetterWithMods {
         recipe -> BWRegistry.CAULDRON.addUnstokedRecipe(recipe.getInputs(), recipe.getOutputs()));
     scriptStokedCauldron.forEach(
         recipe -> BWRegistry.CAULDRON.addStokedRecipe(recipe.getInputs(), recipe.getOutputs()));
-    scriptMill.forEach(BWRegistry.MILLSTONE::addRecipe);
+    for (MillRecipe millRecipe : scriptMill) {
+      BWRegistry.MILLSTONE.addRecipe(millRecipe);
+    }
     scriptCrucible.forEach(
         recipe -> BWRegistry.CRUCIBLE.addUnstokedRecipe(recipe.getInputs(), recipe.getOutputs()));
     scriptStokedCrucible.forEach(
@@ -175,12 +178,12 @@ public class BetterWithMods {
         0));
   }
 
-  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack ...")
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "ItemStack ItemStack")
   public void addMill(Converter converter, String[] line) {
-    scriptMill.add(new MillRecipe(
-        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
-        Arrays.asList((ItemStack) converter.convert(line[0])),
-        120));
+    scriptMill.add(
+        new MillRecipe(
+        Lists.newArrayList(new IngredientWrapper((ItemStack) converter.convert(line[1]))), // Output
+        Lists.newArrayList((ItemStack) converter.convert(line[0]))));                      // Input
   }
 
   public class Heat {

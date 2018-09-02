@@ -173,7 +173,7 @@ public class ThermalExpansion {
         converter.convert(line[6])});
   }
 
-  @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack FluidStack Integer String Float")
+  @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack FluidStack Integer String Integer")
   public void addFluidTransposer(Converter converter, String[] line) {
     TransposerManager.TransposerRecipe recipe = new TransposerManager.TransposerRecipe(
         (ItemStack) converter.convert(line[1]),
