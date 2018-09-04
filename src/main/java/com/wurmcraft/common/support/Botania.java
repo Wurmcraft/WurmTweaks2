@@ -88,7 +88,7 @@ public class Botania {
             new Object[0])});
   }
 
-  @ScriptFunction(modid = "botania")
+  @ScriptFunction(modid = "botania", inputFormat = "Block Block")
   public void addPureDaisy(Converter converter, String[] line) {
     pureDaisy.add(
         new Object[]{Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem()),

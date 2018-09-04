@@ -1,5 +1,6 @@
 package com.wurmcraft.common.support;
 
+import com.wurmcraft.api.script.StackSettings;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -130,6 +131,8 @@ public class TechReborn {
   }
 
   private EFluidGenerator getGeneratorType(String name) {
+    if(name.startsWith(StackSettings.START.getData()) && name.endsWith(StackSettings.END.getData()))
+      name = name.substring(1,name.length() - 1);
     return EFluidGenerator.valueOf(name.toUpperCase());
   }
 

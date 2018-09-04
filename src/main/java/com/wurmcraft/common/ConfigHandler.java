@@ -64,6 +64,9 @@ public class ConfigHandler {
   @Config.Comment("Change how damage is calculated")
   public static double damageMod = 1.0;
 
+  @Config.Comment("Change fast regen is calculated")
+  public static double regenMod = 1.0;
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

@@ -34,7 +34,7 @@ public class ReloadMessage extends CustomMessage.CustomClientMessage<ReloadMessa
   public void process(EntityPlayer player, Side side) {
     player.sendMessage(
         new TextComponentString(TextFormatting.RED + "Reloading Scripts... (Please wait)"));
-    ScriptExecutor.reload(true);
+    ScriptExecutor.reload(false);
     player.sendMessage(
         new TextComponentString(TextFormatting.RED + "Scripts Reloaded!"));
   }

@@ -139,7 +139,7 @@ public class BetterWithMods {
   }
 
 
-  @ScriptFunction(modid = "betterwithmods")
+  @ScriptFunction(modid = "betterwithmods", inputFormat = "Integer Block")
   public void addBWMHeat(Converter converter, String[] line) {
     scriptHeat.add(new Heat(new BlockIngredient(
         converter.getBulkItemsAsList(Arrays.copyOfRange(line, 1, line.length))

@@ -20,6 +20,6 @@ public class DamageHealEvents {
 
   @SubscribeEvent
   public void livingTick(LivingHealEvent e) {
-    e.setAmount((float) (e.getAmount() * ConfigHandler.damageMod));
+    e.setAmount((float) (e.getAmount() * ConfigHandler.regenMod));
   }
 }

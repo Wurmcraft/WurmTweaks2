@@ -70,7 +70,11 @@ public class WTCommand extends CommandBase {
 
   private void reload(String[] args, ICommandSender sender) {
     // TODO Reload JEI Recipes
-    ScriptExecutor.reload(true);
-    NetworkHandler.sendToAll(new ReloadMessage(true));
+    ScriptExecutor.reload(false);
+    if (sender instanceof EntityPlayer && !((EntityPlayer) sender).world.isRemote) {
+      NetworkHandler.sendToAll(new ReloadMessage(true));
+    } else {
+      NetworkHandler.sendToAll(new ReloadMessage(true));
+    }
   }
 }

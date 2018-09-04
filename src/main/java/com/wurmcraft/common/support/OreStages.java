@@ -113,7 +113,7 @@ public class OreStages {
   @SubscribeEvent
   public void onPlayerCraft(PlayerEvent.ItemCraftedEvent e) {
     String possibleStage = getStage(e.crafting);
-    if (possibleStage.length() > 0) {
+    if (possibleStage.length() > 0 && GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
       GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
       if (e.player.world.isRemote) {
         e.player.sendMessage(new TextComponentString(
@@ -129,7 +129,7 @@ public class OreStages {
   @SubscribeEvent
   public void onItemPickup(ItemPickupEvent e) {
     String possibleStage = getStage(e.getStack());
-    if (!possibleStage.isEmpty()) {
+    if (!possibleStage.isEmpty() && GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
       GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
       e.player.sendMessage(new TextComponentString(
           TextFormatting.AQUA + "You have just unlocked the %STAGE% stage!"

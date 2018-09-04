@@ -3,6 +3,7 @@ package com.wurmcraft.common.support;
 import com.shinoow.abyssalcraft.api.recipe.CrystallizerRecipes;
 import com.shinoow.abyssalcraft.api.recipe.MaterializerRecipes;
 import com.shinoow.abyssalcraft.api.recipe.TransmutatorRecipes;
+import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
@@ -17,7 +18,7 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "abyssalcraft")
 public class AbyssalCraft {
 
-  private static NonBlockingHashSet<Object[]> crystallizerRecipes;
+  private static NonBlockingHashSet<Crystallizer> crystallizerRecipes;
   private static NonBlockingHashSet<Object[]> transmutatorRecipes;
   private static NonBlockingHashSet<Object[]> materializerRecipes;
 
@@ -32,7 +33,7 @@ public class AbyssalCraft {
       MaterializerRecipes.instance().getMaterializationList().clear();
     } else if (ScriptExecutor.reload) {
       crystallizerRecipes.forEach(
-          recipe -> CrystallizerRecipes.instance().getCrystallizationList().remove(recipe[0]));
+          recipe -> CrystallizerRecipes.instance().getCrystallizationList().remove(recipe.input));
       crystallizerRecipes.clear();
       transmutatorRecipes.forEach(
           recipe -> TransmutatorRecipes.instance().getTransmutationList().remove(recipe[0]));
@@ -45,9 +46,9 @@ public class AbyssalCraft {
 
   @ScriptFunction(modid = "abyssalcraft", inputFormat = "ItemStack ItemStack ItemStack Float")
   public void addCrystallizer(Converter converter, String[] line) {
-    crystallizerRecipes.add(
-        new Object[]{converter.convert(line[2]), converter.convert(line[0]),
-            converter.convert(line[1]), Float.parseFloat(line[3])});
+    crystallizerRecipes.add(new Crystallizer((ItemStack) converter.convert(line[0], 1),
+        (ItemStack) converter.convert(line[1], 1), (ItemStack) converter.convert(line[2], 1),
+        Float.parseFloat(line[3])));
   }
 
   @ScriptFunction(modid = "abyssalcraft", inputFormat = "ItemStack ItemStack Float")
@@ -64,19 +65,30 @@ public class AbyssalCraft {
             converter.convert(line[0])});
   }
 
-  @ScriptFunction(modid = "abyssalcraft")
+  @FinalizeSupport
   public void finishSupport() {
-    for (Object[] recipe : crystallizerRecipes) {
+    for (Crystallizer crystallizerRecipe : crystallizerRecipes) {
       CrystallizerRecipes.instance()
-          .crystallize((ItemStack) recipe[0], (ItemStack) recipe[1], (ItemStack) recipe[2],
-              (float) recipe[3]);
+          .crystallize(crystallizerRecipe.output, crystallizerRecipe.output2,
+              crystallizerRecipe.input, crystallizerRecipe.exp);
     }
-    for (Object[] recipe : transmutatorRecipes) {
-      TransmutatorRecipes.instance()
-          .transmute((ItemStack) recipe[0], (ItemStack) recipe[1], (float) recipe[2]);
-    }
-    for (Object[] recipe : materializerRecipes) {
-      MaterializerRecipes.instance().materialize((ItemStack[]) recipe[0], (ItemStack) recipe[1]);
+    transmutatorRecipes.forEach(recipe -> TransmutatorRecipes.instance()
+        .transmute((ItemStack) recipe[0], (ItemStack) recipe[1], (float) recipe[2]));
+    materializerRecipes.forEach(recipe -> MaterializerRecipes.instance()
+        .materialize((ItemStack[]) recipe[0], (ItemStack) recipe[1]));
+  }
+
+  public class Crystallizer {
+
+    public ItemStack output;
+    public ItemStack output2;
+    public ItemStack input;
+    public float exp;
+
+    public Crystallizer(ItemStack output, ItemStack output2, ItemStack input, float exp) {
+      this.output = output;
+      this.input = input;
+      this.exp = exp;
     }
   }
 }

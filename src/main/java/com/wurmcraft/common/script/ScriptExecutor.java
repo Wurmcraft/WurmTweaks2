@@ -144,11 +144,23 @@ public class ScriptExecutor {
     ScriptExecutor.runScripts();
     if (wait) {
       ScriptExecutor.waitTillScriptsFinish();
+      FunctionBuilder.postInitFinalizeSupport();
+      FunctionBuilder.serverStartingFinalizeSupport();
+      reload = false;
     } else {
-      // TODO Script Reload Manager
+      reloadScriptsInBackground();
     }
-    FunctionBuilder.postInitFinalizeSupport();
-    FunctionBuilder.serverStartingFinalizeSupport();
-    reload = false;
+  }
+
+  public static void reloadScriptsInBackground() {
+    final Thread thread = Thread.currentThread();
+    new Thread(() -> {
+      waitTillScriptsFinish();
+      synchronized (thread) {
+        FunctionBuilder.postInitFinalizeSupport();
+        FunctionBuilder.serverStartingFinalizeSupport();
+        reload = false;
+      }
+    }, "WurmScript Background Reload Manager").run();
   }
 }

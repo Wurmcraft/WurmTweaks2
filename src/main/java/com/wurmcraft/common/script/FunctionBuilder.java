@@ -192,6 +192,7 @@ public class FunctionBuilder {
     }
   }
 
+
   public static void preInitSupport() {
     for (Object[] obj : initData.get("pre")) {
       invokeMethod(obj);
