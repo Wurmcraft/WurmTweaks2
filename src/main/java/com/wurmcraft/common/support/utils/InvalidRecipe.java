@@ -11,52 +11,52 @@ public class InvalidRecipe implements IRecipe {
 
   private final IRecipe oldRecipe;
 
-  public InvalidRecipe (IRecipe oldRecipe) {
+  public InvalidRecipe(IRecipe oldRecipe) {
     this.oldRecipe = oldRecipe;
   }
 
   @Override
-  public boolean matches (InventoryCrafting inv, World worldIn) {
+  public boolean matches(InventoryCrafting inv, World worldIn) {
     return false;
   }
 
   @Override
-  public ItemStack getCraftingResult (InventoryCrafting inv) {
+  public ItemStack getCraftingResult(InventoryCrafting inv) {
     return ItemStack.EMPTY;
   }
 
   @Override
-  public boolean canFit (int width,int height) {
+  public boolean canFit(int width, int height) {
     return false;
   }
 
   @Override
-  public ItemStack getRecipeOutput () {
+  public ItemStack getRecipeOutput() {
     return ItemStack.EMPTY;
   }
 
   @Override
-  public NonNullList <ItemStack> getRemainingItems (InventoryCrafting inv) {
-    return NonNullList.create ();
+  public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+    return NonNullList.create();
   }
 
   @Override
-  public IRecipe setRegistryName (ResourceLocation name) {
-    return oldRecipe.setRegistryName (name);
+  public IRecipe setRegistryName(ResourceLocation name) {
+    return oldRecipe.setRegistryName(name);
   }
 
   @Override
-  public ResourceLocation getRegistryName () {
-    return oldRecipe.getRegistryName ();
+  public ResourceLocation getRegistryName() {
+    return oldRecipe.getRegistryName();
   }
 
   @Override
-  public Class <IRecipe> getRegistryType () {
-    return oldRecipe.getRegistryType ();
+  public Class<IRecipe> getRegistryType() {
+    return oldRecipe.getRegistryType();
   }
 
   @Override
-  public boolean isDynamic () {
+  public boolean isDynamic() {
     return true;
   }
 }

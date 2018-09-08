@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.DryingRecipe;
@@ -43,6 +44,7 @@ public class TConstruct {
   private static NonBlockingHashSet<MeltingRecipe> melting;
   private static NonBlockingHashSet<Object[]> entityMelting;
 
+  @Method(modid = "tconstruct")
   @InitSupport
   public void init() {
     if (casting == null) {
@@ -87,6 +89,7 @@ public class TConstruct {
     }
   }
 
+  @Method(modid = "tconstruct")
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : casting) {
@@ -116,18 +119,21 @@ public class TConstruct {
     }
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack FluidStack")
   public void addCasting(Converter converter, String[] line) {
     casting.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
         converter.convert(line[2]), ((FluidStack) converter.convert(line[2])).amount});
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack FluidStack")
   public void addBasin(Converter converter, String[] line) {
     basin.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
         converter.convert(line[2]), ((FluidStack) converter.convert(line[2])).amount});
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack FluidStack ...")
   public void addAlloy(Converter converter, String[] line) {
     List<FluidStack> lineFluids = new ArrayList<>();
@@ -137,17 +143,20 @@ public class TConstruct {
     alloy.add(new Object[]{converter.convert(line[0]), lineFluids.toArray(new FluidStack[0])});
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack Integer")
   public void addDrying(Converter converter, String[] line) {
     drying.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
         Integer.parseInt(line[2])});
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack Integer")
   public void addFuel(Converter converter, String[] line) {
     fuel.add(new Object[]{converter.convert(line[0]), Integer.parseInt(line[1])});
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack ItemStack Integer")
   public void addMelting(Converter converter, String[] line) {
     melting.add(new MeltingRecipe(RecipeMatch.of((ItemStack) converter.convert(line[1])),
@@ -155,13 +164,15 @@ public class TConstruct {
   }
 
   // TODO Entity Converts
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack Entity")
   public void addEntityMelting(Converter converter, String[] line) {
     entityMelting.add(new Object[]{((EntityLiving) converter.convert(line[0], 1)).getClass(),
         converter.convert(line[0])});
   }
-  // End Of Normal Mod Support
 
+  // End Of Normal Mod Support
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack ItemStack Block")
   public void handleMelting(Converter converter, String[] line) {
     Fluid fluid = ((FluidStack) converter.convert(line[0], 1)).getFluid();
@@ -178,6 +189,7 @@ public class TConstruct {
     }
   }
 
+  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "String FluidStack")
   public void handleMaterialParts(Converter converter, String[] line) {
     Fluid fluid = ((FluidStack) converter.convert(line[1])).getFluid();
@@ -198,6 +210,7 @@ public class TConstruct {
     }
   }
 
+  @Method(modid = "tconstruct")
   private int normalize(int amount) {
     if (amount == Material.VALUE_Ingot) {
       return INGOT;

@@ -13,6 +13,7 @@ import me.desht.pneumaticcraft.common.recipes.AmadronOfferManager;
 import me.desht.pneumaticcraft.common.recipes.AssemblyRecipe;
 import me.desht.pneumaticcraft.common.recipes.PressureChamberRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "pneumaticcraft")
@@ -24,7 +25,7 @@ public class PnumaticCraft {
   private static NonBlockingHashSet<Object[]> amadron;
   private static NonBlockingHashSet<Object[]> defaultAmadron;
 
-
+  @Method(modid = "pneumaticcraft")
   @InitSupport
   public void init() {
     drill = new NonBlockingHashSet<>();
@@ -49,6 +50,7 @@ public class PnumaticCraft {
     }
   }
 
+  @Method(modid = "pneumaticcraft")
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : drill) {
@@ -74,16 +76,19 @@ public class PnumaticCraft {
     }
   }
 
+  @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAssemblyDrill(Converter converter, String[] line) {
     drill.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAssemblyLaser(Converter converter, String[] line) {
     laser.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack Integer ItemStack ...")
   public void addPressureChamber(Converter converter, String[] line) {
     pressure.add(new Object[]{
@@ -92,11 +97,13 @@ public class PnumaticCraft {
         new ItemStack[]{(ItemStack) converter.convert(line[0])}});
   }
 
+  @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addDefaultAmadron(Converter converter, String[] line) {
     defaultAmadron.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
   }
 
+  @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAmadron(Converter converter, String[] line) {
     amadron.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});

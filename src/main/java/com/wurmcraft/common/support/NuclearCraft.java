@@ -8,7 +8,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import nc.recipe.NCRecipes;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "nuclearcraft")
@@ -18,7 +18,7 @@ public class NuclearCraft {
   private static NonBlockingHashSet<Object[]> separator;
   private static NonBlockingHashSet<Object[]> pressurizer;
 
-
+  @Method(modid = "nuclearcraft")
   @InitSupport
   public void init() {
     if (manufactory == null) {
@@ -44,29 +44,32 @@ public class NuclearCraft {
     }
   }
 
+  @Method(modid = "nuclearcraft")
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : manufactory) {
       NCRecipes.Type.MANUFACTORY.getRecipeHandler()
-          .addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1], (int) recipe[2]);
+          .addRecipe(recipe[0], recipe[1], recipe[2]);
     }
     for (Object[] recipe : separator) {
       NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler()
-          .addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1], (ItemStack) recipe[2],
-              (int) recipe[3]);
+          .addRecipe(recipe[0], recipe[1], recipe[2],
+              recipe[3]);
     }
     for (Object[] recipe : pressurizer) {
       NCRecipes.Type.PRESSURIZER.getRecipeHandler()
-          .addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1], (int) recipe[2]);
+          .addRecipe(recipe[0], recipe[1], recipe[2]);
     }
   }
 
+  @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addManufactory(Converter converter, String[] line) {
     manufactory.add(new Object[]{converter.convert(line[1]), converter.convert(line[0]),
         Integer.parseInt(line[2])});
   }
 
+  @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack ItemStack Integer")
   public void addIsotopeSeparator(Converter converter, String[] line) {
 
@@ -74,6 +77,7 @@ public class NuclearCraft {
         converter.convert(line[1]), Integer.parseInt(line[3])});
   }
 
+  @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addPressurizer(Converter converter, String[] line) {
     pressurizer.add(new Object[]{converter.convert(line[1]), converter.convert(line[0]),

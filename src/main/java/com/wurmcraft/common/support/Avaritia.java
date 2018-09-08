@@ -18,6 +18,7 @@ import morph.avaritia.recipe.extreme.ExtremeShapelessRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
@@ -28,7 +29,7 @@ public class Avaritia {
   private static NonBlockingHashSet<ExtremeShapelessRecipe> shapeless;
   private static NonBlockingHashSet<ICompressorRecipe> compressor;
 
-
+  @Method(modid = "avaritia")
   @InitSupport
   public void init() {
     shaped = new NonBlockingHashSet<>();
@@ -49,12 +50,14 @@ public class Avaritia {
     }
   }
 
+  @Method(modid = "avaritia")
   @ScriptFunction(modid = "avaritia")
   public void addShapedExtreme(Converter converter, String[] line) {
     shaped.add(new ExtremeShapedRecipe((ItemStack) converter.convert(line[0]),
         CraftingHelper.parseShaped(RecipeUtils.getShapedRecipe(line).toArray(new Object[0]))));
   }
 
+  @Method(modid = "avaritia")
   @ScriptFunction(modid = "avaritia", inputFormat = "ItemStack ItemStack/OreDictionary ...")
   public void addShapelessExtreme(Converter converter, String[] line) {
     shapeless.add(new ExtremeShapelessRecipe(
@@ -62,6 +65,7 @@ public class Avaritia {
         (ItemStack) converter.convert(line[0])));
   }
 
+  @Method(modid = "avaritia")
   @ScriptFunction(modid = "avaritia")
   public void addCompression(Converter converter, String[] line) {
     compressor.add(
@@ -70,6 +74,7 @@ public class Avaritia {
             RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, 1))));
   }
 
+  @Method(modid = "avaritia")
   @FinalizeSupport
   public void finishSupport() {
     shaped.forEach(recipe -> AvaritiaRecipeManager.EXTREME_RECIPES.put(new ResourceLocation(

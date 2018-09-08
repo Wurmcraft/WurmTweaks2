@@ -17,6 +17,7 @@ import com.wurmcraft.common.support.utils.RecipeUtils;
 import java.util.Arrays;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 
@@ -28,6 +29,8 @@ public class BloodMagic {
   private static NonBlockingHashSet<Object[]> forge;
   private static NonBlockingHashSet<Object[]> table;
 
+
+  @Method(modid = "bloodmagic")
   @InitSupport
   public void init() {
     if (altar == null) {
@@ -76,6 +79,7 @@ public class BloodMagic {
     }
   }
 
+  @Method(modid = "bloodmagic")
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : altar) {
@@ -100,6 +104,7 @@ public class BloodMagic {
     }
   }
 
+  @Method(modid = "bloodmagic")
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack ItemStack Integer Integer Integer Integer")
   public void addAltar(Converter converter, String[] line) {
     altar.add(new Object[]{
@@ -109,6 +114,7 @@ public class BloodMagic {
         Integer.parseInt(line[5])});
   }
 
+  @Method(modid = "bloodmagic")
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack ItemStack ItemStack")
   public void addAlchemyArray(Converter converter, String[] line) {
     array.add(new Object[]{new IngredientWrapper((ItemStack) converter.convert(line[2], 1)),
@@ -116,6 +122,7 @@ public class BloodMagic {
         converter.convert(line[0]), null});
   }
 
+  @Method(modid = "bloodmagic")
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack Float Float ItemStack/OreDictionary ...")
   public void addSoulForge(Converter converter, String[] line) {
     forge.add(
@@ -124,6 +131,7 @@ public class BloodMagic {
             converter.getBulkItemsAsList(Arrays.copyOfRange(line, 3, line.length))});
   }
 
+  @Method(modid = "bloodmagic")
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack Integer Integer Integer ItemStack/OreDictionary ...")
   public void addTable(Converter converter, String[] line) {
     table.add(new Object[]{converter.convert(line[0], 1), Integer.parseInt(line[1]),

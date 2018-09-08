@@ -19,8 +19,8 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 public class AbyssalCraft {
 
   private static NonBlockingHashSet<Crystallizer> crystallizerRecipes;
-  private static NonBlockingHashSet<Object[]> transmutatorRecipes;
-  private static NonBlockingHashSet<Object[]> materializerRecipes;
+  private static NonBlockingHashSet<Transmutator> transmutatorRecipes;
+  private static NonBlockingHashSet<Materializer> materializerRecipes;
 
   @InitSupport
   public void init() {
@@ -36,10 +36,10 @@ public class AbyssalCraft {
           recipe -> CrystallizerRecipes.instance().getCrystallizationList().remove(recipe.input));
       crystallizerRecipes.clear();
       transmutatorRecipes.forEach(
-          recipe -> TransmutatorRecipes.instance().getTransmutationList().remove(recipe[0]));
+          recipe -> TransmutatorRecipes.instance().getTransmutationList().remove(recipe.input));
       transmutatorRecipes.clear();
       materializerRecipes.forEach(
-          recipe -> MaterializerRecipes.instance().getMaterializationList().remove(recipe[0]));
+          recipe -> MaterializerRecipes.instance().getMaterializationList().remove(recipe.output));
       materializerRecipes.clear();
     }
   }
@@ -53,29 +53,25 @@ public class AbyssalCraft {
 
   @ScriptFunction(modid = "abyssalcraft", inputFormat = "ItemStack ItemStack Float")
   public void addTransmutator(Converter converter, String[] line) {
-    transmutatorRecipes.add(
-        new Object[]{converter.convert(line[1]), converter.convert(line[0]),
-            Float.parseFloat(line[2])});
+    transmutatorRecipes.add(new Transmutator((ItemStack) converter.convert(line[0]),
+        (ItemStack) converter.convert(line[1]), Float.parseFloat(line[2])));
   }
 
-  @ScriptFunction(modid = "abyssalcraft", inputFormat = "ItemStack ItemStack ...")
+  @ScriptFunction(modid = "abyssalcraft", inputFormat = "ItemStack Crystal ...")
   public void addMaterializer(Converter converter, String[] line) {
-    materializerRecipes
-        .add(new Object[]{converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length)),
-            converter.convert(line[0])});
+    materializerRecipes.add(new Materializer((ItemStack) converter.convert(line[0]),
+        (ItemStack[]) converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length))));
   }
 
   @FinalizeSupport
   public void finishSupport() {
-    for (Crystallizer crystallizerRecipe : crystallizerRecipes) {
-      CrystallizerRecipes.instance()
-          .crystallize(crystallizerRecipe.output, crystallizerRecipe.output2,
-              crystallizerRecipe.input, crystallizerRecipe.exp);
-    }
+    crystallizerRecipes.forEach(crystallizerRecipe -> CrystallizerRecipes.instance()
+        .crystallize(crystallizerRecipe.input, crystallizerRecipe.output,
+            crystallizerRecipe.output2, crystallizerRecipe.exp));
     transmutatorRecipes.forEach(recipe -> TransmutatorRecipes.instance()
-        .transmute((ItemStack) recipe[0], (ItemStack) recipe[1], (float) recipe[2]));
+        .transmute(recipe.input, recipe.output, recipe.exp));
     materializerRecipes.forEach(recipe -> MaterializerRecipes.instance()
-        .materialize((ItemStack[]) recipe[0], (ItemStack) recipe[1]));
+        .materialize(recipe.input, recipe.output));
   }
 
   public class Crystallizer {
@@ -87,8 +83,33 @@ public class AbyssalCraft {
 
     public Crystallizer(ItemStack output, ItemStack output2, ItemStack input, float exp) {
       this.output = output;
+      this.output2 = output2;
       this.input = input;
       this.exp = exp;
+    }
+  }
+
+  public class Transmutator {
+
+    public ItemStack output;
+    public ItemStack input;
+    public float exp;
+
+    public Transmutator(ItemStack output, ItemStack input, float exp) {
+      this.output = output;
+      this.input = input;
+      this.exp = exp;
+    }
+  }
+
+  public class Materializer {
+
+    public ItemStack output;
+    public ItemStack[] input;
+
+    public Materializer(ItemStack output, ItemStack[] input) {
+      this.output = output;
+      this.input = input;
     }
   }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import net.minecraft.item.ItemStack;
 
 public class AE2Grinder implements IGrinderRecipe {
+
   private final ItemStack in;
   private final ItemStack out;
   private final float optionalChance;
@@ -14,14 +15,15 @@ public class AE2Grinder implements IGrinderRecipe {
   private final int turns;
 
   public AE2Grinder(ItemStack input, ItemStack output, int cost) {
-    this(input, output, (ItemStack)null, (ItemStack)null, 0.0F, 0.0F, cost);
+    this(input, output, null, null, 0.0F, 0.0F, cost);
   }
 
   public AE2Grinder(ItemStack input, ItemStack output, ItemStack optional, float chance, int cost) {
-    this(input, output, optional, (ItemStack)null, chance, 0.0F, cost);
+    this(input, output, optional, null, chance, 0.0F, cost);
   }
 
-  public AE2Grinder(ItemStack input, ItemStack output, ItemStack optional1, ItemStack optional2, float chance1, float chance2, int cost) {
+  public AE2Grinder(ItemStack input, ItemStack output, ItemStack optional1, ItemStack optional2,
+      float chance1, float chance2, int cost) {
     this.in = input;
     this.out = output;
     this.optionalOutput = Optional.ofNullable(optional1);

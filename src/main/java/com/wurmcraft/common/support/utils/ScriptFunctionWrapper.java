@@ -11,7 +11,7 @@ public class ScriptFunctionWrapper implements Function<String, Void> {
 
   public ScriptFunctionWrapper(Method method, Converter converter) {
     this.method = method;
-    if(method != null) {
+    if (method != null) {
       try {
         this.clazz = method.getDeclaringClass().newInstance();
       } catch (Throwable e) {
@@ -25,7 +25,7 @@ public class ScriptFunctionWrapper implements Function<String, Void> {
   public Void apply(String s) {
     if (method != null && clazz != null) {
       try {
-        method.invoke(clazz,  converter,s.split(" "));
+        method.invoke(clazz, converter, s.split(" "));
       } catch (Throwable e) {
         e.printStackTrace();
       }

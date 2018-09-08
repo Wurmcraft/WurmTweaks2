@@ -73,25 +73,30 @@ public class FunctionBuilder {
 
   private static NonBlockingHashMap<String, FunctionWrapper> searchForLooseFunctions(
       ASMDataTable asmDataTable) {
-    NonBlockingHashMap<String, FunctionWrapper> functions = new NonBlockingHashMap<>();
-    for (ASMData data : asmDataTable.getAll(ScriptFunction.class.getName())) {
-      try {
-        Class<?> asmClass = Class.forName(data.getClassName());
-        Method[] scriptFunctions = searchForAnnotations(asmClass, ScriptFunction.class);
-        for (Method method : scriptFunctions) {
-          if (method.getAnnotation(ScriptFunction.class).modid().length() == 0 || isModLoaded(
-              method.getAnnotation(ScriptFunction.class).modid())) {
-            functions.putIfAbsent(getFunctionName(method),
-                createFunction(null, method.getAnnotation(ScriptFunction.class), method,
-                    autoCast(asmClass)));
+    try {
+      NonBlockingHashMap<String, FunctionWrapper> functions = new NonBlockingHashMap<>();
+      for (ASMData data : asmDataTable.getAll(ScriptFunction.class.getName())) {
+        try {
+          Class<?> asmClass = Class.forName(data.getClassName());
+          Method[] scriptFunctions = searchForAnnotations(asmClass, ScriptFunction.class);
+          for (Method method : scriptFunctions) {
+            if (isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
+              functions.putIfAbsent(getFunctionName(method),
+                  createFunction(null, method.getAnnotation(ScriptFunction.class), method,
+                      autoCast(asmClass)));
+            }
           }
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
         }
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
       }
+      return functions;
+    } catch(Exception e) {
+      e.printStackTrace();
     }
-    return functions;
+    return new NonBlockingHashMap<>();
   }
+
 
   public static <T> T autoCast(Class<T> type) {
     return (T) type;

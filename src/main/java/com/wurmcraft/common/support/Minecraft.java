@@ -99,11 +99,9 @@ public class Minecraft {
     }
   }
 
-  @ScriptFunction(modid = "minecraft", precedence = true, inputFormat = "ItemStack String ...")
+  @ScriptFunction(modid = "minecraft", precedence = true, inputFormat = "ItemStack String")
   public void addOreEntry(Converter converter, String[] input) {
-    for (int index = 1; index < input.length; index++) {
-      scriptOreEntry.add(new OreEntry((ItemStack) converter.convert(input[0], 0), input[index]));
-    }
+    scriptOreEntry.add(new OreEntry((ItemStack) converter.convert(input[0], 0), input[1]));
   }
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack/OreDictionary")

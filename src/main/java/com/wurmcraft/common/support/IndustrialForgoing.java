@@ -18,6 +18,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "industrialforegoing")
@@ -28,6 +29,7 @@ public class IndustrialForgoing {
   private static NonBlockingHashSet<ProteinReactorEntry> protein;
   private static NonBlockingHashSet<LaserDrillEntry> laser;
 
+  @Method(modid = "industrialforegoing")
   @InitSupport
   public void init() {
     if (bioReactor == null) {
@@ -53,6 +55,7 @@ public class IndustrialForgoing {
     }
   }
 
+  @Method(modid = "industrialforegoing")
   @FinalizeSupport
   public void finishSupport() {
     for (BioReactorEntry recipe : bioReactor) {
@@ -69,22 +72,26 @@ public class IndustrialForgoing {
     }
   }
 
+  @Method(modid = "industrialforegoing")
   @ScriptFunction(modid = "industrialforegoing", inputFormat = "ItemStack")
   public void addBioReactor(Converter converter, String[] line) {
     bioReactor.add(new BioReactorEntry((ItemStack) converter.convert(line[0], 1)));
   }
 
+  @Method(modid = "industrialforegoing")
   @ScriptFunction(modid = "industrialforegoing", inputFormat = "ItemStack Integer")
   public void addSludgeRefiner(Converter converter, String[] line) {
     sludge
         .add(new SludgeEntry((ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])));
   }
 
+  @Method(modid = "industrialforegoing")
   @ScriptFunction(modid = "industrialforegoing", inputFormat = "ItemStack")
   public void addProteinReactor(Converter converter, String[] line) {
     protein.add(new ProteinReactorEntry((ItemStack) converter.convert(line[0], 1)));
   }
 
+  @Method(modid = "industrialforegoing")
   @ScriptFunction(modid = "industrialforegoing", inputFormat = "ItemStack Integer Integer", typeData = "Laser", type = FunctionType.Linked)
   public void addLaser(Converter converter, String[] line) {
     laser.add(

@@ -14,6 +14,7 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 // TODO (3)
@@ -24,7 +25,7 @@ public class EnvironmentalTech {
   private static NonBlockingHashSet<Object[]> res;
   private static NonBlockingHashSet<Object[]> ore;
 
-
+  @Method(modid = "environmentaltech")
   @InitSupport
   public void init() {
     botanic = new NonBlockingHashSet<>();
@@ -73,6 +74,7 @@ public class EnvironmentalTech {
 
   }
 
+  @Method(modid = "environmentaltech")
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : botanic) {
@@ -137,6 +139,7 @@ public class EnvironmentalTech {
     }
   }
 
+  @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addBotanicMiner(Converter converter, String[] line) {
     botanic.add(new Object[]{
@@ -146,6 +149,7 @@ public class EnvironmentalTech {
     });
   }
 
+  @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addResourceMiner(Converter converter, String[] line) {
     res.add(new Object[]{
@@ -155,6 +159,7 @@ public class EnvironmentalTech {
     });
   }
 
+  @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String", typeData = "Laser", type = FunctionType.Linked)
   public void addOreMiner(Converter converter, String[] line) {
     ore.add(new Object[]{

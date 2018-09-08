@@ -9,7 +9,6 @@ import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
@@ -70,8 +69,7 @@ public class ActuallyAdditions {
         .addTreasureChestLoot(loot.returnItem, loot.itemWeight, loot.minAmount, loot.maxAmount));
     scriptLensConversion.forEach(recipe -> ActuallyAdditionsAPI
         .addReconstructorLensConversionRecipe(recipe.getInput(), recipe.getOutput(),
-            recipe.getEnergyUsed(),
-            (LensConversion) recipe.getType()));
+            recipe.getEnergyUsed()));
     scriptEmpowerer.forEach(recipe -> ActuallyAdditionsAPI
         .addEmpowererRecipe(recipe.getInput(), recipe.getOutput(), recipe.getStandOne(),
             recipe.getStandTwo(), recipe.getStandThree(), recipe.getStandFour(),
@@ -87,8 +85,8 @@ public class ActuallyAdditions {
 
   @ScriptFunction(modid = "actuallyadditions", inputFormat = "ItemStack ItemStack ItemStack Integer", typeData = "Crusher", type = FunctionType.Linked)
   public void addAACrusher(Converter converter, String[] line) {
-    scriptCrusher.add(new CrusherRecipe((ItemStack) converter.convert(line[2], 1),
-        (ItemStack) converter.convert(line[0], 1), (ItemStack) converter.convert(line[1], 1),
+    scriptCrusher.add(new CrusherRecipe((ItemStack) converter.convert(line[1], 1),
+        (ItemStack) converter.convert(line[0], 1), (ItemStack) converter.convert(line[2], 1),
         Integer.parseInt(line[3])));
   }
 
@@ -108,9 +106,9 @@ public class ActuallyAdditions {
   @ScriptFunction(modid = "actuallyadditions", inputFormat = "ItemStack ItemStack Integer")
   public void addReconstructor(Converter converter, String[] line) {
     scriptLensConversion.add(new LensConversionRecipe((ItemStack) converter.convert(line[1]),
-        (ItemStack) converter.convert(line[0]), Integer.parseInt(line[2]), ActuallyAdditionsAPI.lensDefaultConversion));
+        (ItemStack) converter.convert(line[0]), Integer.parseInt(line[2]),
+        ActuallyAdditionsAPI.lensDefaultConversion));
   }
-
 
   @ScriptFunction(modid = "actuallyadditions", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer")
   public void addEmpowerer(Converter converter, String[] line) {

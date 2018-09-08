@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
@@ -24,11 +25,11 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 @Support(modid = "orestages")
 public class OreStages {
 
+  public static NonBlockingHashMap<ItemStack, String> itemCache;
   private static NonBlockingHashSet<OreStage> oreStages;
   private static NonBlockingHashSet<Unlock> unlockStages;
 
-  public static NonBlockingHashMap<ItemStack, String> itemCache;
-
+  @Method(modid = "orestages")
   @InitSupport
   public void init() {
     oreStages = new NonBlockingHashSet<>();
@@ -46,6 +47,7 @@ public class OreStages {
     }
   }
 
+  @Method(modid = "orestages")
   @FinalizeSupport
   public void finalizeSupport() {
     for (OreStage stage : oreStages) {
@@ -56,7 +58,7 @@ public class OreStages {
     }
   }
 
-
+  @Method(modid = "orestages")
   @ScriptFunction(modid = "orestages", inputFormat = "String Block Block")
   public void addOreStage(Converter converter, String[] line) {
     oreStages.add(new OreStage(
@@ -66,6 +68,7 @@ public class OreStages {
             .getDefaultState(), getStageFromString(line[0])));
   }
 
+  @Method(modid = "orestages")
   @ScriptFunction(modid = "orestages", inputFormat = "ItemStack String")
   public void addUnlock(Converter converter, String[] line) {
     unlockStages.add(new Unlock(line[1],
@@ -73,10 +76,12 @@ public class OreStages {
             1)));
   }
 
+  @Method(modid = "orestages")
   private String getStageFromString(String stage) {
     return stage.replaceAll("_", " ");
   }
 
+  @Method(modid = "orestages")
   private String getStage(ItemStack stack) {
     for (ItemStack item : itemCache.keySet()) {
       if (item.isItemEqualIgnoreDurability(stack)) {
@@ -84,6 +89,38 @@ public class OreStages {
       }
     }
     return "";
+  }
+
+  @Method(modid = "orestages")
+  @SubscribeEvent
+  public void onPlayerCraft(PlayerEvent.ItemCraftedEvent e) {
+    String possibleStage = getStage(e.crafting);
+    if (possibleStage.length() > 0 && GameStageHelper.getPlayerData(e.player)
+        .hasStage(possibleStage)) {
+      GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
+      if (e.player.world.isRemote) {
+        e.player.sendMessage(new TextComponentString(
+            TextFormatting.AQUA + "You have just unlocked the %STAGE% stage!"
+                .replaceAll("%STAGE%", possibleStage)));
+      }
+      if (e.player instanceof EntityPlayerMP) {
+        GameStageHelper.syncPlayer(e.player);
+      }
+    }
+  }
+
+  @Method(modid = "orestages")
+  @SubscribeEvent
+  public void onItemPickup(ItemPickupEvent e) {
+    String possibleStage = getStage(e.getStack());
+    if (!possibleStage.isEmpty() && GameStageHelper.getPlayerData(e.player)
+        .hasStage(possibleStage)) {
+      GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
+      e.player.sendMessage(new TextComponentString(
+          TextFormatting.AQUA + "You have just unlocked the %STAGE% stage!"
+              .replaceAll("%STAGE%", possibleStage)));
+      GameStageHelper.syncPlayer(e.player);
+    }
   }
 
   public class OreStage {
@@ -109,34 +146,4 @@ public class OreStages {
       this.item = item;
     }
   }
-
-  @SubscribeEvent
-  public void onPlayerCraft(PlayerEvent.ItemCraftedEvent e) {
-    String possibleStage = getStage(e.crafting);
-    if (possibleStage.length() > 0 && GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
-      GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
-      if (e.player.world.isRemote) {
-        e.player.sendMessage(new TextComponentString(
-            TextFormatting.AQUA + "You have just unlocked the %STAGE% stage!"
-                .replaceAll("%STAGE%", possibleStage)));
-      }
-      if (e.player instanceof EntityPlayerMP) {
-        GameStageHelper.syncPlayer(e.player);
-      }
-    }
-  }
-
-  @SubscribeEvent
-  public void onItemPickup(ItemPickupEvent e) {
-    String possibleStage = getStage(e.getStack());
-    if (!possibleStage.isEmpty() && GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
-      GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
-      e.player.sendMessage(new TextComponentString(
-          TextFormatting.AQUA + "You have just unlocked the %STAGE% stage!"
-              .replaceAll("%STAGE%", possibleStage)));
-      GameStageHelper.syncPlayer(e.player);
-    }
-  }
-
-
 }

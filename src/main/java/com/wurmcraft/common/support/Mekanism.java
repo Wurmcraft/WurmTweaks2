@@ -17,6 +17,7 @@ import mekanism.common.recipe.RecipeHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "mekanism")
@@ -41,6 +42,7 @@ public class Mekanism {
   private static NonBlockingHashSet<Object[]> solar;
   private static NonBlockingHashSet<Object[]> box;
 
+  @Method(modid = "mekanism")
   @InitSupport
   public void init() {
     if (enricher == null) {
@@ -105,7 +107,7 @@ public class Mekanism {
     }
   }
 
-
+  @Method(modid = "mekanism")
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] r : enricher) {
@@ -173,25 +175,28 @@ public class Mekanism {
     }
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addEnrichmentChamber(Converter converter, String[] line) {
     enricher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addOsmiumCompressor(Converter converter, String[] line) {
     osmiumCompressor.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addCombiner(Converter converter, String[] line) {
 
     combiner.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addMCrusher(Converter converter, String[] line) {
-
     crusher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
@@ -201,6 +206,7 @@ public class Mekanism {
     purification.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack String Integer")
   public void addMetallurgicInfuser(Converter converter, String[] line) {
     InfuseType type = InfuseRegistry.get(line[2]);
@@ -210,17 +216,20 @@ public class Mekanism {
   }
 
   // TODO Gas Converter
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack GasStack")
   public void addChemicalInfuser(Converter converter, String[] line) {
     chemInfuser.add(new Object[]{converter.convert(line[0]), converter.convert(line[2]),
         converter.convert(line[1])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack ItemStack")
   public void addChemicalOxidizer(Converter converter, String[] line) {
     oxidiser.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack GasStack")
   public void addChemicalInjection(Converter converter, String[] line) {
     chemInjection.add(
@@ -228,6 +237,7 @@ public class Mekanism {
             converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack GasStack Integer")
   public void addElectrolyticSeparator(Converter converter, String[] line) {
     electroSeperator.add(
@@ -236,27 +246,32 @@ public class Mekanism {
 
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack ItemStack Float")
   public void addSawmill(Converter converter, String[] line) {
     sawmill.add(new Object[]{converter.convert(line[1]),
         converter.convert(line[0]), converter.convert(line[2]), Float.parseFloat(line[3])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack ItemStack")
   public void addChemicalDissolution(Converter converter, String[] line) {
     chemicalDissolution.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack")
   public void addChemicalWasher(Converter converter, String[] line) {
     washer.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack GasStack")
   public void addChemicalCrystallizer(Converter converter, String[] line) {
     crystallizer.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack GasStack GasStack FluidStack ItemStack Integer Integer")
   public void addMekPressureChamber(Converter converter, String[] line) {
     pressure.add(new Object[]{converter.convert(line[4]), converter.convert(line[3]),
@@ -265,16 +280,19 @@ public class Mekanism {
         Integer.parseInt(line[6])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack")
   public void addThermalEvaporation(Converter converter, String[] line) {
     thermal.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack")
   public void addSolarNeutron(Converter converter, String[] line) {
     solar.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
   }
 
+  @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack")
   public void addBoxBlacklist(Converter converter, String[] line) {
     box.add(new Object[]{converter.convert(line[0]),

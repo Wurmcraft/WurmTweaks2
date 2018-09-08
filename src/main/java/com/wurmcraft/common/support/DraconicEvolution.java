@@ -12,6 +12,7 @@ import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import java.util.Arrays;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "draconicevolution")
@@ -19,6 +20,7 @@ public class DraconicEvolution {
 
   private static NonBlockingHashSet<SimpleFusionRecipe> fusion;
 
+  @Method(modid = "draconicevolution")
   @InitSupport
   public void init() {
     fusion = new NonBlockingHashSet<>();
@@ -32,6 +34,7 @@ public class DraconicEvolution {
     }
   }
 
+  @Method(modid = "draconicevolution")
   @FinalizeSupport
   public void finalize() {
     for (SimpleFusionRecipe recipe : fusion) {
@@ -39,7 +42,7 @@ public class DraconicEvolution {
     }
   }
 
-
+  @Method(modid = "draconicevolution")
   @ScriptFunction(modid = "draconicevolution", inputFormat = "ItemStack ItemStack Integer Integer ItemStack ...")
   public void addDEFusion(Converter converter, String[] line) {
     fusion.add(

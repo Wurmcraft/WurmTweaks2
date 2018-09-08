@@ -9,6 +9,7 @@ import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import hellfirepvp.astralsorcery.common.crafting.infusion.InfusionRecipeRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "astralsorcery")
@@ -17,6 +18,7 @@ public class AstralSorcery {
   private static NonBlockingHashSet<Object[]> basic;
   private static NonBlockingHashSet<Object[]> slow;
 
+  @Method(modid = "appliedenergistics")
   @InitSupport
   public void init() {
     basic = new NonBlockingHashSet<>();
@@ -29,16 +31,19 @@ public class AstralSorcery {
     }
   }
 
+  @Method(modid = "appliedenergistics")
   @ScriptFunction(modid = "astralsorcery", inputFormat = "ItemStack ItemStack")
   public void addBasicInfusion(Converter converter, String[] line) {
     basic.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
   }
 
+  @Method(modid = "appliedenergistics")
   @ScriptFunction(modid = "astralsorcery", inputFormat = "ItemStack ItemStack")
   public void addSlowInfusion(Converter converter, String[] line) {
     slow.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
   }
 
+  @Method(modid = "appliedenergistics")
   @FinalizeSupport
   public void finishSupport() {
     basic.forEach(recipe -> InfusionRecipeRegistry
