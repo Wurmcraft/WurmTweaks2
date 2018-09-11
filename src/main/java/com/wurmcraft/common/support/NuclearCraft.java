@@ -27,15 +27,15 @@ public class NuclearCraft {
       pressurizer = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllMachineRecipes) {
-//      NCRecipes.Type.PRESSURIZER.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.MANUFACTORY.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.ALLOY_FURNACE.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.CHEMICAL_REACTOR.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.SUPERCOOLER.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.INFUSER.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.INGOT_FORMER.getRecipeHandler().recipes.clear();
-//      NCRecipes.Type.MELTER.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.PRESSURIZER.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.MANUFACTORY.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.ALLOY_FURNACE.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.CHEMICAL_REACTOR.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.SUPERCOOLER.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.INFUSER.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.INGOT_FORMER.getRecipeHandler().recipes.clear();
+      //      NCRecipes.Type.MELTER.getRecipeHandler().recipes.clear();
     } else if (ScriptExecutor.reload) {
       manufactory.clear();
       separator.clear();
@@ -48,39 +48,46 @@ public class NuclearCraft {
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : manufactory) {
-      NCRecipes.Type.MANUFACTORY.getRecipeHandler()
-          .addRecipe(recipe[0], recipe[1], recipe[2]);
+      NCRecipes.Type.MANUFACTORY.getRecipeHandler().addRecipe(recipe[0], recipe[1], recipe[2]);
     }
     for (Object[] recipe : separator) {
-      NCRecipes.Type.ISOTOPE_SEPARATOR.getRecipeHandler()
-          .addRecipe(recipe[0], recipe[1], recipe[2],
-              recipe[3]);
+      NCRecipes.Type.ISOTOPE_SEPARATOR
+          .getRecipeHandler()
+          .addRecipe(recipe[0], recipe[1], recipe[2], recipe[3]);
     }
     for (Object[] recipe : pressurizer) {
-      NCRecipes.Type.PRESSURIZER.getRecipeHandler()
-          .addRecipe(recipe[0], recipe[1], recipe[2]);
+      NCRecipes.Type.PRESSURIZER.getRecipeHandler().addRecipe(recipe[0], recipe[1], recipe[2]);
     }
   }
 
   @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addManufactory(Converter converter, String[] line) {
-    manufactory.add(new Object[]{converter.convert(line[1]), converter.convert(line[0]),
-        Integer.parseInt(line[2])});
+    manufactory.add(
+        new Object[]{
+            converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
+        });
   }
 
   @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack ItemStack Integer")
   public void addIsotopeSeparator(Converter converter, String[] line) {
 
-    separator.add(new Object[]{converter.convert(line[2]), converter.convert(line[0]),
-        converter.convert(line[1]), Integer.parseInt(line[3])});
+    separator.add(
+        new Object[]{
+            converter.convert(line[2]),
+            converter.convert(line[0]),
+            converter.convert(line[1]),
+            Integer.parseInt(line[3])
+        });
   }
 
   @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addPressurizer(Converter converter, String[] line) {
-    pressurizer.add(new Object[]{converter.convert(line[1]), converter.convert(line[0]),
-        Integer.parseInt(line[2])});
+    pressurizer.add(
+        new Object[]{
+            converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
+        });
   }
 }

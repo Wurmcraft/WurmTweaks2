@@ -2,11 +2,10 @@ package com.wurmcraft.common.script.converters;
 
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.DataWrapper;
+import com.wurmcraft.api.script.StackSettings;
 import com.wurmcraft.api.script.anotations.DataConverter;
 import com.wurmcraft.api.script.converter.IDataConverter;
-import com.wurmcraft.api.script.StackSettings;
 import com.wurmcraft.api.script.exceptions.InvalidItemStack;
-
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,12 +25,6 @@ public class StackConverter implements IDataConverter<ItemStack> {
   private NonBlockingHashMap<String, ItemStack> cachedData;
   private Logger log;
 
-
-  @Override
-  public String getName() {
-    return "ItemStack";
-  }
-
   public StackConverter() {
     cachedData = new NonBlockingHashMap<>();
     this.log = WurmTweaks.logger;
@@ -42,6 +35,11 @@ public class StackConverter implements IDataConverter<ItemStack> {
       cachedData = new NonBlockingHashMap<>();
     }
     this.log = WurmTweaks.logger;
+  }
+
+  @Override
+  public String getName() {
+    return "ItemStack";
   }
 
   @Override

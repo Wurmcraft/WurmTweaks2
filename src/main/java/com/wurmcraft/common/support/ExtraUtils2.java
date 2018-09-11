@@ -27,8 +27,8 @@ public class ExtraUtils2 {
     if (ConfigHandler.removeAllMachineRecipes) {
       TileResonator.resonatorRecipes.clear();
       while (XUMachineCrusher.INSTANCE.recipes_registry.iterator().hasNext()) {
-        XUMachineCrusher.INSTANCE.recipes_registry
-            .removeRecipe(XUMachineCrusher.INSTANCE.recipes_registry.iterator().next());
+        XUMachineCrusher.INSTANCE.recipes_registry.removeRecipe(
+            XUMachineCrusher.INSTANCE.recipes_registry.iterator().next());
       }
     } else if (ScriptExecutor.reload) {
       // TODO Remove Recipes
@@ -45,9 +45,8 @@ public class ExtraUtils2 {
     }
     for (Object[] recipe : crusher) {
       if (recipe.length == 4) {
-        XUMachineCrusher
-            .addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1], (ItemStack) recipe[2],
-                (float) recipe[3]);
+        XUMachineCrusher.addRecipe(
+            (ItemStack) recipe[0], (ItemStack) recipe[1], (ItemStack) recipe[2], (float) recipe[3]);
       } else {
         XUMachineCrusher.addRecipe((ItemStack) recipe[0], (ItemStack) recipe[1]);
       }
@@ -57,8 +56,10 @@ public class ExtraUtils2 {
   @Method(modid = "extrautils2")
   @ScriptFunction(modid = "extrautils2", inputFormat = "ItemStack ItemStack Integer")
   public void addResonator(Converter converter, String[] line) {
-    resonator.add(new Object[]{converter.convert(line[1]), converter.convert(line[0]),
-       Integer.parseInt(line[2])});
+    resonator.add(
+        new Object[]{
+            converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
+        });
   }
 
   @Method(modid = "extrautils2")
@@ -67,8 +68,13 @@ public class ExtraUtils2 {
     if (line.length == 2) {
       crusher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
     } else {
-      crusher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0]),
-          converter.convert(line[2]), Float.parseFloat(line[3])});
+      crusher.add(
+          new Object[]{
+              converter.convert(line[1]),
+              converter.convert(line[0]),
+              converter.convert(line[2]),
+              Float.parseFloat(line[3])
+          });
     }
   }
 }

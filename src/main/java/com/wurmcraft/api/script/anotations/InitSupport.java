@@ -14,6 +14,7 @@ public @interface InitSupport {
   EnumInitType initType() default EnumInitType.INIT;
 
   enum EnumInitType {
-    PREINIT, INIT
+    PREINIT,
+    INIT
   }
 }

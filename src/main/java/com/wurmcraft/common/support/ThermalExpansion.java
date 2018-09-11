@@ -92,9 +92,8 @@ public class ThermalExpansion {
     }
     for (Object[] r : pulverizer) {
       if (r.length == 5) {
-        PulverizerManager
-            .addRecipe((int) r[0], (ItemStack) r[1], (ItemStack) r[2], (ItemStack) r[3],
-                (int) r[4]);
+        PulverizerManager.addRecipe(
+            (int) r[0], (ItemStack) r[1], (ItemStack) r[2], (ItemStack) r[3], (int) r[4]);
       } else {
         PulverizerManager.addRecipe((int) r[0], (ItemStack) r[1], (ItemStack) r[2]);
       }
@@ -107,89 +106,127 @@ public class ThermalExpansion {
       }
     }
     for (Object[] r : compactor) {
-      CompactorManager
-          .addRecipe((int) r[0], (ItemStack) r[1], (ItemStack) r[2], (CompactorManager.Mode) r[3]);
+      CompactorManager.addRecipe(
+          (int) r[0], (ItemStack) r[1], (ItemStack) r[2], (CompactorManager.Mode) r[3]);
     }
     for (Object[] r : crucible) {
       CrucibleManager.addRecipe((int) r[0], (ItemStack) r[1], (FluidStack) r[2]);
     }
     for (Object[] r : centerfuge) {
-      CentrifugeManager
-          .addRecipe((int) r[0], (ItemStack) r[1], (List<ItemStack>) r[2], (FluidStack) r[3]);
+      CentrifugeManager.addRecipe(
+          (int) r[0], (ItemStack) r[1], (List<ItemStack>) r[2], (FluidStack) r[3]);
     }
     for (TransposerManager.TransposerRecipe r : fillTransposer) {
-      TransposerManager
-          .addFillRecipe(r.getEnergy(), r.getInput(), r.getOutput(), r.getFluid(), true);
+      TransposerManager.addFillRecipe(
+          r.getEnergy(), r.getInput(), r.getOutput(), r.getFluid(), true);
     }
     for (TransposerManager.TransposerRecipe r : extractTransposer) {
-      TransposerManager
-          .addExtractRecipe(r.getEnergy(), r.getInput(), r.getOutput(), r.getFluid(), r.getChance(),
-              true);
+      TransposerManager.addExtractRecipe(
+          r.getEnergy(), r.getInput(), r.getOutput(), r.getFluid(), r.getChance(), true);
     }
   }
 
   @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer")
   public void addRedstoneFurnace(Converter converter, String[] line) {
-    furnace.add(new Object[]{Integer.parseInt(line[2]), converter.convert(line[1]),
-        converter.convert(line[0])});
-
+    furnace.add(
+        new Object[]{
+            Integer.parseInt(line[2]), converter.convert(line[1]), converter.convert(line[0])
+        });
   }
 
   @Method(modid = "thermalexpansion")
-  @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer ItemStack Integer")
+  @ScriptFunction(
+      modid = "thermalexpansion",
+      inputFormat = "ItemStack ItemStack Integer ItemStack Integer"
+  )
   public void addPulverizer(Converter converter, String[] line) {
-    pulverizer.add(new Object[]{Integer.parseInt(line[2]), converter.convert(line[1]),
-        converter.convert(line[0]), converter.convert(line[3]),
-        Integer.parseInt(line[4])});
-
+    pulverizer.add(
+        new Object[]{
+            Integer.parseInt(line[2]),
+            converter.convert(line[1]),
+            converter.convert(line[0]),
+            converter.convert(line[3]),
+            Integer.parseInt(line[4])
+        });
   }
 
   @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer")
   public void addTESawmill(Converter converter, String[] line) {
-    sawmill.add(new Object[]{Integer.parseInt(line[2]), converter.convert(line[1]),
-        converter.convert(line[0])});
+    sawmill.add(
+        new Object[]{
+            Integer.parseInt(line[2]), converter.convert(line[1]), converter.convert(line[0])
+        });
   }
 
   @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack ItemStack Integer")
   public void addSmelter(Converter converter, String[] line) {
-    smelter.add(new Object[]{Integer.parseInt(line[3]), converter.convert(line[1]),
-        converter.convert(line[2]), converter.convert(line[0])});
+    smelter.add(
+        new Object[]{
+            Integer.parseInt(line[3]),
+            converter.convert(line[1]),
+            converter.convert(line[2]),
+            converter.convert(line[0])
+        });
   }
 
   @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer String")
   public void addCompactor(Converter converter, String[] line) {
-    compactor.add(new Object[]{Integer.parseInt(line[2]), converter.convert(line[1]),
-        converter.convert(line[0]), getMode(line[3])});
+    compactor.add(
+        new Object[]{
+            Integer.parseInt(line[2]),
+            converter.convert(line[1]),
+            converter.convert(line[0]),
+            getMode(line[3])
+        });
   }
 
   @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "FluidStack ItemStack Integer")
   public void addMagmaCrucible(Converter converter, String[] line) {
-    crucible.add(new Object[]{Integer.parseInt(line[2]), converter.convert(line[1]),
-        converter.convert(line[0])});
+    crucible.add(
+        new Object[]{
+            Integer.parseInt(line[2]), converter.convert(line[1]), converter.convert(line[0])
+        });
   }
 
   @Method(modid = "thermalexpansion")
-  @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack Integer FluidStack", typeData = "Centerfuge", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "thermalexpansion",
+      inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack Integer FluidStack",
+      typeData = "Centerfuge",
+      type = FunctionType.Linked
+  )
   public void addTECenterfuge(Converter converter, String[] line) {
-    centerfuge.add(new Object[]{Integer.parseInt(line[5]), converter.convert(line[4]),
-        Arrays.asList(converter.convert(line[0]), converter.convert(line[1]),
-            converter.convert(line[2]), converter.convert(line[3])),
-        converter.convert(line[6])});
+    centerfuge.add(
+        new Object[]{
+            Integer.parseInt(line[5]),
+            converter.convert(line[4]),
+            Arrays.asList(
+                converter.convert(line[0]),
+                converter.convert(line[1]),
+                converter.convert(line[2]),
+                converter.convert(line[3])),
+            converter.convert(line[6])
+        });
   }
 
   @Method(modid = "thermalexpansion")
-  @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack FluidStack Integer String Integer")
+  @ScriptFunction(
+      modid = "thermalexpansion",
+      inputFormat = "ItemStack ItemStack FluidStack Integer String Integer"
+  )
   public void addFluidTransposer(Converter converter, String[] line) {
-    TransposerManager.TransposerRecipe recipe = new TransposerManager.TransposerRecipe(
-        (ItemStack) converter.convert(line[1]),
-        (ItemStack) converter.convert(line[0]), (FluidStack) converter.convert(line[2]),
-        Integer.parseInt(line[3]),
-        line.length == 6 ? Integer.parseInt(line[5]) : 0);
+    TransposerManager.TransposerRecipe recipe =
+        new TransposerManager.TransposerRecipe(
+            (ItemStack) converter.convert(line[1]),
+            (ItemStack) converter.convert(line[0]),
+            (FluidStack) converter.convert(line[2]),
+            Integer.parseInt(line[3]),
+            line.length == 6 ? Integer.parseInt(line[5]) : 0);
     if (line[4].matches("[eE]xtract")) {
       extractTransposer.add(recipe);
     } else if (line[4].matches("[fF]ill")) {

@@ -17,12 +17,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.lwjgl.opengl.Display;
 
-
 public class ClientProxy extends CommonProxy {
 
   private static void createModel(Item item, int meta, String name) {
-    ModelLoader.setCustomModelResourceLocation(item, meta,
-        new ModelResourceLocation(Global.MODID + ":" + name, "inventory"));
+    ModelLoader.setCustomModelResourceLocation(
+        item, meta, new ModelResourceLocation(Global.MODID + ":" + name, "inventory"));
   }
 
   @Override
@@ -67,8 +66,8 @@ public class ClientProxy extends CommonProxy {
     for (int index = 0; index < metaItems.length; index++) {
       createModel(WurmTweaksItems.itemMeta, index, metaItems[index]);
     }
-    createModel(Item.getItemFromBlock(WurmTweaksBlocks.transparentAluminum), 0,
-        "transparentAluminum");
+    createModel(
+        Item.getItemFromBlock(WurmTweaksBlocks.transparentAluminum), 0, "transparentAluminum");
     createModel(Item.getItemFromBlock(WurmTweaksBlocks.stoneMagic), 0, "stoneMagic");
     createModel(Item.getItemFromBlock(WurmTweaksBlocks.logMagic), 0, "logMagic");
   }

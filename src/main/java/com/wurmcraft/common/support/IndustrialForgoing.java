@@ -81,8 +81,8 @@ public class IndustrialForgoing {
   @Method(modid = "industrialforegoing")
   @ScriptFunction(modid = "industrialforegoing", inputFormat = "ItemStack Integer")
   public void addSludgeRefiner(Converter converter, String[] line) {
-    sludge
-        .add(new SludgeEntry((ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])));
+    sludge.add(
+        new SludgeEntry((ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])));
   }
 
   @Method(modid = "industrialforegoing")
@@ -92,10 +92,17 @@ public class IndustrialForgoing {
   }
 
   @Method(modid = "industrialforegoing")
-  @ScriptFunction(modid = "industrialforegoing", inputFormat = "ItemStack Integer Integer", typeData = "Laser", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "industrialforegoing",
+      inputFormat = "ItemStack Integer Integer",
+      typeData = "Laser",
+      type = FunctionType.Linked
+  )
   public void addLaser(Converter converter, String[] line) {
     laser.add(
-        new LaserDrillEntry(Integer.parseInt(line[1]), (ItemStack) converter.convert(line[0], 1),
+        new LaserDrillEntry(
+            Integer.parseInt(line[1]),
+            (ItemStack) converter.convert(line[0], 1),
             Integer.parseInt(line[2])));
   }
 }

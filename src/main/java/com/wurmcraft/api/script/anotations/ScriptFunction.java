@@ -1,6 +1,5 @@
 package com.wurmcraft.api.script.anotations;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -27,6 +26,8 @@ public @interface ScriptFunction {
   String[] guiVar() default {"wurmtweaks2", "-1"};
 
   enum FunctionType {
-    Standard, Custom, Linked
+    Custom,
+    Linked,
+    Standard
   }
 }

@@ -43,13 +43,17 @@ public class DraconicEvolution {
   }
 
   @Method(modid = "draconicevolution")
-  @ScriptFunction(modid = "draconicevolution", inputFormat = "ItemStack ItemStack Integer Integer ItemStack ...")
+  @ScriptFunction(
+      modid = "draconicevolution",
+      inputFormat = "ItemStack ItemStack Integer Integer ItemStack ..."
+  )
   public void addDEFusion(Converter converter, String[] line) {
     fusion.add(
-        new SimpleFusionRecipe((ItemStack) converter.convert(line[0]),
+        new SimpleFusionRecipe(
+            (ItemStack) converter.convert(line[0]),
             (ItemStack) converter.convert(line[1]),
-            Integer.parseInt(line[3]), Integer.parseInt(line[2]), converter.getBulkItemsAsList(
-            Arrays.copyOfRange(line, 3, line.length))));
+            Integer.parseInt(line[3]),
+            Integer.parseInt(line[2]),
+            converter.getBulkItemsAsList(Arrays.copyOfRange(line, 3, line.length))));
   }
-
 }

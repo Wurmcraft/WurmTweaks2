@@ -108,6 +108,7 @@ processResources {
 
 spotless {
     java {
+        googleJavaFormat()
         removeUnusedImports()
         indentWithSpaces()
         trimTrailingWhitespace()

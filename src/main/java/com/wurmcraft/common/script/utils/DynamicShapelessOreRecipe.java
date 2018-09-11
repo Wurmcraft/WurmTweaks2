@@ -12,24 +12,21 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 // TODO NBT Support
 public class DynamicShapelessOreRecipe extends ShapelessOreRecipe {
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
-      Block result, Object... recipe) {
+  public DynamicShapelessOreRecipe(ResourceLocation group, Block result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
-      Item result, Object... recipe) {
+  public DynamicShapelessOreRecipe(ResourceLocation group, Item result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
-      NonNullList<Ingredient> input,
-      @Nonnull ItemStack result) {
+  public DynamicShapelessOreRecipe(
+      ResourceLocation group, NonNullList<Ingredient> input, @Nonnull ItemStack result) {
     super(group, input, result);
   }
 
-  public DynamicShapelessOreRecipe(ResourceLocation group,
-      @Nonnull ItemStack result, Object... recipe) {
+  public DynamicShapelessOreRecipe(
+      ResourceLocation group, @Nonnull ItemStack result, Object... recipe) {
     super(group, result, recipe);
   }
 
@@ -37,5 +34,4 @@ public class DynamicShapelessOreRecipe extends ShapelessOreRecipe {
   public boolean isDynamic() {
     return true;
   }
-
 }

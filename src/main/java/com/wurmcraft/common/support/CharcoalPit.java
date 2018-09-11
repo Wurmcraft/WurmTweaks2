@@ -34,9 +34,13 @@ public class CharcoalPit {
   @Method(modid = "charcoal_pit")
   @ScriptFunction(modid = "charcoal_pit", inputFormat = "ItemStack ItemStack")
   public void addBloomery(Converter converter, String[] line) {
-    bloomery.add(new OreSmeltingRecipes.AlloyRecipe(converter.convert(line[0], 1),
-        ((ItemStack) converter.convert(line[0], 1)).getCount(), true, true,
-        (ItemStack) converter.convert((line[1]))));
+    bloomery.add(
+        new OreSmeltingRecipes.AlloyRecipe(
+            converter.convert(line[0], 1),
+            ((ItemStack) converter.convert(line[0], 1)).getCount(),
+            true,
+            true,
+            (ItemStack) converter.convert((line[1]))));
   }
 
   @Method(modid = "charcoal_pit")
@@ -44,5 +48,4 @@ public class CharcoalPit {
   public void finishSupport() {
     bloomery.forEach(OreSmeltingRecipes::addAlloyRecipe);
   }
-
 }

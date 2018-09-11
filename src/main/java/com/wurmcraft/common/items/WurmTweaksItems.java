@@ -9,7 +9,8 @@ public class WurmTweaksItems {
   public static Item itemMeta;
 
   public static void register() {
-    register(itemMeta = new ItemMeta(ConfigHandler.metaItems.replaceAll(" ", "").split(",")),
+    register(
+        itemMeta = new ItemMeta(ConfigHandler.metaItems.replaceAll(" ", "").split(",")),
         "itemMeta");
   }
 

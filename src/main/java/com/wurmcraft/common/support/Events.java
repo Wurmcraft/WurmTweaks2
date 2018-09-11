@@ -32,18 +32,18 @@ public class Events {
   // Drop
   public static NonBlockingHashSet<ItemStack> drops = new NonBlockingHashSet<>();
   // Pickup Conversion
-  private static NonBlockingHashMap<ItemStack, ItemStack> dropPickupEvent = new NonBlockingHashMap<>();
+  private static NonBlockingHashMap<ItemStack, ItemStack> dropPickupEvent =
+      new NonBlockingHashMap<>();
   private static NonBlockingHashSet<Item> pickupQuick = new NonBlockingHashSet<>();
 
-
   private static boolean isSameIgnoreSize(ItemStack a, ItemStack b) {
-    return a.getItem().equals(b.getItem()) && a.getTagCompound() == b.getTagCompound() && (
-        (a.getItemDamage() == b.getItemDamage()) || a.getItemDamage() == Short.MAX_VALUE);
+    return a.getItem().equals(b.getItem())
+        && a.getTagCompound() == b.getTagCompound()
+        && ((a.getItemDamage() == b.getItemDamage()) || a.getItemDamage() == Short.MAX_VALUE);
   }
 
   @FinalizeSupport
   public void finishSupport() {
-
   }
 
   @InitSupport
@@ -72,8 +72,9 @@ public class Events {
   @SubscribeEvent
   @SideOnly(value = Side.CLIENT)
   public void onRenderTooltip(ItemTooltipEvent e) {
-    if (tooltipQuick.size() > 0 && tooltips.size() > 0 && tooltipQuick
-        .contains(e.getItemStack().getItem())) {
+    if (tooltipQuick.size() > 0
+        && tooltips.size() > 0
+        && tooltipQuick.contains(e.getItemStack().getItem())) {
       for (Object[] data : tooltips) {
         if (isSameIgnoreSize((ItemStack) data[0], e.getItemStack())) {
           e.getToolTip().addAll(Arrays.asList(((String[]) data[1])));
@@ -106,17 +107,19 @@ public class Events {
     dropPickupEvent.put(theStack, (ItemStack) converter.convert(line[1]));
   }
 
-
   @SubscribeEvent
   public void onPickupEvent(EntityItemPickupEvent e) {
-    if (pickupQuick.size() > 0 && dropPickupEvent.size() > 0 && pickupQuick
-        .contains(e.getItem().getItem().getItem())) {
+    if (pickupQuick.size() > 0
+        && dropPickupEvent.size() > 0
+        && pickupQuick.contains(e.getItem().getItem().getItem())) {
       for (ItemStack item : dropPickupEvent.keySet()) {
         if (isSameIgnoreSize(item, e.getItem().getItem())) {
           e.getItem().setPickupDelay(1);
           e.getItem().setDead();
-          e.getEntityPlayer().inventory.addItemStackToInventory(
-              convertToCorrect(e.getItem().getItem(), dropPickupEvent.get(item)));
+          e.getEntityPlayer()
+              .inventory
+              .addItemStackToInventory(
+                  convertToCorrect(e.getItem().getItem(), dropPickupEvent.get(item)));
         }
       }
     }

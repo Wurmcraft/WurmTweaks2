@@ -1,6 +1,5 @@
 package com.wurmcraft.common.support;
 
-
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
@@ -37,6 +36,12 @@ public class Minecraft {
   public static NonBlockingHashSet<OreEntry> scriptOreEntry;
   public static NonBlockingHashSet<BrewingOreRecipe> scriptBrewing;
 
+  private static List<ItemStack> createList(ItemStack... stack) {
+    List<ItemStack> list = new ArrayList<>();
+    Collections.addAll(list, stack);
+    return list;
+  }
+
   @InitSupport
   public void init() {
     scriptRecipes = new NonBlockingHashSet<>();
@@ -47,8 +52,8 @@ public class Minecraft {
       removeRecipes();
       scriptRecipes.clear();
       scriptOreEntry.clear();
-      WurmTweaks.logger
-          .warn("OreDictionary entries have not been reloaded. (Old ones will still exist)");
+      WurmTweaks.logger.warn(
+          "OreDictionary entries have not been reloaded. (Old ones will still exist)");
       // TODO Remove Furnace, OreDict, Brewing Recipes on Reload
       scriptFurnace.clear();
       scriptBrewing.clear();
@@ -84,17 +89,20 @@ public class Minecraft {
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack/OreDictionary ...")
   public void addShapeless(Converter converter, String[] line) {
-    Object[] shapelessInputs = RecipeUtils
-        .getShapelessItems(Arrays.copyOfRange(line, 1, line.length), converter);
-    scriptRecipes.add(RecipeUtils
-        .createShapelessRecipe((ItemStack) converter.convert(line[0], 1), shapelessInputs));
+    Object[] shapelessInputs =
+        RecipeUtils.getShapelessItems(Arrays.copyOfRange(line, 1, line.length), converter);
+    scriptRecipes.add(
+        RecipeUtils.createShapelessRecipe(
+            (ItemStack) converter.convert(line[0], 1), shapelessInputs));
   }
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ***")
   public void addShaped(Converter converter, String[] line) {
     if (line.length >= 2) {
-      scriptRecipes.add(RecipeUtils.createShapedRecipe((ItemStack) converter.convert(line[0], 1),
-          RecipeUtils.getShapedRecipe(line).toArray()));
+      scriptRecipes.add(
+          RecipeUtils.createShapedRecipe(
+              (ItemStack) converter.convert(line[0], 1),
+              RecipeUtils.getShapedRecipe(line).toArray()));
     } else {
       WurmTweaks.logger.error("Invalid Shaped Format '" + Strings.join(line, " ") + "'");
     }
@@ -107,27 +115,27 @@ public class Minecraft {
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack/OreDictionary")
   public void addFurnace(Converter converter, String[] input) {
-    Object inputObject =  converter.convert(input[1], 1);
-    if(inputObject instanceof Ingredient) {
-    scriptFurnace.add(new FurnaceRecipe((ItemStack) converter.convert(input[0], 0),
-        (Ingredient) inputObject, 1));
-    } else if(inputObject instanceof ItemStack) {
-      scriptFurnace.add(new FurnaceRecipe((ItemStack) converter.convert(input[0], 0),
-          new IngredientWrapper((ItemStack) inputObject), 1));
+    Object inputObject = converter.convert(input[1], 1);
+    if (inputObject instanceof Ingredient) {
+      scriptFurnace.add(
+          new FurnaceRecipe(
+              (ItemStack) converter.convert(input[0], 0), (Ingredient) inputObject, 1));
+    } else if (inputObject instanceof ItemStack) {
+      scriptFurnace.add(
+          new FurnaceRecipe(
+              (ItemStack) converter.convert(input[0], 0),
+              new IngredientWrapper((ItemStack) inputObject),
+              1));
     }
   }
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack ItemStack")
   public void addBrewing(Converter converter, String[] input) {
-    scriptBrewing.add(new BrewingOreRecipe((ItemStack) converter.convert(input[0], 1),
-        createList((ItemStack) converter.convert(input[2])),
-        (ItemStack) converter.convert(input[1])));
-  }
-
-  private static List<ItemStack> createList(ItemStack... stack) {
-    List<ItemStack> list = new ArrayList<>();
-    Collections.addAll(list, stack);
-    return list;
+    scriptBrewing.add(
+        new BrewingOreRecipe(
+            (ItemStack) converter.convert(input[0], 1),
+            createList((ItemStack) converter.convert(input[2])),
+            (ItemStack) converter.convert(input[1])));
   }
 
   private void removeRecipes() {
@@ -136,16 +144,19 @@ public class Minecraft {
     if (ConfigHandler.removeAllRecipes) {
       FurnaceRecipes.instance().getSmeltingList().clear();
       for (IRecipe recipe : recipes.getValues()) {
-        if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
-            .getResourceDomain())) {
+        if (canRemove(
+            Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
+                .getResourceDomain())) {
           recipes.remove(recipe.getRegistryName());
           recipes.register(new InvalidRecipe(recipe));
         }
       }
     } else {
       for (IRecipe recipe : recipes.getValues()) {
-        if (canRemove(Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
-            .getResourceDomain()) && scriptRecipes.contains(recipe)) {
+        if (canRemove(
+            Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
+                .getResourceDomain())
+            && scriptRecipes.contains(recipe)) {
           recipes.remove(recipe.getRegistryName());
           recipes.register(new InvalidRecipe(recipe));
         }
@@ -192,5 +203,4 @@ public class Minecraft {
       this.values = values;
     }
   }
-
 }

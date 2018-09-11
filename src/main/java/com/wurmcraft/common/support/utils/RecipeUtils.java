@@ -15,7 +15,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
-
 public class RecipeUtils {
 
   public static final ResourceLocation RECIPE_GROUP = new ResourceLocation(Global.MODID, "Recipes");
@@ -39,8 +38,8 @@ public class RecipeUtils {
   }
 
   private static void invalidItemStack(String line) {
-    WurmTweaks.logger
-        .error("Unable to convert '" + line + "' into an ItemStack or OreDictionary Entry!");
+    WurmTweaks.logger.error(
+        "Unable to convert '" + line + "' into an ItemStack or OreDictionary Entry!");
   }
 
   public static IRecipe createShapelessRecipe(ItemStack output, Object[] input) {
@@ -54,7 +53,6 @@ public class RecipeUtils {
     recipe.setRegistryName(Global.MODID, output.toString() + Arrays.hashCode(input));
     return recipe;
   }
-
 
   private static boolean validIngredient(Ingredient ingredient) {
     for (ItemStack stack : ingredient.getMatchingStacks()) {
@@ -191,5 +189,4 @@ public class RecipeUtils {
     }
     return Ingredient.EMPTY;
   }
-
 }

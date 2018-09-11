@@ -20,7 +20,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
-
 @Support(modid = "bloodmagic")
 public class BloodMagic {
 
@@ -28,7 +27,6 @@ public class BloodMagic {
   private static NonBlockingHashSet<Object[]> array;
   private static NonBlockingHashSet<Object[]> forge;
   private static NonBlockingHashSet<Object[]> table;
-
 
   @Method(modid = "bloodmagic")
   @InitSupport
@@ -40,30 +38,30 @@ public class BloodMagic {
       table = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllMachineRecipes) {
-      for (RecipeAlchemyArray array : BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .getAlchemyArrayRecipes()) {
+      for (RecipeAlchemyArray array :
+          BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes()) {
         for (ItemStack input : array.getInput().getMatchingStacks()) {
           for (ItemStack cat : array.getCatalyst().getMatchingStacks()) {
             BloodMagicAPI.INSTANCE.getRecipeRegistrar().removeAlchemyArray(input, cat);
           }
         }
       }
-      for (RecipeBloodAltar recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .getAltarRecipes()) {
+      for (RecipeBloodAltar recipe :
+          BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes()) {
         for (ItemStack input : recipe.getInput().getMatchingStacks()) {
           BloodMagicAPI.INSTANCE.getRecipeRegistrar().removeBloodAltar(input);
         }
       }
-      for (RecipeTartaricForge recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .getTartaricForgeRecipes()) {
+      for (RecipeTartaricForge recipe :
+          BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes()) {
         for (Ingredient input : recipe.getInput()) {
           for (ItemStack stack : input.getMatchingStacks()) {
             BloodMagicAPI.INSTANCE.getRecipeRegistrar().removeTartaricForge(stack);
           }
         }
       }
-      for (RecipeAlchemyTable recipe : BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .getAlchemyRecipes()) {
+      for (RecipeAlchemyTable recipe :
+          BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyRecipes()) {
         for (Ingredient input : recipe.getInput()) {
           for (ItemStack stack : input.getMatchingStacks()) {
             BloodMagicAPI.INSTANCE.getRecipeRegistrar().removeAlchemyTable(stack);
@@ -83,60 +81,98 @@ public class BloodMagic {
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : altar) {
-      BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .addBloodAltar((Ingredient) recipe[0], (ItemStack) recipe[1], (int) recipe[2],
-              (int) recipe[3], (int) recipe[4], (int) recipe[5]);
+      BloodMagicAPI.INSTANCE
+          .getRecipeRegistrar()
+          .addBloodAltar(
+              (Ingredient) recipe[0],
+              (ItemStack) recipe[1],
+              (int) recipe[2],
+              (int) recipe[3],
+              (int) recipe[4],
+              (int) recipe[5]);
     }
     for (Object[] recipe : array) {
-      BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .addAlchemyArray((Ingredient) recipe[0], (Ingredient) recipe[1], (ItemStack) recipe[2],
-              null);
+      BloodMagicAPI.INSTANCE
+          .getRecipeRegistrar()
+          .addAlchemyArray(
+              (Ingredient) recipe[0], (Ingredient) recipe[1], (ItemStack) recipe[2], null);
     }
     for (Object[] recipe : forge) {
-      BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .addTartaricForge((ItemStack) recipe[0], (float) recipe[1], (float) recipe[2],
-              (ItemStack[]) recipe[3]);
+      BloodMagicAPI.INSTANCE
+          .getRecipeRegistrar()
+          .addTartaricForge(
+              (ItemStack) recipe[0], (float) recipe[1], (float) recipe[2], (ItemStack[]) recipe[3]);
     }
     for (Object[] recipe : table) {
-      BloodMagicAPI.INSTANCE.getRecipeRegistrar()
-          .addAlchemyTable((ItemStack) recipe[0], (int) recipe[1], (int) recipe[2], (int) recipe[3],
+      BloodMagicAPI.INSTANCE
+          .getRecipeRegistrar()
+          .addAlchemyTable(
+              (ItemStack) recipe[0],
+              (int) recipe[1],
+              (int) recipe[2],
+              (int) recipe[3],
               (Ingredient[]) recipe[4]);
     }
   }
 
   @Method(modid = "bloodmagic")
-  @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack ItemStack Integer Integer Integer Integer")
+  @ScriptFunction(
+      modid = "bloodmagic",
+      inputFormat = "ItemStack ItemStack Integer Integer Integer Integer"
+  )
   public void addAltar(Converter converter, String[] line) {
-    altar.add(new Object[]{
-        new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
-        converter.convert(line[0]),
-        Integer.parseInt(line[2]), Integer.parseInt(line[3]), Integer.parseInt(line[4]),
-        Integer.parseInt(line[5])});
+    altar.add(
+        new Object[]{
+            new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
+            converter.convert(line[0]),
+            Integer.parseInt(line[2]),
+            Integer.parseInt(line[3]),
+            Integer.parseInt(line[4]),
+            Integer.parseInt(line[5])
+        });
   }
 
   @Method(modid = "bloodmagic")
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack ItemStack ItemStack")
   public void addAlchemyArray(Converter converter, String[] line) {
-    array.add(new Object[]{new IngredientWrapper((ItemStack) converter.convert(line[2], 1)),
-        new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
-        converter.convert(line[0]), null});
+    array.add(
+        new Object[]{
+            new IngredientWrapper((ItemStack) converter.convert(line[2], 1)),
+            new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
+            converter.convert(line[0]),
+            null
+        });
   }
 
   @Method(modid = "bloodmagic")
-  @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack Float Float ItemStack/OreDictionary ...")
+  @ScriptFunction(
+      modid = "bloodmagic",
+      inputFormat = "ItemStack Float Float ItemStack/OreDictionary ..."
+  )
   public void addSoulForge(Converter converter, String[] line) {
     forge.add(
-        new Object[]{converter.convert(line[0]), Float.parseFloat(line[2]),
+        new Object[]{
+            converter.convert(line[0]),
+            Float.parseFloat(line[2]),
             Float.parseFloat(line[1]),
-            converter.getBulkItemsAsList(Arrays.copyOfRange(line, 3, line.length))});
+            converter.getBulkItemsAsList(Arrays.copyOfRange(line, 3, line.length))
+        });
   }
 
   @Method(modid = "bloodmagic")
-  @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack Integer Integer Integer ItemStack/OreDictionary ...")
+  @ScriptFunction(
+      modid = "bloodmagic",
+      inputFormat = "ItemStack Integer Integer Integer ItemStack/OreDictionary ..."
+  )
   public void addTable(Converter converter, String[] line) {
-    table.add(new Object[]{converter.convert(line[0], 1), Integer.parseInt(line[1]),
-        Integer.parseInt(line[2]), Integer.parseInt(line[3]),
-        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 4, line.length)).toArray(
-            new Ingredient[0])});
+    table.add(
+        new Object[]{
+            converter.convert(line[0], 1),
+            Integer.parseInt(line[1]),
+            Integer.parseInt(line[2]),
+            Integer.parseInt(line[3]),
+            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 4, line.length))
+                .toArray(new Ingredient[0])
+        });
   }
 }

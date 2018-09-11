@@ -37,10 +37,14 @@ public class Avaritia {
       AvaritiaRecipeManager.EXTREME_RECIPES.clear();
       AvaritiaRecipeManager.COMPRESSOR_RECIPES.clear();
     } else if (ScriptExecutor.reload) {
-      shaped.stream().map(Impl::getRegistryName)
+      shaped
+          .stream()
+          .map(Impl::getRegistryName)
           .forEach(AvaritiaRecipeManager.EXTREME_RECIPES::remove);
       shaped.clear();
-      shapeless.stream().map(Impl::getRegistryName)
+      shapeless
+          .stream()
+          .map(Impl::getRegistryName)
           .forEach(AvaritiaRecipeManager.EXTREME_RECIPES::remove);
       shapeless.clear();
       compressor.forEach(AvaritiaRecipeManager.COMPRESSOR_RECIPES::remove);
@@ -50,39 +54,61 @@ public class Avaritia {
 
   @ScriptFunction(modid = "avaritia")
   public void addShapedExtreme(Converter converter, String[] line) {
-    shaped.add(new ExtremeShapedRecipe((ItemStack) converter.convert(line[0]),
-        CraftingHelper.parseShaped(RecipeUtils.getShapedRecipe(line).toArray(new Object[0]))));
+    shaped.add(
+        new ExtremeShapedRecipe(
+            (ItemStack) converter.convert(line[0]),
+            CraftingHelper.parseShaped(RecipeUtils.getShapedRecipe(line).toArray(new Object[0]))));
   }
 
   @ScriptFunction(modid = "avaritia", inputFormat = "ItemStack ItemStack/OreDictionary ...")
   public void addShapelessExtreme(Converter converter, String[] line) {
-    shapeless.add(new ExtremeShapelessRecipe(
-        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
-        (ItemStack) converter.convert(line[0])));
+    shapeless.add(
+        new ExtremeShapelessRecipe(
+            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)),
+            (ItemStack) converter.convert(line[0])));
   }
 
   @ScriptFunction(modid = "avaritia")
   public void addCompression(Converter converter, String[] line) {
     compressor.add(
-        new CompressorRecipe(((ItemStack) converter.convert(line[0])),
-            ((ItemStack) converter.convert(line[1])).getCount(), false,
+        new CompressorRecipe(
+            ((ItemStack) converter.convert(line[0])),
+            ((ItemStack) converter.convert(line[1])).getCount(),
+            false,
             RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, 1))));
   }
 
   @FinalizeSupport
   public void finishSupport() {
-    shaped.forEach(recipe -> AvaritiaRecipeManager.EXTREME_RECIPES.put(new ResourceLocation(
-        Global.MODID,
-        recipe.getRecipeOutput().toString() + (recipe.getRecipeOutput().hasTagCompound() ? recipe
-            .getRecipeOutput().getTagCompound() : "")), recipe));
+    shaped.forEach(
+        recipe ->
+            AvaritiaRecipeManager.EXTREME_RECIPES.put(
+                new ResourceLocation(
+                    Global.MODID,
+                    recipe.getRecipeOutput().toString()
+                        + (recipe.getRecipeOutput().hasTagCompound()
+                        ? recipe.getRecipeOutput().getTagCompound()
+                        : "")),
+                recipe));
     shapeless.forEach(
-        recipe -> AvaritiaRecipeManager.EXTREME_RECIPES.put(new ResourceLocation(Global.MODID,
-            recipe.getRecipeOutput().toString() + (recipe.getRecipeOutput().hasTagCompound()
-                ? recipe
-                .getRecipeOutput().getTagCompound() : "")), recipe));
+        recipe ->
+            AvaritiaRecipeManager.EXTREME_RECIPES.put(
+                new ResourceLocation(
+                    Global.MODID,
+                    recipe.getRecipeOutput().toString()
+                        + (recipe.getRecipeOutput().hasTagCompound()
+                        ? recipe.getRecipeOutput().getTagCompound()
+                        : "")),
+                recipe));
     compressor.forEach(
-        recipe -> AvaritiaRecipeManager.COMPRESSOR_RECIPES.put(new ResourceLocation(Global.MODID,
-            recipe.getResult().toString() + (recipe.getResult().hasTagCompound() ? recipe
-                .getResult().getTagCompound() : "")), recipe));
+        recipe ->
+            AvaritiaRecipeManager.COMPRESSOR_RECIPES.put(
+                new ResourceLocation(
+                    Global.MODID,
+                    recipe.getResult().toString()
+                        + (recipe.getResult().hasTagCompound()
+                        ? recipe.getResult().getTagCompound()
+                        : "")),
+                recipe));
   }
 }

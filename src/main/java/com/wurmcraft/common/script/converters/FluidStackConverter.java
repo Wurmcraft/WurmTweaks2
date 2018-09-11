@@ -1,6 +1,5 @@
 package com.wurmcraft.common.script.converters;
 
-
 import com.wurmcraft.WurmTweaks;
 import com.wurmcraft.api.script.DataWrapper;
 import com.wurmcraft.api.script.StackSettings;
@@ -40,8 +39,10 @@ public class FluidStackConverter implements IDataConverter<FluidStack> {
   @Override
   public int getDataSize(String data) {
     if (data.contains(StackSettings.STACKSIZE.getData())) {
-      String fluidSize = data.substring(data.indexOf(StackSettings.FLUID.getData()) + 1,
-          data.indexOf(StackSettings.STACKSIZE.getData()));
+      String fluidSize =
+          data.substring(
+              data.indexOf(StackSettings.FLUID.getData()) + 1,
+              data.indexOf(StackSettings.STACKSIZE.getData()));
       try {
         return Integer.parseInt(fluidSize);
       } catch (NumberFormatException e) {
@@ -53,10 +54,13 @@ public class FluidStackConverter implements IDataConverter<FluidStack> {
 
   @Override
   public DataWrapper getName(String data) {
-    if (data.contains(StackSettings.START.getData()) && data
-        .contains(StackSettings.END.getData()) && data.contains(StackSettings.FLUID.getData())) {
-      String name = data.substring(data.indexOf(StackSettings.STACKSIZE.getData()) + 1,
-          data.indexOf(StackSettings.END.getData()));
+    if (data.contains(StackSettings.START.getData())
+        && data.contains(StackSettings.END.getData())
+        && data.contains(StackSettings.FLUID.getData())) {
+      String name =
+          data.substring(
+              data.indexOf(StackSettings.STACKSIZE.getData()) + 1,
+              data.indexOf(StackSettings.END.getData()));
       return new DataWrapper("N/A", name);
     }
     return new DataWrapper("null", "null");
@@ -90,9 +94,12 @@ public class FluidStackConverter implements IDataConverter<FluidStack> {
 
   @Override
   public String toString(FluidStack data) {
-    return StackSettings.START.getData() + StackSettings.FLUID.getData() + data.amount
-        + StackSettings.STACKSIZE.getData() + data
-        .getUnlocalizedName().substring(5) + StackSettings.END.getData();
+    return StackSettings.START.getData()
+        + StackSettings.FLUID.getData()
+        + data.amount
+        + StackSettings.STACKSIZE.getData()
+        + data.getUnlocalizedName().substring(5)
+        + StackSettings.END.getData();
   }
 
   @Override

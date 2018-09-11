@@ -12,8 +12,6 @@ import com.wurmcraft.common.support.Minecraft.OreEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -28,11 +26,6 @@ public class OreDictConverter implements IDataConverter<Ingredient> {
   private static NonBlockingHashMap<String, Ingredient> cachedData;
   private Logger log;
 
-  @Override
-  public String getName() {
-    return "OreDictionary";
-  }
-
   public OreDictConverter() {
     cachedData = new NonBlockingHashMap<>();
     this.log = WurmTweaks.logger;
@@ -43,6 +36,11 @@ public class OreDictConverter implements IDataConverter<Ingredient> {
       cachedData = new NonBlockingHashMap<>();
     }
     this.log = WurmTweaks.logger;
+  }
+
+  @Override
+  public String getName() {
+    return "OreDictionary";
   }
 
   @Override

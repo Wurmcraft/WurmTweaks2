@@ -1,0 +1,17 @@
+addBotanicMiner('<minecraft:apple> 1900 1900 0')
+addBotanicMiner('<minecraft:apple> 1900 1900 1')
+addBotanicMiner('<minecraft:apple> 1900 1900 2')
+addBotanicMiner('<minecraft:apple> 1900 1900 3')
+addBotanicMiner('<minecraft:apple> 1900 1900 15')
+
+addResourceMiner('<minecraft:apple> 1900 1900 15')
+addResourceMiner('<minecraft:apple> 1900 1900 6')
+addResourceMiner('<minecraft:apple> 1900 1900 12')
+addResourceMiner('<minecraft:apple> 1900 1900 8')
+addResourceMiner('<minecraft:apple> 1900 1900 12')
+
+addOreMiner('<minecraft:apple> 1900 1900 10')
+addOreMiner('<minecraft:apple> 1900 1900 0')
+addOreMiner('<minecraft:apple> 1900 1900 5')
+addOreMiner('<minecraft:apple> 1900 1900 9')
+addOreMiner('<minecraft:apple> 1900 1900 10')

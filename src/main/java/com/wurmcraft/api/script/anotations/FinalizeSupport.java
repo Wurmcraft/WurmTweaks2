@@ -1,6 +1,5 @@
 package com.wurmcraft.api.script.anotations;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,7 +14,7 @@ public @interface FinalizeSupport {
   EnumInitType initType() default EnumInitType.POSTINIT;
 
   enum EnumInitType {
-    POSTINIT, SERVER_STARTING
+    POSTINIT,
+    SERVER_STARTING
   }
-
 }

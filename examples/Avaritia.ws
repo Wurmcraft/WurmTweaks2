@@ -6,7 +6,7 @@
 */
 
 /*
-	Add a Shaped Extream Crafting Recipe
+	Add a Shaped Extreme Crafting Recipe
 
 	addShapedExtreme('<output> <format> <style')
 */
@@ -14,9 +14,9 @@ addShapedExtreme('<minecraft:apple> LLLLLLLLL LXXXXXXXL LLLLLLLLL L <minecraft:l
 addShapedExtreme('<minecraft:apple> LLLLLLLLL LXXXXXXXL LLLLLLLLL L <logWood> X <minecraft:stone>')
 
 /*
-	Add a Shapeless Extream Crafting Recipe
+	Add a Shapeless Extreme Crafting Recipe
 
-	addShapelessExtreme('<output> <format> <style')
+	addShapelessExtreme('<output> <format> <style>')
 */
 addShapelessExtreme('<minecraft:apple> <minecraft:log> <minecraft:log@1> <minecraft:log@2> <minecraft:log@3> <minecraft:log@4> <minecraft:log> <minecraft:log@1> <minecraft:log@2> <minecraft:log@3> <minecraft:log@4>')
 addShapelessExtreme('<minecraft:apple> <logWood> <minecraft:stone> <minecraft:stone@1> <minecraft:stone@2> <minecraft:dirt> <minecraft:grass> <logWood> <minecraft:stone> <minecraft:stone@1> <minecraft:stone@2> <minecraft:dirt> <minecraft:grass>')

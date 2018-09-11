@@ -23,8 +23,12 @@ public class AE2Inscriber implements IInscriberRecipe {
   @Nonnull
   private final InscriberProcessType type;
 
-  public AE2Inscriber(@Nonnull Collection<ItemStack> inputs, @Nonnull ItemStack output,
-      @Nullable ItemStack top, @Nullable ItemStack bot, @Nonnull InscriberProcessType type) {
+  public AE2Inscriber(
+      @Nonnull Collection<ItemStack> inputs,
+      @Nonnull ItemStack output,
+      @Nullable ItemStack top,
+      @Nullable ItemStack bot,
+      @Nonnull InscriberProcessType type) {
     this.inputs = new ArrayList(inputs.size());
     this.inputs.addAll(inputs);
     this.output = output;

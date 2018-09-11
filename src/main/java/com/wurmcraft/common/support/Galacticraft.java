@@ -40,13 +40,19 @@ public class Galacticraft {
       CompressorRecipes.getRecipeList().clear();
       CircuitFabricatorRecipes.getRecipes().clear();
     } else if (ScriptExecutor.reload) {
-      shapedCompressor.stream().map(recipe -> (ItemStack) recipe[0])
+      shapedCompressor
+          .stream()
+          .map(recipe -> (ItemStack) recipe[0])
           .forEach(CompressorRecipes::removeRecipe);
       shapedCompressor.clear();
-      shapelessCompressor.stream().map(recipe -> (ItemStack) recipe[0])
+      shapelessCompressor
+          .stream()
+          .map(recipe -> (ItemStack) recipe[0])
           .forEach(CompressorRecipes::removeRecipe);
       shapelessCompressor.clear();
-      circuitFab.stream().map(fab -> (ItemStack) fab[0])
+      circuitFab
+          .stream()
+          .map(fab -> (ItemStack) fab[0])
           .forEach(CircuitFabricatorRecipes::removeRecipe);
       circuitFab.clear();
       station.clear();
@@ -60,41 +66,51 @@ public class Galacticraft {
         recipe -> CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]));
     shapelessCompressor.forEach(
         recipe -> CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]));
-    circuitFab.forEach(recipe -> CircuitFabricatorRecipes
-        .addRecipe((ItemStack) recipe[0], (List<Object>) recipe[1]));
-    station.forEach(recipe -> GalacticraftRegistry
-        .replaceSpaceStationRecipe((int) recipe[0], (HashMap<Object, Integer>) recipe[1]));
+    circuitFab.forEach(
+        recipe ->
+            CircuitFabricatorRecipes.addRecipe((ItemStack) recipe[0], (List<Object>) recipe[1]));
+    station.forEach(
+        recipe ->
+            GalacticraftRegistry.replaceSpaceStationRecipe(
+                (int) recipe[0], (HashMap<Object, Integer>) recipe[1]));
   }
 
   @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore")
   public void addShapedCompressor(Converter converter, String[] line) {
-    shapedCompressor.add(new Object[]{converter.convert(line[0]),
-        RecipeUtils.getShapedRecipe(line).toArray(new Object[0])});
+    shapedCompressor.add(
+        new Object[]{
+            converter.convert(line[0]), RecipeUtils.getShapedRecipe(line).toArray(new Object[0])
+        });
   }
 
   @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "ItemStack ItemStack ...")
   public void addShapelessCompressor(Converter converter, String[] line) {
-    shapelessCompressor
-        .add(new Object[]{converter.convert(line[0], 1),
-            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)).toArray(
-                new Ingredient[0])});
+    shapelessCompressor.add(
+        new Object[]{
+            converter.convert(line[0], 1),
+            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length))
+                .toArray(new Ingredient[0])
+        });
   }
 
   @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "ItemStack ItemStack ...")
   public void addCircuitFabricator(Converter converter, String[] line) {
-    circuitFab.add(new Object[]{converter.convert(line[0], 1),
-        Arrays.asList(converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length)))});
+    circuitFab.add(
+        new Object[]{
+            converter.convert(line[0], 1),
+            Arrays.asList(converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length)))
+        });
   }
 
   @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "Integer ItemStack/OreDictionary")
   public void addSpaceStationRecipe(Converter converter, String[] line) {
     HashMap<Object, Integer> stationRecipe = new HashMap<>();
-    for (Object item : RecipeUtils
-        .getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length))) {
+    for (Object item :
+        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length))) {
       if (item instanceof ItemStack) {
         stationRecipe.put(item, ((ItemStack) item).getCount());
       } else {

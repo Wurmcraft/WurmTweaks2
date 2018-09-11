@@ -17,10 +17,19 @@ public class FunctionWrapper {
   private Object function;
   private Object clazz;
 
-  public FunctionWrapper(String modid, String supportDependencies, boolean threaded,
+  public FunctionWrapper(
+      String modid,
+      String supportDependencies,
+      boolean threaded,
       byte supportCode,
-      FunctionType type, boolean precedence, String name, String typeData,
-      String inputFormat, String[] guiVar, Object function, Object clazz) {
+      FunctionType type,
+      boolean precedence,
+      String name,
+      String typeData,
+      String inputFormat,
+      String[] guiVar,
+      Object function,
+      Object clazz) {
     this.modid = modid;
     this.supportDependencies = supportDependencies;
     this.threaded = threaded;
@@ -37,14 +46,22 @@ public class FunctionWrapper {
 
   @Override
   public String toString() {
-    return "FunctionWrapper{" +
-        "modid='" + modid + '\'' +
-        ", threaded=" + threaded +
-        ", supportCode=" + supportCode +
-        ", type=" + type +
-        ", precedence=" + precedence +
-        ", name='" + name + '\'' +
-        '}';
+    return "FunctionWrapper{"
+        + "modid='"
+        + modid
+        + '\''
+        + ", threaded="
+        + threaded
+        + ", supportCode="
+        + supportCode
+        + ", type="
+        + type
+        + ", precedence="
+        + precedence
+        + ", name='"
+        + name
+        + '\''
+        + '}';
   }
 
   public String getModid() {

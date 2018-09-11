@@ -1,6 +1,5 @@
 package com.wurmcraft.common.support;
 
-
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -31,7 +30,8 @@ public class ExNihilo {
       scriptSieve = new NonBlockingHashSet<>();
     }
     if (ConfigHandler.removeAllRecipes) {
-      exnihilocreatio.registries.manager.ExNihiloRegistryManager.CROOK_REGISTRY.getRecipeList()
+      exnihilocreatio.registries.manager.ExNihiloRegistryManager.CROOK_REGISTRY
+          .getRecipeList()
           .clear();
     } else if (ScriptExecutor.reload) {
       // TODO Setup Recipe Reloads
@@ -41,37 +41,45 @@ public class ExNihilo {
   @Method(modid = "exnihilocreatio")
   @FinalizeSupport
   public void finailze() {
-    scriptCrook
-        .forEach(crook -> exnihilocreatio.registries.manager.ExNihiloRegistryManager.CROOK_REGISTRY
-            .register(crook.input, crook.reward, crook.chance, crook.chance));
-    scriptCompost.forEach(compost -> exnihilocreatio.registries.CompostRegistry
-        .register(compost.item, compost.compost));
-    scriptCrucible
-        .forEach(
-            crucible -> exnihilocreatio.registries.manager.ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY
-                .register(crucible.item,
+    scriptCrook.forEach(
+        crook ->
+            exnihilocreatio.registries.manager.ExNihiloRegistryManager.CROOK_REGISTRY.register(
+                crook.input, crook.reward, crook.chance, crook.chance));
+    scriptCompost.forEach(
+        compost ->
+            exnihilocreatio.registries.CompostRegistry.register(compost.item, compost.compost));
+    scriptCrucible.forEach(
+        crucible ->
+            exnihilocreatio.registries.manager.ExNihiloRegistryManager.CRUCIBLE_STONE_REGISTRY
+                .register(
+                    crucible.item,
                     new exnihilocreatio.registries.types.Meltable(
                         crucible.fluid.getUnlocalizedName(), crucible.fluid.amount)));
-    scriptSieve
-        .forEach(sieve -> exnihilocreatio.registries.manager.ExNihiloRegistryManager.SIEVE_REGISTRY
-            .register(sieve.input, sieve.drop, sieve.chance, sieve.lvl));
+    scriptSieve.forEach(
+        sieve ->
+            exnihilocreatio.registries.manager.ExNihiloRegistryManager.SIEVE_REGISTRY.register(
+                sieve.input, sieve.drop, sieve.chance, sieve.lvl));
   }
 
   @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio", inputFormat = "ItemStack ItemStack Float Float")
   public void addCrook(Converter converter, String[] line) {
     scriptCrook.add(
-        new Crook(new exnihilocreatio.util.BlockInfo((ItemStack) converter.convert(line[0], 1)),
-            (ItemStack) converter.convert(line[1], 1), Float.parseFloat(line[2]),
+        new Crook(
+            new exnihilocreatio.util.BlockInfo((ItemStack) converter.convert(line[0], 1)),
+            (ItemStack) converter.convert(line[1], 1),
+            Float.parseFloat(line[2]),
             Float.parseFloat(line[3])));
   }
 
   @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio", inputFormat = "ItemStack Float ItemStack")
   public void addCompost(Converter converter, String[] line) {
-    scriptCompost
-        .add(new Compost(new exnihilocreatio.util.ItemInfo((ItemStack) converter.convert(line[0])),
-            new exnihilocreatio.registries.types.Compostable(Float.parseFloat(line[1]),
+    scriptCompost.add(
+        new Compost(
+            new exnihilocreatio.util.ItemInfo((ItemStack) converter.convert(line[0])),
+            new exnihilocreatio.registries.types.Compostable(
+                Float.parseFloat(line[1]),
                 new exnihilocreatio.texturing.Color(150, 150, 150, 80),
                 new exnihilocreatio.util.BlockInfo((ItemStack) converter.convert(line[2])))));
   }
@@ -79,17 +87,20 @@ public class ExNihilo {
   @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio")
   public void addENCrucible(Converter converter, String[] line) {
-    scriptCrucible.add(new Crucible((ItemStack) converter.convert(line[0]),
-        (FluidStack) converter.convert(line[1])));
+    scriptCrucible.add(
+        new Crucible(
+            (ItemStack) converter.convert(line[0]), (FluidStack) converter.convert(line[1])));
   }
 
   @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio")
   public void addSieve(Converter converter, String[] line) {
-    scriptSieve.add(new Sieve((ItemStack) converter.convert(line[1], 1),
-        new exnihilocreatio.util.ItemInfo((ItemStack) converter.convert(line[0], 1)),
-        Float.parseFloat(line[2]),
-        Integer.parseInt(line[3])));
+    scriptSieve.add(
+        new Sieve(
+            (ItemStack) converter.convert(line[1], 1),
+            new exnihilocreatio.util.ItemInfo((ItemStack) converter.convert(line[0], 1)),
+            Float.parseFloat(line[2]),
+            Integer.parseInt(line[3])));
   }
 
   public class Crook {
@@ -99,8 +110,8 @@ public class ExNihilo {
     public float chance;
     public float fortune;
 
-    public Crook(exnihilocreatio.util.BlockInfo input, ItemStack reward, float chance,
-        float fortune) {
+    public Crook(
+        exnihilocreatio.util.BlockInfo input, ItemStack reward, float chance, float fortune) {
       this.input = input;
       this.reward = reward;
       this.chance = chance;
@@ -113,8 +124,8 @@ public class ExNihilo {
     public exnihilocreatio.util.ItemInfo item;
     public exnihilocreatio.registries.types.Compostable compost;
 
-    public Compost(exnihilocreatio.util.ItemInfo item,
-        exnihilocreatio.registries.types.Compostable compost) {
+    public Compost(
+        exnihilocreatio.util.ItemInfo item, exnihilocreatio.registries.types.Compostable compost) {
       this.item = item;
       this.compost = compost;
     }

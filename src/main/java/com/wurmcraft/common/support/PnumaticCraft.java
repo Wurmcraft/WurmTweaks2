@@ -54,24 +54,29 @@ public class PnumaticCraft {
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : drill) {
-      PneumaticRegistry.getInstance().getRecipeRegistry()
+      PneumaticRegistry.getInstance()
+          .getRecipeRegistry()
           .addAssemblyDrillRecipe(recipe[0], recipe[1]);
     }
     for (Object[] recipe : laser) {
-      PneumaticRegistry.getInstance().getRecipeRegistry()
+      PneumaticRegistry.getInstance()
+          .getRecipeRegistry()
           .addAssemblyLaserRecipe(recipe[0], recipe[1]);
     }
     for (Object[] recipe : pressure) {
-      PneumaticRegistry.getInstance().getRecipeRegistry()
-          .registerPressureChamberRecipe((ItemStack[]) recipe[0], (float) recipe[1],
-              (ItemStack[]) recipe[2]);
+      PneumaticRegistry.getInstance()
+          .getRecipeRegistry()
+          .registerPressureChamberRecipe(
+              (ItemStack[]) recipe[0], (float) recipe[1], (ItemStack[]) recipe[2]);
     }
     for (Object[] recipe : defaultAmadron) {
-      PneumaticRegistry.getInstance().getRecipeRegistry()
+      PneumaticRegistry.getInstance()
+          .getRecipeRegistry()
           .registerDefaultStaticAmadronOffer(recipe[0], recipe[1]);
     }
     for (Object[] recipe : amadron) {
-      PneumaticRegistry.getInstance().getRecipeRegistry()
+      PneumaticRegistry.getInstance()
+          .getRecipeRegistry()
           .registerDefaultPeriodicAmadronOffer(recipe[0], recipe[1]);
     }
   }
@@ -91,10 +96,14 @@ public class PnumaticCraft {
   @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack Integer ItemStack ...")
   public void addPressureChamber(Converter converter, String[] line) {
-    pressure.add(new Object[]{
-        converter.getBulkItemsAsList(Arrays.copyOfRange(line, 2, line.length)).toArray(
-            new ItemStack[0]), Float.parseFloat(line[1]),
-        new ItemStack[]{(ItemStack) converter.convert(line[0])}});
+    pressure.add(
+        new Object[]{
+            converter
+                .getBulkItemsAsList(Arrays.copyOfRange(line, 2, line.length))
+                .toArray(new ItemStack[0]),
+            Float.parseFloat(line[1]),
+            new ItemStack[]{(ItemStack) converter.convert(line[0])}
+        });
   }
 
   @Method(modid = "pneumaticcraft")

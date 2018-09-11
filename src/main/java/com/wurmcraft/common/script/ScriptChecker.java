@@ -1,10 +1,11 @@
 package com.wurmcraft.common.script;
 
-import static com.wurmcraft.common.ConfigHandler.*;
 import static com.wurmcraft.common.ConfigHandler.checkForUpdates;
 import static com.wurmcraft.common.ConfigHandler.masterScript;
+import static com.wurmcraft.common.ConfigHandler.scriptDir;
 
 import com.wurmcraft.WurmTweaks;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -19,13 +20,12 @@ import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import java.io.*;
 
 /**
  * Keeps the WurmScript script updated based on its URL
  *
- * Checks for WurmScript updates based on its URL along with starting a UpdateCheckerThread to check
- * for updates while the game is running
+ * <p>Checks for WurmScript updates based on its URL along with starting a UpdateCheckerThread to
+ * check for updates while the game is running
  */
 public class ScriptChecker {
 
@@ -34,7 +34,8 @@ public class ScriptChecker {
   /**
    * Loads the master file and gives a String[] of all the scripts that need to be run
    *
-   * This will load the master script ether via URL or file then remove its comments and return a
+   * <p>This will load the master script ether via URL or file then remove its comments and return
+   * a
    * list of the scripts that need to be run
    */
   public static String[] getLoadedScriptsFromMaster() {
@@ -56,15 +57,16 @@ public class ScriptChecker {
   /**
    * Downloads the scripts from the masterFile and saves them to the configuration folder
    *
-   * Downloads the valid scripts from the masterFile and saves them into the configuration folder
+   * <p>Downloads the valid scripts from the masterFile and saves them into the configuration
+   * folder
    * for WurmScript
    */
   public static void downloadScripts(String... scriptName) {
     if (checkForUpdates) {
       for (String script : scriptName) {
         if (!script.isEmpty() && script.endsWith(".ws")) {
-          File saveLocation = new File(
-              Loader.instance().getConfigDir().getParent() + File.separator + scriptDir);
+          File saveLocation =
+              new File(Loader.instance().getConfigDir().getParent() + File.separator + scriptDir);
           if (!saveLocation.exists()) {
             saveLocation.mkdirs();
           }
@@ -73,8 +75,12 @@ public class ScriptChecker {
             if (hasUpdated(script)) {
               FileUtils.copyURLToFile(new URL(BASE_URL + "/" + script), saveLocation, 10000, 1000);
               WurmTweaks.logger.trace(
-                  "Downloaded '" + BASE_URL + "/" + script + " to " + saveLocation
-                      .getAbsolutePath());
+                  "Downloaded '"
+                      + BASE_URL
+                      + "/"
+                      + script
+                      + " to "
+                      + saveLocation.getAbsolutePath());
             } else {
               WurmTweaks.logger.trace(script + " is up to date!");
             }
@@ -85,7 +91,9 @@ public class ScriptChecker {
                 "Unable to save '"
                     + script
                     + "' to "
-                    + Loader.instance().getConfigDir().getParent() + File.separator + scriptDir
+                    + Loader.instance().getConfigDir().getParent()
+                    + File.separator
+                    + scriptDir
                     + File.separator
                     + script);
           }
@@ -102,16 +110,19 @@ public class ScriptChecker {
   /**
    * Checks the scripts URL to see if its local version has changed comparted to its web version.
    *
-   * Created a MD5 hash of the web version and comapares it to its local (file) version and return
-   * if they are the same, aka the local version is the same as the web version
+   * <p>Created a MD5 hash of the web version and comapares it to its local (file) version and
+   * return if they are the same, aka the local version is the same as the web version
    */
   private static boolean hasUpdated(String scriptName) {
     try {
-      String urlHash = DigestUtils.md5Hex(IOUtils
-          .toString(new URI(BASE_URL + "/" + scriptName), Charset.defaultCharset()));
+      String urlHash =
+          DigestUtils.md5Hex(
+              IOUtils.toString(new URI(BASE_URL + "/" + scriptName), Charset.defaultCharset()));
       File saveLocation =
           new File(
-              Loader.instance().getConfigDir().getParent() + File.separator + scriptDir
+              Loader.instance().getConfigDir().getParent()
+                  + File.separator
+                  + scriptDir
                   + File.separator
                   + scriptName);
       if (!saveLocation.exists()) {
@@ -129,9 +140,13 @@ public class ScriptChecker {
     List<File> scripts = new ArrayList<>();
     for (String script : getLoadedScriptsFromMaster()) {
       if (script.length() > 0) {
-        scripts.add(new File(
-            Loader.instance().getConfigDir().getParent() + File.separator + scriptDir
-                + File.separator + script));
+        scripts.add(
+            new File(
+                Loader.instance().getConfigDir().getParent()
+                    + File.separator
+                    + scriptDir
+                    + File.separator
+                    + script));
       }
     }
     return scripts.toArray(new File[0]);

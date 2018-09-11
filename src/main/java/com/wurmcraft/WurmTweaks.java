@@ -12,7 +12,6 @@ import com.wurmcraft.common.events.LootDestroyer;
 import com.wurmcraft.common.items.WurmTweaksItems;
 import com.wurmcraft.common.network.NetworkHandler;
 import com.wurmcraft.common.reference.Global;
-
 import com.wurmcraft.common.script.FunctionBuilder;
 import com.wurmcraft.common.script.ScriptChecker;
 import com.wurmcraft.common.script.ScriptExecutor;
@@ -27,7 +26,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Global.MODID, name = Global.NAME, version = Global.VERSION, dependencies = Global.DEPENDENCIES)
+@Mod(
+    modid = Global.MODID,
+    name = Global.NAME,
+    version = Global.VERSION,
+    dependencies = Global.DEPENDENCIES
+)
 public class WurmTweaks {
 
   @Mod.Instance(Global.MODID)

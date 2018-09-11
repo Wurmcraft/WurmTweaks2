@@ -21,11 +21,3 @@ addCrystallizer('<minecraft:apple> <minecraft:log@2> <minecraft:log@1> 5')
 	addTransmutator('<output> <input> <xp>')
 */
 addTransmutator('<minecraft:apple> <minecraft:log@2> 3')
-
-/*
-	Add a Materializer Recipe
-	
-	Format:		   ItemStack ItemStack ... (as many stacks as you want)
-	addMaterializer('<output> <input> ...')
-*/
-addMaterializer('<minecraft:apple> <minecraft:log@0> <minecraft:log@1> <minecraft:log@2> <minecraft:log@3>')

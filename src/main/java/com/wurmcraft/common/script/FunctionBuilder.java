@@ -26,8 +26,9 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 public class FunctionBuilder {
 
-  private static NonBlockingHashMap<String, NonBlockingHashSet<Object[]>> initData = new NonBlockingHashMap<>();
   public static PrintStream print;
+  private static NonBlockingHashMap<String, NonBlockingHashSet<Object[]>> initData =
+      new NonBlockingHashMap<>();
 
   static {
     try {
@@ -52,12 +53,17 @@ public class FunctionBuilder {
         Method[] supportFunctions = searchForAnnotations(asmClass, Support.class);
         for (Method method : supportFunctions) {
           String name = getFunctionName(method);
-          if (method.getAnnotation(ScriptFunction.class).modid().length() == 0 && isModLoaded(
-              asmClass.getAnnotation(Support.class).modid()) || isModLoaded(
-              method.getAnnotation(ScriptFunction.class).modid())) {
-            functions.put(name,
-                Objects.requireNonNull(createFunction(asmClass.getAnnotation(Support.class),
-                    method.getAnnotation(ScriptFunction.class), method, autoCast(asmClass))));
+          if (method.getAnnotation(ScriptFunction.class).modid().length() == 0
+              && isModLoaded(asmClass.getAnnotation(Support.class).modid())
+              || isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
+            functions.put(
+                name,
+                Objects.requireNonNull(
+                    createFunction(
+                        asmClass.getAnnotation(Support.class),
+                        method.getAnnotation(ScriptFunction.class),
+                        method,
+                        autoCast(asmClass))));
           }
         }
       } catch (ClassNotFoundException e) {
@@ -81,8 +87,12 @@ public class FunctionBuilder {
           Method[] scriptFunctions = searchForAnnotations(asmClass, ScriptFunction.class);
           for (Method method : scriptFunctions) {
             if (isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
-              functions.putIfAbsent(getFunctionName(method),
-                  createFunction(null, method.getAnnotation(ScriptFunction.class), method,
+              functions.putIfAbsent(
+                  getFunctionName(method),
+                  createFunction(
+                      null,
+                      method.getAnnotation(ScriptFunction.class),
+                      method,
                       autoCast(asmClass)));
             }
           }
@@ -91,19 +101,18 @@ public class FunctionBuilder {
         }
       }
       return functions;
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return new NonBlockingHashMap<>();
   }
 
-
   public static <T> T autoCast(Class<T> type) {
     return (T) type;
   }
 
-  private static <T extends Annotation> Method[] searchForAnnotations(Class clazz,
-      Class<T> annotation) {
+  private static <T extends Annotation> Method[] searchForAnnotations(
+      Class clazz, Class<T> annotation) {
     List<Method> methods = new ArrayList<>();
     for (Method method : clazz.getDeclaredMethods()) {
       if (method.getAnnotation(annotation) != null) {
@@ -114,25 +123,42 @@ public class FunctionBuilder {
   }
 
   private static String getFunctionName(Method method) {
-    return method.getAnnotation(ScriptFunction.class).name().length() > 0 ? method
-        .getAnnotation(ScriptFunction.class).name() : method.getName();
+    return method.getAnnotation(ScriptFunction.class).name().length() > 0
+        ? method.getAnnotation(ScriptFunction.class).name()
+        : method.getName();
   }
 
-  private static FunctionWrapper createFunction(Support support, ScriptFunction function,
-      Method method, Object clazz) {
+  private static FunctionWrapper createFunction(
+      Support support, ScriptFunction function, Method method, Object clazz) {
     if (validFunction(method)) {
       if (support != null) {
         return new FunctionWrapper(
             function.modid().length() > 0 ? function.modid() : support.modid(),
             support.supportDependencies(),
-            function.threadSafe() || (support.threaded()), support.suppotCode(), function.type(),
-            function.precedence(), getFunctionName(method), function.typeData(),
-            function.inputFormat(), function.guiVar(), method, clazz);
-      } else {
-        return new FunctionWrapper(function.modid(), "", function.threadSafe(), (byte) 0,
+            function.threadSafe() || (support.threaded()),
+            support.suppotCode(),
             function.type(),
-            function.precedence(), function.name(), function.typeData(), function.inputFormat(),
-            function.guiVar(), method, clazz);
+            function.precedence(),
+            getFunctionName(method),
+            function.typeData(),
+            function.inputFormat(),
+            function.guiVar(),
+            method,
+            clazz);
+      } else {
+        return new FunctionWrapper(
+            function.modid(),
+            "",
+            function.threadSafe(),
+            (byte) 0,
+            function.type(),
+            function.precedence(),
+            function.name(),
+            function.typeData(),
+            function.inputFormat(),
+            function.guiVar(),
+            method,
+            clazz);
       }
     }
     return null;
@@ -197,7 +223,6 @@ public class FunctionBuilder {
     }
   }
 
-
   public static void preInitSupport() {
     for (Object[] obj : initData.get("pre")) {
       invokeMethod(obj);
@@ -220,8 +245,8 @@ public class FunctionBuilder {
         try {
           Thread.currentThread().sleep(200);
         } catch (InterruptedException e) {
-          FunctionBuilder.print
-              .println(Thread.currentThread().getName() + ": " + e.getLocalizedMessage());
+          FunctionBuilder.print.println(
+              Thread.currentThread().getName() + ": " + e.getLocalizedMessage());
         }
       }
       postInitFinalizeSupport();
@@ -235,8 +260,9 @@ public class FunctionBuilder {
   }
 
   public static boolean isModLoaded(String modid) {
-    return Loader.isModLoaded(modid) || modid.equalsIgnoreCase("minecraft") || modid
-        .equalsIgnoreCase("events");
+    return Loader.isModLoaded(modid)
+        || modid.equalsIgnoreCase("minecraft")
+        || modid.equalsIgnoreCase("events");
   }
 
   public static Bindings createFunctionBindings(
@@ -244,8 +270,7 @@ public class FunctionBuilder {
     SimpleBindings bindings = new SimpleBindings();
     for (String key : functions.keySet()) {
       FunctionWrapper wrapper = functions.get(key);
-      bindings
-          .put(key, new ScriptFunctionWrapper((Method) wrapper.getFunction(), converter));
+      bindings.put(key, new ScriptFunctionWrapper((Method) wrapper.getFunction(), converter));
     }
     if (bindings.size() < ScriptExecutor.functions.size()) {
       for (String key : ScriptExecutor.functions.keySet()) {

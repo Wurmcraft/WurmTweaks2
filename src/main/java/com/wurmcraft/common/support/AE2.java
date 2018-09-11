@@ -36,11 +36,15 @@ public class AE2 {
     }
     if (ConfigHandler.removeAllRecipes) {
       while (AEApi.instance().registries().grinder().getRecipes().iterator().hasNext()) {
-        AEApi.instance().registries().grinder()
+        AEApi.instance()
+            .registries()
+            .grinder()
             .removeRecipe(AEApi.instance().registries().grinder().getRecipes().iterator().next());
       }
       while (AEApi.instance().registries().inscriber().getRecipes().iterator().hasNext()) {
-        AEApi.instance().registries().inscriber()
+        AEApi.instance()
+            .registries()
+            .inscriber()
             .removeRecipe(AEApi.instance().registries().inscriber().getRecipes().iterator().next());
       }
     } else if (ScriptExecutor.reload) {
@@ -67,20 +71,35 @@ public class AE2 {
   }
 
   @Method(modid = "appliedenergistics")
-  @ScriptFunction(modid = "appliedenergistics", inputFormat = "ItemStack ItemStack ItemStack Float Integer", typeData = "Crusher", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "appliedenergistics",
+      inputFormat = "ItemStack ItemStack ItemStack Float Integer",
+      typeData = "Crusher",
+      type = FunctionType.Linked
+  )
   public void addAEGrinder(Converter converter, String[] line) {
-    scriptGrinder.add(new AE2Grinder((ItemStack) converter.convert(line[1]),
-        (ItemStack) converter.convert(line[0]), (ItemStack) converter.convert(line[2]),
-        Float.parseFloat(line[3]), Integer.parseInt(line[4])));
+    scriptGrinder.add(
+        new AE2Grinder(
+            (ItemStack) converter.convert(line[1]),
+            (ItemStack) converter.convert(line[0]),
+            (ItemStack) converter.convert(line[2]),
+            Float.parseFloat(line[3]),
+            Integer.parseInt(line[4])));
   }
 
   @Method(modid = "appliedenergistics")
-  @ScriptFunction(modid = "appliedenergistics", inputFormat = "ItemStack ItemStack ItemStack String ItemStack")
+  @ScriptFunction(
+      modid = "appliedenergistics",
+      inputFormat = "ItemStack ItemStack ItemStack String ItemStack"
+  )
   public void addInscriber(Converter converter, String[] line) {
-    scriptInscriber.add(new AE2Inscriber(
-        converter.getBulkItemsAsList(Arrays.copyOfRange(line, 4, line.length)),
-        (ItemStack) converter.convert(line[0]), (ItemStack) converter.convert(line[1]),
-        (ItemStack) converter.convert(line[2]), Objects.requireNonNull(getType(line[3]))));
+    scriptInscriber.add(
+        new AE2Inscriber(
+            converter.getBulkItemsAsList(Arrays.copyOfRange(line, 4, line.length)),
+            (ItemStack) converter.convert(line[0]),
+            (ItemStack) converter.convert(line[1]),
+            (ItemStack) converter.convert(line[2]),
+            Objects.requireNonNull(getType(line[3]))));
   }
 
   @Method(modid = "appliedenergistics")

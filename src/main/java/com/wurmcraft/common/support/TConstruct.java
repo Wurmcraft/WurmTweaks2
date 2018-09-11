@@ -102,16 +102,16 @@ public class TConstruct {
       TinkerRegistry.registerAlloy((FluidStack) recipe[0], (FluidStack[]) recipe[1]);
     }
     for (Object[] recipe : drying) {
-      TinkerRegistry
-          .registerDryingRecipe((ItemStack) recipe[0], (ItemStack) recipe[1], (int) recipe[2]);
+      TinkerRegistry.registerDryingRecipe(
+          (ItemStack) recipe[0], (ItemStack) recipe[1], (int) recipe[2]);
     }
     for (Object[] recipe : fuel) {
       TinkerRegistry.registerSmelteryFuel((FluidStack) recipe[0], (int) recipe[1]);
     }
     melting.forEach(recipe -> TinkerRegistry.registerMelting(recipe));
     for (Object[] recipe : entityMelting) {
-      TinkerRegistry
-          .registerEntityMelting((Class<? extends Entity>) recipe[0], (FluidStack) recipe[1]);
+      TinkerRegistry.registerEntityMelting(
+          (Class<? extends Entity>) recipe[0], (FluidStack) recipe[1]);
     }
   }
 
@@ -119,18 +119,26 @@ public class TConstruct {
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack FluidStack")
   public void addCasting(Converter converter, String[] line) {
     FluidStack fluid = (FluidStack) converter.convert(line[2]);
-    casting.add(new CastingRecipe((ItemStack) converter.convert(line[0]),
-        RecipeMatch.of((ItemStack) converter.convert(line[1])), fluid.getFluid(), fluid.amount,
-        (fluid.amount / INGOT) * 40));
+    casting.add(
+        new CastingRecipe(
+            (ItemStack) converter.convert(line[0]),
+            RecipeMatch.of((ItemStack) converter.convert(line[1])),
+            fluid.getFluid(),
+            fluid.amount,
+            (fluid.amount / INGOT) * 40));
   }
 
   @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack FluidStack")
   public void addBasin(Converter converter, String[] line) {
     FluidStack fluid = (FluidStack) converter.convert(line[2]);
-    casting.add(new CastingRecipe((ItemStack) converter.convert(line[0]),
-        RecipeMatch.of((ItemStack) converter.convert(line[1])), fluid.getFluid(), fluid.amount,
-        (fluid.amount / INGOT) * 40));
+    casting.add(
+        new CastingRecipe(
+            (ItemStack) converter.convert(line[0]),
+            RecipeMatch.of((ItemStack) converter.convert(line[1])),
+            fluid.getFluid(),
+            fluid.amount,
+            (fluid.amount / INGOT) * 40));
   }
 
   @Method(modid = "tconstruct")
@@ -146,8 +154,10 @@ public class TConstruct {
   @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack Integer")
   public void addDrying(Converter converter, String[] line) {
-    drying.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
-        Integer.parseInt(line[2])});
+    drying.add(
+        new Object[]{
+            converter.convert(line[0]), converter.convert(line[1]), Integer.parseInt(line[2])
+        });
   }
 
   @Method(modid = "tconstruct")
@@ -159,16 +169,23 @@ public class TConstruct {
   @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack ItemStack Integer")
   public void addMelting(Converter converter, String[] line) {
-    melting.add(new MeltingRecipe(RecipeMatch.of((ItemStack) converter.convert(line[1])),
-        ((FluidStack) converter.convert(line[0])), Integer.parseInt(line[2])));
+    melting.add(
+        new MeltingRecipe(
+            RecipeMatch.of((ItemStack) converter.convert(line[1])),
+            ((FluidStack) converter.convert(line[0])),
+            Integer.parseInt(line[2])));
   }
 
   // TODO Entity Converts
   @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack Entity")
   public void addEntityMelting(Converter converter, String[] line) {
-    entityMelting.add(new Object[]{((EntityLiving) converter.convert(line[0], 1)).getClass(),
-        converter.convert(line[0])});
+    if (converter.convert(line[0], 1) != null) {
+      entityMelting.add(
+          new Object[]{
+              ((EntityLiving) converter.convert(line[0], 1)).getClass(), converter.convert(line[0])
+          });
+    }
   }
 
   // End Of Normal Mod Support
@@ -178,19 +195,27 @@ public class TConstruct {
     FluidStack fluid = ((FluidStack) converter.convert(line[0], 1));
     if (converter.convert(line[2]) != ItemStack.EMPTY) {
       melting.add(
-          new MeltingRecipe(RecipeMatch.of((ItemStack) converter.convert(line[2])),
-              fluid.getFluid(), BLOCK));
+          new MeltingRecipe(
+              RecipeMatch.of((ItemStack) converter.convert(line[2])), fluid.getFluid(), BLOCK));
       basin.add(
-          new CastingRecipe((ItemStack) converter.convert(line[2]), RecipeMatch.of(ItemStack.EMPTY),
-              fluid.getFluid(), fluid.amount, (fluid.amount / BLOCK) * 80));
-//      basin.add(new Object[]{converter.convert(line[2]), ItemStack.EMPTY, fluid.getFluid(), BLOCK});
+          new CastingRecipe(
+              (ItemStack) converter.convert(line[2]),
+              RecipeMatch.of(ItemStack.EMPTY),
+              fluid.getFluid(),
+              fluid.amount,
+              (fluid.amount / BLOCK) * 80));
+      //      basin.add(new Object[]{converter.convert(line[2]), ItemStack.EMPTY, fluid.getFluid(), BLOCK});
     }
     if (converter.convert(line[1]) != ItemStack.EMPTY) {
       melting.add(
           new MeltingRecipe(RecipeMatch.of((ItemStack) converter.convert(line[1])), fluid, INGOT));
-      casting.add(new CastingRecipe((ItemStack) converter.convert(line[1]),
-          RecipeMatch.of((ItemStack) converter.convert("<tconstruct:cast_custom>")),
-          fluid.getFluid(), fluid.amount, (fluid.amount / INGOT) * 40));
+      casting.add(
+          new CastingRecipe(
+              (ItemStack) converter.convert(line[1]),
+              RecipeMatch.of((ItemStack) converter.convert("<tconstruct:cast_custom>")),
+              fluid.getFluid(),
+              fluid.amount,
+              (fluid.amount / INGOT) * 40));
     }
   }
 
@@ -205,14 +230,20 @@ public class TConstruct {
       }
     }
     for (IToolPart toolPart : TinkerRegistry.getToolParts()) {
-      if (toolPart instanceof MaterialItem && toolPart.canBeCasted()) {
+      if (toolPart instanceof MaterialItem && toolPart.canBeCasted() && fluid != null) {
         ItemStack stack = toolPart.getItemstackWithMaterial(material);
-        melting.add(new MeltingRecipe(RecipeMatch.of(stack), fluid.getFluid(),
-            normalize(toolPart.getCost())));
+        melting.add(
+            new MeltingRecipe(
+                RecipeMatch.of(stack), fluid.getFluid(), normalize(toolPart.getCost())));
         ItemStack cast = new ItemStack(TinkerSmeltery.cast);
         Cast.setTagForPart(cast, stack.getItem());
-        casting.add(new CastingRecipe(stack, RecipeMatch.of(cast), fluid.getFluid(),
-            (normalize(toolPart.getCost())), fluid.amount));
+        casting.add(
+            new CastingRecipe(
+                stack,
+                RecipeMatch.of(cast),
+                fluid.getFluid(),
+                (normalize(toolPart.getCost())),
+                fluid.amount));
       }
     }
   }

@@ -13,24 +13,21 @@ public class DynamicShapedOreRecipe extends ShapedOreRecipe {
 
   private static Converter converter = new Converter();
 
-  public DynamicShapedOreRecipe(ResourceLocation group,
-      Block result, Object... recipe) {
+  public DynamicShapedOreRecipe(ResourceLocation group, Block result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapedOreRecipe(ResourceLocation group,
-      Item result, Object... recipe) {
+  public DynamicShapedOreRecipe(ResourceLocation group, Item result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapedOreRecipe(ResourceLocation group,
-      @Nonnull ItemStack result, Object... recipe) {
+  public DynamicShapedOreRecipe(
+      ResourceLocation group, @Nonnull ItemStack result, Object... recipe) {
     super(group, result, recipe);
   }
 
-  public DynamicShapedOreRecipe(ResourceLocation group,
-      @Nonnull ItemStack result,
-      ShapedPrimer primer) {
+  public DynamicShapedOreRecipe(
+      ResourceLocation group, @Nonnull ItemStack result, ShapedPrimer primer) {
     super(group, result, primer);
   }
 

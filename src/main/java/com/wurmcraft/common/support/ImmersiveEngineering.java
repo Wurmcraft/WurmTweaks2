@@ -65,16 +65,24 @@ public class ImmersiveEngineering {
     } else if (ScriptExecutor.reload) {
       scriptAlloy.stream().map(alloy -> alloy.output).forEach(AlloyRecipe::removeRecipes);
       scriptAlloy.clear();
-      scriptArcFurnace.stream().map(smelting -> smelting.output)
+      scriptArcFurnace
+          .stream()
+          .map(smelting -> smelting.output)
           .forEach(ArcFurnaceRecipe::removeRecipes);
       scriptArcFurnace.clear();
-      scriptBlastFurnace.stream().map(smelting -> smelting.output)
+      scriptBlastFurnace
+          .stream()
+          .map(smelting -> smelting.output)
           .forEach(BlastFurnaceRecipe::removeRecipes);
-      scriptBottling.stream().map(bottle -> bottle.output)
+      scriptBottling
+          .stream()
+          .map(bottle -> bottle.output)
           .forEach(BottlingMachineRecipe::removeRecipes);
       scriptCoke.stream().map(oven -> oven.output).forEach(CokeOvenRecipe::removeRecipes);
       scriptBottling.clear();
-      scriptCrusher.stream().map(crusher -> crusher.output)
+      scriptCrusher
+          .stream()
+          .map(crusher -> crusher.output)
           .forEach(CrusherRecipe::removeRecipesForOutput);
       scriptCrusher.clear();
       scriptFermenter.forEach(fermenter -> FermenterRecipe.recipeList.remove(fermenter));
@@ -94,9 +102,15 @@ public class ImmersiveEngineering {
   public void finalizeSupport() {
     scriptAlloy.forEach(
         alloy -> AlloyRecipe.addRecipe(alloy.output, alloy.input0, alloy.input1, alloy.time));
-    scriptArcFurnace.forEach(arc -> ArcFurnaceRecipe
-        .addRecipe(arc.output, arc.input, arc.slag, arc.getTotalProcessTime(),
-            arc.getTotalProcessEnergy() / arc.getTotalProcessTime(), arc.additives));
+    scriptArcFurnace.forEach(
+        arc ->
+            ArcFurnaceRecipe.addRecipe(
+                arc.output,
+                arc.input,
+                arc.slag,
+                arc.getTotalProcessTime(),
+                arc.getTotalProcessEnergy() / arc.getTotalProcessTime(),
+                arc.additives));
     scriptBlastFurnace.forEach(
         blast -> BlastFurnaceRecipe.addRecipe(blast.output, blast.input, blast.time, blast.slag));
     for (BottlingMachineRecipe bottling : scriptBottling) {
@@ -106,100 +120,185 @@ public class ImmersiveEngineering {
       CokeOvenRecipe.addRecipe(oven.output, oven.input, oven.time, oven.creosoteOutput);
     }
     for (CrusherRecipe crusher : scriptCrusher) {
-      CrusherRecipe.addRecipe(crusher.output, crusher.input,
+      CrusherRecipe.addRecipe(
+          crusher.output,
+          crusher.input,
           (crusher.getTotalProcessEnergy() / crusher.getTotalProcessTime()));
     }
-    scriptFermenter.forEach(fermenter -> FermenterRecipe
-        .addRecipe(fermenter.fluidOutput, fermenter.itemOutput, fermenter.input,
-            fermenter.getTotalProcessEnergy() / fermenter.getTotalProcessTime()));
+    scriptFermenter.forEach(
+        fermenter ->
+            FermenterRecipe.addRecipe(
+                fermenter.fluidOutput,
+                fermenter.itemOutput,
+                fermenter.input,
+                fermenter.getTotalProcessEnergy() / fermenter.getTotalProcessTime()));
     for (MetalPressRecipe metal : scriptMetal) {
-      MetalPressRecipe.addRecipe(metal.output, metal.input, metal.mold,
+      MetalPressRecipe.addRecipe(
+          metal.output,
+          metal.input,
+          metal.mold,
           metal.getTotalProcessEnergy() / metal.getTotalProcessEnergy());
     }
     for (MixerRecipe mixer : scriptMixer) {
-      MixerRecipe.addRecipe(mixer.fluidOutput, mixer.fluidInput, mixer.itemInputs,
+      MixerRecipe.addRecipe(
+          mixer.fluidOutput,
+          mixer.fluidInput,
+          mixer.itemInputs,
           mixer.getTotalProcessEnergy() / mixer.getTotalProcessEnergy());
     }
     for (RefineryRecipe refinery : scriptRefinery) {
-      RefineryRecipe.addRecipe(refinery.output, refinery.input0, refinery.input1,
+      RefineryRecipe.addRecipe(
+          refinery.output,
+          refinery.input0,
+          refinery.input1,
           refinery.getTotalProcessEnergy() / refinery.getTotalProcessTime());
     }
     for (SqueezerRecipe squeezer : scriptSqueezer) {
-      SqueezerRecipe.addRecipe(squeezer.fluidOutput, squeezer.itemOutput, squeezer.input,
+      SqueezerRecipe.addRecipe(
+          squeezer.fluidOutput,
+          squeezer.itemOutput,
+          squeezer.input,
           squeezer.getTotalProcessEnergy() / squeezer.getTotalProcessEnergy());
     }
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack ItemStack Integer", typeData = "Alloy", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "ItemStack ItemStack ItemStack Integer",
+      typeData = "Alloy",
+      type = FunctionType.Linked
+  )
   public void addIEAlloy(Converter converter, String[] line) {
     scriptAlloy.add(
-        new AlloyRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),
-            converter.convert(line[2]), Integer.parseInt(line[3])));
+        new AlloyRecipe(
+            (ItemStack) converter.convert(line[0]),
+            converter.convert(line[1]),
+            converter.convert(line[2]),
+            Integer.parseInt(line[3])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat =
-      "ItemStack ItemStack/OreDictionary"
-          + " ItemStack Integer", typeData = "Blast", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "ItemStack ItemStack/OreDictionary" + " ItemStack Integer",
+      typeData = "Blast",
+      type = FunctionType.Linked
+  )
   public void addIEBlastFurnace(Converter converter, String[] line) {
     scriptBlastFurnace.add(
-        new BlastFurnaceRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),
-            Integer.parseInt(line[3]), (ItemStack) converter.convert(line[2])));
+        new BlastFurnaceRecipe(
+            (ItemStack) converter.convert(line[0]),
+            converter.convert(line[1]),
+            Integer.parseInt(line[3]),
+            (ItemStack) converter.convert(line[2])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary FluidStack")
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "ItemStack ItemStack/OreDictionary FluidStack"
+  )
   public void addBottling(Converter converter, String[] line) {
-    scriptBottling.add(new BottlingMachineRecipe((ItemStack) converter.convert(line[0]),
-        converter.convert(line[1]), (FluidStack) converter.convert(line[2])));
+    scriptBottling.add(
+        new BottlingMachineRecipe(
+            (ItemStack) converter.convert(line[0]),
+            converter.convert(line[1]),
+            (FluidStack) converter.convert(line[2])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary Integer Integer", typeData = "Coke", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "ItemStack ItemStack/OreDictionary Integer Integer",
+      typeData = "Coke",
+      type = FunctionType.Linked
+  )
   public void addCokeOven(Converter converter, String[] line) {
     scriptCoke.add(
-        new CokeOvenRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),
-            Integer.parseInt(line[2]), Integer.parseInt(line[3])));
+        new CokeOvenRecipe(
+            (ItemStack) converter.convert(line[0]),
+            converter.convert(line[1]),
+            Integer.parseInt(line[2]),
+            Integer.parseInt(line[3])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary Integer", typeData = "Crusher", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "ItemStack ItemStack/OreDictionary Integer",
+      typeData = "Crusher",
+      type = FunctionType.Linked
+  )
   public void addIECrusher(Converter converter, String[] line) {
     scriptCrusher.add(
-        new CrusherRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),
+        new CrusherRecipe(
+            (ItemStack) converter.convert(line[0]),
+            converter.convert(line[1]),
             Integer.parseInt(line[2])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer")
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer"
+  )
   public void addFermenter(Converter converter, String[] line) {
-    scriptFermenter.add(new FermenterRecipe((FluidStack) converter.convert(line[0]),
-        (ItemStack) converter.convert(line[1]), converter.convert(line[2]),
-        Integer.parseInt(line[3])));
+    scriptFermenter.add(
+        new FermenterRecipe(
+            (FluidStack) converter.convert(line[0]),
+            (ItemStack) converter.convert(line[1]),
+            converter.convert(line[2]),
+            Integer.parseInt(line[3])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "ItemStack ItemStack/OreDictionary ItemStack Integer", typeData = "Press", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "ItemStack ItemStack ItemStack Integer",
+      typeData = "Press",
+      type = FunctionType.Linked
+  )
   public void addIEMetalPress(Converter converter, String[] line) {
     scriptMetal.add(
-        new MetalPressRecipe((ItemStack) converter.convert(line[0]), converter.convert(line[1]),
+        new MetalPressRecipe(
+            (ItemStack) converter.convert(line[0]),
+            converter.convert(line[1]),
             new ComparableItemStack((ItemStack) converter.convert(line[2], 1)),
             Integer.parseInt(line[3])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "FluidStack FluidStack Integer ItemStack/OreDictionary ...")
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "FluidStack FluidStack Integer ItemStack/OreDictionary ..."
+  )
   public void addMixer(Converter converter, String[] line) {
-    scriptMixer.add(new MixerRecipe((FluidStack) converter.convert(line[0]),
-        (FluidStack) converter.convert(line[1]),
-        converter.getBulkItems(Arrays.copyOfRange(line, 3, line.length)),
-        Integer.parseInt(line[2])));
+    scriptMixer.add(
+        new MixerRecipe(
+            (FluidStack) converter.convert(line[0]),
+            (FluidStack) converter.convert(line[1]),
+            converter.getBulkItems(Arrays.copyOfRange(line, 3, line.length)),
+            Integer.parseInt(line[2])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "FluidStack FluidStack FluidStack Integer", typeData = "Refinery", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "FluidStack FluidStack FluidStack Integer",
+      typeData = "Refinery",
+      type = FunctionType.Linked
+  )
   public void addIERefinery(Converter converter, String[] line) {
-    scriptRefinery.add(new RefineryRecipe((FluidStack) converter.convert(line[0]),
-        (FluidStack) converter.convert(line[1]), (FluidStack) converter.convert(line[2]),
-        Integer.parseInt(line[3])));
+    scriptRefinery.add(
+        new RefineryRecipe(
+            (FluidStack) converter.convert(line[0]),
+            (FluidStack) converter.convert(line[1]),
+            (FluidStack) converter.convert(line[2]),
+            Integer.parseInt(line[3])));
   }
 
-  @ScriptFunction(modid = "immersiveengineering", inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer")
+  @ScriptFunction(
+      modid = "immersiveengineering",
+      inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer"
+  )
   public void addSqueezer(Converter converter, String[] line) {
-    scriptSqueezer.add(new SqueezerRecipe((FluidStack) converter.convert(line[0]),
-        (ItemStack) converter.convert(line[1]), converter.convert(line[2]),
-        Integer.parseInt(line[3])));
+    scriptSqueezer.add(
+        new SqueezerRecipe(
+            (FluidStack) converter.convert(line[0]),
+            (ItemStack) converter.convert(line[1]),
+            converter.convert(line[2]),
+            Integer.parseInt(line[3])));
   }
 }

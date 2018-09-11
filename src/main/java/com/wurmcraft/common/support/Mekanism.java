@@ -1,6 +1,5 @@
 package com.wurmcraft.common.support;
 
-import com.google.common.base.Preconditions;
 import com.wurmcraft.api.script.anotations.FinalizeSupport;
 import com.wurmcraft.api.script.anotations.InitSupport;
 import com.wurmcraft.api.script.anotations.ScriptFunction;
@@ -123,8 +122,11 @@ public class Mekanism {
       RecipeHandler.addCrusherRecipe((ItemStack) r[0], (ItemStack) r[1]);
     }
     for (Object[] r : metaInfuser) {
-      RecipeHandler.addMetallurgicInfuserRecipe((InfuseType) r[0], (int) r[1], (ItemStack) r[2],
-          (ItemStack) r[3]);
+      if (r[0] == null || r[1] == null) {
+        continue;
+      }
+      RecipeHandler.addMetallurgicInfuserRecipe(
+          (InfuseType) r[0], (int) r[1], (ItemStack) r[2], (ItemStack) r[3]);
     }
     for (Object[] r : chemInfuser) {
       if (r[0] == null && r[1] == null && r[2] == null) {
@@ -136,19 +138,17 @@ public class Mekanism {
       RecipeHandler.addChemicalOxidizerRecipe((ItemStack) r[0], (GasStack) r[1]);
     }
     for (Object[] r : chemInjection) {
-      RecipeHandler
-          .addChemicalInjectionChamberRecipe((ItemStack) r[0], (Gas) r[1], (ItemStack) r[2]);
+      RecipeHandler.addChemicalInjectionChamberRecipe(
+          (ItemStack) r[0], (Gas) r[1], (ItemStack) r[2]);
     }
     for (Object[] r : electroSeperator) {
-      RecipeHandler
-          .addElectrolyticSeparatorRecipe((FluidStack) r[0], (double) r[1], (GasStack) r[2],
-              (GasStack) r[3]);
+      RecipeHandler.addElectrolyticSeparatorRecipe(
+          (FluidStack) r[0], (double) r[1], (GasStack) r[2], (GasStack) r[3]);
     }
     for (Object[] r : sawmill) {
       if (r.length == 4) {
-        RecipeHandler
-            .addPrecisionSawmillRecipe((ItemStack) r[0], (ItemStack) r[1], (ItemStack) r[2],
-                (float) r[3]);
+        RecipeHandler.addPrecisionSawmillRecipe(
+            (ItemStack) r[0], (ItemStack) r[1], (ItemStack) r[2], (float) r[3]);
       } else {
         RecipeHandler.addPrecisionSawmillRecipe((ItemStack) r[0], (ItemStack) r[1]);
       }
@@ -172,9 +172,14 @@ public class Mekanism {
       if (r[4] == null) {
         continue;
       }
-      RecipeHandler
-          .addPRCRecipe((ItemStack) r[0], (FluidStack) r[1], (GasStack) r[2], (ItemStack) r[3],
-              (GasStack) r[4], (double) r[5], (int) r[6]);
+      RecipeHandler.addPRCRecipe(
+          (ItemStack) r[0],
+          (FluidStack) r[1],
+          (GasStack) r[2],
+          (ItemStack) r[3],
+          (GasStack) r[4],
+          (double) r[5],
+          (int) r[6]);
     }
     for (Object[] r : thermal) {
       if (r[0] == null || r[1] == null) {
@@ -228,16 +233,19 @@ public class Mekanism {
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack String Integer")
   public void addMetallurgicInfuser(Converter converter, String[] line) {
     InfuseType type = InfuseRegistry.get(line[2]);
-    metaInfuser.add(new Object[]{type, Integer.parseInt(line[3]),
-        converter.convert(line[1]), converter.convert(line[0])});
+    metaInfuser.add(
+        new Object[]{
+            type, Integer.parseInt(line[3]), converter.convert(line[1]), converter.convert(line[0])
+        });
   }
 
-  // TODO Gas Converter
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack GasStack")
   public void addChemicalInfuser(Converter converter, String[] line) {
-    chemInfuser.add(new Object[]{converter.convert(line[0]), converter.convert(line[2]),
-        converter.convert(line[1])});
+    chemInfuser.add(
+        new Object[]{
+            converter.convert(line[0]), converter.convert(line[2]), converter.convert(line[1])
+        });
   }
 
   @Method(modid = "mekanism")
@@ -249,25 +257,38 @@ public class Mekanism {
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack GasStack")
   public void addChemicalInjection(Converter converter, String[] line) {
-    chemInjection.add(
-        new Object[]{converter.convert(line[1]), Preconditions.checkNotNull((GasStack) converter.convert(line[2])).getGas(),
-            converter.convert(line[0])});
+    if (converter.convert(line[2]) != null) {
+      chemInjection.add(
+          new Object[]{
+              converter.convert(line[1]),
+              ((GasStack) converter.convert(line[2])).getGas(),
+              converter.convert(line[0])
+          });
+    }
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "FluidStack GasStack Double GasStack")
   public void addElectrolyticSeparator(Converter converter, String[] line) {
     electroSeperator.add(
-        new Object[]{converter.convert(line[3]), converter.convert(line[0]),
+        new Object[]{
+            converter.convert(line[3]),
+            converter.convert(line[0]),
             Double.parseDouble(line[2]),
-            converter.convert(line[1])});
+            converter.convert(line[1])
+        });
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack ItemStack Float")
   public void addSawmill(Converter converter, String[] line) {
-    sawmill.add(new Object[]{converter.convert(line[1]),
-        converter.convert(line[0]), converter.convert(line[2]), Float.parseFloat(line[3])});
+    sawmill.add(
+        new Object[]{
+            converter.convert(line[1]),
+            converter.convert(line[0]),
+            converter.convert(line[2]),
+            Float.parseFloat(line[3])
+        });
   }
 
   @Method(modid = "mekanism")
@@ -289,12 +310,21 @@ public class Mekanism {
   }
 
   @Method(modid = "mekanism")
-  @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack GasStack GasStack FluidStack ItemStack Integer Integer")
+  @ScriptFunction(
+      modid = "mekanism",
+      inputFormat = "ItemStack GasStack GasStack FluidStack ItemStack Integer Integer"
+  )
   public void addMekPressureChamber(Converter converter, String[] line) {
-    pressure.add(new Object[]{converter.convert(line[4]), converter.convert(line[3]),
-        converter.convert(line[1]),
-        converter.convert(line[0]), converter.convert(line[2]), (double) Float.parseFloat(line[5]),
-        Integer.parseInt(line[6])});
+    pressure.add(
+        new Object[]{
+            converter.convert(line[4]),
+            converter.convert(line[3]),
+            converter.convert(line[1]),
+            converter.convert(line[0]),
+            converter.convert(line[2]),
+            (double) Float.parseFloat(line[5]),
+            Integer.parseInt(line[6])
+        });
   }
 
   @Method(modid = "mekanism")
@@ -312,7 +342,10 @@ public class Mekanism {
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack")
   public void addBoxBlacklist(Converter converter, String[] line) {
-    box.add(new Object[]{Block.getBlockFromItem(((ItemStack) converter.convert(line[0])).getItem()),
-        ((ItemStack) converter.convert(line[0])).getItemDamage()});
+    box.add(
+        new Object[]{
+            Block.getBlockFromItem(((ItemStack) converter.convert(line[0])).getItem()),
+            ((ItemStack) converter.convert(line[0])).getItemDamage()
+        });
   }
 }

@@ -1,6 +1,5 @@
 package com.wurmcraft.common.support;
 
-
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_botanic.VMBotanic;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_ore.VMOre;
 import com.valkyrieofnight.et.m_multiblocks.m_voidminer.m_res.VMRes;
@@ -71,7 +70,6 @@ public class EnvironmentalTech {
     } else if (ScriptExecutor.reload) {
       // TODO Handle Reload
     }
-
   }
 
   @Method(modid = "environmentaltech")
@@ -142,30 +140,41 @@ public class EnvironmentalTech {
   @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addBotanicMiner(Converter converter, String[] line) {
-    botanic.add(new Object[]{
-        Integer.parseInt(line[2]),
-        new WeightedItemStack((ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
-        line[3]
-    });
+    botanic.add(
+        new Object[]{
+            Integer.parseInt(line[2]),
+            new WeightedItemStack(
+                (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
+            line[3]
+        });
   }
 
   @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addResourceMiner(Converter converter, String[] line) {
-    res.add(new Object[]{
-        Integer.parseInt(line[2]),
-        new WeightedItemStack((ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
-        line[3]
-    });
+    res.add(
+        new Object[]{
+            Integer.parseInt(line[2]),
+            new WeightedItemStack(
+                (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
+            line[3]
+        });
   }
 
   @Method(modid = "environmentaltech")
-  @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String", typeData = "Laser", type = FunctionType.Linked)
+  @ScriptFunction(
+      modid = "environmentaltech",
+      inputFormat = "ItemStack Integer Integer String",
+      typeData = "Laser",
+      type = FunctionType.Linked
+  )
   public void addOreMiner(Converter converter, String[] line) {
-    ore.add(new Object[]{
-        Integer.parseInt(line[2]),
-        new WeightedItemStack((ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
-        line[3]
-    });
+    ore.add(
+        new Object[]{
+            Integer.parseInt(line[2]),
+            new WeightedItemStack(
+                (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
+            line[3]
+        });
   }
 }

@@ -22,8 +22,14 @@ public class AE2Grinder implements IGrinderRecipe {
     this(input, output, optional, null, chance, 0.0F, cost);
   }
 
-  public AE2Grinder(ItemStack input, ItemStack output, ItemStack optional1, ItemStack optional2,
-      float chance1, float chance2, int cost) {
+  public AE2Grinder(
+      ItemStack input,
+      ItemStack output,
+      ItemStack optional1,
+      ItemStack optional2,
+      float chance1,
+      float chance2,
+      int cost) {
     this.in = input;
     this.out = output;
     this.optionalOutput = Optional.ofNullable(optional1);

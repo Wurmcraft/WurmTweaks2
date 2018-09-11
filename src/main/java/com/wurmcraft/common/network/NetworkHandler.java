@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class NetworkHandler {
 
-  private static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE
-      .newSimpleChannel(Global.MODID);
+  private static final SimpleNetworkWrapper network =
+      NetworkRegistry.INSTANCE.newSimpleChannel(Global.MODID);
   private static byte packetID = 0;
 
   public static void registerPackets() {
@@ -22,8 +22,8 @@ public class NetworkHandler {
     registerMessage(ReloadMessage.class);
   }
 
-  private static final <T extends CustomMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(
-      Class<T> clazz) {
+  private static final <T extends CustomMessage<T> & IMessageHandler<T, IMessage>>
+  void registerMessage(Class<T> clazz) {
     if (CustomMessage.CustomClientMessage.class.isAssignableFrom(clazz)) {
       NetworkHandler.network.registerMessage(clazz, clazz, packetID++, Side.CLIENT);
     } else if (CustomMessage.CustomServerMessage.class.isAssignableFrom(clazz)) {
@@ -46,16 +46,20 @@ public class NetworkHandler {
     NetworkHandler.network.sendToAllAround(message, point);
   }
 
-  public static void sendToAllAround(IMessage message, int dimension, double x, double y, double z,
-      double range) {
-    NetworkHandler
-        .sendToAllAround(message, new NetworkRegistry.TargetPoint(dimension, x, y, z, range));
+  public static void sendToAllAround(
+      IMessage message, int dimension, double x, double y, double z, double range) {
+    NetworkHandler.sendToAllAround(
+        message, new NetworkRegistry.TargetPoint(dimension, x, y, z, range));
   }
 
   public static void sendToAllAround(IMessage message, EntityPlayer player, double range) {
-    NetworkHandler
-        .sendToAllAround(message, player.world.provider.getDimension(), player.posX, player.posY,
-            player.posZ, range);
+    NetworkHandler.sendToAllAround(
+        message,
+        player.world.provider.getDimension(),
+        player.posX,
+        player.posY,
+        player.posZ,
+        range);
   }
 
   public static void sendToDimension(IMessage message, int dimensionId) {

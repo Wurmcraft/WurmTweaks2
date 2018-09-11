@@ -1,6 +1,5 @@
 package com.wurmcraft.api.script.converter;
 
-
 import com.wurmcraft.api.script.DataWrapper;
 
 /**

@@ -46,9 +46,13 @@ public class AstralSorcery {
   @Method(modid = "appliedenergistics")
   @FinalizeSupport
   public void finishSupport() {
-    basic.forEach(recipe -> InfusionRecipeRegistry
-        .registerBasicInfusion((ItemStack) recipe[0], (ItemStack) recipe[1]));
-    slow.forEach(recipe -> InfusionRecipeRegistry
-        .registerLowConsumptionInfusion((ItemStack) recipe[0], (ItemStack) recipe[1]));
+    basic.forEach(
+        recipe ->
+            InfusionRecipeRegistry.registerBasicInfusion(
+                (ItemStack) recipe[0], (ItemStack) recipe[1]));
+    slow.forEach(
+        recipe ->
+            InfusionRecipeRegistry.registerLowConsumptionInfusion(
+                (ItemStack) recipe[0], (ItemStack) recipe[1]));
   }
 }

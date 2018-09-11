@@ -27,7 +27,6 @@ public class Botania {
   private static NonBlockingHashSet<Object[]> pureDaisy;
   private static NonBlockingHashSet<Object[]> apohecary;
 
-
   @Method(modid = "botania")
   @InitSupport
   public void init() {
@@ -60,19 +59,17 @@ public class Botania {
   @FinalizeSupport
   public void finishSupport() {
     for (Object[] recipe : conjuration) {
-      BotaniaAPI.registerManaConjurationRecipe((ItemStack) recipe[0], recipe[1],
-          (int) recipe[2]);
+      BotaniaAPI.registerManaConjurationRecipe((ItemStack) recipe[0], recipe[1], (int) recipe[2]);
     }
     for (Object[] recipe : infusion) {
-      BotaniaAPI.registerManaInfusionRecipe((ItemStack) recipe[0], recipe[1],
-          (int) recipe[2]);
+      BotaniaAPI.registerManaInfusionRecipe((ItemStack) recipe[0], recipe[1], (int) recipe[2]);
     }
     for (Object[] recipe : elven) {
       BotaniaAPI.registerElvenTradeRecipe((ItemStack[]) recipe[0], (ItemStack) recipe[1]);
     }
     for (Object[] recipe : rune) {
-      BotaniaAPI
-          .registerRuneAltarRecipe((ItemStack) recipe[0], (int) recipe[1], (Object[]) recipe[2]);
+      BotaniaAPI.registerRuneAltarRecipe(
+          (ItemStack) recipe[0], (int) recipe[1], (Object[]) recipe[2]);
     }
     for (Object[] recipe : pureDaisy) {
       BotaniaAPI.registerPureDaisyRecipe(recipe[0], (IBlockState) recipe[1]);
@@ -88,26 +85,35 @@ public class Botania {
   @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack ...")
   public void addApothecary(Converter converter, String[] line) {
-    apohecary.add(new Object[]{converter.convert(line[0]),
-        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length)).toArray(
-            new Object[0])});
+    apohecary.add(
+        new Object[]{
+            converter.convert(line[0]),
+            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length))
+                .toArray(new Object[0])
+        });
   }
 
   @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "Block Block")
   public void addPureDaisy(Converter converter, String[] line) {
     pureDaisy.add(
-        new Object[]{Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem()),
-            Block.getBlockFromItem(
-                ((ItemStack) converter.convert(line[0], 1)).getItem()).getDefaultState()});
+        new Object[]{
+            Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem()),
+            Block.getBlockFromItem(((ItemStack) converter.convert(line[0], 1)).getItem())
+                .getDefaultState()
+        });
   }
 
   @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack Integer ItemStack/OreDictionary ...")
   public void addRune(Converter converter, String[] line) {
-    rune.add(new Object[]{converter.convert(line[0]), Integer.parseInt(line[1]),
-        RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 2, line.length)).toArray(
-            new Object[0])});
+    rune.add(
+        new Object[]{
+            converter.convert(line[0]),
+            Integer.parseInt(line[1]),
+            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 2, line.length))
+                .toArray(new Object[0])
+        });
   }
 
   @Method(modid = "botania")
@@ -119,21 +125,27 @@ public class Botania {
   @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack Integer")
   public void addInfusion(Converter converter, String[] line) {
-    infusion.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
-        Integer.parseInt(line[2])});
+    infusion.add(
+        new Object[]{
+            converter.convert(line[0]), converter.convert(line[1]), Integer.parseInt(line[2])
+        });
   }
 
   @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack Integer")
   public void addAlchemy(Converter converter, String[] line) {
-    alchemy.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
-        Integer.parseInt(line[2])});
+    alchemy.add(
+        new Object[]{
+            converter.convert(line[0]), converter.convert(line[1]), Integer.parseInt(line[2])
+        });
   }
 
   @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack Integer")
   public void addConjuration(Converter converter, String[] line) {
-    conjuration.add(new Object[]{converter.convert(line[0]), converter.convert(line[1]),
-        Integer.parseInt(line[2])});
+    conjuration.add(
+        new Object[]{
+            converter.convert(line[0]), converter.convert(line[1]), Integer.parseInt(line[2])
+        });
   }
 }
