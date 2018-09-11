@@ -13,10 +13,8 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
-// TODO (3)
 @Support(modid = "environmentaltech")
 public class EnvironmentalTech {
 
@@ -24,8 +22,7 @@ public class EnvironmentalTech {
   private static NonBlockingHashSet<Object[]> res;
   private static NonBlockingHashSet<Object[]> ore;
 
-  @Method(modid = "environmentaltech")
-  @InitSupport
+  @InitSupport(modid = "environmentaltech")
   public void init() {
     botanic = new NonBlockingHashSet<>();
     res = new NonBlockingHashSet<>();
@@ -72,8 +69,7 @@ public class EnvironmentalTech {
     }
   }
 
-  @Method(modid = "environmentaltech")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "environmentaltech")
   public void finishSupport() {
     for (Object[] recipe : botanic) {
       if ((int) recipe[0] == 1) {
@@ -137,7 +133,6 @@ public class EnvironmentalTech {
     }
   }
 
-  @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addBotanicMiner(Converter converter, String[] line) {
     botanic.add(
@@ -149,7 +144,6 @@ public class EnvironmentalTech {
         });
   }
 
-  @Method(modid = "environmentaltech")
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addResourceMiner(Converter converter, String[] line) {
     res.add(
@@ -161,7 +155,6 @@ public class EnvironmentalTech {
         });
   }
 
-  @Method(modid = "environmentaltech")
   @ScriptFunction(
     modid = "environmentaltech",
     inputFormat = "ItemStack Integer Integer String",

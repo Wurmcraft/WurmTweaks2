@@ -16,7 +16,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.RollingMachineRecipe;
@@ -52,8 +51,7 @@ public class TechReborn {
   private static NonBlockingHashSet<FusionReactorRecipe> fusion;
   private static NonBlockingHashSet<BaseRecipe> machine;
 
-  @Method(modid = "techreborn")
-  @InitSupport
+  @InitSupport(modid = "techreborn")
   public void init() {
     if (shapeless == null) {
       shapeless = new NonBlockingHashSet<>();
@@ -78,8 +76,7 @@ public class TechReborn {
     }
   }
 
-  @Method(modid = "techreborn")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "techreborn")
   public void finishSupport() {
     for (Object[] r : shapeless) {
       TechRebornAPI.addShapelessOreRollingMachinceRecipe(

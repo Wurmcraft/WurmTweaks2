@@ -42,10 +42,10 @@ public class Events {
         && ((a.getItemDamage() == b.getItemDamage()) || a.getItemDamage() == Short.MAX_VALUE);
   }
 
-  @FinalizeSupport
+  @FinalizeSupport(modid = "events")
   public void finishSupport() {}
 
-  @InitSupport
+  @InitSupport(modid = "events")
   public void init() {
     MinecraftForge.EVENT_BUS.register(this);
     if (ScriptExecutor.reload) {

@@ -12,7 +12,6 @@ import java.util.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 import vazkii.botania.api.BotaniaAPI;
 
@@ -27,8 +26,7 @@ public class Botania {
   private static NonBlockingHashSet<Object[]> pureDaisy;
   private static NonBlockingHashSet<Object[]> apohecary;
 
-  @Method(modid = "botania")
-  @InitSupport
+  @InitSupport(modid = "botania")
   public void init() {
     if (conjuration == null) {
       conjuration = new NonBlockingHashSet<>();
@@ -55,8 +53,7 @@ public class Botania {
     }
   }
 
-  @Method(modid = "botania")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "botania")
   public void finishSupport() {
     for (Object[] recipe : conjuration) {
       BotaniaAPI.registerManaConjurationRecipe((ItemStack) recipe[0], recipe[1], (int) recipe[2]);
@@ -82,7 +79,6 @@ public class Botania {
     }
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack ...")
   public void addApothecary(Converter converter, String[] line) {
     apohecary.add(
@@ -93,7 +89,6 @@ public class Botania {
         });
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "Block Block")
   public void addPureDaisy(Converter converter, String[] line) {
     pureDaisy.add(
@@ -104,7 +99,6 @@ public class Botania {
         });
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack Integer ItemStack/OreDictionary ...")
   public void addRune(Converter converter, String[] line) {
     rune.add(
@@ -116,13 +110,11 @@ public class Botania {
         });
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack")
   public void addElven(Converter converter, String[] line) {
     infusion.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack Integer")
   public void addInfusion(Converter converter, String[] line) {
     infusion.add(
@@ -131,7 +123,6 @@ public class Botania {
         });
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack Integer")
   public void addAlchemy(Converter converter, String[] line) {
     alchemy.add(
@@ -140,7 +131,6 @@ public class Botania {
         });
   }
 
-  @Method(modid = "botania")
   @ScriptFunction(modid = "botania", inputFormat = "ItemStack ItemStack Integer")
   public void addConjuration(Converter converter, String[] line) {
     conjuration.add(

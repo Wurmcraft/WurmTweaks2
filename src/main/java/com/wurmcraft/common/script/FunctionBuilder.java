@@ -48,26 +48,30 @@ public class FunctionBuilder {
       ASMDataTable asmTable) {
     NonBlockingHashMap<String, FunctionWrapper> functions = new NonBlockingHashMap<>();
     for (ASMData data : asmTable.getAll(Support.class.getName())) {
-      try {
-        Class<?> asmClass = Class.forName(data.getClassName());
-        Method[] supportFunctions = searchForAnnotations(asmClass, Support.class);
-        for (Method method : supportFunctions) {
-          String name = getFunctionName(method);
-          if (method.getAnnotation(ScriptFunction.class).modid().length() == 0
-                  && isModLoaded(asmClass.getAnnotation(Support.class).modid())
-              || isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
-            functions.put(
-                name,
-                Objects.requireNonNull(
-                    createFunction(
-                        asmClass.getAnnotation(Support.class),
-                        method.getAnnotation(ScriptFunction.class),
-                        method,
-                        autoCast(asmClass))));
+      if (isValidToLoad(data)) {
+        try {
+          Class<?> asmClass = Class.forName(data.getClassName());
+          if (asmClass != null) {
+            Method[] supportFunctions = searchForAnnotations(asmClass, Support.class);
+            for (Method method : supportFunctions) {
+              String name = getFunctionName(method);
+              if (method.getAnnotation(ScriptFunction.class).modid().length() == 0
+                      && isModLoaded(asmClass.getAnnotation(Support.class).modid())
+                  || isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
+                functions.put(
+                    name,
+                    Objects.requireNonNull(
+                        createFunction(
+                            asmClass.getAnnotation(Support.class),
+                            method.getAnnotation(ScriptFunction.class),
+                            method,
+                            autoCast(asmClass))));
+              }
+            }
           }
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
         }
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
       }
     }
     NonBlockingHashMap<String, FunctionWrapper> looseFunctions = searchForLooseFunctions(asmTable);
@@ -82,22 +86,26 @@ public class FunctionBuilder {
     try {
       NonBlockingHashMap<String, FunctionWrapper> functions = new NonBlockingHashMap<>();
       for (ASMData data : asmDataTable.getAll(ScriptFunction.class.getName())) {
-        try {
-          Class<?> asmClass = Class.forName(data.getClassName());
-          Method[] scriptFunctions = searchForAnnotations(asmClass, ScriptFunction.class);
-          for (Method method : scriptFunctions) {
-            if (isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
-              functions.putIfAbsent(
-                  getFunctionName(method),
-                  createFunction(
-                      null,
-                      method.getAnnotation(ScriptFunction.class),
-                      method,
-                      autoCast(asmClass)));
+        if (data != null
+            && data.getAnnotationInfo() != null
+            && isModLoaded(data.getAnnotationInfo().get("modid").toString())) {
+          try {
+            Class<?> asmClass = Class.forName(data.getClassName());
+            Method[] scriptFunctions = searchForAnnotations(asmClass, ScriptFunction.class);
+            for (Method method : scriptFunctions) {
+              if (isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
+                functions.putIfAbsent(
+                    getFunctionName(method),
+                    createFunction(
+                        null,
+                        method.getAnnotation(ScriptFunction.class),
+                        method,
+                        autoCast(asmClass)));
+              }
             }
+          } catch (ClassNotFoundException e) {
+            e.printStackTrace();
           }
-        } catch (ClassNotFoundException e) {
-          e.printStackTrace();
         }
       }
       return functions;
@@ -175,36 +183,42 @@ public class FunctionBuilder {
     NonBlockingHashSet<Object[]> serverStarting = new NonBlockingHashSet<>();
     // Before Scripts are Run
     for (ASMData data : dataTable.getAll(InitSupport.class.getName())) {
-      try {
-        Class<?> asmClass = Class.forName(data.getClassName());
-        Method[] initMethods = searchForAnnotations(asmClass, InitSupport.class);
-        for (Method method : initMethods) {
-          InitSupport initSupport = method.getAnnotation(InitSupport.class);
-          if (initSupport.initType().equals(EnumInitType.PREINIT)) {
-            preInit.add(new Object[] {method, asmClass});
-          } else if (initSupport.initType().equals(EnumInitType.INIT)) {
-            init.add(new Object[] {method, asmClass});
+      if (isValidToLoad(data)) {
+        try {
+          Class<?> asmClass = Class.forName(data.getClassName());
+          Method[] initMethods = searchForAnnotations(asmClass, InitSupport.class);
+          for (Method method : initMethods) {
+            InitSupport initSupport = method.getAnnotation(InitSupport.class);
+            if (initSupport.initType().equals(EnumInitType.PREINIT)) {
+              preInit.add(new Object[] {method, asmClass});
+            } else if (initSupport.initType().equals(EnumInitType.INIT)) {
+              init.add(new Object[] {method, asmClass});
+            }
           }
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
         }
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
       }
     }
     // After Scripts are run
     for (ASMData data : dataTable.getAll(FinalizeSupport.class.getName())) {
-      try {
-        Class<?> asmClass = Class.forName(data.getClassName());
-        Method[] initMethods = searchForAnnotations(asmClass, FinalizeSupport.class);
-        for (Method method : initMethods) {
-          FinalizeSupport initSupport = method.getAnnotation(FinalizeSupport.class);
-          if (initSupport.initType().equals(FinalizeSupport.EnumInitType.POSTINIT)) {
-            postInit.add(new Object[] {method, asmClass});
-          } else if (initSupport.initType().equals(FinalizeSupport.EnumInitType.SERVER_STARTING)) {
-            serverStarting.add(new Object[] {method, asmClass});
+      if (isValidToLoad(data)) {
+        try {
+          Class<?> asmClass = Class.forName(data.getClassName());
+          Method[] initMethods = searchForAnnotations(asmClass, FinalizeSupport.class);
+          for (Method method : initMethods) {
+            FinalizeSupport initSupport = method.getAnnotation(FinalizeSupport.class);
+            if (initSupport.initType().equals(FinalizeSupport.EnumInitType.POSTINIT)) {
+              postInit.add(new Object[] {method, asmClass});
+            } else if (initSupport
+                .initType()
+                .equals(FinalizeSupport.EnumInitType.SERVER_STARTING)) {
+              serverStarting.add(new Object[] {method, asmClass});
+            }
           }
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
         }
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
       }
     }
     initData.put("pre", preInit);
@@ -281,5 +295,15 @@ public class FunctionBuilder {
     }
     // TODO Linking Support
     return bindings;
+  }
+
+  public static boolean isValidToLoad(ASMData data) {
+    if (data != null
+        && data.getAnnotationInfo() != null
+        && !data.getAnnotationInfo().isEmpty()
+        && !((String) data.getAnnotationInfo().getOrDefault("modid", "")).isEmpty()) {
+      return isModLoaded(data.getAnnotationInfo().get("modid").toString());
+    }
+    return false;
   }
 }

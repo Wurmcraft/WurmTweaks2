@@ -9,7 +9,6 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "charcoal_pit")
@@ -17,8 +16,7 @@ public class CharcoalPit {
 
   private static NonBlockingHashSet<OreSmeltingRecipes.AlloyRecipe> bloomery;
 
-  @Method(modid = "charcoal_pit")
-  @InitSupport
+  @InitSupport(modid = "charcoal_pit")
   public void init() {
     if (bloomery == null) {
       bloomery = new NonBlockingHashSet<>();
@@ -31,7 +29,6 @@ public class CharcoalPit {
     }
   }
 
-  @Method(modid = "charcoal_pit")
   @ScriptFunction(modid = "charcoal_pit", inputFormat = "ItemStack ItemStack")
   public void addBloomery(Converter converter, String[] line) {
     bloomery.add(
@@ -43,8 +40,7 @@ public class CharcoalPit {
             (ItemStack) converter.convert((line[1]))));
   }
 
-  @Method(modid = "charcoal_pit")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "charcoal_pit")
   public void finishSupport() {
     bloomery.forEach(OreSmeltingRecipes::addAlloyRecipe);
   }

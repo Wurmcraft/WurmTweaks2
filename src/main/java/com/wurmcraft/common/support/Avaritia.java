@@ -28,7 +28,7 @@ public class Avaritia {
   private static NonBlockingHashSet<ExtremeShapelessRecipe> shapeless;
   private static NonBlockingHashSet<ICompressorRecipe> compressor;
 
-  @InitSupport
+  @InitSupport(modid = "avaritia")
   public void init() {
     shaped = new NonBlockingHashSet<>();
     shapeless = new NonBlockingHashSet<>();
@@ -78,7 +78,7 @@ public class Avaritia {
             RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, 1))));
   }
 
-  @FinalizeSupport
+  @FinalizeSupport(modid = "avaritia")
   public void finishSupport() {
     shaped.forEach(
         recipe ->

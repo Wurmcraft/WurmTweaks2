@@ -17,7 +17,6 @@ import com.wurmcraft.common.support.utils.ae2.AE2Inscriber;
 import java.util.Arrays;
 import java.util.Objects;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 // TODO Find out how even AE2 registry's show recipes within it
@@ -27,8 +26,7 @@ public class AE2 {
   private static NonBlockingHashSet<IGrinderRecipe> scriptGrinder;
   private static NonBlockingHashSet<IInscriberRecipe> scriptInscriber;
 
-  @Method(modid = "appliedenergistics")
-  @InitSupport
+  @InitSupport(modid = "appliedenergistics")
   public void init() {
     if (scriptGrinder == null || scriptInscriber == null) {
       scriptGrinder = new NonBlockingHashSet<>();
@@ -59,8 +57,7 @@ public class AE2 {
     }
   }
 
-  @Method(modid = "appliedenergistics")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "appliedenergistics")
   public void finalize() {
     for (IGrinderRecipe recipe : scriptGrinder) {
       AEApi.instance().registries().grinder().addRecipe(recipe);
@@ -70,7 +67,6 @@ public class AE2 {
     }
   }
 
-  @Method(modid = "appliedenergistics")
   @ScriptFunction(
     modid = "appliedenergistics",
     inputFormat = "ItemStack ItemStack ItemStack Float Integer",
@@ -87,7 +83,6 @@ public class AE2 {
             Integer.parseInt(line[4])));
   }
 
-  @Method(modid = "appliedenergistics")
   @ScriptFunction(
     modid = "appliedenergistics",
     inputFormat = "ItemStack ItemStack ItemStack String ItemStack"
@@ -102,7 +97,6 @@ public class AE2 {
             Objects.requireNonNull(getType(line[3]))));
   }
 
-  @Method(modid = "appliedenergistics")
   private InscriberProcessType getType(String type) {
     if (type.equalsIgnoreCase(InscriberProcessType.INSCRIBE.name())) {
       return InscriberProcessType.INSCRIBE;

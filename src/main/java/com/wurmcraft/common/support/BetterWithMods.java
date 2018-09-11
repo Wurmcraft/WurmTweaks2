@@ -40,7 +40,7 @@ public class BetterWithMods {
   private static NonBlockingHashSet<CookingPotRecipe> scriptStokedCrucible;
   private static int count = 0;
 
-  @InitSupport
+  @InitSupport(modid = "betterwithmods")
   public void init() {
     scriptHopper = new NonBlockingHashSet<>();
     scriptShapedAnvil = new NonBlockingHashSet<>();
@@ -91,7 +91,7 @@ public class BetterWithMods {
     }
   }
 
-  @FinalizeSupport
+  @FinalizeSupport(modid = "betterwithmods")
   public void finalize() {
     if (count == 0) {
       count++;

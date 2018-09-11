@@ -19,7 +19,7 @@ public class AbyssalCraft {
   private static NonBlockingHashSet<Crystallizer> crystallizerRecipes;
   private static NonBlockingHashSet<Transmutator> transmutatorRecipes;
 
-  @InitSupport
+  @InitSupport(modid = "abyssalcraft")
   public void init() {
     crystallizerRecipes = new NonBlockingHashSet<>();
     transmutatorRecipes = new NonBlockingHashSet<>();
@@ -56,7 +56,7 @@ public class AbyssalCraft {
             Float.parseFloat(line[2])));
   }
 
-  @FinalizeSupport
+  @FinalizeSupport(modid = "abyssalcraft")
   public void finishSupport() {
     crystallizerRecipes.forEach(
         crystallizerRecipe ->

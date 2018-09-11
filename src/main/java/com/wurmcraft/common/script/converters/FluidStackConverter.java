@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
-@DataConverter
+@DataConverter(modid = "minecraft")
 public class FluidStackConverter implements IDataConverter<FluidStack> {
 
   private static final Thread mainThread = Thread.currentThread();

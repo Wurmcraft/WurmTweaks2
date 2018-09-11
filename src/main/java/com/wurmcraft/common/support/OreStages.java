@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
@@ -29,8 +28,7 @@ public class OreStages {
   private static NonBlockingHashSet<OreStage> oreStages;
   private static NonBlockingHashSet<Unlock> unlockStages;
 
-  @Method(modid = "orestages")
-  @InitSupport
+  @InitSupport(modid = "orestages")
   public void init() {
     oreStages = new NonBlockingHashSet<>();
     unlockStages = new NonBlockingHashSet<>();
@@ -47,8 +45,7 @@ public class OreStages {
     }
   }
 
-  @Method(modid = "orestages")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "orestages")
   public void finalizeSupport() {
     for (OreStage stage : oreStages) {
       OreTiersAPI.addReplacement(stage.stage, stage.block, stage.replacement, true);
@@ -58,7 +55,6 @@ public class OreStages {
     }
   }
 
-  @Method(modid = "orestages")
   @ScriptFunction(modid = "orestages", inputFormat = "String Block Block")
   public void addOreStage(Converter converter, String[] line) {
     oreStages.add(
@@ -70,18 +66,15 @@ public class OreStages {
             getStageFromString(line[0])));
   }
 
-  @Method(modid = "orestages")
   @ScriptFunction(modid = "orestages", inputFormat = "ItemStack String")
   public void addUnlock(Converter converter, String[] line) {
     unlockStages.add(new Unlock(line[1], (ItemStack) converter.convert(line[0], 1)));
   }
 
-  @Method(modid = "orestages")
   private String getStageFromString(String stage) {
     return stage.replaceAll("_", " ");
   }
 
-  @Method(modid = "orestages")
   private String getStage(ItemStack stack) {
     for (ItemStack item : itemCache.keySet()) {
       if (item.isItemEqualIgnoreDurability(stack)) {
@@ -91,7 +84,6 @@ public class OreStages {
     return "";
   }
 
-  @Method(modid = "orestages")
   @SubscribeEvent
   public void onPlayerCraft(PlayerEvent.ItemCraftedEvent e) {
     String possibleStage = getStage(e.crafting);
@@ -111,7 +103,6 @@ public class OreStages {
     }
   }
 
-  @Method(modid = "orestages")
   @SubscribeEvent
   public void onItemPickup(ItemPickupEvent e) {
     String possibleStage = getStage(e.getStack());

@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
-@DataConverter
+@DataConverter(modid = "minecraft")
 public class StackConverter implements IDataConverter<ItemStack> {
 
   private static final Thread mainThread = Thread.currentThread();

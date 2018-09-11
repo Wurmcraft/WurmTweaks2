@@ -10,7 +10,6 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "extrautils2")
@@ -19,8 +18,7 @@ public class ExtraUtils2 {
   private static NonBlockingHashSet<Object[]> resonator;
   private static NonBlockingHashSet<Object[]> crusher;
 
-  @Method(modid = "extrautils2")
-  @InitSupport
+  @InitSupport(modid = "extrautils2")
   public void init() {
     resonator = new NonBlockingHashSet<>();
     crusher = new NonBlockingHashSet<>();
@@ -37,8 +35,7 @@ public class ExtraUtils2 {
     }
   }
 
-  @Method(modid = "extrautils2")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "extrautils2")
   public void finishSupport() {
     for (Object[] recipe : resonator) {
       TileResonator.register((ItemStack) recipe[0], (ItemStack) recipe[1], (int) recipe[2]);
@@ -53,7 +50,6 @@ public class ExtraUtils2 {
     }
   }
 
-  @Method(modid = "extrautils2")
   @ScriptFunction(modid = "extrautils2", inputFormat = "ItemStack ItemStack Integer")
   public void addResonator(Converter converter, String[] line) {
     resonator.add(
@@ -62,7 +58,6 @@ public class ExtraUtils2 {
         });
   }
 
-  @Method(modid = "extrautils2")
   @ScriptFunction(modid = "extrautils2", inputFormat = "ItemStack ItemStack ItemStack Float")
   public void addXUCrusher(Converter converter, String[] line) {
     if (line.length == 2) {

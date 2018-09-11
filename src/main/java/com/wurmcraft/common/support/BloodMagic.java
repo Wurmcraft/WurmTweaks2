@@ -17,7 +17,6 @@ import com.wurmcraft.common.support.utils.RecipeUtils;
 import java.util.Arrays;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "bloodmagic")
@@ -28,8 +27,7 @@ public class BloodMagic {
   private static NonBlockingHashSet<Object[]> forge;
   private static NonBlockingHashSet<Object[]> table;
 
-  @Method(modid = "bloodmagic")
-  @InitSupport
+  @InitSupport(modid = "bloodmagic")
   public void init() {
     if (altar == null) {
       altar = new NonBlockingHashSet<>();
@@ -77,8 +75,7 @@ public class BloodMagic {
     }
   }
 
-  @Method(modid = "bloodmagic")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "bloodmagic")
   public void finishSupport() {
     for (Object[] recipe : altar) {
       BloodMagicAPI.INSTANCE
@@ -115,7 +112,6 @@ public class BloodMagic {
     }
   }
 
-  @Method(modid = "bloodmagic")
   @ScriptFunction(
     modid = "bloodmagic",
     inputFormat = "ItemStack ItemStack Integer Integer Integer Integer"
@@ -132,7 +128,6 @@ public class BloodMagic {
         });
   }
 
-  @Method(modid = "bloodmagic")
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack ItemStack ItemStack")
   public void addAlchemyArray(Converter converter, String[] line) {
     array.add(
@@ -144,7 +139,6 @@ public class BloodMagic {
         });
   }
 
-  @Method(modid = "bloodmagic")
   @ScriptFunction(
     modid = "bloodmagic",
     inputFormat = "ItemStack Float Float ItemStack/OreDictionary ..."
@@ -159,7 +153,6 @@ public class BloodMagic {
         });
   }
 
-  @Method(modid = "bloodmagic")
   @ScriptFunction(
     modid = "bloodmagic",
     inputFormat = "ItemStack Integer Integer Integer ItemStack/OreDictionary ..."

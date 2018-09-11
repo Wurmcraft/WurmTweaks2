@@ -10,7 +10,7 @@ import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
-@DataConverter
+@DataConverter(modid = "mekanism")
 public class GasStackConverter implements IDataConverter<GasStack> {
 
   private static final Thread mainThread = Thread.currentThread();

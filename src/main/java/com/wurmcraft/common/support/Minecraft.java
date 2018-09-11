@@ -28,12 +28,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
-@Support(modid = "minecraft", threaded = true)
+@Support(modid = "minecraft")
 public class Minecraft {
 
   public static NonBlockingHashSet<IRecipe> scriptRecipes;
   public static NonBlockingHashSet<FurnaceRecipe> scriptFurnace;
-  public static NonBlockingHashSet<OreEntry> scriptOreEntry;
+  public static NonBlockingHashSet<OreEntry> scriptOreEntry = new NonBlockingHashSet<>();
   public static NonBlockingHashSet<BrewingOreRecipe> scriptBrewing;
 
   private static List<ItemStack> createList(ItemStack... stack) {
@@ -42,11 +42,10 @@ public class Minecraft {
     return list;
   }
 
-  @InitSupport
+  @InitSupport(modid = "minecraft")
   public void init() {
     scriptRecipes = new NonBlockingHashSet<>();
     scriptFurnace = new NonBlockingHashSet<>();
-    scriptOreEntry = new NonBlockingHashSet<>();
     scriptBrewing = new NonBlockingHashSet<>();
     if (ScriptExecutor.reload) {
       removeRecipes();
@@ -60,7 +59,7 @@ public class Minecraft {
     }
   }
 
-  @FinalizeSupport()
+  @FinalizeSupport(modid = "minecraft")
   public void finalizeSupport() {
     if (ConfigHandler.removeAllRecipes || ScriptExecutor.reload) {
       removeRecipes();

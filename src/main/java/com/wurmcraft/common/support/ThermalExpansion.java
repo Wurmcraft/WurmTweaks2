@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "thermalexpansion")
@@ -37,8 +36,7 @@ public class ThermalExpansion {
   private static NonBlockingHashSet<TransposerManager.TransposerRecipe> extractTransposer;
   private static NonBlockingHashSet<TransposerManager.TransposerRecipe> fillTransposer;
 
-  @Method(modid = "thermalexpansion")
-  @InitSupport
+  @InitSupport(modid = "thermalexpansion")
   public void init() {
     if (furnace == null) {
       furnace = new NonBlockingHashSet<>();
@@ -84,8 +82,7 @@ public class ThermalExpansion {
     }
   }
 
-  @Method(modid = "thermalexpansion")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "thermalexpansion")
   public void finishSupport() {
     for (Object[] recipe : furnace) {
       FurnaceManager.addRecipe((int) recipe[0], (ItemStack) recipe[1], (ItemStack) recipe[2]);
@@ -126,7 +123,6 @@ public class ThermalExpansion {
     }
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer")
   public void addRedstoneFurnace(Converter converter, String[] line) {
     furnace.add(
@@ -135,7 +131,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(
     modid = "thermalexpansion",
     inputFormat = "ItemStack ItemStack Integer ItemStack Integer"
@@ -151,7 +146,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer")
   public void addTESawmill(Converter converter, String[] line) {
     sawmill.add(
@@ -160,7 +154,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack ItemStack Integer")
   public void addSmelter(Converter converter, String[] line) {
     smelter.add(
@@ -172,7 +165,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "ItemStack ItemStack Integer String")
   public void addCompactor(Converter converter, String[] line) {
     compactor.add(
@@ -184,7 +176,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(modid = "thermalexpansion", inputFormat = "FluidStack ItemStack Integer")
   public void addMagmaCrucible(Converter converter, String[] line) {
     crucible.add(
@@ -193,7 +184,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(
     modid = "thermalexpansion",
     inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack Integer FluidStack",
@@ -214,7 +204,6 @@ public class ThermalExpansion {
         });
   }
 
-  @Method(modid = "thermalexpansion")
   @ScriptFunction(
     modid = "thermalexpansion",
     inputFormat = "ItemStack ItemStack FluidStack Integer String Integer"
@@ -234,7 +223,6 @@ public class ThermalExpansion {
     }
   }
 
-  @Method(modid = "thermalexpansion")
   private CompactorManager.Mode getMode(String mode) {
     if (mode.matches("[gG]ear")) {
       return CompactorManager.Mode.GEAR;

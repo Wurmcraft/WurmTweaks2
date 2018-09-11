@@ -1,5 +1,6 @@
 package com.wurmcraft.common.support.utils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 
@@ -27,7 +28,11 @@ public class ScriptFunctionWrapper implements Function<String, Void> {
       try {
         method.invoke(clazz, converter, s.split(" "));
       } catch (Throwable e) {
-        e.printStackTrace();
+        if (e instanceof InvocationTargetException) {
+          e.getCause().printStackTrace();
+        } else {
+          e.printStackTrace();
+        }
       }
     }
     return null;

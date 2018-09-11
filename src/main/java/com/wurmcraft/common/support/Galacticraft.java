@@ -16,7 +16,6 @@ import micdoodle8.mods.galacticraft.api.recipe.CircuitFabricatorRecipes;
 import micdoodle8.mods.galacticraft.api.recipe.CompressorRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "galacticraftcore")
@@ -27,8 +26,7 @@ public class Galacticraft {
   private static NonBlockingHashSet<Object[]> circuitFab;
   private static NonBlockingHashSet<Object[]> station;
 
-  @Method(modid = "galacticraftcore")
-  @InitSupport
+  @InitSupport(modid = "galacticraftcore")
   public void init() {
     if (shapelessCompressor == null) {
       shapedCompressor = new NonBlockingHashSet<>();
@@ -59,8 +57,7 @@ public class Galacticraft {
     }
   }
 
-  @Method(modid = "galacticraftcore")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "galacticraftcore")
   public void finishSupport() {
     shapedCompressor.forEach(
         recipe -> CompressorRecipes.addRecipe((ItemStack) recipe[0], (Object[]) recipe[1]));
@@ -75,7 +72,6 @@ public class Galacticraft {
                 (int) recipe[0], (HashMap<Object, Integer>) recipe[1]));
   }
 
-  @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore")
   public void addShapedCompressor(Converter converter, String[] line) {
     shapedCompressor.add(
@@ -84,7 +80,6 @@ public class Galacticraft {
         });
   }
 
-  @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "ItemStack ItemStack ...")
   public void addShapelessCompressor(Converter converter, String[] line) {
     shapelessCompressor.add(
@@ -95,7 +90,6 @@ public class Galacticraft {
         });
   }
 
-  @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "ItemStack ItemStack ...")
   public void addCircuitFabricator(Converter converter, String[] line) {
     circuitFab.add(
@@ -105,7 +99,6 @@ public class Galacticraft {
         });
   }
 
-  @Method(modid = "galacticraftcore")
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "Integer ItemStack/OreDictionary")
   public void addSpaceStationRecipe(Converter converter, String[] line) {
     HashMap<Object, Integer> stationRecipe = new HashMap<>();

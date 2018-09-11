@@ -8,7 +8,6 @@ import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import nc.recipe.NCRecipes;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "nuclearcraft")
@@ -18,8 +17,7 @@ public class NuclearCraft {
   private static NonBlockingHashSet<Object[]> separator;
   private static NonBlockingHashSet<Object[]> pressurizer;
 
-  @Method(modid = "nuclearcraft")
-  @InitSupport
+  @InitSupport(modid = "nuclearcraft")
   public void init() {
     if (manufactory == null) {
       manufactory = new NonBlockingHashSet<>();
@@ -44,8 +42,7 @@ public class NuclearCraft {
     }
   }
 
-  @Method(modid = "nuclearcraft")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "nuclearcraft")
   public void finishSupport() {
     for (Object[] recipe : manufactory) {
       NCRecipes.Type.MANUFACTORY.getRecipeHandler().addRecipe(recipe[0], recipe[1], recipe[2]);
@@ -60,7 +57,6 @@ public class NuclearCraft {
     }
   }
 
-  @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addManufactory(Converter converter, String[] line) {
     manufactory.add(
@@ -69,7 +65,6 @@ public class NuclearCraft {
         });
   }
 
-  @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack ItemStack Integer")
   public void addIsotopeSeparator(Converter converter, String[] line) {
 
@@ -82,7 +77,6 @@ public class NuclearCraft {
         });
   }
 
-  @Method(modid = "nuclearcraft")
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addPressurizer(Converter converter, String[] line) {
     pressurizer.add(

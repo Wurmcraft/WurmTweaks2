@@ -14,7 +14,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.DryingRecipe;
@@ -44,8 +43,7 @@ public class TConstruct {
   private static NonBlockingHashSet<MeltingRecipe> melting;
   private static NonBlockingHashSet<Object[]> entityMelting;
 
-  @Method(modid = "tconstruct")
-  @InitSupport
+  @InitSupport(modid = "tconstruct")
   public void init() {
     if (casting == null) {
       casting = new NonBlockingHashSet<>();
@@ -89,8 +87,7 @@ public class TConstruct {
     }
   }
 
-  @Method(modid = "tconstruct")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "tconstruct")
   public void finishSupport() {
     for (ICastingRecipe recipe : casting) {
       TinkerRegistry.registerTableCasting(recipe);
@@ -115,7 +112,6 @@ public class TConstruct {
     }
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack FluidStack")
   public void addCasting(Converter converter, String[] line) {
     FluidStack fluid = (FluidStack) converter.convert(line[2]);
@@ -128,7 +124,6 @@ public class TConstruct {
             (fluid.amount / INGOT) * 40));
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack FluidStack")
   public void addBasin(Converter converter, String[] line) {
     FluidStack fluid = (FluidStack) converter.convert(line[2]);
@@ -141,7 +136,6 @@ public class TConstruct {
             (fluid.amount / INGOT) * 40));
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack FluidStack ...")
   public void addAlloy(Converter converter, String[] line) {
     List<FluidStack> lineFluids = new ArrayList<>();
@@ -151,7 +145,6 @@ public class TConstruct {
     alloy.add(new Object[] {converter.convert(line[0]), lineFluids.toArray(new FluidStack[0])});
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack Integer")
   public void addDrying(Converter converter, String[] line) {
     drying.add(
@@ -160,13 +153,11 @@ public class TConstruct {
         });
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack Integer")
   public void addFuel(Converter converter, String[] line) {
     fuel.add(new Object[] {converter.convert(line[0]), Integer.parseInt(line[1])});
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack ItemStack Integer")
   public void addMelting(Converter converter, String[] line) {
     melting.add(
@@ -177,7 +168,6 @@ public class TConstruct {
   }
 
   // TODO Entity Converts
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack Entity")
   public void addEntityMelting(Converter converter, String[] line) {
     if (converter.convert(line[0], 1) != null) {
@@ -189,7 +179,6 @@ public class TConstruct {
   }
 
   // End Of Normal Mod Support
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack ItemStack Block")
   public void handleMelting(Converter converter, String[] line) {
     FluidStack fluid = ((FluidStack) converter.convert(line[0], 1));
@@ -219,7 +208,6 @@ public class TConstruct {
     }
   }
 
-  @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "String FluidStack")
   public void handleMaterialParts(Converter converter, String[] line) {
     FluidStack fluid = ((FluidStack) converter.convert(line[1]));
@@ -248,7 +236,6 @@ public class TConstruct {
     }
   }
 
-  @Method(modid = "tconstruct")
   private int normalize(int amount) {
     if (amount == Material.VALUE_Ingot) {
       return INGOT;

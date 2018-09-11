@@ -9,7 +9,6 @@ import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 @Support(modid = "exnihilocreatio")
@@ -20,8 +19,7 @@ public class ExNihilo {
   private static NonBlockingHashSet<Crucible> scriptCrucible;
   private static NonBlockingHashSet<Sieve> scriptSieve;
 
-  @Method(modid = "exnihilocreatio")
-  @InitSupport
+  @InitSupport(modid = "exnihilocreatio")
   public void init() {
     if (scriptCrook == null) {
       scriptCrook = new NonBlockingHashSet<>();
@@ -38,8 +36,7 @@ public class ExNihilo {
     }
   }
 
-  @Method(modid = "exnihilocreatio")
-  @FinalizeSupport
+  @FinalizeSupport(modid = "exnihilocreatio")
   public void finailze() {
     scriptCrook.forEach(
         crook ->
@@ -61,7 +58,6 @@ public class ExNihilo {
                 sieve.input, sieve.drop, sieve.chance, sieve.lvl));
   }
 
-  @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio", inputFormat = "ItemStack ItemStack Float Float")
   public void addCrook(Converter converter, String[] line) {
     scriptCrook.add(
@@ -72,7 +68,6 @@ public class ExNihilo {
             Float.parseFloat(line[3])));
   }
 
-  @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio", inputFormat = "ItemStack Float ItemStack")
   public void addCompost(Converter converter, String[] line) {
     scriptCompost.add(
@@ -84,7 +79,6 @@ public class ExNihilo {
                 new exnihilocreatio.util.BlockInfo((ItemStack) converter.convert(line[2])))));
   }
 
-  @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio")
   public void addENCrucible(Converter converter, String[] line) {
     scriptCrucible.add(
@@ -92,7 +86,6 @@ public class ExNihilo {
             (ItemStack) converter.convert(line[0]), (FluidStack) converter.convert(line[1])));
   }
 
-  @Method(modid = "exnihilocreatio")
   @ScriptFunction(modid = "exnihilocreatio")
   public void addSieve(Converter converter, String[] line) {
     scriptSieve.add(

@@ -32,7 +32,7 @@ public class ActuallyAdditions {
   private static NonBlockingHashSet<WeightedOre> scriptStone;
   private static NonBlockingHashSet<WeightedOre> scriptNether;
 
-  @InitSupport
+  @InitSupport(modid = "actuallyadditions")
   public void init() {
     scriptCrusher = new NonBlockingHashSet<>();
     scriptBallOfFur = new NonBlockingHashSet<>();
@@ -58,7 +58,7 @@ public class ActuallyAdditions {
     }
   }
 
-  @FinalizeSupport
+  @FinalizeSupport(modid = "actuallyadditions")
   public void finalizeSupport() {
     scriptCrusher.forEach(
         crusher ->

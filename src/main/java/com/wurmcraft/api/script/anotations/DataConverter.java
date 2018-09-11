@@ -5,11 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Requires a default construct to work correctly otherwise it will throw an exception
- */
+/** Requires a default construct to work correctly otherwise it will throw an exception */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface DataConverter {
 
+  String modid() default "";
 }

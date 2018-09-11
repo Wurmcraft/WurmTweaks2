@@ -40,7 +40,7 @@ public class ImmersiveEngineering {
   private static NonBlockingHashSet<RefineryRecipe> scriptRefinery;
   private static NonBlockingHashSet<SqueezerRecipe> scriptSqueezer;
 
-  @InitSupport
+  @InitSupport(modid = "immersiveengineering")
   public void init() {
     scriptAlloy = new NonBlockingHashSet<>();
     scriptArcFurnace = new NonBlockingHashSet<>();
@@ -98,7 +98,7 @@ public class ImmersiveEngineering {
     }
   }
 
-  @FinalizeSupport
+  @FinalizeSupport(modid = "immersiveengineering")
   public void finalizeSupport() {
     scriptAlloy.forEach(
         alloy -> AlloyRecipe.addRecipe(alloy.output, alloy.input0, alloy.input1, alloy.time));

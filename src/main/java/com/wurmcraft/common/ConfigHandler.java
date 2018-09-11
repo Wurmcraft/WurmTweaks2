@@ -15,7 +15,7 @@ public class ConfigHandler {
 
   @Config.Comment("Master Script URL")
   public static String masterScript =
-      "https://raw.githubusercontent.com/Wurmcraft/WurmTweaks2/Rewrite/scripts/master.ws";
+      "https://raw.githubusercontent.com/Wurmcraft/WurmTweaks2/Rewrite/examples/master.ws";
 
   @Config.Comment("Default Script Directory")
   public static String scriptDir = "config" + File.separator + "WurmTweaks";
