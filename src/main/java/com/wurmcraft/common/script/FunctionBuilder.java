@@ -54,7 +54,7 @@ public class FunctionBuilder {
         for (Method method : supportFunctions) {
           String name = getFunctionName(method);
           if (method.getAnnotation(ScriptFunction.class).modid().length() == 0
-              && isModLoaded(asmClass.getAnnotation(Support.class).modid())
+                  && isModLoaded(asmClass.getAnnotation(Support.class).modid())
               || isModLoaded(method.getAnnotation(ScriptFunction.class).modid())) {
             functions.put(
                 name,
@@ -135,7 +135,7 @@ public class FunctionBuilder {
         return new FunctionWrapper(
             function.modid().length() > 0 ? function.modid() : support.modid(),
             support.supportDependencies(),
-            function.threadSafe() || (support.threaded()),
+            function.threadSafe(),
             support.suppotCode(),
             function.type(),
             function.precedence(),
@@ -181,9 +181,9 @@ public class FunctionBuilder {
         for (Method method : initMethods) {
           InitSupport initSupport = method.getAnnotation(InitSupport.class);
           if (initSupport.initType().equals(EnumInitType.PREINIT)) {
-            preInit.add(new Object[]{method, asmClass});
+            preInit.add(new Object[] {method, asmClass});
           } else if (initSupport.initType().equals(EnumInitType.INIT)) {
-            init.add(new Object[]{method, asmClass});
+            init.add(new Object[] {method, asmClass});
           }
         }
       } catch (ClassNotFoundException e) {
@@ -198,9 +198,9 @@ public class FunctionBuilder {
         for (Method method : initMethods) {
           FinalizeSupport initSupport = method.getAnnotation(FinalizeSupport.class);
           if (initSupport.initType().equals(FinalizeSupport.EnumInitType.POSTINIT)) {
-            postInit.add(new Object[]{method, asmClass});
+            postInit.add(new Object[] {method, asmClass});
           } else if (initSupport.initType().equals(FinalizeSupport.EnumInitType.SERVER_STARTING)) {
-            serverStarting.add(new Object[]{method, asmClass});
+            serverStarting.add(new Object[] {method, asmClass});
           }
         }
       } catch (ClassNotFoundException e) {
@@ -217,7 +217,7 @@ public class FunctionBuilder {
     Method method = (Method) obj[0];
     method.setAccessible(true);
     try {
-      method.invoke(((Class<?>) obj[1]).newInstance(), new Object[]{});
+      method.invoke(((Class<?>) obj[1]).newInstance(), new Object[] {});
     } catch (Throwable e) {
       e.printStackTrace(print);
     }

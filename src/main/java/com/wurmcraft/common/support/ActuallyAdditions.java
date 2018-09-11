@@ -103,10 +103,10 @@ public class ActuallyAdditions {
   }
 
   @ScriptFunction(
-      modid = "actuallyadditions",
-      inputFormat = "ItemStack ItemStack ItemStack Integer",
-      typeData = "Crusher",
-      type = FunctionType.Linked
+    modid = "actuallyadditions",
+    inputFormat = "ItemStack ItemStack ItemStack Integer",
+    typeData = "Crusher",
+    type = FunctionType.Linked
   )
   public void addAACrusher(Converter converter, String[] line) {
     scriptCrusher.add(
@@ -118,10 +118,10 @@ public class ActuallyAdditions {
   }
 
   @ScriptFunction(
-      modid = "actuallyadditions",
-      inputFormat = "ItemStack Integer",
-      typeData = "Scrap",
-      type = FunctionType.Linked
+    modid = "actuallyadditions",
+    inputFormat = "ItemStack Integer",
+    typeData = "Scrap",
+    type = FunctionType.Linked
   )
   public void addBallOfFur(Converter converter, String[] line) {
     scriptBallOfFur.add(
@@ -149,8 +149,8 @@ public class ActuallyAdditions {
   }
 
   @ScriptFunction(
-      modid = "actuallyadditions",
-      inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer"
+    modid = "actuallyadditions",
+    inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer"
   )
   public void addEmpowerer(Converter converter, String[] line) {
     scriptEmpowerer.add(
@@ -163,7 +163,7 @@ public class ActuallyAdditions {
             (ItemStack) converter.convert(line[5]),
             Integer.parseInt(line[6]),
             Integer.parseInt(line[7]),
-            new float[]{0xFF2F21, 158F / 255F, 43F / 255F, 39F / 255F}));
+            new float[] {0xFF2F21, 158F / 255F, 43F / 255F, 39F / 255F}));
   }
 
   @ScriptFunction(modid = "actuallyadditions", inputFormat = "ItemStack Block ItemStack Block")
@@ -177,10 +177,10 @@ public class ActuallyAdditions {
   }
 
   @ScriptFunction(
-      modid = "actuallyadditions",
-      inputFormat = "String OreDictionary Integer",
-      typeData = "Laser",
-      type = FunctionType.Linked
+    modid = "actuallyadditions",
+    inputFormat = "String OreDictionary Integer",
+    typeData = "Laser",
+    type = FunctionType.Linked
   )
   public void addAALaser(Converter converter, String[] line) {
     if (line[0].equalsIgnoreCase("stone")) {

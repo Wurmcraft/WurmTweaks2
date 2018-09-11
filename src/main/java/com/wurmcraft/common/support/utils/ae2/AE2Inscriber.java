@@ -12,16 +12,11 @@ import net.minecraft.item.ItemStack;
 
 public class AE2Inscriber implements IInscriberRecipe {
 
-  @Nonnull
-  private final List<ItemStack> inputs;
-  @Nonnull
-  private final ItemStack output;
-  @Nonnull
-  private final Optional<ItemStack> maybeTop;
-  @Nonnull
-  private final Optional<ItemStack> maybeBot;
-  @Nonnull
-  private final InscriberProcessType type;
+  @Nonnull private final List<ItemStack> inputs;
+  @Nonnull private final ItemStack output;
+  @Nonnull private final Optional<ItemStack> maybeTop;
+  @Nonnull private final Optional<ItemStack> maybeBot;
+  @Nonnull private final InscriberProcessType type;
 
   public AE2Inscriber(
       @Nonnull Collection<ItemStack> inputs,

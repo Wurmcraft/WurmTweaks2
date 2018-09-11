@@ -43,8 +43,7 @@ public class Events {
   }
 
   @FinalizeSupport
-  public void finishSupport() {
-  }
+  public void finishSupport() {}
 
   @InitSupport
   public void init() {
@@ -66,7 +65,7 @@ public class Events {
           line[index].replaceAll("&", "\u00A7").replaceAll(StackSettings.SPACE.getData(), " "));
     }
     tooltipQuick.add(((ItemStack) converter.convert(line[0])).getItem());
-    tooltips.add(new Object[]{converter.convert(line[0]), tips.toArray(new String[0])});
+    tooltips.add(new Object[] {converter.convert(line[0]), tips.toArray(new String[0])});
   }
 
   @SubscribeEvent

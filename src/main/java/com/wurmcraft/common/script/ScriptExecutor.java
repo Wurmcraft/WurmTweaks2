@@ -164,15 +164,15 @@ public class ScriptExecutor {
   public static void reloadScriptsInBackground() {
     final Thread thread = Thread.currentThread();
     new Thread(
-        () -> {
-          waitTillScriptsFinish();
-          synchronized (thread) {
-            FunctionBuilder.postInitFinalizeSupport();
-            FunctionBuilder.serverStartingFinalizeSupport();
-            reload = false;
-          }
-        },
-        "WurmScript Background Reload Manager")
+            () -> {
+              waitTillScriptsFinish();
+              synchronized (thread) {
+                FunctionBuilder.postInitFinalizeSupport();
+                FunctionBuilder.serverStartingFinalizeSupport();
+                reload = false;
+              }
+            },
+            "WurmScript Background Reload Manager")
         .run();
   }
 }

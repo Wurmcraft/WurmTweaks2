@@ -64,8 +64,8 @@ public class NuclearCraft {
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addManufactory(Converter converter, String[] line) {
     manufactory.add(
-        new Object[]{
-            converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
+        new Object[] {
+          converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
         });
   }
 
@@ -74,11 +74,11 @@ public class NuclearCraft {
   public void addIsotopeSeparator(Converter converter, String[] line) {
 
     separator.add(
-        new Object[]{
-            converter.convert(line[2]),
-            converter.convert(line[0]),
-            converter.convert(line[1]),
-            Integer.parseInt(line[3])
+        new Object[] {
+          converter.convert(line[2]),
+          converter.convert(line[0]),
+          converter.convert(line[1]),
+          Integer.parseInt(line[3])
         });
   }
 
@@ -86,8 +86,8 @@ public class NuclearCraft {
   @ScriptFunction(modid = "nuclearcraft", inputFormat = "ItemStack ItemStack Integer")
   public void addPressurizer(Converter converter, String[] line) {
     pressurizer.add(
-        new Object[]{
-            converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
+        new Object[] {
+          converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
         });
   }
 }

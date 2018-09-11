@@ -115,8 +115,8 @@ public class OreDictConverter implements IDataConverter<Ingredient> {
         && data.endsWith(StackSettings.END.getData())
         && !data.contains(StackSettings.NAME.getData())) {
       if (data.substring(
-          data.indexOf(StackSettings.START.getData()) + 1,
-          data.indexOf(StackSettings.END.getData()))
+              data.indexOf(StackSettings.START.getData()) + 1,
+              data.indexOf(StackSettings.END.getData()))
           .matches(StackSettings.EMPTY_STACK.getData())) {
         return Ingredient.EMPTY;
       }

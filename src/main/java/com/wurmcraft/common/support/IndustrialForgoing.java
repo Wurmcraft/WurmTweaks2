@@ -93,10 +93,10 @@ public class IndustrialForgoing {
 
   @Method(modid = "industrialforegoing")
   @ScriptFunction(
-      modid = "industrialforegoing",
-      inputFormat = "ItemStack Integer Integer",
-      typeData = "Laser",
-      type = FunctionType.Linked
+    modid = "industrialforegoing",
+    inputFormat = "ItemStack Integer Integer",
+    typeData = "Laser",
+    type = FunctionType.Linked
   )
   public void addLaser(Converter converter, String[] line) {
     laser.add(

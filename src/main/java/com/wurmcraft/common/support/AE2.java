@@ -72,10 +72,10 @@ public class AE2 {
 
   @Method(modid = "appliedenergistics")
   @ScriptFunction(
-      modid = "appliedenergistics",
-      inputFormat = "ItemStack ItemStack ItemStack Float Integer",
-      typeData = "Crusher",
-      type = FunctionType.Linked
+    modid = "appliedenergistics",
+    inputFormat = "ItemStack ItemStack ItemStack Float Integer",
+    typeData = "Crusher",
+    type = FunctionType.Linked
   )
   public void addAEGrinder(Converter converter, String[] line) {
     scriptGrinder.add(
@@ -89,8 +89,8 @@ public class AE2 {
 
   @Method(modid = "appliedenergistics")
   @ScriptFunction(
-      modid = "appliedenergistics",
-      inputFormat = "ItemStack ItemStack ItemStack String ItemStack"
+    modid = "appliedenergistics",
+    inputFormat = "ItemStack ItemStack ItemStack String ItemStack"
   )
   public void addInscriber(Converter converter, String[] line) {
     scriptInscriber.add(

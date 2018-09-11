@@ -125,8 +125,8 @@ public class BetterWithMods {
   }
 
   @ScriptFunction(
-      modid = "betterwithmods",
-      inputFormat = "String ItemStack ItemStack ItemStack ..."
+    modid = "betterwithmods",
+    inputFormat = "String ItemStack ItemStack ItemStack ..."
   )
   public void addHopperFilter(Converter converter, String[] line) {
     scriptHopper.add(

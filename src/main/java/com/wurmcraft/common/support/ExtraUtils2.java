@@ -57,8 +57,8 @@ public class ExtraUtils2 {
   @ScriptFunction(modid = "extrautils2", inputFormat = "ItemStack ItemStack Integer")
   public void addResonator(Converter converter, String[] line) {
     resonator.add(
-        new Object[]{
-            converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
+        new Object[] {
+          converter.convert(line[1]), converter.convert(line[0]), Integer.parseInt(line[2])
         });
   }
 
@@ -66,14 +66,14 @@ public class ExtraUtils2 {
   @ScriptFunction(modid = "extrautils2", inputFormat = "ItemStack ItemStack ItemStack Float")
   public void addXUCrusher(Converter converter, String[] line) {
     if (line.length == 2) {
-      crusher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+      crusher.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
     } else {
       crusher.add(
-          new Object[]{
-              converter.convert(line[1]),
-              converter.convert(line[0]),
-              converter.convert(line[2]),
-              Float.parseFloat(line[3])
+          new Object[] {
+            converter.convert(line[1]),
+            converter.convert(line[0]),
+            converter.convert(line[2]),
+            Float.parseFloat(line[3])
           });
     }
   }

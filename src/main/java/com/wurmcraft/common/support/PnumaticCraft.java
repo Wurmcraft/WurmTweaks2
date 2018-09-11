@@ -84,37 +84,37 @@ public class PnumaticCraft {
   @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAssemblyDrill(Converter converter, String[] line) {
-    drill.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    drill.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAssemblyLaser(Converter converter, String[] line) {
-    laser.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    laser.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack Integer ItemStack ...")
   public void addPressureChamber(Converter converter, String[] line) {
     pressure.add(
-        new Object[]{
-            converter
-                .getBulkItemsAsList(Arrays.copyOfRange(line, 2, line.length))
-                .toArray(new ItemStack[0]),
-            Float.parseFloat(line[1]),
-            new ItemStack[]{(ItemStack) converter.convert(line[0])}
+        new Object[] {
+          converter
+              .getBulkItemsAsList(Arrays.copyOfRange(line, 2, line.length))
+              .toArray(new ItemStack[0]),
+          Float.parseFloat(line[1]),
+          new ItemStack[] {(ItemStack) converter.convert(line[0])}
         });
   }
 
   @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addDefaultAmadron(Converter converter, String[] line) {
-    defaultAmadron.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
+    defaultAmadron.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
   }
 
   @Method(modid = "pneumaticcraft")
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAmadron(Converter converter, String[] line) {
-    amadron.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
+    amadron.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
   }
 }

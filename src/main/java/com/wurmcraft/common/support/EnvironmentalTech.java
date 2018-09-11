@@ -141,11 +141,11 @@ public class EnvironmentalTech {
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addBotanicMiner(Converter converter, String[] line) {
     botanic.add(
-        new Object[]{
-            Integer.parseInt(line[2]),
-            new WeightedItemStack(
-                (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
-            line[3]
+        new Object[] {
+          Integer.parseInt(line[2]),
+          new WeightedItemStack(
+              (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
+          line[3]
         });
   }
 
@@ -153,28 +153,28 @@ public class EnvironmentalTech {
   @ScriptFunction(modid = "environmentaltech", inputFormat = "ItemStack Integer Integer String")
   public void addResourceMiner(Converter converter, String[] line) {
     res.add(
-        new Object[]{
-            Integer.parseInt(line[2]),
-            new WeightedItemStack(
-                (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
-            line[3]
+        new Object[] {
+          Integer.parseInt(line[2]),
+          new WeightedItemStack(
+              (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
+          line[3]
         });
   }
 
   @Method(modid = "environmentaltech")
   @ScriptFunction(
-      modid = "environmentaltech",
-      inputFormat = "ItemStack Integer Integer String",
-      typeData = "Laser",
-      type = FunctionType.Linked
+    modid = "environmentaltech",
+    inputFormat = "ItemStack Integer Integer String",
+    typeData = "Laser",
+    type = FunctionType.Linked
   )
   public void addOreMiner(Converter converter, String[] line) {
     ore.add(
-        new Object[]{
-            Integer.parseInt(line[2]),
-            new WeightedItemStack(
-                (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
-            line[3]
+        new Object[] {
+          Integer.parseInt(line[2]),
+          new WeightedItemStack(
+              (ItemStack) converter.convert(line[0], 1), Integer.parseInt(line[1])),
+          line[3]
         });
   }
 }

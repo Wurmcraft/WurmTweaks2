@@ -113,9 +113,9 @@ public class StackConverter implements IDataConverter<ItemStack> {
     } else if (data.contains(StackSettings.START.getData())
         && data.contains(StackSettings.END.getData())
         && data.substring(
-        data.indexOf(StackSettings.START.getData()) + 1,
-        data.indexOf(StackSettings.END.getData()))
-        .matches(StackSettings.EMPTY_STACK.getData())) {
+                data.indexOf(StackSettings.START.getData()) + 1,
+                data.indexOf(StackSettings.END.getData()))
+            .matches(StackSettings.EMPTY_STACK.getData())) {
       return new DataWrapper("empty", "empty");
     }
     return new DataWrapper("null", "null");
@@ -145,8 +145,8 @@ public class StackConverter implements IDataConverter<ItemStack> {
   @Override
   public ItemStack getData(String data) {
     if (data.substring(
-        data.indexOf(StackSettings.START.getData()) + 1,
-        data.indexOf(StackSettings.END.getData()))
+            data.indexOf(StackSettings.START.getData()) + 1,
+            data.indexOf(StackSettings.END.getData()))
         .matches(StackSettings.EMPTY_STACK.getData())) {
       return ItemStack.EMPTY;
     }
@@ -161,8 +161,8 @@ public class StackConverter implements IDataConverter<ItemStack> {
         && data.endsWith(StackSettings.END.getData())
         && data.contains(StackSettings.NAME.getData())) {
       if (data.substring(
-          data.indexOf(StackSettings.START.getData()) + 1,
-          data.indexOf(StackSettings.END.getData()))
+              data.indexOf(StackSettings.START.getData()) + 1,
+              data.indexOf(StackSettings.END.getData()))
           .matches(StackSettings.EMPTY_STACK.getData())) {
         return ItemStack.EMPTY;
       }

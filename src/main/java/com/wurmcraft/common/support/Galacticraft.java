@@ -79,8 +79,8 @@ public class Galacticraft {
   @ScriptFunction(modid = "galacticraftcore")
   public void addShapedCompressor(Converter converter, String[] line) {
     shapedCompressor.add(
-        new Object[]{
-            converter.convert(line[0]), RecipeUtils.getShapedRecipe(line).toArray(new Object[0])
+        new Object[] {
+          converter.convert(line[0]), RecipeUtils.getShapedRecipe(line).toArray(new Object[0])
         });
   }
 
@@ -88,10 +88,10 @@ public class Galacticraft {
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "ItemStack ItemStack ...")
   public void addShapelessCompressor(Converter converter, String[] line) {
     shapelessCompressor.add(
-        new Object[]{
-            converter.convert(line[0], 1),
-            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length))
-                .toArray(new Ingredient[0])
+        new Object[] {
+          converter.convert(line[0], 1),
+          RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 1, line.length))
+              .toArray(new Ingredient[0])
         });
   }
 
@@ -99,9 +99,9 @@ public class Galacticraft {
   @ScriptFunction(modid = "galacticraftcore", inputFormat = "ItemStack ItemStack ...")
   public void addCircuitFabricator(Converter converter, String[] line) {
     circuitFab.add(
-        new Object[]{
-            converter.convert(line[0], 1),
-            Arrays.asList(converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length)))
+        new Object[] {
+          converter.convert(line[0], 1),
+          Arrays.asList(converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length)))
         });
   }
 
@@ -117,6 +117,6 @@ public class Galacticraft {
         stationRecipe.put(item, 16);
       }
     }
-    station.add(new Object[]{Integer.parseInt(line[0]), stationRecipe});
+    station.add(new Object[] {Integer.parseInt(line[0]), stationRecipe});
   }
 }

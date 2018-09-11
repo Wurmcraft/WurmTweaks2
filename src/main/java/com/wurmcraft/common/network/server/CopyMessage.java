@@ -14,8 +14,7 @@ public class CopyMessage extends CustomMessage.CustomClientMessage<CopyMessage> 
 
   private NBTTagCompound data;
 
-  public CopyMessage() {
-  }
+  public CopyMessage() {}
 
   public CopyMessage(String d) {
     NBTTagCompound nbt = new NBTTagCompound();

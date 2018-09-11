@@ -103,7 +103,7 @@ public class OreStages {
             new TextComponentString(
                 TextFormatting.AQUA
                     + "You have just unlocked the %STAGE% stage!"
-                    .replaceAll("%STAGE%", possibleStage)));
+                        .replaceAll("%STAGE%", possibleStage)));
       }
       if (e.player instanceof EntityPlayerMP) {
         GameStageHelper.syncPlayer(e.player);
@@ -122,7 +122,7 @@ public class OreStages {
           new TextComponentString(
               TextFormatting.AQUA
                   + "You have just unlocked the %STAGE% stage!"
-                  .replaceAll("%STAGE%", possibleStage)));
+                      .replaceAll("%STAGE%", possibleStage)));
       GameStageHelper.syncPlayer(e.player);
     }
   }

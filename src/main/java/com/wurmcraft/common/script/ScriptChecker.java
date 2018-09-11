@@ -34,8 +34,7 @@ public class ScriptChecker {
   /**
    * Loads the master file and gives a String[] of all the scripts that need to be run
    *
-   * <p>This will load the master script ether via URL or file then remove its comments and return
-   * a
+   * <p>This will load the master script ether via URL or file then remove its comments and return a
    * list of the scripts that need to be run
    */
   public static String[] getLoadedScriptsFromMaster() {
@@ -57,8 +56,7 @@ public class ScriptChecker {
   /**
    * Downloads the scripts from the masterFile and saves them to the configuration folder
    *
-   * <p>Downloads the valid scripts from the masterFile and saves them into the configuration
-   * folder
+   * <p>Downloads the valid scripts from the masterFile and saves them into the configuration folder
    * for WurmScript
    */
   public static void downloadScripts(String... scriptName) {

@@ -148,22 +148,22 @@ public class TConstruct {
     for (int index = 1; index < line.length; index++) {
       lineFluids.add((FluidStack) converter.convert(line[index]));
     }
-    alloy.add(new Object[]{converter.convert(line[0]), lineFluids.toArray(new FluidStack[0])});
+    alloy.add(new Object[] {converter.convert(line[0]), lineFluids.toArray(new FluidStack[0])});
   }
 
   @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "ItemStack ItemStack Integer")
   public void addDrying(Converter converter, String[] line) {
     drying.add(
-        new Object[]{
-            converter.convert(line[0]), converter.convert(line[1]), Integer.parseInt(line[2])
+        new Object[] {
+          converter.convert(line[0]), converter.convert(line[1]), Integer.parseInt(line[2])
         });
   }
 
   @Method(modid = "tconstruct")
   @ScriptFunction(modid = "tconstruct", inputFormat = "FluidStack Integer")
   public void addFuel(Converter converter, String[] line) {
-    fuel.add(new Object[]{converter.convert(line[0]), Integer.parseInt(line[1])});
+    fuel.add(new Object[] {converter.convert(line[0]), Integer.parseInt(line[1])});
   }
 
   @Method(modid = "tconstruct")
@@ -182,8 +182,8 @@ public class TConstruct {
   public void addEntityMelting(Converter converter, String[] line) {
     if (converter.convert(line[0], 1) != null) {
       entityMelting.add(
-          new Object[]{
-              ((EntityLiving) converter.convert(line[0], 1)).getClass(), converter.convert(line[0])
+          new Object[] {
+            ((EntityLiving) converter.convert(line[0], 1)).getClass(), converter.convert(line[0])
           });
     }
   }

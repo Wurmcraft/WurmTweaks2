@@ -27,10 +27,10 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
 @Mod(
-    modid = Global.MODID,
-    name = Global.NAME,
-    version = Global.VERSION,
-    dependencies = Global.DEPENDENCIES
+  modid = Global.MODID,
+  name = Global.NAME,
+  version = Global.VERSION,
+  dependencies = Global.DEPENDENCIES
 )
 public class WurmTweaks {
 

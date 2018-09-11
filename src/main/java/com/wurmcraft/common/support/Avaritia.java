@@ -87,8 +87,8 @@ public class Avaritia {
                     Global.MODID,
                     recipe.getRecipeOutput().toString()
                         + (recipe.getRecipeOutput().hasTagCompound()
-                        ? recipe.getRecipeOutput().getTagCompound()
-                        : "")),
+                            ? recipe.getRecipeOutput().getTagCompound()
+                            : "")),
                 recipe));
     shapeless.forEach(
         recipe ->
@@ -97,8 +97,8 @@ public class Avaritia {
                     Global.MODID,
                     recipe.getRecipeOutput().toString()
                         + (recipe.getRecipeOutput().hasTagCompound()
-                        ? recipe.getRecipeOutput().getTagCompound()
-                        : "")),
+                            ? recipe.getRecipeOutput().getTagCompound()
+                            : "")),
                 recipe));
     compressor.forEach(
         recipe ->
@@ -107,8 +107,8 @@ public class Avaritia {
                     Global.MODID,
                     recipe.getResult().toString()
                         + (recipe.getResult().hasTagCompound()
-                        ? recipe.getResult().getTagCompound()
-                        : "")),
+                            ? recipe.getResult().getTagCompound()
+                            : "")),
                 recipe));
   }
 }

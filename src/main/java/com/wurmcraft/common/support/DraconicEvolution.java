@@ -44,8 +44,8 @@ public class DraconicEvolution {
 
   @Method(modid = "draconicevolution")
   @ScriptFunction(
-      modid = "draconicevolution",
-      inputFormat = "ItemStack ItemStack Integer Integer ItemStack ..."
+    modid = "draconicevolution",
+    inputFormat = "ItemStack ItemStack Integer Integer ItemStack ..."
   )
   public void addDEFusion(Converter converter, String[] line) {
     fusion.add(

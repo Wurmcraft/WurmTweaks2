@@ -13,8 +13,7 @@ public class ReloadMessage extends CustomMessage.CustomClientMessage<ReloadMessa
 
   private boolean reload;
 
-  public ReloadMessage() {
-  }
+  public ReloadMessage() {}
 
   public ReloadMessage(boolean reload) {
     this.reload = reload;

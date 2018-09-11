@@ -11,11 +11,9 @@ public class CommonProxy {
     MinecraftForge.EVENT_BUS.register(new Registry());
   }
 
-  public void init() {
-  }
+  public void init() {}
 
-  public void postInit() {
-  }
+  public void postInit() {}
 
   public IThreadListener getThreadListener(MessageContext context) {
     if (context.side.isServer()) {

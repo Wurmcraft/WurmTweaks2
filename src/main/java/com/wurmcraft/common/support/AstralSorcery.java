@@ -34,13 +34,13 @@ public class AstralSorcery {
   @Method(modid = "appliedenergistics")
   @ScriptFunction(modid = "astralsorcery", inputFormat = "ItemStack ItemStack")
   public void addBasicInfusion(Converter converter, String[] line) {
-    basic.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
+    basic.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
   }
 
   @Method(modid = "appliedenergistics")
   @ScriptFunction(modid = "astralsorcery", inputFormat = "ItemStack ItemStack")
   public void addSlowInfusion(Converter converter, String[] line) {
-    slow.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
+    slow.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
   }
 
   @Method(modid = "appliedenergistics")

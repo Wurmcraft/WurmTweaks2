@@ -154,8 +154,8 @@ public class Minecraft {
     } else {
       for (IRecipe recipe : recipes.getValues()) {
         if (canRemove(
-            Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
-                .getResourceDomain())
+                Objects.requireNonNull(recipe.getRecipeOutput().getItem().getRegistryName())
+                    .getResourceDomain())
             && scriptRecipes.contains(recipe)) {
           recipes.remove(recipe.getRegistryName());
           recipes.register(new InvalidRecipe(recipe));

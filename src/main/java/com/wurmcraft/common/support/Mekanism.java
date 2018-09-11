@@ -201,32 +201,32 @@ public class Mekanism {
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addEnrichmentChamber(Converter converter, String[] line) {
-    enricher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    enricher.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addOsmiumCompressor(Converter converter, String[] line) {
-    osmiumCompressor.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    osmiumCompressor.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addCombiner(Converter converter, String[] line) {
 
-    combiner.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    combiner.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addMCrusher(Converter converter, String[] line) {
-    crusher.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    crusher.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack")
   public void addPurification(Converter converter, String[] line) {
 
-    purification.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    purification.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
@@ -234,8 +234,8 @@ public class Mekanism {
   public void addMetallurgicInfuser(Converter converter, String[] line) {
     InfuseType type = InfuseRegistry.get(line[2]);
     metaInfuser.add(
-        new Object[]{
-            type, Integer.parseInt(line[3]), converter.convert(line[1]), converter.convert(line[0])
+        new Object[] {
+          type, Integer.parseInt(line[3]), converter.convert(line[1]), converter.convert(line[0])
         });
   }
 
@@ -243,15 +243,15 @@ public class Mekanism {
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack GasStack")
   public void addChemicalInfuser(Converter converter, String[] line) {
     chemInfuser.add(
-        new Object[]{
-            converter.convert(line[0]), converter.convert(line[2]), converter.convert(line[1])
+        new Object[] {
+          converter.convert(line[0]), converter.convert(line[2]), converter.convert(line[1])
         });
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack ItemStack")
   public void addChemicalOxidizer(Converter converter, String[] line) {
-    oxidiser.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    oxidiser.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
@@ -259,10 +259,10 @@ public class Mekanism {
   public void addChemicalInjection(Converter converter, String[] line) {
     if (converter.convert(line[2]) != null) {
       chemInjection.add(
-          new Object[]{
-              converter.convert(line[1]),
-              ((GasStack) converter.convert(line[2])).getGas(),
-              converter.convert(line[0])
+          new Object[] {
+            converter.convert(line[1]),
+            ((GasStack) converter.convert(line[2])).getGas(),
+            converter.convert(line[0])
           });
     }
   }
@@ -271,11 +271,11 @@ public class Mekanism {
   @ScriptFunction(modid = "mekanism", inputFormat = "FluidStack GasStack Double GasStack")
   public void addElectrolyticSeparator(Converter converter, String[] line) {
     electroSeperator.add(
-        new Object[]{
-            converter.convert(line[3]),
-            converter.convert(line[0]),
-            Double.parseDouble(line[2]),
-            converter.convert(line[1])
+        new Object[] {
+          converter.convert(line[3]),
+          converter.convert(line[0]),
+          Double.parseDouble(line[2]),
+          converter.convert(line[1])
         });
   }
 
@@ -283,69 +283,69 @@ public class Mekanism {
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack ItemStack Float")
   public void addSawmill(Converter converter, String[] line) {
     sawmill.add(
-        new Object[]{
-            converter.convert(line[1]),
-            converter.convert(line[0]),
-            converter.convert(line[2]),
-            Float.parseFloat(line[3])
+        new Object[] {
+          converter.convert(line[1]),
+          converter.convert(line[0]),
+          converter.convert(line[2]),
+          Float.parseFloat(line[3])
         });
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack ItemStack")
   public void addChemicalDissolution(Converter converter, String[] line) {
-    chemicalDissolution.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    chemicalDissolution.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack")
   public void addChemicalWasher(Converter converter, String[] line) {
-    washer.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    washer.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack GasStack")
   public void addChemicalCrystallizer(Converter converter, String[] line) {
-    crystallizer.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    crystallizer.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(
-      modid = "mekanism",
-      inputFormat = "ItemStack GasStack GasStack FluidStack ItemStack Integer Integer"
+    modid = "mekanism",
+    inputFormat = "ItemStack GasStack GasStack FluidStack ItemStack Integer Integer"
   )
   public void addMekPressureChamber(Converter converter, String[] line) {
     pressure.add(
-        new Object[]{
-            converter.convert(line[4]),
-            converter.convert(line[3]),
-            converter.convert(line[1]),
-            converter.convert(line[0]),
-            converter.convert(line[2]),
-            (double) Float.parseFloat(line[5]),
-            Integer.parseInt(line[6])
+        new Object[] {
+          converter.convert(line[4]),
+          converter.convert(line[3]),
+          converter.convert(line[1]),
+          converter.convert(line[0]),
+          converter.convert(line[2]),
+          (double) Float.parseFloat(line[5]),
+          Integer.parseInt(line[6])
         });
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "FluidStack FluidStack")
   public void addThermalEvaporation(Converter converter, String[] line) {
-    thermal.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
+    thermal.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack")
   public void addSolarNeutron(Converter converter, String[] line) {
-    solar.add(new Object[]{converter.convert(line[1]), converter.convert(line[0])});
+    solar.add(new Object[] {converter.convert(line[1]), converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack")
   public void addBoxBlacklist(Converter converter, String[] line) {
     box.add(
-        new Object[]{
-            Block.getBlockFromItem(((ItemStack) converter.convert(line[0])).getItem()),
-            ((ItemStack) converter.convert(line[0])).getItemDamage()
+        new Object[] {
+          Block.getBlockFromItem(((ItemStack) converter.convert(line[0])).getItem()),
+          ((ItemStack) converter.convert(line[0])).getItemDamage()
         });
   }
 }

@@ -23,7 +23,7 @@ public class NetworkHandler {
   }
 
   private static final <T extends CustomMessage<T> & IMessageHandler<T, IMessage>>
-  void registerMessage(Class<T> clazz) {
+      void registerMessage(Class<T> clazz) {
     if (CustomMessage.CustomClientMessage.class.isAssignableFrom(clazz)) {
       NetworkHandler.network.registerMessage(clazz, clazz, packetID++, Side.CLIENT);
     } else if (CustomMessage.CustomServerMessage.class.isAssignableFrom(clazz)) {

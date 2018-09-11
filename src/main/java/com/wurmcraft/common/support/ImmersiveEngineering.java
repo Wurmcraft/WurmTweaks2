@@ -163,10 +163,10 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "ItemStack ItemStack ItemStack Integer",
-      typeData = "Alloy",
-      type = FunctionType.Linked
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack ItemStack Integer",
+    typeData = "Alloy",
+    type = FunctionType.Linked
   )
   public void addIEAlloy(Converter converter, String[] line) {
     scriptAlloy.add(
@@ -178,10 +178,10 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "ItemStack ItemStack/OreDictionary" + " ItemStack Integer",
-      typeData = "Blast",
-      type = FunctionType.Linked
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack/OreDictionary" + " ItemStack Integer",
+    typeData = "Blast",
+    type = FunctionType.Linked
   )
   public void addIEBlastFurnace(Converter converter, String[] line) {
     scriptBlastFurnace.add(
@@ -193,8 +193,8 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "ItemStack ItemStack/OreDictionary FluidStack"
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack/OreDictionary FluidStack"
   )
   public void addBottling(Converter converter, String[] line) {
     scriptBottling.add(
@@ -205,10 +205,10 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "ItemStack ItemStack/OreDictionary Integer Integer",
-      typeData = "Coke",
-      type = FunctionType.Linked
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack/OreDictionary Integer Integer",
+    typeData = "Coke",
+    type = FunctionType.Linked
   )
   public void addCokeOven(Converter converter, String[] line) {
     scriptCoke.add(
@@ -220,10 +220,10 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "ItemStack ItemStack/OreDictionary Integer",
-      typeData = "Crusher",
-      type = FunctionType.Linked
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack/OreDictionary Integer",
+    typeData = "Crusher",
+    type = FunctionType.Linked
   )
   public void addIECrusher(Converter converter, String[] line) {
     scriptCrusher.add(
@@ -234,8 +234,8 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer"
+    modid = "immersiveengineering",
+    inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer"
   )
   public void addFermenter(Converter converter, String[] line) {
     scriptFermenter.add(
@@ -247,10 +247,10 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "ItemStack ItemStack ItemStack Integer",
-      typeData = "Press",
-      type = FunctionType.Linked
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack ItemStack Integer",
+    typeData = "Press",
+    type = FunctionType.Linked
   )
   public void addIEMetalPress(Converter converter, String[] line) {
     scriptMetal.add(
@@ -262,8 +262,8 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "FluidStack FluidStack Integer ItemStack/OreDictionary ..."
+    modid = "immersiveengineering",
+    inputFormat = "FluidStack FluidStack Integer ItemStack/OreDictionary ..."
   )
   public void addMixer(Converter converter, String[] line) {
     scriptMixer.add(
@@ -275,10 +275,10 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "FluidStack FluidStack FluidStack Integer",
-      typeData = "Refinery",
-      type = FunctionType.Linked
+    modid = "immersiveengineering",
+    inputFormat = "FluidStack FluidStack FluidStack Integer",
+    typeData = "Refinery",
+    type = FunctionType.Linked
   )
   public void addIERefinery(Converter converter, String[] line) {
     scriptRefinery.add(
@@ -290,8 +290,8 @@ public class ImmersiveEngineering {
   }
 
   @ScriptFunction(
-      modid = "immersiveengineering",
-      inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer"
+    modid = "immersiveengineering",
+    inputFormat = "FluidStack ItemStack ItemStack/OreDictionary Integer"
   )
   public void addSqueezer(Converter converter, String[] line) {
     scriptSqueezer.add(

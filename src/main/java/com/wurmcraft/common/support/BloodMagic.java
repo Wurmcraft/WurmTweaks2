@@ -117,18 +117,18 @@ public class BloodMagic {
 
   @Method(modid = "bloodmagic")
   @ScriptFunction(
-      modid = "bloodmagic",
-      inputFormat = "ItemStack ItemStack Integer Integer Integer Integer"
+    modid = "bloodmagic",
+    inputFormat = "ItemStack ItemStack Integer Integer Integer Integer"
   )
   public void addAltar(Converter converter, String[] line) {
     altar.add(
-        new Object[]{
-            new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
-            converter.convert(line[0]),
-            Integer.parseInt(line[2]),
-            Integer.parseInt(line[3]),
-            Integer.parseInt(line[4]),
-            Integer.parseInt(line[5])
+        new Object[] {
+          new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
+          converter.convert(line[0]),
+          Integer.parseInt(line[2]),
+          Integer.parseInt(line[3]),
+          Integer.parseInt(line[4]),
+          Integer.parseInt(line[5])
         });
   }
 
@@ -136,43 +136,43 @@ public class BloodMagic {
   @ScriptFunction(modid = "bloodmagic", inputFormat = "ItemStack ItemStack ItemStack")
   public void addAlchemyArray(Converter converter, String[] line) {
     array.add(
-        new Object[]{
-            new IngredientWrapper((ItemStack) converter.convert(line[2], 1)),
-            new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
-            converter.convert(line[0]),
-            null
+        new Object[] {
+          new IngredientWrapper((ItemStack) converter.convert(line[2], 1)),
+          new IngredientWrapper((ItemStack) converter.convert(line[1], 1)),
+          converter.convert(line[0]),
+          null
         });
   }
 
   @Method(modid = "bloodmagic")
   @ScriptFunction(
-      modid = "bloodmagic",
-      inputFormat = "ItemStack Float Float ItemStack/OreDictionary ..."
+    modid = "bloodmagic",
+    inputFormat = "ItemStack Float Float ItemStack/OreDictionary ..."
   )
   public void addSoulForge(Converter converter, String[] line) {
     forge.add(
-        new Object[]{
-            converter.convert(line[0]),
-            Float.parseFloat(line[2]),
-            Float.parseFloat(line[1]),
-            converter.getBulkItemsAsList(Arrays.copyOfRange(line, 3, line.length))
+        new Object[] {
+          converter.convert(line[0]),
+          Float.parseFloat(line[2]),
+          Float.parseFloat(line[1]),
+          converter.getBulkItemsAsList(Arrays.copyOfRange(line, 3, line.length))
         });
   }
 
   @Method(modid = "bloodmagic")
   @ScriptFunction(
-      modid = "bloodmagic",
-      inputFormat = "ItemStack Integer Integer Integer ItemStack/OreDictionary ..."
+    modid = "bloodmagic",
+    inputFormat = "ItemStack Integer Integer Integer ItemStack/OreDictionary ..."
   )
   public void addTable(Converter converter, String[] line) {
     table.add(
-        new Object[]{
-            converter.convert(line[0], 1),
-            Integer.parseInt(line[1]),
-            Integer.parseInt(line[2]),
-            Integer.parseInt(line[3]),
-            RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 4, line.length))
-                .toArray(new Ingredient[0])
+        new Object[] {
+          converter.convert(line[0], 1),
+          Integer.parseInt(line[1]),
+          Integer.parseInt(line[2]),
+          Integer.parseInt(line[3]),
+          RecipeUtils.getShapelessIngredient(Arrays.copyOfRange(line, 4, line.length))
+              .toArray(new Ingredient[0])
         });
   }
 }
