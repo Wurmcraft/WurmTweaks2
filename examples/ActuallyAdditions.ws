@@ -12,7 +12,6 @@
 	addAACrusher('<output> <input> <secondaryOutput> <chance>')
 */
 addAACrusher('<minecraft:apple> <minecraft:log@2> <minecraft:leaves@2> 25')
-addAACrusher('<minecraft:apple> <minecraft:log@2> <empty> 0')
 
 /*
 	Add a Ball of Fur Drop
@@ -20,7 +19,7 @@ addAACrusher('<minecraft:apple> <minecraft:log@2> <empty> 0')
 	Format:		   ItemStack Integer
 	addBallOfFur('<item> <chance>')
 */
-addBallOfFur('<minecraft:bedrock> 5')
+addBallOfFur('<minecraft:bedrock> 80')
 
 /*
 	Add Treasure Chest Loot
@@ -30,7 +29,7 @@ addBallOfFur('<minecraft:bedrock> 5')
 
 	Note: Minimum amount of spawn is set to the amount of the item
 */
-addTreasureChest('<4xminecraft:apple> 15 24')
+addTreasureChest('<4xminecraft:apple> 95 24')
 
 /*
 	Add a Reconstructer Recipe
@@ -38,7 +37,7 @@ addTreasureChest('<4xminecraft:apple> 15 24')
 	Format:		       ItemStack ItemStack Integer
 	addReconstructor('<output> <input> <energy>')
 */
-addReconstructer('<2xminecraft:apple> <minecraft:log> 5600')
+addReconstructor('<minecraft:apple> <minecraft:apple> 5600')
 
 
 /*
@@ -47,7 +46,7 @@ addReconstructer('<2xminecraft:apple> <minecraft:log> 5600')
 	Format:		ItemStack ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer
 	addEmpowerer('<output> <input> <slot1> <slot2> <slot3> <slot4> <energyPerStand> <time>')
 */
-addEmpowerer('<minecraft:apple> <minecraft:log> <minecraft:log@1> <minecraft:log@2> <minecraft:log@3> 800 100')
+addEmpowerer('<minecraft:apple> <minecraft:log> <minecraft:log@1> <minecraft:log@2> <minecraft:log@3> <minecraft:log@4> 800 100')
 
 
 /*
@@ -56,4 +55,4 @@ addEmpowerer('<minecraft:apple> <minecraft:log> <minecraft:log@1> <minecraft:log
 	Format:		    ItemStack       Block        ItemStack        Block
 	addComposter('<output> <outputDisplayBlock> <input> <inputDisplayBlock>')
 */
-addComposter('<minecraft:apple> <minecraft:wool@14> <minecraft:log> <minecraft:hat_block>')
+addComposter('<minecraft:apple> <minecraft:wool@14> <minecraft:log> <minecraft:hay_block>')

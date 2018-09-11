@@ -104,7 +104,6 @@ public class TechReborn {
     }
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ...")
   public void addShapelessRolling(Converter converter, String[] line) {
     shapeless.add(new Object[]{new ResourceLocation(
@@ -113,7 +112,6 @@ public class TechReborn {
             new Ingredient[0])});
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn")
   public void addShapedRolling(Converter converter, String[] line) {
     shaped.add(new Object[]{new ResourceLocation(Global.MODID,
@@ -121,13 +119,11 @@ public class TechReborn {
         RecipeUtils.getShapedRecipe(line).toArray(new Object[0])});
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack")
   public void addScrapbox(Converter converter, String[] line) {
     scrap.add(new Object[]{converter.convert(line[0])});
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "String FluidStack Integer")
   public void addGeneratorFluid(Converter converter, String[] line) {
     fluidGenerator.add(
@@ -136,7 +132,6 @@ public class TechReborn {
             Integer.parseInt(line[2])});
   }
 
-  @Method(modid = "techreborn")
   private EFluidGenerator getGeneratorType(String name) {
     if (name.startsWith(StackSettings.START.getData()) && name
         .endsWith(StackSettings.END.getData())) {
@@ -145,7 +140,6 @@ public class TechReborn {
     return EFluidGenerator.valueOf(name.toUpperCase());
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack Integer Integer Integer")
   public void addTechFusion(Converter converter, String[] line) {
     fusion.add(new FusionReactorRecipe((ItemStack) converter.convert(line[1]),
@@ -155,7 +149,6 @@ public class TechReborn {
         Integer.parseInt(line[5])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack Integer Integer")
   public void addAlloySmelter(Converter converter, String[] line) {
     machine.add(new AlloySmelterRecipe(converter.convert(line[1]), converter.convert(line[2]),
@@ -163,7 +156,6 @@ public class TechReborn {
         Integer.parseInt(line[4])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack Integer Integer")
   public void addAssemblingMachine(Converter converter, String[] line) {
     machine.add(new AssemblingMachineRecipe(converter.convert(line[1]), converter.convert(line[2]),
@@ -171,7 +163,6 @@ public class TechReborn {
         Integer.parseInt(line[4])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack ItemStack Integer Integer Integer")
   public void addIndustrialBlastFurnace(Converter converter, String[] line) {
     machine.add(new BlastFurnaceRecipe(converter.convert(line[2]), converter.convert(line[3]),
@@ -180,7 +171,6 @@ public class TechReborn {
         Integer.parseInt(line[5]), Integer.parseInt(line[6])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer ItemStack")
   public void addTRCentrifuge(Converter converter, String[] line) {
     machine.add(new CentrifugeRecipe(converter.convert(line[4]), converter.convert(line[7]),
@@ -190,7 +180,6 @@ public class TechReborn {
         Integer.parseInt(line[6])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack Integer Integer")
   public void addChemicalReactor(Converter converter, String[] line) {
     machine.add(new ChemicalReactorRecipe(converter.convert(line[2]), converter.convert(line[1]),
@@ -198,7 +187,6 @@ public class TechReborn {
         Integer.parseInt(line[4])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack Integer Integer")
   public void addCompressor(Converter converter, String[] line) {
     machine.add(
@@ -206,7 +194,6 @@ public class TechReborn {
             Integer.parseInt(line[2]), Integer.parseInt(line[3])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer")
   public void addDistillationTower(Converter converter, String[] line) {
     machine.add(new DistillationTowerRecipe(converter.convert(line[3]), converter.convert(line[4]),
@@ -216,7 +203,6 @@ public class TechReborn {
             (line[3]), Integer.parseInt(line[5]), Integer.parseInt(line[6])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack Integer Integer")
   public void addExtractor(Converter converter, String[] line) {
     machine
@@ -224,7 +210,6 @@ public class TechReborn {
             Integer.parseInt(line[2]), Integer.parseInt(line[3])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack Integer Integer")
   public void addGrinder(Converter converter, String[] line) {
     machine
@@ -232,7 +217,6 @@ public class TechReborn {
             Integer.parseInt(line[2]), Integer.parseInt(line[3]) * 10));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack ItemStack Integer Integer")
   public void addImplosionCompressor(Converter converter, String[] line) {
     machine.add(
@@ -242,7 +226,6 @@ public class TechReborn {
             Integer.parseInt(line[5])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack ItemStack ItemStack ItemStack ItemStack Integer Integer")
   public void addIndustrialElectrolyzer(Converter converter, String[] line) {
     machine.add(
@@ -253,8 +236,7 @@ public class TechReborn {
             Integer.parseInt(line[7])));
   }
 
-  @Method(modid = "techreborn")
-  @ScriptFunction(modid = "ItemStack FluidStack ItemStack ItemStack ItemStack ItemStack Integer Integer")
+  @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack FluidStack ItemStack ItemStack ItemStack ItemStack Integer Integer")
   public void addIndustrialGrinder(Converter converter, String[] line) {
     machine.add(new IndustrialGrinderRecipe(converter.convert(line[0]),
         (FluidStack) converter.convert(line[1]),
@@ -264,7 +246,6 @@ public class TechReborn {
         Integer.parseInt(line[7])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack FluidStack ItemStack ItemStack ItemStack Integer Integer")
   public void addIndustrialSawmill(Converter converter, String[] line) {
     machine.add(new IndustrialSawmillRecipe((ItemStack) converter.convert(line[0]),
@@ -273,7 +254,6 @@ public class TechReborn {
         Integer.parseInt(line[5]), Integer.parseInt(line[6])));
   }
 
-  @Method(modid = "techreborn")
   @ScriptFunction(modid = "techreborn", inputFormat = "ItemStack ItemStack Integer Integer")
   public void addVacuumFreezer(Converter converter, String[] line) {
     machine.add(

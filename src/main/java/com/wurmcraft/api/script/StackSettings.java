@@ -12,6 +12,7 @@ public enum StackSettings {
   // Special Types
   FLUID("*", "type.fluid"),
   ENTITY("#", "type.entity"),
+  GAS("%", "type.gas"),
   EMPTY_STACK("empty", "type.empty"),
   SPACE("_", "type.space");
 

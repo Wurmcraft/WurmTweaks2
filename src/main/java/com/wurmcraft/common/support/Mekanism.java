@@ -127,6 +127,9 @@ public class Mekanism {
           (ItemStack) r[3]);
     }
     for (Object[] r : chemInfuser) {
+      if (r[0] == null && r[1] == null && r[2] == null) {
+        continue;
+      }
       RecipeHandler.addChemicalInfuserRecipe((GasStack) r[0], (GasStack) r[1], (GasStack) r[2]);
     }
     for (Object[] r : oxidiser) {
@@ -154,20 +157,35 @@ public class Mekanism {
       RecipeHandler.addChemicalDissolutionChamberRecipe((ItemStack) r[0], (GasStack) r[1]);
     }
     for (Object[] r : washer) {
+      if (r[0] == null && r[1] == null) {
+        continue;
+      }
       RecipeHandler.addChemicalWasherRecipe((GasStack) r[0], (GasStack) r[1]);
     }
     for (Object[] r : crystallizer) {
+      if (r[0] == null) {
+        continue;
+      }
       RecipeHandler.addChemicalCrystallizerRecipe((GasStack) r[0], (ItemStack) r[1]);
     }
     for (Object[] r : pressure) {
+      if (r[4] == null) {
+        continue;
+      }
       RecipeHandler
           .addPRCRecipe((ItemStack) r[0], (FluidStack) r[1], (GasStack) r[2], (ItemStack) r[3],
               (GasStack) r[4], (double) r[5], (int) r[6]);
     }
     for (Object[] r : thermal) {
+      if (r[0] == null || r[1] == null) {
+        continue;
+      }
       RecipeHandler.addThermalEvaporationRecipe((FluidStack) r[0], (FluidStack) r[1]);
     }
     for (Object[] r : solar) {
+      if (r[0] == null && r[1] == null) {
+        continue;
+      }
       RecipeHandler.addSolarNeutronRecipe((GasStack) r[0], (GasStack) r[1]);
     }
     for (Object[] r : box) {
@@ -210,7 +228,6 @@ public class Mekanism {
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack String Integer")
   public void addMetallurgicInfuser(Converter converter, String[] line) {
     InfuseType type = InfuseRegistry.get(line[2]);
-    Preconditions.checkNotNull(type);
     metaInfuser.add(new Object[]{type, Integer.parseInt(line[3]),
         converter.convert(line[1]), converter.convert(line[0])});
   }
@@ -233,17 +250,17 @@ public class Mekanism {
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack GasStack")
   public void addChemicalInjection(Converter converter, String[] line) {
     chemInjection.add(
-        new Object[]{converter.convert(line[1]), ((GasStack) converter.convert(line[2])).getGas(),
+        new Object[]{converter.convert(line[1]), Preconditions.checkNotNull((GasStack) converter.convert(line[2])).getGas(),
             converter.convert(line[0])});
   }
 
   @Method(modid = "mekanism")
-  @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack ItemStack GasStack Integer")
+  @ScriptFunction(modid = "mekanism", inputFormat = "FluidStack GasStack Double GasStack")
   public void addElectrolyticSeparator(Converter converter, String[] line) {
     electroSeperator.add(
-        new Object[]{converter.convert(line[2]), Float.parseFloat(line[3]),
-            converter.convert(line[0]), converter.convert(line[1])});
-
+        new Object[]{converter.convert(line[3]), converter.convert(line[0]),
+            Double.parseDouble(line[2]),
+            converter.convert(line[1])});
   }
 
   @Method(modid = "mekanism")
@@ -281,7 +298,7 @@ public class Mekanism {
   }
 
   @Method(modid = "mekanism")
-  @ScriptFunction(modid = "mekanism", inputFormat = "GasStack GasStack")
+  @ScriptFunction(modid = "mekanism", inputFormat = "FluidStack FluidStack")
   public void addThermalEvaporation(Converter converter, String[] line) {
     thermal.add(new Object[]{converter.convert(line[0]), converter.convert(line[1])});
   }
@@ -295,7 +312,7 @@ public class Mekanism {
   @Method(modid = "mekanism")
   @ScriptFunction(modid = "mekanism", inputFormat = "ItemStack")
   public void addBoxBlacklist(Converter converter, String[] line) {
-    box.add(new Object[]{converter.convert(line[0]),
+    box.add(new Object[]{Block.getBlockFromItem(((ItemStack) converter.convert(line[0])).getItem()),
         ((ItemStack) converter.convert(line[0])).getItemDamage()});
   }
 }

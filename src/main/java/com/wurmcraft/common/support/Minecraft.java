@@ -8,6 +8,7 @@ import com.wurmcraft.api.script.anotations.ScriptFunction;
 import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
+import com.wurmcraft.common.script.utils.IngredientWrapper;
 import com.wurmcraft.common.support.utils.Converter;
 import com.wurmcraft.common.support.utils.InvalidRecipe;
 import com.wurmcraft.common.support.utils.RecipeUtils;
@@ -106,8 +107,14 @@ public class Minecraft {
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack/OreDictionary")
   public void addFurnace(Converter converter, String[] input) {
+    Object inputObject =  converter.convert(input[1], 1);
+    if(inputObject instanceof Ingredient) {
     scriptFurnace.add(new FurnaceRecipe((ItemStack) converter.convert(input[0], 0),
-        (Ingredient) converter.convert(input[1], 1)));
+        (Ingredient) inputObject, 1));
+    } else if(inputObject instanceof ItemStack) {
+      scriptFurnace.add(new FurnaceRecipe((ItemStack) converter.convert(input[0], 0),
+          new IngredientWrapper((ItemStack) inputObject), 1));
+    }
   }
 
   @ScriptFunction(modid = "minecraft", inputFormat = "ItemStack ItemStack ItemStack")

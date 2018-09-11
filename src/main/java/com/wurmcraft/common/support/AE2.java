@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional.Method;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
+// TODO Find out how even AE2 registry's show recipes within it
 @Support(modid = "appliedenergistics")
 public class AE2 {
 

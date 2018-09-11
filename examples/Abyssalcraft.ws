@@ -11,7 +11,7 @@
 	Format:		    ItemStack ItemStack ItemStack Float
 	addCrystallizer('<output> <output2> <input> <xp>')
 */
-addCrystallizer('<minecraft:apple> <minecraft:planks> <minecraft:log@1> 5')
+addCrystallizer('<minecraft:apple> <minecraft:log@2> <minecraft:log@1> 5')
 
 
 /*

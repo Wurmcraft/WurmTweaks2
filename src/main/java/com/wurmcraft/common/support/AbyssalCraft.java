@@ -60,7 +60,7 @@ public class AbyssalCraft {
   @ScriptFunction(modid = "abyssalcraft", inputFormat = "ItemStack Crystal ...")
   public void addMaterializer(Converter converter, String[] line) {
     materializerRecipes.add(new Materializer((ItemStack) converter.convert(line[0]),
-        (ItemStack[]) converter.getBulkItems(Arrays.copyOfRange(line, 1, line.length))));
+        converter.getBulkItemsAsList(Arrays.copyOfRange(line, 1, line.length)).toArray(new ItemStack[0])));
   }
 
   @FinalizeSupport
