@@ -1,14 +1,8 @@
 addEnrichmentChamber('<minecraft:apple> <minecraft:log> <minecraft:leaves@2>')
 
-
-
 addOsmiumCompressor('<minecraft:apple> <minecraft:log> <minecraft:leaves@2>')
 
-
-
 addCombiner('<minecraft:apple> <minecraft:log> <minecraft:leaves@2>')
-
-
 
 addMCrusher('<minecraft:apple> <minecraft:log> <minecraft:leaves@2>')
 

@@ -2,7 +2,7 @@ addApothecary('<minecraft:apple> <minecraft:log>')
 
 addPureDaisy('<minecraft:dirt> <minecraft:log>')
 
-addRune('<minecraft:apple> 2950 packIron <minecraft:iron_ore>')
+addRune('<minecraft:apple> 2950 <packIron> <minecraft:iron_ore>')
 
 addElven('<minecraft:apple> <minecraft:log>')
 
