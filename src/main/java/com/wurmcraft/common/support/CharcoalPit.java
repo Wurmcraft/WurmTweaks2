@@ -34,7 +34,7 @@ public class CharcoalPit {
     bloomery.add(
         new OreSmeltingRecipes.AlloyRecipe(
             converter.convert(line[0], 1),
-            ((ItemStack) converter.convert(line[0], 1)).getCount(),
+            ((ItemStack) converter.convert(line[1], 1)).getCount(),
             true,
             true,
             (ItemStack) converter.convert((line[1]))));

@@ -83,7 +83,8 @@ public class StackConverter implements IDataConverter<ItemStack> {
     if (data.contains(StackSettings.START.getData())
         && data.contains(StackSettings.END.getData())
         && data.contains(StackSettings.NAME.getData())) {
-      boolean hasDedicatedStackSize = data.contains(StackSettings.STACKSIZE.getData());
+      boolean hasDedicatedStackSize =
+          getTillEndOfNumber(data).contains(StackSettings.STACKSIZE.getData());
       String modid =
           data.substring(
               hasDedicatedStackSize
@@ -121,6 +122,21 @@ public class StackConverter implements IDataConverter<ItemStack> {
     return new DataWrapper("null", "null");
   }
 
+  private String getTillEndOfNumber(String line) {
+    if (line.contains(StackSettings.STACKSIZE.getData())) {
+      try {
+        String input =
+            line.substring(
+                line.indexOf(StackSettings.START.getData()) + 1,
+                line.indexOf(StackSettings.STACKSIZE.getData()));
+        Integer.parseInt(input);
+      } catch (NumberFormatException e) {
+        return "";
+      }
+    }
+    return line;
+  }
+
   @Override
   public String getExtraData(String data) {
     if (data.contains(StackSettings.EXTRA_DATA.getData())) {
@@ -150,7 +166,7 @@ public class StackConverter implements IDataConverter<ItemStack> {
         .matches(StackSettings.EMPTY_STACK.getData())) {
       return ItemStack.EMPTY;
     }
-    if (cachedData != null && cachedData.containsKey(data)) {
+    if (cachedData != null && cachedData.containsKey(data) && !cachedData.get(data).isEmpty()) {
       return cachedData.get(data);
     }
     return getItemStack(data);

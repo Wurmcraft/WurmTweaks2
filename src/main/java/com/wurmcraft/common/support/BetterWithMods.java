@@ -38,7 +38,6 @@ public class BetterWithMods {
   private static NonBlockingHashSet<MillRecipe> scriptMill;
   private static NonBlockingHashSet<CookingPotRecipe> scriptCrucible;
   private static NonBlockingHashSet<CookingPotRecipe> scriptStokedCrucible;
-  private static int count = 0;
 
   @InitSupport(modid = "betterwithmods")
   public void init() {
@@ -55,7 +54,7 @@ public class BetterWithMods {
       HopperInteractions.RECIPES.clear();
       AnvilCraftingManager.ANVIL_CRAFTING.clear();
       for (CookingPotRecipe recipe : BWRegistry.CAULDRON.getRecipes()) {
-        BWRegistry.CAULDRON.remove(recipe);
+        BWRegistry.CAULDRON.getRecipes().remove(recipe);
       }
       for (CookingPotRecipe recipe : BWRegistry.CRUCIBLE.getRecipes()) {
         BWRegistry.CRUCIBLE.remove(recipe);
@@ -73,15 +72,16 @@ public class BetterWithMods {
       }
       scriptShapelessAnvil.clear();
       // TODO Remove Block Heat on Reload
-      for (CookingPotRecipe recipe : scriptCauldron) {
-        BWRegistry.CAULDRON.remove(recipe);
-      }
-      for (CookingPotRecipe recipe : scriptStokedCauldron) {
-        BWRegistry.CAULDRON.remove(recipe);
-      }
-      for (MillRecipe recipe : scriptMill) {
-        BWRegistry.MILLSTONE.remove(recipe);
-      }
+      //      for (CookingPotRecipe recipe : scriptCauldron) {
+      //        BWRegistry.CAULDRON.remove(recipe);
+      //      }
+      BWRegistry.CAULDRON.getRecipes().clear();
+      //      for (CookingPotRecipe recipe : scriptStokedCauldron) {
+      BWRegistry.CAULDRON.getRecipes().clear();
+      //      }
+      //      for (MillRecipe recipe : scriptMill) {
+      BWRegistry.MILLSTONE.getRecipes().clear();
+      //      }
       for (CookingPotRecipe recipe : scriptCrucible) {
         BWRegistry.CRUCIBLE.remove(recipe);
       }
@@ -93,34 +93,31 @@ public class BetterWithMods {
 
   @FinalizeSupport(modid = "betterwithmods")
   public void finalize() {
-    if (count == 0) {
-      count++;
-      for (HopperRecipe hopperRecipe : scriptHopper) {
-        HopperInteractions.addHopperRecipe(hopperRecipe);
-      }
-      AnvilCraftingManager.ANVIL_CRAFTING.addAll(scriptShapedAnvil);
-      AnvilCraftingManager.ANVIL_CRAFTING.addAll(scriptShapelessAnvil);
-      for (Heat heat : scriptHeat) {
-        BWMHeatRegistry.addHeatSource(heat.block, heat.heat);
-      }
-      for (CookingPotRecipe cookingPotRecipe : scriptCauldron) {
-        BWRegistry.CAULDRON.addUnstokedRecipe(
-            cookingPotRecipe.getInputs(), cookingPotRecipe.getOutputs());
-      }
-      for (CookingPotRecipe cookingPotRecipe : scriptStokedCauldron) {
-        BWRegistry.CAULDRON.addStokedRecipe(
-            cookingPotRecipe.getInputs(), cookingPotRecipe.getOutputs());
-      }
-      for (MillRecipe millRecipe : scriptMill) {
-        BWRegistry.MILLSTONE.addRecipe(millRecipe);
-      }
-      for (CookingPotRecipe cookingPotRecipe : scriptCrucible) {
-        BWRegistry.CRUCIBLE.addUnstokedRecipe(
-            cookingPotRecipe.getInputs(), cookingPotRecipe.getOutputs());
-      }
-      for (CookingPotRecipe recipe : scriptStokedCrucible) {
-        BWRegistry.CRUCIBLE.addStokedRecipe(recipe.getInputs(), recipe.getOutputs());
-      }
+    for (HopperRecipe hopperRecipe : scriptHopper) {
+      HopperInteractions.addHopperRecipe(hopperRecipe);
+    }
+    AnvilCraftingManager.ANVIL_CRAFTING.addAll(scriptShapedAnvil);
+    AnvilCraftingManager.ANVIL_CRAFTING.addAll(scriptShapelessAnvil);
+    for (Heat heat : scriptHeat) {
+      BWMHeatRegistry.addHeatSource(heat.block, heat.heat);
+    }
+    for (CookingPotRecipe cookingPotRecipe : scriptCauldron) {
+      BWRegistry.CAULDRON.addUnstokedRecipe(
+          cookingPotRecipe.getInputs(), cookingPotRecipe.getOutputs());
+    }
+    for (CookingPotRecipe cookingPotRecipe : scriptStokedCauldron) {
+      BWRegistry.CAULDRON.addStokedRecipe(
+          cookingPotRecipe.getInputs(), cookingPotRecipe.getOutputs());
+    }
+    for (MillRecipe millRecipe : scriptMill) {
+      BWRegistry.MILLSTONE.addRecipe(millRecipe);
+    }
+    for (CookingPotRecipe cookingPotRecipe : scriptCrucible) {
+      BWRegistry.CRUCIBLE.addUnstokedRecipe(
+          cookingPotRecipe.getInputs(), cookingPotRecipe.getOutputs());
+    }
+    for (CookingPotRecipe recipe : scriptStokedCrucible) {
+      BWRegistry.CRUCIBLE.addStokedRecipe(recipe.getInputs(), recipe.getOutputs());
     }
   }
 

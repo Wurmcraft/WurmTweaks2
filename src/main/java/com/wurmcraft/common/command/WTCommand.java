@@ -14,6 +14,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -42,6 +43,8 @@ public class WTCommand extends CommandBase {
       hand(args, sender);
     } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
       reload(args, sender);
+    } else if (args.length == 2 && args[0].equalsIgnoreCase("load")) {
+      load(args, sender);
     }
   }
 
@@ -75,6 +78,27 @@ public class WTCommand extends CommandBase {
       NetworkHandler.sendToAll(new ReloadMessage(true));
     } else {
       NetworkHandler.sendToAll(new ReloadMessage(true));
+    }
+  }
+
+  private void load(String[] args, ICommandSender sender) {
+    if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
+      Object d = new Converter().convert(args[1]);
+      if (d != null) {
+        if (d instanceof ItemStack) {
+          player.inventory.addItemStackToInventory((ItemStack) d);
+        } else if (d instanceof Ingredient) {
+          for (ItemStack item : ((Ingredient) d).getMatchingStacks())
+            player.inventory.addItemStackToInventory(item);
+        }
+        sender.sendMessage(new TextComponentString(TextFormatting.AQUA + "Added to Inventory"));
+      } else {
+        sender.sendMessage(
+            new TextComponentString(TextFormatting.RED + "Invalid, Unable to Convert!"));
+      }
+    } else {
+      sender.sendMessage(new TextComponentString(TextFormatting.RED + "Players Only"));
     }
   }
 }
