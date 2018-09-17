@@ -126,7 +126,8 @@ public class ScriptChecker {
       if (!saveLocation.exists()) {
         return true;
       }
-      String fileHash =  DigestUtils.md5Hex(Strings.join(Files.readAllLines(saveLocation.toPath()), ""));
+      String fileHash =
+          DigestUtils.md5Hex(Strings.join(Files.readAllLines(saveLocation.toPath()), ""));
       return !urlHash.equals(fileHash);
     } catch (Exception e) {
       e.printStackTrace();

@@ -53,12 +53,8 @@ public class BetterWithMods {
     if (ConfigHandler.removeAllRecipes) {
       HopperInteractions.RECIPES.clear();
       AnvilCraftingManager.ANVIL_CRAFTING.clear();
-      for (CookingPotRecipe recipe : BWRegistry.CAULDRON.getRecipes()) {
-        BWRegistry.CAULDRON.getRecipes().remove(recipe);
-      }
-      for (CookingPotRecipe recipe : BWRegistry.CRUCIBLE.getRecipes()) {
-        BWRegistry.CRUCIBLE.remove(recipe);
-      }
+      BWRegistry.CAULDRON.getRecipes().clear();
+      BWRegistry.CRUCIBLE.getRecipes().clear();
       // TODO Remove All Recipes
     } else if (ScriptExecutor.reload) {
       scriptHopper.forEach(

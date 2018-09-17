@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -88,13 +89,13 @@ public class OreStages {
   public void onPlayerCraft(PlayerEvent.ItemCraftedEvent e) {
     String possibleStage = getStage(e.crafting);
     if (possibleStage.length() > 0
-        && GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
+        && !GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
       GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
       if (e.player.world.isRemote) {
         e.player.sendMessage(
             new TextComponentString(
                 TextFormatting.AQUA
-                    + "You have just unlocked the %STAGE% stage!"
+                    + I18n.translateToLocal("chat.unlockStage.name")
                         .replaceAll("%STAGE%", possibleStage)));
       }
       if (e.player instanceof EntityPlayerMP) {
@@ -107,13 +108,15 @@ public class OreStages {
   public void onItemPickup(ItemPickupEvent e) {
     String possibleStage = getStage(e.getStack());
     if (!possibleStage.isEmpty()
-        && GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
+        && !GameStageHelper.getPlayerData(e.player).hasStage(possibleStage)) {
       GameStageHelper.getPlayerData(e.player).addStage(possibleStage);
-      e.player.sendMessage(
-          new TextComponentString(
-              TextFormatting.AQUA
-                  + "You have just unlocked the %STAGE% stage!"
-                      .replaceAll("%STAGE%", possibleStage)));
+      if (e.player.world.isRemote) {
+        e.player.sendMessage(
+            new TextComponentString(
+                TextFormatting.AQUA
+                    + I18n.translateToLocal("chat.unlockStage.name")
+                        .replaceAll("%STAGE%", possibleStage)));
+      }
       GameStageHelper.syncPlayer(e.player);
     }
   }

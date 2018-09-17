@@ -2,9 +2,7 @@ package com.wurmcraft.api.script;
 
 import net.minecraft.util.ResourceLocation;
 
-/**
- * Custom Implementation of ResourceLocation to does not automatically ToLowerCase()
- */
+/** Custom Implementation of ResourceLocation to does not automatically ToLowerCase() */
 public class DataWrapper {
 
   private String modid;

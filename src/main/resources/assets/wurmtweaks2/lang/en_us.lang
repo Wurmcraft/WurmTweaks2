@@ -81,3 +81,6 @@ item.electroShielding.name=Electro-Magnetic Shielding
 tile.transparentAluminum.name=Transparent Aluminum
 tile.stoneMagic.name=Magic Infused Stone
 tile.logMagic.name=Magic Infused Log
+
+# Chat
+chat.unlockStage.name=You have just unlocked the %STAGE% stage.
