@@ -50,6 +50,11 @@ public class BetterWithMods {
     scriptMill = new NonBlockingHashSet<>();
     scriptCrucible = new NonBlockingHashSet<>();
     scriptStokedCrucible = new NonBlockingHashSet<>();
+  }
+
+  @FinalizeSupport(modid = "betterwithmods")
+  public void finalize() {
+    // Yea this is a thing thx BWM
     if (ConfigHandler.removeAllRecipes) {
       HopperInteractions.RECIPES.clear();
       AnvilCraftingManager.ANVIL_CRAFTING.clear();
@@ -67,17 +72,9 @@ public class BetterWithMods {
         AnvilCraftingManager.ANVIL_CRAFTING.remove(recipe);
       }
       scriptShapelessAnvil.clear();
-      // TODO Remove Block Heat on Reload
-      //      for (CookingPotRecipe recipe : scriptCauldron) {
-      //        BWRegistry.CAULDRON.remove(recipe);
-      //      }
       BWRegistry.CAULDRON.getRecipes().clear();
-      //      for (CookingPotRecipe recipe : scriptStokedCauldron) {
       BWRegistry.CAULDRON.getRecipes().clear();
-      //      }
-      //      for (MillRecipe recipe : scriptMill) {
       BWRegistry.MILLSTONE.getRecipes().clear();
-      //      }
       for (CookingPotRecipe recipe : scriptCrucible) {
         BWRegistry.CRUCIBLE.remove(recipe);
       }
@@ -85,10 +82,6 @@ public class BetterWithMods {
         BWRegistry.CRUCIBLE.remove(recipe);
       }
     }
-  }
-
-  @FinalizeSupport(modid = "betterwithmods")
-  public void finalize() {
     for (HopperRecipe hopperRecipe : scriptHopper) {
       HopperInteractions.addHopperRecipe(hopperRecipe);
     }
