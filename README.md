@@ -6,7 +6,7 @@
 
 WurmTweaks is a mod designed to help modpack creators easily create complex modpacks using a simple scripting language designed modify/change and remove recipes for a selection of different mods.  Unlike MineTweaker / CraftTweaker this system is a lot more customizable for everyone's modpack needs including the ability to use an online recipe distribution allowing the recipe updates to be active within a few minutes.
 
-##Features
+## Features
 - Mostly Multithreaded script loading
 - Web Based Recipes [Example Modpack](https://github.com/Wurmcraft/Survival-of-the-Ages/tree/master/scripts)
 - Recipes Reloading (Current WIP)
@@ -17,5 +17,6 @@ The best place for example usage is the [Example Scripts](https://github.com/Wur
 
 ## Dev Setup
 
-#####Setup: ```gradle setupDecompWorkspace (idea | eclipse)```
-#####Building: ```gradle spotlessApply build```
+**Setup:** ```gradle setupDecompWorkspace (idea | eclipse)```
+
+**Building:** ```gradle spotlessApply build```
