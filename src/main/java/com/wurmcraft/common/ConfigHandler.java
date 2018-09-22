@@ -1,7 +1,6 @@
 package com.wurmcraft.common;
 
 import com.wurmcraft.common.reference.Global;
-import java.io.File;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -18,7 +17,7 @@ public class ConfigHandler {
       "https://raw.githubusercontent.com/Wurmcraft/WurmTweaks2/Rewrite/examples/master.ws";
 
   @Config.Comment("Default Script Directory")
-  public static String scriptDir = "config" + File.separator + "WurmTweaks";
+  public static String scriptDir = "config/WurmTweaks";
 
   @Config.Comment("List of Meta Items")
   public static String metaItems =
