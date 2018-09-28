@@ -75,7 +75,5 @@ public interface IDataConverter<T> {
    *
    * @param message Message to be displayed (Used for errors or debug)
    */
-  default void print(String message) {
-    System.out.println("[StackHelper]: " + message);
-  }
+  void print(String message);
 }

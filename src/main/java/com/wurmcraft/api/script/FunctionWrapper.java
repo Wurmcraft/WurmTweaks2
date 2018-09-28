@@ -2,11 +2,16 @@ package com.wurmcraft.api.script;
 
 import com.wurmcraft.api.script.anotations.ScriptFunction.FunctionType;
 
+/**
+ * Used by WurmTweaks script engine to bind and store any related data to its custom Nashorn
+ * functions
+ *
+ * @see com.wurmcraft.common.script.ScriptExecutor
+ */
 public class FunctionWrapper {
 
   private String modid;
   private String supportDependencies;
-  private boolean threaded;
   private byte supportCode;
   private FunctionType type;
   private boolean precedence;
@@ -20,7 +25,6 @@ public class FunctionWrapper {
   public FunctionWrapper(
       String modid,
       String supportDependencies,
-      boolean threaded,
       byte supportCode,
       FunctionType type,
       boolean precedence,
@@ -32,7 +36,6 @@ public class FunctionWrapper {
       Object clazz) {
     this.modid = modid;
     this.supportDependencies = supportDependencies;
-    this.threaded = threaded;
     this.supportCode = supportCode;
     this.type = type;
     this.precedence = precedence;
@@ -50,8 +53,6 @@ public class FunctionWrapper {
         + "modid='"
         + modid
         + '\''
-        + ", threaded="
-        + threaded
         + ", supportCode="
         + supportCode
         + ", type="
@@ -72,9 +73,6 @@ public class FunctionWrapper {
     return supportDependencies;
   }
 
-  public boolean isThreaded() {
-    return threaded;
-  }
 
   public byte getSupportCode() {
     return supportCode;

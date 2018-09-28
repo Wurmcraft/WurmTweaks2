@@ -83,12 +83,12 @@ public class WurmTweaks {
     for (ASMData data : table.getAll(DataConverter.class.getName())) {
       if (FunctionBuilder.isValidToLoad(data)) {
         try {
-          Object instance = Class.forName(data.getClassName()).newInstance();
-          if (instance instanceof IDataConverter) {
-            WurmTweak2API.dataConverters.add((IDataConverter) instance);
+          Object objectInstance = Class.forName(data.getClassName()).newInstance();
+          if (objectInstance instanceof IDataConverter) {
+            WurmTweak2API.dataConverters.add((IDataConverter) objectInstance);
           }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-          e.printStackTrace();
+          logger.error(e.getMessage());
         }
       }
     }

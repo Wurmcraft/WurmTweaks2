@@ -26,7 +26,20 @@ import techreborn.api.generator.GeneratorRecipeHelper;
 import techreborn.api.reactor.FusionReactorRecipe;
 import techreborn.api.reactor.FusionReactorRecipeHelper;
 import techreborn.api.recipe.BaseRecipe;
-import techreborn.api.recipe.machines.*;
+import techreborn.api.recipe.machines.AlloySmelterRecipe;
+import techreborn.api.recipe.machines.AssemblingMachineRecipe;
+import techreborn.api.recipe.machines.BlastFurnaceRecipe;
+import techreborn.api.recipe.machines.CentrifugeRecipe;
+import techreborn.api.recipe.machines.ChemicalReactorRecipe;
+import techreborn.api.recipe.machines.CompressorRecipe;
+import techreborn.api.recipe.machines.DistillationTowerRecipe;
+import techreborn.api.recipe.machines.ExtractorRecipe;
+import techreborn.api.recipe.machines.GrinderRecipe;
+import techreborn.api.recipe.machines.ImplosionCompressorRecipe;
+import techreborn.api.recipe.machines.IndustrialElectrolyzerRecipe;
+import techreborn.api.recipe.machines.IndustrialGrinderRecipe;
+import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
+import techreborn.api.recipe.machines.VacuumFreezerRecipe;
 
 @Support(modid = "techreborn")
 public class TechReborn {

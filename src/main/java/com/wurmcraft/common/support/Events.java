@@ -10,11 +10,14 @@ import com.wurmcraft.common.support.utils.Converter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,6 +38,8 @@ public class Events {
   private static NonBlockingHashMap<ItemStack, ItemStack> dropPickupEvent =
       new NonBlockingHashMap<>();
   private static NonBlockingHashSet<Item> pickupQuick = new NonBlockingHashSet<>();
+  // Entity
+  private static NonBlockingHashSet<MobDrop> mobDrops = new NonBlockingHashSet<>();
 
   private static boolean isSameIgnoreSize(ItemStack a, ItemStack b) {
     return a.getItem().equals(b.getItem())
@@ -87,6 +92,12 @@ public class Events {
     drops.add((ItemStack) converter.convert(line[0]));
   }
 
+  @ScriptFunction(modid = "events", inputFormat = "String ItemStack Integer")
+  public void addMobDrop(Converter converter, String[] line) {
+    mobDrops.add(
+        new MobDrop(line[0], (ItemStack) converter.convert(line[1]), Integer.parseInt(line[2])));
+  }
+
   @SubscribeEvent
   public void disableDrop(ItemTossEvent e) {
     if (e.getEntityItem().getItem() != ItemStack.EMPTY) {
@@ -137,6 +148,36 @@ public class Events {
       ItemStack temp = conversion.copy();
       temp.setCount(pickupItem.getCount() * conversion.getCount());
       return temp;
+    }
+  }
+
+  @SubscribeEvent
+  public void addMobDrop(LivingDropsEvent e) {
+    for (MobDrop drop : mobDrops) {
+      if (drop.name.equalsIgnoreCase(EntityList.getEntityString(e.getEntityLiving()))
+          && e.getEntity().world.rand.nextInt(drop.rarity) == 0) {
+        e.getDrops()
+            .add(
+                new EntityItem(
+                    e.getEntity().getEntityWorld(),
+                    e.getEntityLiving().posX,
+                    e.getEntityLiving().posY,
+                    e.getEntityLiving().posZ,
+                    drop.item));
+      }
+    }
+  }
+
+  public class MobDrop {
+
+    public String name;
+    private ItemStack item;
+    private int rarity;
+
+    public MobDrop(String name, ItemStack item, int rarity) {
+      this.name = name;
+      this.item = item;
+      this.rarity = rarity;
     }
   }
 }

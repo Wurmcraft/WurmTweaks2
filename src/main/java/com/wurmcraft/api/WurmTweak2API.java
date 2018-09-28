@@ -6,5 +6,7 @@ import java.util.List;
 
 public class WurmTweak2API {
 
+  WurmTweak2API() {}
+
   public static List<IDataConverter> dataConverters = new ArrayList<>();
 }

@@ -7,7 +7,9 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/** Manages and handles anything to do with global config's */
+/**
+ * Manages and handles anything to do with global config's
+ */
 @Mod.EventBusSubscriber(modid = Global.MODID)
 @Config(modid = Global.MODID)
 public class ConfigHandler {
@@ -32,7 +34,7 @@ public class ConfigHandler {
   public static boolean checkForUpdates = true;
 
   @Config.Comment("Recipes not removed when removing all recipes")
-  public static String[] recipeWhitelist = new String[] {};
+  public static String[] recipeWhitelist = new String[]{};
 
   @Config.Comment("Remove all recipes (Except for whitelist)")
   public static boolean removeAllRecipes = true;

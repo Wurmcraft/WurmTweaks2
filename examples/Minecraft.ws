@@ -13,3 +13,5 @@ addTooltip('<minecraft:apple> this_is_a_multi line_tooltip')
 disablePickup('<minecraft:apple> <minecraft:bone>')
 
 convertPickup('<minecraft:leaves@6> <minecraft:apple>')
+
+addMobDrop('zombie <minecraft:apple> 4')

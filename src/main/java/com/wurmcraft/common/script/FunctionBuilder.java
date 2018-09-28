@@ -143,7 +143,6 @@ public class FunctionBuilder {
         return new FunctionWrapper(
             function.modid().length() > 0 ? function.modid() : support.modid(),
             support.supportDependencies(),
-            function.threadSafe(),
             support.suppotCode(),
             function.type(),
             function.precedence(),
@@ -157,7 +156,6 @@ public class FunctionBuilder {
         return new FunctionWrapper(
             function.modid(),
             "",
-            function.threadSafe(),
             (byte) 0,
             function.type(),
             function.precedence(),

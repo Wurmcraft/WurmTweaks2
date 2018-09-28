@@ -10,5 +10,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DataConverter {
 
+  /** ModID required for this support to be loaded and active */
   String modid() default "";
 }
