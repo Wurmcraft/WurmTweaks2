@@ -92,6 +92,8 @@ dependencies {
     compile group: "net.industrial-craft", name: "industrialcraft-2", version: "2.8.75-ex112", classifier: "dev"
     compile "ex-nihilo-creatio:exnihilocreatio:1.12:${exnihilocreatio_version}"
 	compile "mekanism:Mekanism:1.12.2:9.4.13.349"
+    compile "cucumber:Cucumber:1.12.2:1.1.1"
+    compile "extended-crafting:ExtendedCrafting:1.12.2:1.5.0"
 }
 
 processResources {

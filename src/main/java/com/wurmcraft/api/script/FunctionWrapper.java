@@ -73,7 +73,6 @@ public class FunctionWrapper {
     return supportDependencies;
   }
 
-
   public byte getSupportCode() {
     return supportCode;
   }
