@@ -126,6 +126,7 @@ shadowJar {
         exclude('CharcoalPit*')
         exclude('NuclearCraft*')
         exclude('tesla-core-lib*')
+        exclude('railcraft*')
         include(dependency('com.github.stephenc.high-scale-lib:high-scale-lib:1.1.4'))
     }
 }
