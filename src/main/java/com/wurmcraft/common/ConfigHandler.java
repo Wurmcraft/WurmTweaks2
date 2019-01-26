@@ -35,10 +35,10 @@ public class ConfigHandler {
   public static String[] recipeWhitelist = new String[] {};
 
   @Config.Comment("Remove all recipes (Except for whitelist)")
-  public static boolean removeAllRecipes = true;
+  public static boolean removeAllRecipes = false;
 
   @Config.Comment("Remove all machine recipes")
-  public static boolean removeAllMachineRecipes = true;
+  public static boolean removeAllMachineRecipes = false;
 
   @Config.Comment("MB per ingot with TConstruct")
   public static int tinkersConstructIngotAmount = 1000;
@@ -50,7 +50,7 @@ public class ConfigHandler {
   public static String title = "";
 
   @Config.Comment("Remove all Loot")
-  public static boolean removeAllLoot = true;
+  public static boolean removeAllLoot = false;
 
   @Config.Comment("Change how damage is calculated")
   public static double damageMod = 1.0;
