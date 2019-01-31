@@ -1,7 +1,9 @@
 package com.wurmcraft.common.support.utils;
 
 import com.wurmcraft.WurmTweaks;
+import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.reference.Global;
+import com.wurmcraft.common.script.FunctionBuilder;
 import com.wurmcraft.common.script.utils.DynamicShapedOreRecipe;
 import com.wurmcraft.common.script.utils.DynamicShapelessOreRecipe;
 import com.wurmcraft.common.script.utils.IngredientWrapper;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -43,20 +46,41 @@ public class RecipeUtils {
   }
 
   public static IRecipe createShapelessRecipe(ItemStack output, Object[] input) {
-    DynamicShapelessOreRecipe recipe = new DynamicShapelessOreRecipe(RECIPE_GROUP, output, input);
-    recipe.setRegistryName(Global.MODID, output.toString() + Arrays.hashCode(input));
-    return recipe;
+    if (!verifyInput(input) && ConfigHandler.recipeErrorDebug) {
+      FunctionBuilder.print.println(
+          Thread.currentThread().getName()
+              + " "
+              + output.toString()
+              + " Invalid Input: "
+              + Arrays.toString(input));
+    } else {
+      DynamicShapelessOreRecipe recipe = new DynamicShapelessOreRecipe(RECIPE_GROUP, output, input);
+      recipe.setRegistryName(generateRecipeName(output, Arrays.hashCode(input)));
+      return recipe;
+    }
+    return null;
   }
 
   public static IRecipe createShapedRecipe(ItemStack output, Object[] input) {
-    DynamicShapedOreRecipe recipe = new DynamicShapedOreRecipe(RECIPE_GROUP, output, input);
-    recipe.setRegistryName(Global.MODID, output.toString() + Arrays.hashCode(input));
-    return recipe;
+    if (!verifyInput(input) && ConfigHandler.recipeErrorDebug) {
+      FunctionBuilder.print.println(
+          Thread.currentThread().getName()
+              + " "
+              + output.toString()
+              + " Invalid Input: "
+              + Arrays.toString(input));
+    } else {
+      DynamicShapedOreRecipe recipe = new DynamicShapedOreRecipe(RECIPE_GROUP, output, input);
+      recipe.setRegistryName(generateRecipeName(output, Arrays.hashCode(input)));
+      return recipe;
+    }
+    return null;
   }
 
   private static boolean validIngredient(Ingredient ingredient) {
     for (ItemStack stack : ingredient.getMatchingStacks()) {
       if (stack == ItemStack.EMPTY || stack == null) {
+        ingredient = new IngredientWrapper(new ItemStack(Blocks.BEDROCK));
         return false;
       }
     }
@@ -188,5 +212,24 @@ public class RecipeUtils {
       return (Ingredient) Converter.getFromName("Oredictionary").getData(in);
     }
     return Ingredient.EMPTY;
+  }
+
+  public static boolean verifyInput(Object[] input) {
+    for (Object obj : input) {
+      if (obj instanceof ItemStack) {
+        if (((ItemStack) obj).isEmpty()) {
+          return false;
+        }
+      } else if (obj instanceof String) {
+        if (((String) obj).isEmpty()) {
+          return false;
+        }
+      } else if (obj instanceof Ingredient) {
+        if (((Ingredient) obj).getMatchingStacks().length == 0) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }

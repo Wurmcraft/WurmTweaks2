@@ -7,8 +7,10 @@ import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
+import java.util.*;
 import java.util.Arrays;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.recipe.ItemIngredient;
 import me.desht.pneumaticcraft.common.recipes.AmadronOfferManager;
 import me.desht.pneumaticcraft.common.recipes.AssemblyRecipe;
 import me.desht.pneumaticcraft.common.recipes.PressureChamberRecipe;
@@ -34,7 +36,7 @@ public class PnumaticCraft {
     if (ConfigHandler.removeAllMachineRecipes) {
       AssemblyRecipe.drillRecipes.clear();
       AssemblyRecipe.laserRecipes.clear();
-      PressureChamberRecipe.chamberRecipes.clear();
+      PressureChamberRecipe.recipes.clear();
       AmadronOfferManager.getInstance().getStaticOffers().clear();
       AmadronOfferManager.getInstance().getPeriodicOffers().clear();
       AmadronOfferManager.getInstance().getAllOffers().clear();
@@ -64,7 +66,7 @@ public class PnumaticCraft {
       PneumaticRegistry.getInstance()
           .getRecipeRegistry()
           .registerPressureChamberRecipe(
-              (ItemStack[]) recipe[0], (float) recipe[1], (ItemStack[]) recipe[2]);
+              (ItemIngredient[]) recipe[0], (float) recipe[1], (ItemStack[]) recipe[2]);
     }
     for (Object[] recipe : defaultAmadron) {
       PneumaticRegistry.getInstance()
@@ -92,9 +94,10 @@ public class PnumaticCraft {
   public void addPressureChamber(Converter converter, String[] line) {
     pressure.add(
         new Object[] {
-          converter
-              .getBulkItemsAsList(Arrays.copyOfRange(line, 2, line.length))
-              .toArray(new ItemStack[0]),
+          convertToItemIngredient(
+              converter
+                  .getBulkItemsAsList(Arrays.copyOfRange(line, 2, line.length))
+                  .toArray(new ItemStack[0])),
           Float.parseFloat(line[1]),
           new ItemStack[] {(ItemStack) converter.convert(line[0])}
         });
@@ -108,5 +111,13 @@ public class PnumaticCraft {
   @ScriptFunction(modid = "pneumaticcraft", inputFormat = "ItemStack ItemStack")
   public void addAmadron(Converter converter, String[] line) {
     amadron.add(new Object[] {converter.convert(line[0]), converter.convert(line[1])});
+  }
+
+  private ItemIngredient[] convertToItemIngredient(ItemStack[] items) {
+    List<ItemIngredient> convertItems = new ArrayList<>();
+    for (ItemStack item : items) {
+      convertItems.add(new ItemIngredient(item));
+    }
+    return convertItems.toArray(new ItemIngredient[0]);
   }
 }

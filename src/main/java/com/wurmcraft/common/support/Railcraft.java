@@ -24,6 +24,8 @@ public class Railcraft {
 
   @InitSupport(modid = "railcraft")
   public void init() {
+    rockCrusher = new NonBlockingHashSet<>();
+    rollingMachine = new NonBlockingHashSet<>();
     if (ConfigHandler.removeAllMachineRecipes) {
       RockCrusherCrafter.INSTANCE.getRecipes().clear();
       RollingMachineCrafter.INSTANCE.getRecipes().clear();
@@ -34,8 +36,10 @@ public class Railcraft {
 
   @InitSupport(modid = "railcraft")
   public void finalizeSupport() {
-    for (IRockCrusherRecipeBuilder recipe : rockCrusher) {
-      recipe.register();
+    if (rockCrusher != null) {
+      for (IRockCrusherRecipeBuilder recipe : rockCrusher) {
+        recipe.register();
+      }
     }
   }
 

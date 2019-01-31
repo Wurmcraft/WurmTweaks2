@@ -58,6 +58,9 @@ public class ConfigHandler {
   @Config.Comment("Change fast regen is calculated")
   public static double regenMod = 1.0;
 
+  @Config.Comment("Log / Detect any invalid recipe to WurmScript")
+  public static boolean recipeErrorDebug = false;
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

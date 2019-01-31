@@ -17,6 +17,8 @@ import com.wurmcraft.api.script.anotations.Support;
 import com.wurmcraft.common.ConfigHandler;
 import com.wurmcraft.common.script.ScriptExecutor;
 import com.wurmcraft.common.support.utils.Converter;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import net.minecraft.item.ItemStack;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
@@ -40,7 +42,7 @@ public class IndustrialForgoing {
       BioReactorEntry.BIO_REACTOR_ENTRIES.clear();
       SludgeEntry.SLUDGE_RECIPES.clear();
       ProteinReactorEntry.PROTEIN_REACTOR_ENTRIES.clear();
-      LaserDrillEntry.LASER_DRILL_ENTRIES.clear();
+      LaserDrillEntry.LASER_DRILL_ENTRIES = new LinkedList[256];
     } else if (ScriptExecutor.reload) {
       bioReactor.forEach(entry -> BioReactorEntry.BIO_REACTOR_ENTRIES.remove(entry));
       bioReactor.clear();
@@ -48,7 +50,11 @@ public class IndustrialForgoing {
       sludge.clear();
       protein.forEach(entry -> ProteinReactorEntry.PROTEIN_REACTOR_ENTRIES.remove(entry));
       protein.clear();
-      laser.forEach(entry -> LaserDrillEntry.LASER_DRILL_ENTRIES.remove(entry));
+      for (int index = 0; index < LaserDrillEntry.LASER_DRILL_ENTRIES.length; index++) {
+        for (LaserDrillEntry entry : laser) {
+          LaserDrillEntry.LASER_DRILL_ENTRIES[index].remove(entry);
+        }
+      }
       laser.clear();
     }
   }
@@ -96,6 +102,8 @@ public class IndustrialForgoing {
         new LaserDrillEntry(
             Integer.parseInt(line[1]),
             (ItemStack) converter.convert(line[0], 1),
-            Integer.parseInt(line[2])));
+            Integer.parseInt(line[2]),
+            new ArrayList<>(),
+            new ArrayList<>()));
   }
 }

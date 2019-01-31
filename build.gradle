@@ -73,7 +73,7 @@ dependencies {
     compile "extra-utilities:extrautils2:1.12:${extrautils2_version}"
     compile "immersive-engineering:ImmersiveEngineering:${immersiveengineering_version}"
     compile "shadowfacts-forgelin:Forgelin:${forgelin_version}"
-    compile "industrial-foregoing:industrialforegoing-${mc_version}:${industrialforegoing_version}"
+    compile "industrial-foregoing:industrialforegoing-${mc_version}:1.12.${industrialforegoing_version}"
     compile "mekanism:Mekanism:${mc_version}:${mekanism_version}"
     compile "pneumaticcraft-repressurized:pneumaticcraft-repressurized-${mc_version}:${pneumaticcraft_version}"
     compile "mantle:Mantle:1.12:${mantle_version}"
@@ -94,6 +94,7 @@ dependencies {
 	compile "mekanism:Mekanism:1.12.2:9.4.13.349"
     compile "cucumber:Cucumber:1.12.2:1.1.1"
     compile "extended-crafting:ExtendedCrafting:1.12.2:1.5.0"
+    compile "tough-as-nails:ToughAsNails-1.12.2:${toughasnails_version}:universal"
 }
 
 processResources {

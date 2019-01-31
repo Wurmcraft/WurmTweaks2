@@ -2,6 +2,7 @@ package com.wurmcraft.common.support.utils;
 
 import com.wurmcraft.api.WurmTweak2API;
 import com.wurmcraft.api.script.converter.IDataConverter;
+import com.wurmcraft.common.script.FunctionBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,13 @@ public class Converter {
   public Object convert(String line, int extraData) {
     IDataConverter converter = attemptToFindConverter(line);
     if (converter != null) {
-      return converter.getData(line);
+      Object test = converter.getData(line);
+      if (!line.equalsIgnoreCase("[empty]")
+          && test instanceof ItemStack
+          && test == ItemStack.EMPTY) {
+        FunctionBuilder.print.println(("Invalid ItemStack," + line));
+      }
+      return test;
     }
     return null;
   }
