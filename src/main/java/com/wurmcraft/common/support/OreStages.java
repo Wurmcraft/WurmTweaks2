@@ -61,9 +61,9 @@ public class OreStages {
     oreStages.add(
         new OreStage(
             Block.getBlockFromItem(((ItemStack) converter.convert(line[1], 1)).getItem())
-                .getDefaultState(),
+                .getStateFromMeta(((ItemStack) converter.convert(line[1])).getItemDamage()),
             Block.getBlockFromItem(((ItemStack) converter.convert(line[2], 1)).getItem())
-                .getDefaultState(),
+                .getStateFromMeta(((ItemStack) converter.convert(line[2])).getItemDamage()),
             getStageFromString(line[0])));
   }
 

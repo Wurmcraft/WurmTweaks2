@@ -301,4 +301,18 @@ public class ImmersiveEngineering {
             converter.convert(line[2]),
             Integer.parseInt(line[3])));
   }
+
+  @ScriptFunction(
+    modid = "immersiveengineering",
+    inputFormat = "ItemStack ItemStack ItemStack Integer Integer"
+  )
+  public void addArcFurnace(Converter converter, String[] line) {
+    scriptArcFurnace.add(
+        new ArcFurnaceRecipe(
+            (ItemStack) converter.convert(line[0]),
+            (ItemStack) converter.convert(line[1]),
+            (ItemStack) converter.convert(line[2]),
+            Integer.parseInt(line[3]),
+            Integer.parseInt(line[4])));
+  }
 }
