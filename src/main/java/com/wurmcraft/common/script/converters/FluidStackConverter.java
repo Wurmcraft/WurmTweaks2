@@ -38,7 +38,7 @@ public class FluidStackConverter implements IDataConverter<FluidStack> {
 
   @Override
   public int getDataSize(String data) {
-    if (data.contains(StackSettings.STACKSIZE.getData())) {
+    if (data.contains(".*[0-9]" + StackSettings.STACKSIZE.getData())) {
       String fluidSize =
           data.substring(
               data.indexOf(StackSettings.FLUID.getData()) + 1,

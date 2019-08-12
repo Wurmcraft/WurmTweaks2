@@ -44,8 +44,8 @@ public class StackConverter implements IDataConverter<ItemStack> {
 
   @Override
   public int getMeta(String data) {
-    if (data.contains(StackSettings.META.getData())) {
-      boolean hasNBT = data.contains(StackSettings.EXTRA_DATA.getData());
+    if (data.contains(StackSettings.META.getData() + "[0-9]")) {
+      boolean hasNBT = data.contains(StackSettings.EXTRA_DATA.getData() + "{");
       String meta =
           data.substring(
               data.indexOf(StackSettings.META.getData()) + 1,
@@ -64,7 +64,7 @@ public class StackConverter implements IDataConverter<ItemStack> {
 
   @Override
   public int getDataSize(String data) {
-    if (data.contains(StackSettings.STACKSIZE.getData())) {
+    if (data.contains(".*[0-9]" + StackSettings.STACKSIZE.getData())) {
       String stackSize =
           data.substring(
               data.indexOf(StackSettings.START.getData()) + 1,
@@ -83,16 +83,15 @@ public class StackConverter implements IDataConverter<ItemStack> {
     if (data.contains(StackSettings.START.getData())
         && data.contains(StackSettings.END.getData())
         && data.contains(StackSettings.NAME.getData())) {
-      boolean hasDedicatedStackSize =
-          getTillEndOfNumber(data).contains(StackSettings.STACKSIZE.getData());
+      boolean hasDedicatedStackSize = getTillEndOfNumber(data).contains(".*[0-9]" + StackSettings.STACKSIZE.getData());
       String modid =
           data.substring(
               hasDedicatedStackSize
                   ? data.indexOf(StackSettings.STACKSIZE.getData()) + 1
                   : data.indexOf(StackSettings.START.getData()) + 1,
               data.indexOf(StackSettings.NAME.getData()));
-      boolean hasMETA = data.contains(StackSettings.META.getData());
-      boolean hasNBT = data.contains(StackSettings.EXTRA_DATA.getData());
+      boolean hasMETA = data.contains(StackSettings.META.getData() + "[0-9]");
+      boolean hasNBT = data.contains(StackSettings.EXTRA_DATA.getData() +"{");
       String name;
       if (hasMETA) {
         name =
@@ -123,7 +122,7 @@ public class StackConverter implements IDataConverter<ItemStack> {
   }
 
   private String getTillEndOfNumber(String line) {
-    if (line.contains(StackSettings.STACKSIZE.getData())) {
+    if (line.contains(".*[0-9]" + StackSettings.STACKSIZE.getData())) {
       try {
         String input =
             line.substring(
@@ -139,7 +138,7 @@ public class StackConverter implements IDataConverter<ItemStack> {
 
   @Override
   public String getExtraData(String data) {
-    if (data.contains(StackSettings.EXTRA_DATA.getData())) {
+    if (data.contains(StackSettings.EXTRA_DATA.getData() + "{") ) {
       return data.substring(
           data.indexOf(StackSettings.EXTRA_DATA.getData()) + 1,
           data.indexOf(StackSettings.END.getData()));
