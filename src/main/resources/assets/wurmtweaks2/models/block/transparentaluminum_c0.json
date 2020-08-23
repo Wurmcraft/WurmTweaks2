@@ -1,7 +1,0 @@
-{
-  "__comment": "The model for a block that is not being connected to on any angle.",
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "wurmtweaks2:blocks/transparentaluminum/transparentaluminum0C"
-  }
-}

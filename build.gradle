@@ -1,134 +1,76 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
     }
 }
+
 plugins {
-    id 'com.diffplug.gradle.spotless' version '3.4.0'
     id "com.github.johnrengelman.shadow" version "2.0.4"
+    id "com.diffplug.gradle.spotless" version "3.28.1"
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "${mod_version}"
-group = "com.wurmcraft.wurmtweaks" 
-archivesBaseName = "WurmTweaks"
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
 
-sourceCompatibility = targetCompatibility = '1.8' 
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
+String build_number = System.getenv().BUILD_NUMBER
+if (build_number == null) {
+    build_number = "CustomBuild"
+} else {
+    build_number = "Jenkins-${build_number}"
 }
+
+version = "${mod_version}-${build_number}"
+group = 'com.wurmcraft.wurmtweaks'
+archivesBaseName = 'WurmTweaks2'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    version = "${mc_version}-${forge_version}"
-    runDir = "run"
-    mappings = "${mcp_map}"
-	replace "@version@", project.version
-    replaceIn "Global.java"
-    clientRunArgs += "--username=${username}"
+    mappings channel: 'snapshot', version: '20171003-1.12'
+    // makeObfSourceJar = false
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        server {
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
 }
 
 repositories {
-    maven { url 'https://maven.mcmoddev.com' }
-    maven { url 'http://maven.blamejared.com'}
-	maven { url 'https://modmaven.k-4u.nl'}
-    maven { url = "http://maven.covers1624.net"}
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        name = "ic2"
-        url = "http://maven.ic2.player.to/"
-    }
-    ivy {
-        artifactPattern "https://ci.micdoodle8.com/job/Galacticraft-1.12/181/artifact/Forge/build/libs/[module]-${mc_version}-[revision].[ext]"
+        url = "https://www.cursemaven.com"
     }
 }
 
 dependencies {
-    compile group: 'com.github.stephenc.high-scale-lib', name: 'high-scale-lib', version: '1.1.4'
-    compile "crafttweaker:CraftTweaker2:1.12:${crafttweaker2_version}"
-    compile "bookshelf:Bookshelf:${mc_version}:${bookshelf_version}"
-    compile "game-stages:GameStages:${mc_version}:${gamestages_version}"
-    compile "ore-stages:OreStages:${mc_version}:${orestages_version}"
-    compile "jei:jei_${mc_version}:${jei_version}"
-    compile "abyssalcraft:AbyssalCraft:${mc_version}:${abyssalcraft_version}"
-    compile "actually-additions:ActuallyAdditions:${mc_version}:${actuallyadditions_version}"
-    compile "applied-energistics-2:appliedenergistics2-${ae2_version}"
-    compile "astral-sorcery:astralsorcery:${mc_version}:${astralsorcery_version}"
-    compile "codechicken-lib-1-8:CodeChickenLib-${mc_version}:${codechickenlib_version}:universal"
-    compile "avaritia-1-10:Avaritia-1.12.2:${avaritia_version}:universal"
-    compile "better-with-mods:BetterWithMods:1.12:${betterwithmods_version}"
-    compile "guide-api:Guide-API-1.12:${guideapi_version}"
-    compile "blood-magic:BloodMagic-${mc_version}:${bloodmagic_version}"
-    compile "baubles:Baubles:1.12:${baubles_version}"
-    compile "brandons-core:BrandonsCore-1.12.2:${brandonscore_version}:universal"
-    compile "draconic-evolution:Draconic-Evolution-1.12.2:${draconicevolution_version}:universal"
-    compile "valkyrielib:valkyrielib:${mc_version}:${valkyrielib_version}"
-    compile "environmental-tech:environmentaltech:${mc_version}:${environmentaltech_version}"
-    compile "extra-utilities:extrautils2:1.12:${extrautils2_version}"
-    compile "immersive-engineering:ImmersiveEngineering:${immersiveengineering_version}"
-    compile "shadowfacts-forgelin:Forgelin:${forgelin_version}"
-    compile "industrial-foregoing:industrialforegoing-${mc_version}:1.12.${industrialforegoing_version}"
-    compile "mekanism:Mekanism:${mc_version}:${mekanism_version}"
-    compile "pneumaticcraft-repressurized:pneumaticcraft-repressurized-${mc_version}:${pneumaticcraft_version}"
-    compile "mantle:Mantle:1.12:${mantle_version}"
-    compile "tinkers-construct:TConstruct:${mc_version}:${tconstruct_version}"
-    compile "reborncore:RebornCore-${mc_version}:${reborncore_version}:universal"
-    compile "techreborn:TechReborn-${mc_version}:${techreborn_version}:universal"
-    compile "thaumcraft:Thaumcraft:${mc_version}:${thaumcraft_version}"
-    compile "redstone-flux:RedstoneFlux-1.12:${rf_version}:universal"
-    compile "cofhcore:CoFHCore-${mc_version}:${cofhcore_version}:universal"
-    compile "cofh-world:CoFHWorld-${mc_version}:${cofhworld_version}:universal"
-    compile "thermal-foundation:ThermalFoundation-${mc_version}:${thermalfoundation_version}:universal"
-    compile "thermalexpansion:ThermalExpansion-${mc_version}:${thermalexpansion_version}:universal"
-    compile name: 'Galacticraft-Planets', version: "${galacticraft_version}", ext: 'jar'
-    compile name: 'GalacticraftCore', version: "${galacticraft_version}", ext: 'jar'
-    compile name: 'MicdoodleCore', version: "${galacticraft_version}", ext: 'jar'
-    compile group: "net.industrial-craft", name: "industrialcraft-2", version: "2.8.75-ex112", classifier: "dev"
-    compile "ex-nihilo-creatio:exnihilocreatio:1.12:${exnihilocreatio_version}"
-	compile "mekanism:Mekanism:1.12.2:9.4.13.349"
-    compile "cucumber:Cucumber:1.12.2:1.1.1"
-    compile "extended-crafting:ExtendedCrafting:1.12.2:1.5.0"
-    compile "tough-as-nails:ToughAsNails-1.12.2:${toughasnails_version}:universal"
-}
-
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
-
-spotless {
-    java {
-        googleJavaFormat()
-        removeUnusedImports()
-        indentWithSpaces()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
+    // Minecraft
+    minecraft "net.minecraftforge:forge:1.12.2-${forge_version}"
+    // Libs
+    compile "org.reflections:reflections:${reflections_version}"
+    compile "com.boundary:high-scale-lib:${highscalelib_version}"
+    compile "org.javassist:javassist:${javassist_version}"
+    // Other Mods
 }
 
 shadowJar.archiveName = "${archivesBaseName}-${version}.jar"
 shadowJar {
     dependencies {
         exclude('dummy*')
-        exclude('Botania*')
-        exclude('CharcoalPit*')
-        exclude('NuclearCraft*')
-        exclude('tesla-core-lib*')
-        exclude('railcraft*')
-        include(dependency('com.github.stephenc.high-scale-lib:high-scale-lib:1.1.4'))
+        include(dependency("org.reflections:reflections:${reflections_version}"))
+        include(dependency("com.boundary:high-scale-lib:${highscalelib_version}"))
+        include(dependency('org.javassist:javassist::3.12.1.GA'))
     }
 }
 
@@ -136,9 +78,28 @@ reobf {
     shadowJar {}
 }
 
-task buildAndPackage {
-    dependsOn 'clean'
-    dependsOn 'spotlessApply'
-    dependsOn 'build'
-    tasks.findByName('build').mustRunAfter 'clean'
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "WurmTweaks2",
+            "Specification-Vendor": "WurmCraft",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${mod_version}",
+            "Implementation-Vendor" :"Wurmatron",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+jar.finalizedBy('reobfJar')
+
+task sourcesJar(type: Jar) {
+    classifier = "sources"
+    from sourceSets.main.allJava
+}
+
+artifacts {
+    spotlessApply
+    shadowJar
+    archives sourcesJar
 }
