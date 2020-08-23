@@ -61,7 +61,7 @@ dependencies {
     compile "org.reflections:reflections:${reflections_version}"
     compile "com.boundary:high-scale-lib:${highscalelib_version}"
     compile "org.javassist:javassist:${javassist_version}"
-    implementation 'org.python:jython-slim:2.7.2'
+    compile 'org.python:jython-slim:2.7.2'
     // Other Mods
 }
 
