@@ -113,20 +113,21 @@ public class ItemStackConverter implements IDataConverter<ItemStack> {
   @Override
   public ItemStack getData(String data) {
     if (ConfigHandler.cacheConversions && reverseCache.containsKey(data)) {
-      return reverseCache.get(data);
+      System.out.println("Cache: " + data + " " + reverseCache.get(data));
+      return reverseCache.get(data).copy();
     }
     Item item = (Item) getBasicData(data);
     ItemStack stack = new ItemStack(item, getDataSize(data), getMeta(data));
-//    String nbt = getExtraData(data);
-//    if (nbt != null && !nbt.isEmpty()) {
-//      try {
-//        NBTTagCompound nbtData = JsonToNBT.getTagFromJson(nbt);
-//        stack.setTagCompound(nbtData);
-//      } catch (NBTException e) {
-//        WurmTweaks2.LOGGER
-//            .warn("Failed to load NBT for '" + data + "', creating without NBT");
-//      }
-//    }
+    String nbt = getExtraData(data);
+    if (nbt != null && !nbt.isEmpty()) {
+      try {
+        NBTTagCompound nbtData = JsonToNBT.getTagFromJson(nbt);
+        stack.setTagCompound(nbtData);
+      } catch (NBTException e) {
+        WurmTweaks2.LOGGER
+            .warn("Failed to load NBT for '" + data + "', creating without NBT");
+      }
+    }
     if (ConfigHandler.cacheConversions) {
       cache.put(stack.copy(), data);
       reverseCache.put(data, stack.copy());
