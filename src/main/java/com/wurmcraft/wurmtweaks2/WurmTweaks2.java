@@ -1,6 +1,7 @@
 package com.wurmcraft.wurmtweaks2;
 
 import com.wurmcraft.wurmtweaks2.api.WurmTweaks2API;
+import com.wurmcraft.wurmtweaks2.common.command.InterpreterCommand;
 import com.wurmcraft.wurmtweaks2.common.command.WurmTweaksCommand;
 import com.wurmcraft.wurmtweaks2.common.loader.ConversionHandler;
 import com.wurmcraft.wurmtweaks2.common.reference.Global;
@@ -32,11 +33,11 @@ public class WurmTweaks2 {
   @EventHandler
   public void postInit(FMLPostInitializationEvent e) {
     LOGGER.info("PostInit has started");
-
   }
 
   @EventHandler
   public void serverStarting(FMLServerStartingEvent e) {
     e.registerServerCommand(new WurmTweaksCommand());
+    e.registerServerCommand(new InterpreterCommand());
   }
 }
