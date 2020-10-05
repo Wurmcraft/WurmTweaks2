@@ -2,13 +2,13 @@ package com.wurmcraft.wurmtweaks2.common.script.jython;
 
 import com.google.common.collect.Lists;
 import com.wurmcraft.wurmtweaks2.api.WurmTweaks2API;
-import com.wurmcraft.wurmtweaks2.common.script.data.InvalidRecipe;
 import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import org.python.icu.impl.InvalidFormatException;
+
 
 public class Item {
 
@@ -32,17 +32,13 @@ public class Item {
     return WurmTweaks2API.dataConverters.get("ItemStack").toString(stack);
   }
 
-  // TODO Test Recipe Reload
   public void removeRecipe() {
     recipeLock(false);
     ForgeRegistry<IRecipe> recipeRegistry = (ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES;
     ArrayList<IRecipe> recipes = Lists.newArrayList(recipeRegistry.getValues());
     for (IRecipe r : recipes) {
       if (r.getRecipeOutput().isItemEqual(stack)) {
-        ((ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES).remove(r.getRegistryName());
-        ((ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES)
-            .register(new InvalidRecipe(stack).setRegistryName(r.getRegistryName()));
-        break;
+        recipeRegistry.remove(r.getRegistryName());
       }
     }
     recipeLock(true);

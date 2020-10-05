@@ -36,8 +36,7 @@ public class InterpreterCommand extends CommandBase {
       ScriptContext context = new SimpleScriptContext();
       context.setBindings(ScriptRunner.createBindings(), ScriptContext.GLOBAL_SCOPE);
       context.setBindings(ScriptRunner.createBindings(), ScriptContext.ENGINE_SCOPE);
-      context
-          .setAttribute(ScriptEngine.FILENAME, "player.py", ScriptContext.ENGINE_SCOPE);
+      context.setAttribute(ScriptEngine.FILENAME, "player.py", ScriptContext.ENGINE_SCOPE);
       context.setAttribute("mc_version", "1.12.2", ScriptContext.GLOBAL_SCOPE);
       context.setWriter(writer);
       ScriptRunner.engine
