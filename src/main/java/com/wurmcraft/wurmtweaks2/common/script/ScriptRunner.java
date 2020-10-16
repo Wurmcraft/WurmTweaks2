@@ -10,6 +10,7 @@ public class ScriptRunner {
   public static ScriptEngine engine = manager.getEngineByName("jython");
   public static String[] core_py = new String[]{
       "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import ShapelessRecipe;",
+      "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import ShapedRecipe;",
       "from com.wurmcraft.wurmtweaks2.common.script.jython import Item;",
   };
 
