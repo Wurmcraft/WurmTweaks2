@@ -11,7 +11,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import org.python.antlr.ast.Str;
 import org.python.icu.impl.InvalidFormatException;
 
 public class RecipeUtils {
@@ -49,7 +48,11 @@ public class RecipeUtils {
             .substring(recipeData[0].indexOf("<"));
         return convertShapedRecipeInputs(format, after);
       } else if (recipeData[0].contains("*")) {
-        // TODO Generate Dynamic Format based on Item Placement
+        String[] lineData = recipeData[0].split("\\*");
+        for (int index = 0; index < lineData.length; index++) {
+          lineData[index] = lineData[index].trim();
+        }
+        return generateDynamicRecipeBasedOnData(recipeData[0].split("\\*"));
       } else {
         recipeData = recipeData[0].split(" ");
       }
@@ -125,4 +128,42 @@ public class RecipeUtils {
   private static Object convertToStack(String data) {
     return WurmTweaks2API.dataConverters.get("ItemStack").getData(data);
   }
+
+
+  private static Object[] generateDynamicRecipeBasedOnData(String[] recipeData) {
+    int currentCharIndex = 65;
+    HashMap<String, Character> formatCache = new HashMap<>();
+    List<String> lineData = new ArrayList<>();
+    for (int index = 0; index < recipeData.length; index++) {
+      String[] selectedData = recipeData[index].split(" ");
+      String currentLineFormat = "";
+      for (String item : selectedData) {
+        if (item.isEmpty()) {
+          continue;
+        }
+        if (item.toLowerCase().equals("<empty>") || item.toLowerCase().equals("<nil>")) {
+          currentLineFormat = currentLineFormat + " ";
+        } else if (formatCache.containsKey(item.toLowerCase())) {
+          currentLineFormat = currentLineFormat + formatCache.get(item.toLowerCase());
+        } else {
+          formatCache.put(item.toLowerCase(), (char) currentCharIndex);
+          currentCharIndex++;
+          currentLineFormat = currentLineFormat + formatCache.get(item.toLowerCase());
+        }
+      }
+      lineData.add(currentLineFormat);
+    }
+    return formatRecipeData(lineData.toArray(new String[0]), formatCache, 0);
+  }
+
+  private static Object[] formatRecipeData(String[] format,
+      HashMap<String, Character> formatData, int type) {
+    HashMap<Character, Object> recipeData = new HashMap<>();
+    for (String data : formatData.keySet()) {
+      recipeData.put(formatData.get(data), convertToStack(data));
+    }
+    return formatRecipeData(format, recipeData);
+  }
+
+
 }

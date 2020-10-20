@@ -50,6 +50,7 @@ public class ShapedRecipe {
 
   public ShapedRecipe(String output, String[] recipeData) {
     this.output = output;
+    this.format = "";
     this.recipeData = Strings.join(recipeData, "*");
     ShapedRecipeWT recipe = new ShapedRecipeWT(this);
     recipe.setRegistryName(Global.MODID, output + "_" + recipeData);

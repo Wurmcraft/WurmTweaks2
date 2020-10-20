@@ -37,7 +37,6 @@ public class ShapelessRecipe {
     return inputs;
   }
 
-
   private void register(ShapelessRecipeWT r) {
     recipeLock(false);
     ForgeRegistries.RECIPES.register(r);
