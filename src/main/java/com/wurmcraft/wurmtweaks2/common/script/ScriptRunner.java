@@ -6,16 +6,17 @@ import javax.script.ScriptEngineManager;
 
 public class ScriptRunner {
 
-  public static final ScriptEngineManager manager = new ScriptEngineManager();
-  public static ScriptEngine engine = manager.getEngineByName("jython");
-  public static String[] core_py = new String[]{
-      "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import ShapelessRecipe;",
-      "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import ShapedRecipe;",
-      "from com.wurmcraft.wurmtweaks2.common.script.jython import Item;",
-  };
+    public static final ScriptEngineManager manager = new ScriptEngineManager();
+    public static ScriptEngine engine = manager.getEngineByName("jython");
+    public static String[] core_py = new String[]{
+            "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import ShapelessRecipe;",
+            "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import ShapedRecipe;",
+            "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import FurnaceRecipe;",
+            "from com.wurmcraft.wurmtweaks2.common.script.jython import Item;",
+    };
 
-  public static Bindings createBindings() {
-    Bindings bindings = engine.createBindings();
-    return bindings;
-  }
+    public static Bindings createBindings() {
+        Bindings bindings = engine.createBindings();
+        return bindings;
+    }
 }
