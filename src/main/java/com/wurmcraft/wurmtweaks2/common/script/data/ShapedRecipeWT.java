@@ -14,6 +14,6 @@ public class ShapedRecipeWT extends ShapedOreRecipe {
 
   public ShapedRecipeWT(ShapedRecipe recipe) {
     super(SHAPED_RECIPE,(ItemStack) WurmTweaks2API.dataConverters.get("ItemStack")
-        .getData(recipe.output), RecipeUtils.convertShapedRecipeInputs(recipe.format + " " + recipe.recipeData));
+        .getData(recipe.output), RecipeUtils.convertShapedRecipeInputs(recipe.format,recipe.recipeData));
   }
 }
