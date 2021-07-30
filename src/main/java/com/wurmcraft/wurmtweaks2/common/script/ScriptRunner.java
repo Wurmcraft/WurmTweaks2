@@ -14,6 +14,7 @@ public class ScriptRunner {
             "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import FurnaceRecipe;",
             "from com.wurmcraft.wurmtweaks2.common.script.jython import Item;",
             "from com.wurmcraft.wurmtweaks2.common.script.jython import OreDictionary;",
+            "from com.wurmcraft.wurmtweaks2.common.script.jython.recipes import BrewingRecipe;"
     };
 
     public static Bindings createBindings() {
