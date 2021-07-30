@@ -24,3 +24,15 @@ OreDictionary(apple, "fruitApple")
 OreDictionary(diamond, "stone")
 
 # Item Manager
+table = Item("<crafting_table")
+table.removeRecipe() # Removes Crafting Recipes
+stackSize = table.stackSize()
+table.stackSize(37)
+count = table.count()
+stackedTables = table.count(count + 5) # <6x:crafting_table>
+# Specialty
+sword = Item("<diamond_sword")
+sword.noRepair()
+sword.harvestLevel("pickaxe", 3) # Sword can now mine diamonds
+#sword.harvestSpeed(8)
+#sword.harvestSpeed("<stone>", 50)
