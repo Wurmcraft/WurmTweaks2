@@ -100,7 +100,7 @@ public class ItemStackConverter implements IDataConverter<ItemStack> {
   @Override
   public String getExtraData(String data) {
     if (data.contains(NBT)) {
-      return data.substring(data.indexOf(NBT), data.length() - 1);
+      return data.substring(data.indexOf(NBT) + 1, data.length() - 1);
     }
     return null;
   }
