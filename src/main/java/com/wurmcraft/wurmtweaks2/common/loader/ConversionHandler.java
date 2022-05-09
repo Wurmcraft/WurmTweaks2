@@ -17,5 +17,4 @@ public class ConversionHandler {
     register(new ItemStackConverter());
     return WurmTweaks2API.dataConverters;
   }
-
 }
