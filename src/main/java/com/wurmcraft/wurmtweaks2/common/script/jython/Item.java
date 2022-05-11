@@ -2,10 +2,8 @@ package com.wurmcraft.wurmtweaks2.common.script.jython;
 
 import com.google.common.collect.Lists;
 import com.wurmcraft.wurmtweaks2.api.WurmTweaks2API;
-
-import java.util.ArrayList;
-
 import com.wurmcraft.wurmtweaks2.api.conversion.IDataConverter;
+import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

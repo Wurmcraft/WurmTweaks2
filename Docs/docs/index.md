@@ -8,9 +8,7 @@
 
 ## Support / Quick Reference
 
-  * [Minecraft](./support/minecraft)
+* [Minecraft](./support/minecraft)
+* [Item Functions](./support/item)
 
 ## Guides
-  * [User Guides](./guides/user-guides)
-  * [Script Guides](./guides/setup-guides)
-  * [Modpack Guides](./guides/modpack-guides)

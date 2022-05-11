@@ -55,3 +55,15 @@ Format: `BrewingRecipe("{output}", "{input}", "{catalyst}")`
 Example: `BrewingRecipe("<golden_apple@1>", "<potion^{Potion:\"minecraft:water\"}>", "<diamond_sword>")`
 
 ![brewing example](../img/brewing_example.png "Brewing Example")
+
+# Ore Dictionary Entry
+
+Format: `OreDictionary("{item}, "{entry}")`
+
+- Where `{item}` is replaced with an item or item variable
+- Where `{entry}` is replaced with the ore dictionary name
+
+Example: `OreDictionary("<dirt>", "blockDirt")`
+
+This registers the block `<dirt>` with an ore dictionary entry of `blockDirt`
+

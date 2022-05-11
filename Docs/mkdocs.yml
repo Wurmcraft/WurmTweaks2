@@ -1,16 +1,13 @@
 site_name: WurmTweaks2 Wiki
 site_url: https://wiki.wurmatron.io/wurmtweaks2
+repo_url: https://github.com/Wurmcraft/WurmTweaks2
+repo_name: WurmTweaks2
 theme:
   name: material
 nav:
-    - 'User Guide':
-          - 'Getting Started': 'guides/user-getting-started.md'
-    - 'Script Guide':
-          - 'Getting Started': 'guides/script-getting-started.md'
-    - 'Modpack Guide':
-          - 'Getting Started': 'guides/modpack-getting-started.md'
     - 'Support':
-        - 'Minecraft': 'support/minecraft.md'
+        - 'Minecraft': './support/minecraft.md'
+        - 'Item Support': './support/item.md'
     - 'Links':
         - 'CurseForge': 'https://www.curseforge.com/minecraft/mc-mods/wurmtweaks2'
         - 'Github': 'https://github.com/Wurmcraft/WurmTweaks2'
