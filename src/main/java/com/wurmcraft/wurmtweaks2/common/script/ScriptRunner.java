@@ -96,6 +96,9 @@ public class ScriptRunner {
   }
 
   private static void saveDownloadedScript(String name, String data) {
+    if(!ScriptIO.SAVE_DIR.exists()) {
+      ScriptIO.SAVE_DIR.mkdirs();
+    }
     try {
       Files.write(new File(ScriptIO.SAVE_DIR + File.separator + name).toPath(),
           data.getBytes());

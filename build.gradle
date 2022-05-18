@@ -70,6 +70,7 @@ shadowJar.archiveName = "${archivesBaseName}-${version}.jar"
 shadowJar {
     dependencies {
         exclude('dummy*')
+        exclude('*/*.exe')
         include(dependency("org.reflections:reflections:${reflections_version}"))
         include(dependency("com.boundary:high-scale-lib:${highscalelib_version}"))
         include(dependency('org.javassist:javassist::3.12.1.GA'))
