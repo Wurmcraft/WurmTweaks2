@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/Wurmcraft/WurmTweaks2/1.12.2/scripts/minecraft.py

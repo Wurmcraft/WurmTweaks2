@@ -5,6 +5,8 @@ import com.wurmcraft.wurmtweaks2.common.command.InterpreterCommand;
 import com.wurmcraft.wurmtweaks2.common.command.WurmTweaksCommand;
 import com.wurmcraft.wurmtweaks2.common.loader.ConversionHandler;
 import com.wurmcraft.wurmtweaks2.common.reference.Global;
+import com.wurmcraft.wurmtweaks2.common.script.ScriptRunner;
+import com.wurmcraft.wurmtweaks2.common.script.loader.ScriptIO;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -33,6 +35,7 @@ public class WurmTweaks2 {
   @EventHandler
   public void postInit(FMLPostInitializationEvent e) {
     LOGGER.info("PostInit has started");
+    ScriptRunner.runScripts();
   }
 
   @EventHandler

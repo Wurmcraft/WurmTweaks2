@@ -17,6 +17,9 @@ public class ConfigHandler {
   @Config.Comment("Caches Conversions, Improves Performance, but increases memory usage")
   public static boolean cacheConversions = true;
 
+  @Config.Comment("Script to run on minecraft startup, can be a a single python script or a .ws script with multiple scripts linked / downloaded, see wiki for more info")
+  public static String initialScript = "https://raw.githubusercontent.com/Wurmcraft/WurmTweaks2/1.12.2/scripts/bootstrap.ws";
+
   @SubscribeEvent
   public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     if (event.getModID().equals(Global.MODID)) {

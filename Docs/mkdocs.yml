@@ -5,12 +5,14 @@ repo_name: WurmTweaks2
 theme:
   name: material
 nav:
-    - 'Support':
-        - 'Minecraft': './support/minecraft.md'
-        - 'Item Support': './support/item.md'
-    - 'Links':
-        - 'CurseForge': 'https://www.curseforge.com/minecraft/mc-mods/wurmtweaks2'
-        - 'Github': 'https://github.com/Wurmcraft/WurmTweaks2'
-        - 'Issues': 'https://github.com/Wurmcraft/WurmTweaks2/issues/'
-        - 'Ci / Nightly Builds': 'https://ci.wurmatron.io//job/Minecraft/job/WurmTweaks2/'
-        - 'Donate': 'https://www.paypal.com/cgi-bin/webscr?return=https://www.curseforge.com/projects/270700&cn=Add+special+instructions+to+the+addon+author()&business=wurmatron%40wurmcraft.com&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted&cancel_return=https://www.curseforge.com/projects/270700&lc=US&item_name=WurmTweks2+(from+curseforge.com)&cmd=_donations&rm=1&no_shipping=1&currency_code=USD'
+  - 'Support':
+      - 'Minecraft': './support/minecraft'
+      - 'Item Support': './support/item'
+  - 'Guides':
+    - 'Config': './guides/config'
+  - 'Links':
+    - 'CurseForge': 'https://www.curseforge.com/minecraft/mc-mods/wurmtweaks2'
+    - 'Github': 'https://github.com/Wurmcraft/WurmTweaks2'
+    - 'Issues': 'https://github.com/Wurmcraft/WurmTweaks2/issues/'
+    - 'Ci / Nightly Builds': 'https://ci.wurmatron.io//job/Minecraft/job/WurmTweaks2/'
+    - 'Donate': 'https://www.paypal.com/cgi-bin/webscr?return=https://www.curseforge.com/projects/270700&cn=Add+special+instructions+to+the+addon+author()&business=wurmatron%40wurmcraft.com&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted&cancel_return=https://www.curseforge.com/projects/270700&lc=US&item_name=WurmTweks2+(from+curseforge.com)&cmd=_donations&rm=1&no_shipping=1&currency_code=USD'

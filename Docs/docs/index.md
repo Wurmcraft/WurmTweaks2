@@ -12,3 +12,5 @@
 * [Item Functions](./support/item)
 
 ## Guides
+
+* [Config](./guides/config)
