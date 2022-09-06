@@ -30,13 +30,18 @@ public class InterpreterCommand extends CommandBase {
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args)
       throws CommandException {
+    if (args.length == 0) {
+      sender.sendMessage(new TextComponentString(getUsage(sender)));
+      return;
+    }
     Writer writer = new StringWriter();
     try {
       ScriptRunner.createBindings();
       ScriptContext context = new SimpleScriptContext();
       context.setBindings(ScriptRunner.createBindings(), ScriptContext.GLOBAL_SCOPE);
       context.setBindings(ScriptRunner.createBindings(), ScriptContext.ENGINE_SCOPE);
-      context.setAttribute(ScriptEngine.FILENAME, "player.py", ScriptContext.ENGINE_SCOPE);
+      context.setAttribute(ScriptEngine.FILENAME, "player.py",
+          ScriptContext.ENGINE_SCOPE);
       context.setAttribute("mc_version", "1.12.2", ScriptContext.GLOBAL_SCOPE);
       context.setWriter(writer);
       ScriptRunner.engine
