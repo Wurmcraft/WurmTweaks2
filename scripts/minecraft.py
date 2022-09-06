@@ -34,5 +34,5 @@ stackedTables = table.count(count + 5) # <6x:crafting_table>
 sword = Item("<diamond_sword>")
 sword.noRepair()
 sword.harvestLevel("pickaxe", 3) # Sword can now mine diamonds
-#sword.harvestSpeed(8)
-#sword.harvestSpeed("<stone>", 50)
+sword.harvestSpeed(8)
+sword.harvestSpeed("<stone>", 50)

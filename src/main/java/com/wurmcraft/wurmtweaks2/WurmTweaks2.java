@@ -6,7 +6,9 @@ import com.wurmcraft.wurmtweaks2.common.command.WurmTweaksCommand;
 import com.wurmcraft.wurmtweaks2.common.loader.ConversionHandler;
 import com.wurmcraft.wurmtweaks2.common.reference.Global;
 import com.wurmcraft.wurmtweaks2.common.script.ScriptRunner;
+import com.wurmcraft.wurmtweaks2.common.script.event.HarvestSpeed;
 import com.wurmcraft.wurmtweaks2.common.script.loader.ScriptIO;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -30,6 +32,7 @@ public class WurmTweaks2 {
   @EventHandler
   public void init(FMLInitializationEvent e) {
     LOGGER.info("Init has started");
+    MinecraftForge.EVENT_BUS.register(new HarvestSpeed());
   }
 
   @EventHandler

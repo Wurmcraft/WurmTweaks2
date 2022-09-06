@@ -9,6 +9,7 @@ import com.wurmcraft.wurmtweaks2.api.conversion.IDataConverter;
 import com.wurmcraft.wurmtweaks2.common.script.data.InvalidRecipe;
 import com.wurmcraft.wurmtweaks2.common.script.data.ShapedRecipeWT;
 import com.wurmcraft.wurmtweaks2.common.script.data.ShapelessRecipeWT;
+import com.wurmcraft.wurmtweaks2.common.script.event.HarvestSpeed;
 import com.wurmcraft.wurmtweaks2.common.script.jython.recipes.FurnaceRecipe;
 import java.io.*;
 import java.nio.file.Files;
@@ -139,6 +140,7 @@ public class WurmTweaksCommand extends CommandBase {
           FurnaceRecipes.instance().getSmeltingList().remove(input);
         }
         FurnaceRecipe.currentRecipes.clear();
+        HarvestSpeed.harvestSpeedCache.clear();
         sender.sendMessage(
             new TextComponentString("Furnace Recipes have been removed"));
         // Undo Brewing Recipes

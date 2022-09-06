@@ -3,6 +3,7 @@ package com.wurmcraft.wurmtweaks2.common.script.jython;
 import com.google.common.collect.Lists;
 import com.wurmcraft.wurmtweaks2.api.WurmTweaks2API;
 import com.wurmcraft.wurmtweaks2.api.conversion.IDataConverter;
+import com.wurmcraft.wurmtweaks2.common.script.data.HarvestSpeed;
 import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -76,11 +77,15 @@ public class Item {
         stack.getItem().setHarvestLevel(type, level);
     }
 
-    // TODO Implement
-    public void harvestSpeed(double speed) {}
+    public void harvestSpeed(double speed) {
+        harvestSpeed("*", speed);
+    }
 
-    // TODO Implement
-    public void harvestSpeed(String block, double speed) {}
+    public void harvestSpeed(String block, double speed) {
+        net.minecraft.item.Item stack = (net.minecraft.item.Item) WurmTweaks2API.dataConverters.get("ItemStack").getData(block);
+        HarvestSpeed harvest = new HarvestSpeed(item, stack,block,speed);
+        com.wurmcraft.wurmtweaks2.common.script.event.HarvestSpeed.harvestSpeedCache.put(stack, harvest);
+    }
 
     private void recipeLock(boolean lock) {
         ForgeRegistry<IRecipe> recipeRegistry = (ForgeRegistry<IRecipe>) ForgeRegistries.RECIPES;
