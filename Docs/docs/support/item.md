@@ -49,7 +49,7 @@ Sets the item unable to be repaired in an anvil
 
 # Harvest Level
 
-Function `harvestLevel("{tool}" {num})`
+Function `.harvestLevel("{tool}" {num})`
 
 - Where `{tool}` is replaced with a valid type of harvest level tool (`pickaxe`, `axe`
   , `shovel`)
@@ -59,9 +59,9 @@ This changes the harvest level of item to the provided tool
 
 # Harvest Speed
 
-Function `harvestSpeed("{block}" {num})`
+Function `.harvestSpeed("{block}" {num})`
 
-- Where `{block}` is replaced with a valid block
+- Where `{block}` is replaced with a valid block (**Optional**, unfilled it will work for every block)
 - Where `{num}` is replaced with a number
 
 This changes the speed at which the provided tool will mine a specific block

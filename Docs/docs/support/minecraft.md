@@ -56,7 +56,7 @@ Example: `BrewingRecipe("<golden_apple@1>", "<potion^{Potion:\"minecraft:water\"
 
 ![brewing example](../img/brewing_example.png "Brewing Example")
 
-# Ore Dictionary Entry
+## Ore Dictionary Entry
 
 Format: `OreDictionary("{item}, "{entry}")`
 
