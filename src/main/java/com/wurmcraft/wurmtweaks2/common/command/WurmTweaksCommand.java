@@ -145,6 +145,7 @@ public class WurmTweaksCommand extends CommandBase {
             new TextComponentString("Furnace Recipes have been removed"));
         // Undo Brewing Recipes
         // TODO Undo brewing recipes
+
         recipeLock(true);
       } else {
         sender.sendMessage(new TextComponentString(getUsage(sender)));
